@@ -1,0 +1,180 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Route Generator Tutorial</title>
+</head>
+
+<body>
+<p>
+<h1>Tutorial</h1>
+This tutorial explains how to generate route movies, using Route Generator.
+</p>
+<p>
+<h2>Open map</h2>
+You can open an image file from an existing map or import a map from Google Maps (see below).
+
+For the best results, the size of the map should be the same as the resolution of the movie
+in which you want to place the final route movie
+(e.g. 768 x 576 for standard DVD or 1920×1080 for full HD). Route Generator can use any format and
+does not check this, so you should find out what the best format is you want to use.
+The easiest way is to grab a frame of a map you filmed with your camera, save it as BMP file and use
+that image as a map background. Or check the size of the screenshot and create an image yourself,
+with the same size.
+
+<h3>Import map from Google Maps</h3>
+To import a map from Google Maps, go to File->Import from Google Maps or click <img src="google-maps-logo.png">.
+First set the correct resolution that you want to use for your output map.
+
+<p>
+Now browse to Google Maps in your browser and locate a map that you want to use. Then copy the link to the
+URL field in Route Generator as follows:
+
+<p>
+Click Link to open the URL frame in your browser:<br>
+<img src="google-link.png"><br><br>
+Right click the URL and select Copy:<br>
+<img src="google-link-copy.png"><br><br>
+Right click the URL field in Route Generator and select Paste:<br>
+<img src="google-link-paste.png"><br><br>
+</p>
+
+Now click "Go" to start loading the map. When you are satisfied, click OK to save the map and use it
+in Route Generator.
+
+<h2>Draw route</h2>
+Activate <i>Draw mode</i> (from menu: Tools->Draw mode, or click <img src="drawmode.png">).
+Now start drawing a route, by clicking and dragging your mouse over the map. 
+You can reset the route by deactivating draw mode and activating it again. 
+If you're satisfied with the route you can do some adjustments to the way the route is displayed (next section). 
+
+<h3>Interpolation mode</h3>
+A new feature since version 1.3 is automatic route interpolation. When you check the <i>Interpolation</i> checkbox
+before you start drawing a new route, you only have to click on a few points on the map. When you're ready, de-activate
+<i>Draw mode by clicking </i><img src="drawmode.png">. After that the route will automatically be "interpolated" between
+the clicked points. You can adapt the lenght of the route by modifying the number besides the <i>Interpolation</i> checkbox.
+This number indicates the number of seconds that the complete route will take.
+</p>
+
+<p>
+<h2>Adjust route settings</h2>
+<ul>
+<li> Modify the width of the route by adjusting the <i>Route width</i> settings.
+<li> Modify the line style of the route by adjusting the <i>Route style</i> settings. <b>(new since version 1.3!)</b>
+<li> Modify the color of the route by adjusting the <i>Route color</i> settings.
+<li> <i>Select vehicle icon</i> that will be shown when the route is drawn.
+<li> Correct the direction of the vehicle by checking the <i>Mirror icon</i> checbox and modifying the
+     angle. (Explained below this section.)
+<li> Optionally it's possible to let the Route Generator <i>Generate iconless begin/end frames</i>, 
+     if you want to begin/end your movie without displaying the vehicle icon.
+</ul>
+</p>
+
+<h3>The vehicle icon</h3>
+<p> Route Generator tries to adapt the direction of the vehicle to
+the direction of the route. It assumes that the vehicle's base direction is from left to right
+(or west to east). This is indicated with a red arrow through the preview icon of the selected
+vehicle on the toolbar: <br>
+<img src="toolbar.png"><br>
+<p>
+In the situation displayed above, the vehicle is already displayed correctly left to right, so you don't need
+to correct it's angle. But for some vehicles you need to correct the angle or even mirror the icon, because it
+doesn't match the red arrow:
+<br>
+<img src="bike.png"><br>
+In this case, just modify the angle, until the vehicle direction mathces the red arrow:<br>
+<img src="bike_corrected.png">
+</p>
+</p>
+<h4>Adding custom vehicle icons</h4>
+<p>
+You can add custom icons for vehicles by adding your own icon files into the <i>vehicles</i> 
+subfolder of the Route Generator installation folder. The following icon formats should be accepted: 
+*.bmp, *.gif, *.png, *.bmp, *.jpg, *.tif</p>
+<p>It's recommended to add icons with a transparent background (i.e. *.gif or *.png with an alpha layer). 
+Also choose a reasonable size for the vehicle icons, e.g. 50x50 pixels.</p>
+<p>
+Route Generator needs to be restarted when you add new vehicle icons, otherwise it won't detect them.
+</p>
+<b>Animated vehicle icons</b>
+<p>When the vehicle is an animated image (e.g. animated gif), Route Generator will playback the animation
+in the generated movie!
+</p>
+
+</p>
+
+<p>
+<h2>Show preview</h2>
+To get a preview of the movie that will be generated click the <i>Playback</i> button <img src="player_play.png">
+(or from menu: Tools->Playback).<br>
+You can stop the preview by clicking <i>Stop</i> <img src="player_stop.png">
+(or from menu: Tools->Stop)
+</p>
+<p>
+<h2>Generate route</h2>
+Finally generate the route movie into a directory by clicking the <i>Generate route</i> button <img src="generate.png">
+(or from menu: Tools->Generate route). 
+For each frame of the movie, Route Generator will generate a *.bmp file in the selected directory. 
+Next, these frames (*.bmp files) will be converted to an AVI movie, using bmp2avi, which is 
+by default included with Route Generator.
+</p>
+<p>
+<b>NOTE: Each BMP-file will be written in uncompressed format! E.g. one BMP-file of 768x576 uses about 1.2 MB of
+diskspace. Route Generator assumes 25fps, so for each second 25 x 1.2MB = 30MB of disk space is required for
+the BMP-files only and another 30MB for the generated AVI movie!
+</b> (Route Generator will also give a rough estimation 
+of the required diskspace, before you start generating the route)
+</p>
+<p>
+If somehow bmp2avi is not available, you can download it from:
+<u>http://www.divx-digest.com/software/bmp2avi.html</u> 
+<br>
+<u>Make sure to download the commandline version (<i>bmp2avi.exe</i>)!</u>
+You can extract <i>bmp2avi.exe</i> into any directory.
+When Route Generator starts up, it will automatically ask you to locate the file <i>bmp2avi.exe</i>.
+</p>
+<p>
+After the movie is generated, you can import it in you video editing software. You can optionally 
+finetune the movie by adding extra begin/end frames that you pick from the directory containing 
+the generated *.BMP files.<br>
+</p>
+</p>
+<p>
+<h2>Modifying BMP2AVI preferences</h2>
+<p>
+Since version 1.3 of Route Generator, it's possible to modify the settings that Bmp2Avi uses to
+convert BMP's to an AVI file. To change these settings open the preferences through Edit->Preferences.
+Here you can change 6 Bmp2Avi settings:
+</p>
+<h3>Bmp2Avi location</h3>
+<p>
+Here you can change the location of bmp2avi.exe, in case you have it in a different location
+or for some reason Route Generator is unable to find it anymore.
+</p>
+<h3>Name of output AVI</h3>
+By default the name of the generated AVI is "out.avi", but here you can change this name. E.g.
+when you change this to "mymovie", the generated movie will be called "mymovie.avi".
+<p>
+</p>
+<h3>Delete BMP's</h3>
+<p>
+When you check this, the BMP's will automatically be deleted after the bmp2avi conversion. The
+first and last frame will not be deleted, so you can still use them in your video editing software.
+</p>
+<h3>FPS</h3>
+<p>
+Here you can change the frame rate of the generated AVI (the default is 25).
+</p>
+<h3>Key frame rate</h3>
+<p>
+This value indicates after how many frames a key frame is created (the default is 25).
+</p>
+<h3>Codec</h3>
+<p>
+Here you can change the codec that Bmp2Avi uses to generate the movie. This can result
+in smaller movies, but it's possible that not all codecs are accepted by your video editing software.
+(the default is "Uncompressed")
+</p>
+</p>
+</body>
+</html>

@@ -1,0 +1,386 @@
+<ui version="4.0" >
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>558</width>
+    <height>350</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Route Generator Preferences</string>
+  </property>
+  <layout class="QVBoxLayout" >
+   <item>
+    <widget class="QTabWidget" name="tabWidget" >
+     <property name="currentIndex" >
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab" >
+      <property name="windowModality" >
+       <enum>Qt::NonModal</enum>
+      </property>
+      <attribute name="title" >
+       <string>Bmp2Avi</string>
+      </attribute>
+      <attribute name="toolTip" >
+       <string>Change bmp2avi settings</string>
+      </attribute>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <widget class="QLabel" name="label" >
+         <property name="text" >
+          <string>Bmp2Avi location</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" colspan="2" >
+        <widget class="QLineEdit" name="mBmp2AviLocLE" >
+         <property name="toolTip" >
+          <string>Enter location of bmp2avi executable.</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3" >
+        <widget class="QPushButton" name="mBrowsePB" >
+         <property name="text" >
+          <string>Browse...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QLabel" name="label_2" >
+         <property name="text" >
+          <string>Name output AVI</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="2" >
+        <widget class="QLineEdit" name="mBmp2AviOutNameLE" >
+         <property name="toolTip" >
+          <string>Enter name of ouptut AVI (without .avi extension!)</string>
+         </property>
+         <property name="cursorPosition" >
+          <number>0</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" >
+        <widget class="QLabel" name="label_6" >
+         <property name="text" >
+          <string>Delete BMP's</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="2" >
+        <widget class="QCheckBox" name="mDeleteBMPsCB" >
+         <property name="toolTip" >
+          <string>Delete BMP's after AVI generation</string>
+         </property>
+         <property name="text" >
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" >
+        <widget class="QLabel" name="label_3" >
+         <property name="text" >
+          <string>FPS</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1" >
+        <widget class="QSpinBox" name="mFpsSB" >
+         <property name="toolTip" >
+          <string>Select frame rate of output AVI</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2" >
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>221</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="4" column="0" >
+        <widget class="QLabel" name="label_5" >
+         <property name="text" >
+          <string>Key frame rate</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1" >
+        <widget class="QSpinBox" name="mKeyFrSB" >
+         <property name="toolTip" >
+          <string>Select key frame rate of output AVI</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2" >
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>221</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="5" column="0" >
+        <widget class="QLabel" name="label_4" >
+         <property name="text" >
+          <string>Codec</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1" colspan="2" >
+        <widget class="QComboBox" name="mCodecCB" >
+         <property name="toolTip" >
+          <string>Select codec used for output AVI</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2" >
+      <attribute name="title" >
+       <string>Advanced</string>
+      </attribute>
+      <attribute name="toolTip" >
+       <string>Change advanced settings</string>
+      </attribute>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" colspan="3" >
+        <widget class="QGroupBox" name="groupBox" >
+         <property name="title" >
+          <string>Automatic generate curves (in interpolation mode)</string>
+         </property>
+         <layout class="QGridLayout" >
+          <item row="0" column="0" colspan="4" >
+           <widget class="QCheckBox" name="mSmoothCurvesModeCB" >
+            <property name="toolTip" >
+             <string/>
+            </property>
+            <property name="text" >
+             <string>Enable automatic curves generation (this feature already worked in V1.3, but still has some bugs)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_10" >
+            <property name="text" >
+             <string>The radius of the curves</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QSpinBox" name="mCurveRadiusSB" />
+          </item>
+          <item row="1" column="2" >
+           <widget class="QLabel" name="label_11" >
+            <property name="text" >
+             <string>(pixels)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3" >
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>221</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3" >
+        <widget class="QGroupBox" name="groupBox_2" >
+         <property name="title" >
+          <string>Vehicle orientation parameters (influences how often the vehicle orientation should change)</string>
+         </property>
+         <layout class="QGridLayout" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label_7" >
+            <property name="text" >
+             <string>Minimum angle change of route before new vehicle orientation is calculated</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QSpinBox" name="mStepAngleSB" >
+            <property name="toolTip" >
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_8" >
+            <property name="text" >
+             <string>Minimum distance change of route before new vehicle orientation is calculated</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QSpinBox" name="mMinDistanceSB" >
+            <property name="toolTip" >
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" >
+           <widget class="QLabel" name="label_9" >
+            <property name="text" >
+             <string>Maximum number of frames to always force calculating a new vehicle orientation</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" >
+           <widget class="QSpinBox" name="mForceCounterSB" >
+            <property name="toolTip" >
+             <string>This setting overrules minimum angle and distance settings</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3" >
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="2" >
+           <widget class="QLabel" name="label_12" >
+            <property name="text" >
+             <string>(frames)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2" >
+           <widget class="QLabel" name="label_13" >
+            <property name="text" >
+             <string>(degrees)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2" >
+           <widget class="QLabel" name="label_14" >
+            <property name="text" >
+             <string>(pixels)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0" >
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="1" >
+        <widget class="QPushButton" name="mResetDefaultsPB" >
+         <property name="toolTip" >
+          <string>Reset to original settings</string>
+         </property>
+         <property name="text" >
+          <string>Reset to defaults</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2" >
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons" >
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::NoButton|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>Dialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>Dialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
