@@ -88,7 +88,7 @@ void RGSettingsDialog::browseClicked()
 
 void RGSettingsDialog::accept()
 {
-  RGSettings::setBmp2AviExec(mBmp2AviLocLE->text());
+  RGSettings::setVideoEncExec(mBmp2AviLocLE->text());
   RGSettings::setAviOutName(mBmp2AviOutNameLE->text());
   RGSettings::setDeleteBMPs(mDeleteBMPsCB->isChecked());
   RGSettings::setFps(mFpsSB->value());
@@ -111,7 +111,7 @@ void RGSettingsDialog::initFromSettings()
   mFpsSB->setRange(0,50);
   mKeyFrSB->setRange(0,50);
 
-  mBmp2AviLocLE->setText(RGSettings::getBmp2AviExec());
+  mBmp2AviLocLE->setText(RGSettings::getVideoEncExec());
   mBmp2AviOutNameLE->setText(RGSettings::getAviOutName());
   mDeleteBMPsCB->setChecked(RGSettings::getDeleteBMPs());
   mFpsSB->setValue(RGSettings::getFps());
@@ -131,7 +131,7 @@ void RGSettingsDialog::initFromSettings()
   mForceCounterSB->setRange(1, 100);
 
   //Collect codecs from bmp2avi
-  QString bmp2aviExecName = RGSettings::getBmp2AviExec();
+  QString bmp2aviExecName = RGSettings::getVideoEncExec();
   QFile bmp2aviExec(bmp2aviExecName);
   if (bmp2aviExec.exists()) {
     QProcess *bmp2AviProcess = new QProcess(this);

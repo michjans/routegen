@@ -117,6 +117,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mLineStyleCB->addItem(createIconForStyle(Qt::DotLine),        QString(), QVariant((unsigned) Qt::DotLine));
   mLineStyleCB->addItem(createIconForStyle(Qt::DashDotLine),    QString(), QVariant((unsigned) Qt::DashDotLine));
   mLineStyleCB->addItem(createIconForStyle(Qt::DashDotDotLine), QString(), QVariant((unsigned) Qt::DashDotDotLine));
+  mLineStyleCB->addItem(createIconForStyle(Qt::NoPen),          QString(), QVariant((unsigned) Qt::NoPen));
 
   //Enum mapping starts counting at 1 (see Qt::PenStyle definition)
   mLineStyleCB->setCurrentIndex(penStyle - 1);
@@ -284,45 +285,49 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
     if (generateBMPOK) {
       //Now use bmp2avi to convert the bmp files into an avi file
       //location of bmp2avi should already be stored in the settings
-      QString bmp2aviExecName = RGSettings::getBmp2AviExec();
-      QFile bmp2aviExec(bmp2aviExecName);
-      if (bmp2aviExec.exists()) {
-        QStringList arguments;
-       
-        QString fps      = QString::number(RGSettings::getFps());
-        QString key      = QString::number(RGSettings::getKeyFrameRate());
-        QString outname  = RGSettings::getAviOutName();
-        QString compress = RGSettings::getAviCompression();
+      QString videoEncoder = RGSettings::getVideoEncoder();
+      qWarning()<< "videoenc: " << videoEncoder;
+      if (videoEncoder.isEmpty()){
+          QString txt = QString(
+            "<html>"
+            "<p>"
+            "Your route has been generated in the selected directory. "
+            "Each frame is generated as a *.bmp file in that directory. "
+            "</p>"
+            "<p><b>NOTE: Since no video encoder is available, no avi file is generated!</b></p>"
+            "</html>"
+          );
 
-        arguments << "-f" << fps << "-k" << key << "-o" << outname << "-c" << compress;
-
-        mBmp2AviProcess = new QProcess(this);
-        QObject::connect(mBmp2AviProcess, SIGNAL(finished (int , QProcess::ExitStatus)),
-                         this, SLOT(handleBmp2AviProcessFinished(int , QProcess::ExitStatus)));
-        QObject::connect(mBmp2AviProcess, SIGNAL(error (QProcess::ProcessError)),
-                         this, SLOT(handleBmp2AviProcessError(QProcess::ProcessError)));
-        mBmp2AviProcess->setWorkingDirectory(dir);
-        blockUserInteraction(true);
-        mBmp2AviProcess->start(bmp2aviExecName, arguments);
-        mProcessWaitMessage = new QMessageBox(this);
-        mProcessWaitMessage->setWindowTitle("One moment please...");
-        mProcessWaitMessage->setText("Executing Bmp2Avi to convert BMP files to AVI file, one moment please...");
-        mProcessWaitMessage->setStandardButtons(QMessageBox::NoButton);
-        mProcessWaitMessage->setCursor(Qt::WaitCursor);
-        mProcessWaitMessage->show();
-      } else {
-        QString txt = QString(
-          "<html>"
-          "<p>"
-          "Your route has been generated in the selected directory. "
-          "Each frame is generated as a *.bmp file in that directory. "
-          "</p>"
-          "<p><b>NOTE: Since bmp2avi is unavailable, no avi file is generated!</b></p>"
-          "</html>"
-        );
-        
-        QMessageBox::information (this, "Map Generation Finished", txt );
+          QMessageBox::information (this, "Map Generation Finished", txt );
+          return;
       }
+      QString videoEncoderName = RGSettings::getVideoEncExec();
+      QString fps      = QString::number(RGSettings::getFps());
+      QString outname  = RGSettings::getAviOutName();
+      QString compress = RGSettings::getAviCompression();
+      QString key      = QString::number(RGSettings::getKeyFrameRate());
+      QStringList arguments;
+      if (videoEncoder==QString("bmp2avi")){
+          arguments << "-f" << fps << "-k" << key << "-o" << outname << "-c" << compress;
+      }
+      if (videoEncoder==QString("ffmpeg")){
+          outname.append(".mpg");
+          arguments << "-y" << "-f" << "image2" << "-i" << "map\%05d.bmp" << "-g" << key <<"-r"<<fps<< outname;
+      }
+      mVideoEncProcess = new QProcess(this);
+      QObject::connect(mVideoEncProcess, SIGNAL(finished (int , QProcess::ExitStatus)),
+                       this, SLOT(handleVideoEncProcessFinished(int , QProcess::ExitStatus)));
+      QObject::connect(mVideoEncProcess, SIGNAL(error (QProcess::ProcessError)),
+                       this, SLOT(handleVideoEncProcessError(QProcess::ProcessError)));
+      mVideoEncProcess->setWorkingDirectory(dir);
+      blockUserInteraction(true);
+      mVideoEncProcess->start(videoEncoderName, arguments);
+      mProcessWaitMessage = new QMessageBox(this);
+      mProcessWaitMessage->setWindowTitle("One moment please...");
+      mProcessWaitMessage->setText("Executing videoEncoder to convert BMP files to video file, one moment please...");
+      mProcessWaitMessage->setStandardButtons(QMessageBox::NoButton);
+      mProcessWaitMessage->setCursor(Qt::WaitCursor);
+      mProcessWaitMessage->show();
     }
   }
 }
@@ -493,11 +498,11 @@ void RGMainWindow::handleDrawModeChanged(bool activated)
   actionDraw_mode->setChecked(activated);
 }
 
-void RGMainWindow::handleBmp2AviProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
+void RGMainWindow::handleVideoEncProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
   delete mProcessWaitMessage;
-  QByteArray output = mBmp2AviProcess->readAllStandardOutput();
-  QFile logFile(mBmp2AviProcess->workingDirectory() + "/bmp2avi.log");
+  QByteArray output = mVideoEncProcess->readAllStandardOutput();
+  QFile logFile(mVideoEncProcess->workingDirectory() + "/bmp2avi.log");
   if (logFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
     logFile.write(output);
     logFile.close();
@@ -536,20 +541,20 @@ void RGMainWindow::handleBmp2AviProcessFinished(int exitCode, QProcess::ExitStat
     QMessageBox::critical (this, "Error", QString("Bmp2avi did not finish successfully! See file bmp2avi.log in output directory for details."));
   }
 
-  mBmp2AviProcess->deleteLater();
+  mVideoEncProcess->deleteLater();
   blockUserInteraction(false);
 }
 
-void RGMainWindow::handleBmp2AviProcessError(QProcess::ProcessError)
+void RGMainWindow::handleVideoEncProcessError(QProcess::ProcessError)
 {
   QMessageBox::critical (this, "Error", "Bmp2avi execution failed!" );
 
-  mBmp2AviProcess->kill();
+  mVideoEncProcess->kill();
 
-  if (mBmp2AviProcess->state() != QProcess::NotRunning)
+  if (mVideoEncProcess->state() != QProcess::NotRunning)
     QMessageBox::critical (this, "Error", "Unable to kill bmp2avi.exe, check your processes!" );
 
-  mBmp2AviProcess->deleteLater();
+  mVideoEncProcess->deleteLater();
   blockUserInteraction(false);
 }
 

@@ -24,9 +24,13 @@
 
 void RGSettings::initSettings()
 {
-  //Currently we only initialize bmp2avi
+
   QSettings settings;
-  QString bmp2aviExecName = settings.value("bmp2aviExec", QDir::currentPath() + "/bmp2avi/bmp2avi.exe").toString();
+  settings.setValue("videoEncoder", QString());
+
+  #ifdef Q_WS_WIN
+  //Currently we only initialize bmp2avi
+  QString bmp2aviExecName = settings.value("videoEncExec", QDir::currentPath() + "/bmp2avi/bmp2avi.exe").toString();
   QFile bmp2aviExec(bmp2aviExecName);
   while (bmp2aviExec.exists() == false || !bmp2aviExec.fileName().contains(QString("bmp2avi")))
   {
@@ -47,7 +51,8 @@ void RGSettings::initSettings()
 
   if (bmp2aviExec.exists())
   //Store new location
-  settings.setValue("bmp2aviExec", bmp2aviExecName);
+  settings.setValue("videoEncoder", QString("bmp2avi"));
+  settings.setValue("videoEncExec", bmp2aviExecName);
   else
   QMessageBox::warning (NULL, "Not available", "Avi generation using bmp2avi will be unavailable");
 
@@ -59,30 +64,59 @@ void RGSettings::initSettings()
    *so the keyframe rate has no effect. But it's possible to choose different
    *compression encoders, using the -c argument.
    */
-  QVariant fps      = settings.value("bmp2aviArgFps",          QString("25"));
-  QVariant key      = settings.value("bmp2aviArgKeyFrameRate", QString("25"));
-  QVariant outname  = settings.value("bmp2aviArgOutname",      QString("out"));
-  //Compression "DIB", means none, see bmp2avi documentation
-  QVariant compress = settings.value("bmp2aviArgCompression",  QString("DIB"));
 
-  settings.setValue("bmp2aviArgFps", fps);
-  settings.setValue("bmp2aviArgKeyFrameRate", key);
-  settings.setValue("bmp2aviArgOutname", outname);
+  #endif
+  #ifdef Q_WS_X11
+    QProcess checkFFmpeg;
+    checkFFmpeg.setProcessChannelMode(QProcess::MergedChannels);
+    checkFFmpeg.start("ffmpeg -version");
+    if (!checkFFmpeg.waitForFinished())
+      QMessageBox::warning (NULL, "No video encoder", "No video encoder has been found, video generation will be unavailable.\nInstall FFmpeg and restart the application.");
+    else
+      settings.setValue("videoEncoder", QString("ffmpeg"));
+      settings.setValue("videoEncExec", QString("ffmpeg"));
+
+      //qWarning() << "Make output:" << checkFFmpeg.readAll();
+
+  #endif
+  QVariant fps      = settings.value("bmp2aviArgFps",          QString("25"));
+  QVariant outname  = settings.value("bmp2aviArgOutname",      QString("out"));
+  QVariant key      = settings.value("bmp2aviArgKeyFrameRate", QString("25"));//-g in ffmpeg
+  QVariant compress = settings.value("bmp2aviArgCompression",  QString("DIB"));
+  //Compression "DIB", means none, see bmp2avi documentation
   settings.setValue("bmp2aviArgCompression", compress);
+  settings.setValue("bmp2aviArgKeyFrameRate", key);
+  settings.setValue("bmp2aviArgFps", fps);
+  settings.setValue("bmp2aviArgOutname", outname);
+
 }
 
 QString
-RGSettings::getBmp2AviExec()
+RGSettings::getVideoEncoder()
 {
   QSettings settings;
-  return settings.value("bmp2aviExec").toString();
+  return settings.value("videoEncoder").toString();
 }
 
 void
-RGSettings::setBmp2AviExec(const QString &exec)
+RGSettings::setVideoEncoder(const QString &videoEnc)
 {
   QSettings settings;
-  settings.setValue("bmp2aviExec", exec);
+  settings.setValue("videoEncoder", videoEnc);
+}
+
+QString
+RGSettings::getVideoEncExec()
+{
+  QSettings settings;
+  return settings.value("videoEncExec").toString();
+}
+
+void
+RGSettings::setVideoEncExec(const QString &exec)
+{
+  QSettings settings;
+  settings.setValue("videoEncExec", exec);
 }
 
 QString

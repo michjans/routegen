@@ -31,8 +31,10 @@ public:
   /*
    * Movie generation settings
    */
-  static QString getBmp2AviExec();
-  static void setBmp2AviExec(const QString &);
+  static QString getVideoEncoder();
+  static void setVideoEncoder(const QString &);
+  static QString getVideoEncExec();
+  static void setVideoEncExec(const QString &);
   static QString getAviOutName();
   static void setAviOutName(const QString &);
   static int getFps();

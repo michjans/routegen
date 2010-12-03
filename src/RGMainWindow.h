@@ -71,8 +71,8 @@ private slots:
   void blockUserInteraction(bool);
   void enableGenerateActions(bool);
   void handleDrawModeChanged(bool);
-  void handleBmp2AviProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
-  void handleBmp2AviProcessError(QProcess::ProcessError error);
+  void handleVideoEncProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
+  void handleVideoEncProcessError(QProcess::ProcessError error);
 
 private:
   void  updateVehicleIcon(int idx);
@@ -104,7 +104,7 @@ private:
 
   bool mIgnoreSignals;
 
-  QProcess    *mBmp2AviProcess;
+  QProcess    *mVideoEncProcess;
   QStringList  mGeneratedBMPs;
 
 
