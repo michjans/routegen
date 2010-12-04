@@ -47,6 +47,12 @@ RGSettingsDialog::RGSettingsDialog(QWidget *parent)
   QObject::connect(mBrowsePB, SIGNAL(clicked(bool)), this, SLOT(browseClicked()));
   QObject::connect(mSmoothCurvesModeCB, SIGNAL(toggled(bool)), mCurveRadiusSB, SLOT(setEnabled(bool)));
 
+  //Deactivate Path to bmp2avi.exe on linux :
+  #ifdef Q_WS_X11
+    mBmp2AviLocLE->setDisabled(true);
+    mBrowsePB->setDisabled(true);
+  #endif
+
   initFromSettings();
 }
 
@@ -83,6 +89,7 @@ void RGSettingsDialog::browseClicked()
   if (!bmp2AviLoc.isNull())
   {
     mBmp2AviLocLE->setText(bmp2AviLoc);
+    RGSettings::setVideoEncoder(QString("bmp2avi"));
   }
 }
 
