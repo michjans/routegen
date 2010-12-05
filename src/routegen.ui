@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>843</width>
+    <width>913</width>
     <height>600</height>
    </rect>
   </property>
@@ -122,6 +122,22 @@
        </widget>
       </item>
       <item>
+       <widget class="QSpinBox" name="sizeSB">
+        <property name="toolTip">
+         <string>Renderd size in pixel of the vehicle</string>
+        </property>
+        <property name="minimum">
+         <number>0</number>
+        </property>
+        <property name="maximum">
+         <number>10000</number>
+        </property>
+        <property name="singleStep">
+         <number>10</number>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="Line" name="line_3">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -196,8 +212,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>823</width>
-         <height>477</height>
+         <width>899</width>
+         <height>483</height>
         </rect>
        </property>
       </widget>
@@ -210,8 +226,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>843</width>
-     <height>20</height>
+     <width>913</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">

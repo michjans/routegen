@@ -37,7 +37,7 @@ public:
    *   defaultDelay = if image is animated gif: use this delay between frames (in ms), 
    *                             when property not available in animation (default = 80, 2 frames if 25 fps)
    */
-  RGVehicle(const QString &fileName, bool mirror = false, int startAngle = 0, int defaultDelay = 80);
+  RGVehicle(const QString &fileName, bool mirror = false, int startAngle = 0, int size = 0, int defaultDelay = 80);
 
   ~RGVehicle();
 
@@ -87,6 +87,7 @@ public:
 
 private:
   QImage rotateImage(QImage &image, int degrees);
+  QImage scaleImage(QImage &image, int size);
 
 private:
   std::vector<QImage> mImages;

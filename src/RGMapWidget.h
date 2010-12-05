@@ -59,7 +59,7 @@ signals:
 
 public slots:
 	void loadImage(const QPixmap &pm);
-	void setVehicle(const QString &fileName, bool mirror, int startAngle);
+        void setVehicle(const QString &fileName, bool mirror, int startAngle, int size);
 	void startDrawMode();
 	void endDrawMode();
 	void setPenSize(int);

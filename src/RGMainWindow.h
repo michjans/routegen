@@ -63,6 +63,7 @@ private slots:
   void on_lineStyleCB_activated(int);
   void on_iconCB_activated(int index);
   void on_angleSB_valueChanged(int);
+  void on_sizeSB_valueChanged(int);
   void on_mirrorIconCB_toggled(bool );
   void on_interpolationCB_toggled(bool );
   void on_routeTimeSB_valueChanged(int);
@@ -94,6 +95,7 @@ private:
   QComboBox *mLineStyleCB;
   QCheckBox *mMirrorCB;
   QSpinBox  *mAngleSB;
+  QSpinBox  *mSizeSB;
   QLabel      *mVehiclePreviewLabel;
   QCheckBox *mInterpolationCB;
   QSpinBox  *mRouteTimeSB;
@@ -101,6 +103,7 @@ private:
 
   bool mDrawMirroredIcon;
   int  mStartAngle;
+  int  mSizeVehicle;
 
   bool mIgnoreSignals;
 

@@ -68,11 +68,11 @@ void RGMapWidget::loadImage(const QPixmap &pm)
   //adjustSize();
 }
 
-void RGMapWidget::setVehicle(const QString &fileName, bool mirror, int startAngle)
+void RGMapWidget::setVehicle(const QString &fileName, bool mirror, int startAngle, int size)
 {
   if (mVehicle != NULL) delete mVehicle;
   if (!fileName.isNull()) {
-    mVehicle = new RGVehicle(fileName, mirror, startAngle);
+    mVehicle = new RGVehicle(fileName, mirror, startAngle, size);
 
     //User might have overridden advanced settings for the vehicle
     mVehicle->setForceCounter(RGSettings::getVehicleForceCounter());

@@ -26,7 +26,7 @@
 
 #include "RGVehicle.h"
 
-RGVehicle::RGVehicle(const QString &fileName, bool mirror, int startAngle, int defaultDelay)
+RGVehicle::RGVehicle(const QString &fileName, bool mirror, int startAngle, int size, int defaultDelay)
   : mFrameDelay(defaultDelay),
     mStepAngle(12),     //Minimum angle difference, before rotating the image
     mMinDistance(10),   //Minimum distance between points, before calculating new angle
@@ -59,6 +59,7 @@ RGVehicle::RGVehicle(const QString &fileName, bool mirror, int startAngle, int d
         qDebug() << "   adding animation frame";
         if (mirror)            im = im.mirrored(true, false);
         if (startAngle != 0.0) im = rotateImage(im, startAngle);
+        if (size != 0)         im = scaleImage(im, size);
         mImages.push_back(im);
       }
     }
@@ -69,6 +70,7 @@ RGVehicle::RGVehicle(const QString &fileName, bool mirror, int startAngle, int d
     QImage im = qir.read();
     if (mirror)            im = im.mirrored(true, false);
     if (startAngle != 0.0) im = rotateImage(im, startAngle);
+    if (size != 0)         im = scaleImage(im, size);
     mImages.push_back(im);
     mFrameDelay = INT_MAX; //Means, no animation
   }
@@ -211,6 +213,19 @@ QImage RGVehicle::rotateImage(QImage &image, int degrees)
   QMatrix matrix;
   matrix.rotate((qreal) degrees);
   return image.transformed(matrix, Qt::SmoothTransformation);
+}
+
+QImage RGVehicle::scaleImage(QImage &image, int size)
+{
+    if(image.width() > image.height()){
+        if (size != image.width())
+            return image.scaledToWidth(size,Qt::SmoothTransformation);
+    }
+    else {
+        if (size != image.height())
+            return image.scaledToHeight(size,Qt::SmoothTransformation);
+    }
+    return image;
 }
 
 
