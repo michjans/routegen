@@ -70,7 +70,10 @@ void RGMapWidget::loadImage(const QPixmap &pm)
 
 void RGMapWidget::setVehicle(const QString &fileName, bool mirror, int startAngle, int size)
 {
-  if (mVehicle != NULL) delete mVehicle;
+    if (mVehicle != NULL) {
+        delete mVehicle;
+        mVehicle=NULL;
+    }
   if (!fileName.isNull()) {
     mVehicle = new RGVehicle(fileName, mirror, startAngle, size);
 
