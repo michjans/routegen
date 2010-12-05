@@ -302,6 +302,25 @@ RGSettings::setVehicleAngle(const QString &name, int angle)
   settings.endGroup();
 }
 
+int
+RGSettings::getVehicleSize(const QString &name)
+{
+  QSettings settings;
+  settings.beginGroup("vehicleSizes");
+  int size = settings.value(name, 0).toInt();
+  settings.endGroup();
+  return size;
+}
+
+void
+RGSettings::setVehicleSize(const QString &name, int size)
+{
+  QSettings settings;
+  settings.beginGroup("vehicleSizes");
+  settings.setValue(name, size);
+  settings.endGroup();
+}
+
 bool
 RGSettings::getVehicleMirrored(const QString &name)
 {

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>913</width>
+    <width>985</width>
     <height>600</height>
    </rect>
   </property>
@@ -126,6 +126,9 @@
         <property name="toolTip">
          <string>Renderd size in pixel of the vehicle</string>
         </property>
+        <property name="correctionMode">
+         <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
+        </property>
         <property name="minimum">
          <number>0</number>
         </property>
@@ -212,7 +215,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>899</width>
+         <width>971</width>
          <height>483</height>
         </rect>
        </property>
@@ -226,7 +229,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>913</width>
+     <width>985</width>
      <height>21</height>
     </rect>
    </property>

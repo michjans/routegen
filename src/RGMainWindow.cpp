@@ -390,15 +390,10 @@ void RGMainWindow::on_iconCB_activated(int index)
   if (index > 0) {
     mDrawMirroredIcon = RGSettings::getVehicleMirrored(mIconCB->currentText());
     mStartAngle = RGSettings::getVehicleAngle(mIconCB->currentText());
+    mSizeVehicle = RGSettings::getVehicleSize(mIconCB->currentText());
     mMirrorCB->setChecked(mDrawMirroredIcon);
     mAngleSB->setValue(mStartAngle);
-    mSizeVehicle = 0;
-    //QPixmap pm = mRGMapWidget->getVehiclePixmap();
-    //if (!pm.isNull()) {
-    //    bigsize = pm.width();
-    //    if (bigsize<pm.heigh) bigsize = pm.height();
-    //}
-    //mSizeSB->setValue(bigsize);
+    mSizeSB->setValue(mSizeVehicle);
 
   } else {
     mDrawMirroredIcon = false;
@@ -408,7 +403,6 @@ void RGMainWindow::on_iconCB_activated(int index)
     mSizeSB->setValue(0);
     mSizeVehicle = 0;
     }
-  qWarning() << "mSizeVehicle" << mSizeVehicle;
   updateVehicleIcon(index);
 
   mIgnoreSignals = false;
@@ -464,11 +458,10 @@ void RGMainWindow::on_sizeSB_valueChanged(int size)
   if (mIgnoreSignals) return;
 
   mSizeVehicle = size;
-  qWarning() << "mSizeVehicle" << mSizeVehicle;
   //Store settings for current vehicle
-  //if (mIconCB->currentIndex() > 0) {
-  //  RGSettings::setVehicleAngle(mIconCB->currentText(), angle);
-  //}
+  if (mIconCB->currentIndex() > 0) {
+    RGSettings::setVehicleSize(mIconCB->currentText(), size);
+  }
 
   updateVehicleIcon(mIconCB->currentIndex());
 }

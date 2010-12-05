@@ -63,6 +63,8 @@ public:
   static void setLastGenDir(const QString &fileName);
   static int getVehicleAngle(const QString &name);
   static void setVehicleAngle(const QString &name, int angle);
+  static int getVehicleSize(const QString &name);
+  static void setVehicleSize(const QString &name, int size);
   static bool getVehicleMirrored(const QString &name);
   static void setVehicleMirrored(const QString &name, bool mirror);
   
