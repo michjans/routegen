@@ -294,6 +294,7 @@
    <addaction name="actionSave_image"/>
    <addaction name="separator"/>
    <addaction name="actionDraw_mode"/>
+   <addaction name="actionNew_route"/>
    <addaction name="separator"/>
    <addaction name="actionPlayback"/>
    <addaction name="actionStop"/>
@@ -426,6 +427,18 @@
     <string>Import map from Google Maps</string>
    </property>
   </action>
+  <action name="actionNew_route">
+   <property name="icon">
+    <iconset resource="routegen.qrc">
+     <normaloff>:/icons/icons/mapgen.png</normaloff>:/icons/icons/mapgen.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;New Route</string>
+   </property>
+   <property name="toolTip">
+    <string>Start New Route</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="routegen.qrc"/>
@@ -438,12 +451,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>363</x>
-     <y>147</y>
+     <x>662</x>
+     <y>79</y>
     </hint>
     <hint type="destinationlabel">
-     <x>453</x>
-     <y>147</y>
+     <x>722</x>
+     <y>80</y>
     </hint>
    </hints>
   </connection>

@@ -23,12 +23,13 @@
 #include <QProgressDialog>
 #include <QCheckBox>
 #include <QDebug>
+#include <math.h>
 
 #include "RGMapWidget.h"
 #include "RGRoute.h"
 #include "RGSettings.h"
 
-#define MIN_PATH_LENGTH 5
+#define MIN_PATH_LENGTH 2
 
 //The number of field with of the numbers before the generated file names,
 //e.g. if 5 then always 5 digits, e.g. map00001.bmp, etc.
@@ -42,21 +43,29 @@ RGMapWidget::RGMapWidget(QWidget *parent)
 :QWidget(parent),
  mVehicle(NULL),
  mRgr(NULL),
+ mFPS(25),
  mPenColor(Qt::blue),
  mPenStyle(Qt::SolidLine),
  mInDrawMode(false),
  mInitPhase(true),
  mGenerateBeginEndFrames(false),
- mInterpolationMode(false),
- mFPS(25),
- mRoutePlayTime(5),  //5 seconds by default (only used by in interpolation mode)
- mPlayTimer(NULL)
+ mPlayTimer(NULL),
+ mTimerCounter(0)
 {
   setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
   mFPS = RGSettings::getFps();
-  mRoutePlayTime = RGSettings::getRoutePlayTime();
-  mInterpolationMode = RGSettings::getInterpolationMode();
+  if (mRgr)
+      delete mRgr;
+  QList<QPoint> test;
+  mRgr = new RGRoute(test);
+  mRgr->setFPS(mFPS);
+  mRgr->setTotalTime(RGSettings::getRoutePlayTime());
+  mRgr->setPlayMode((int) RGSettings::getInterpolationMode());
+  if (mPlayTimer == NULL) {
+    mPlayTimer = new QTimer(this);
+    QObject::connect(mPlayTimer, SIGNAL(timeout()), this, SLOT(playTimerEvent()));
+  }
 }
 
 void RGMapWidget::loadImage(const QPixmap &pm)
@@ -105,33 +114,30 @@ QPixmap RGMapWidget::getVehiclePixmap()
 bool RGMapWidget::generateMovie(const QString &dirName, const QString &filePrefix, QStringList &generatedBMPs)
 {
   //Disable draw mode automatically
-  if (mInterpolationMode && mInDrawMode)
+  if (mInDrawMode)
     endDrawMode();
 
   generatedBMPs.clear();
   //Only usefull when route has more than MIN_PATH_LENGTH points
-  if (mPath.count() < MIN_PATH_LENGTH) {
+  if (mRgr->stepCount() < MIN_PATH_LENGTH) {
     QMessageBox::warning (this, "Route too short", "Sorry, this route is too short to generate a valid route.");
     return false;
   }
 
   bool generationOK = true;
   emit busy(true);
-  QString text = QString("Number of frames: ") + QString::number(mPath.count());
+  //QString text = QString("Number of frames: ") + QString::number(mRgr->stepCount());
 
-  mPathBackup = mPath;
-  mPath.clear();
-
-  QProgressDialog progress("Generating files...", "Abort", 0, mPathBackup.count(), this);
+  QProgressDialog progress("Generating files...", "Abort", 0, mRgr->getNumberFrame(), this);
   progress.setWindowModality(Qt::WindowModal);
   progress.setMinimumDuration (100);
 
   QString fileName;
   bool result;
-  int i = 0;
+  mTimerCounter = 0;
   if (mGenerateBeginEndFrames) {
     //First save first frame without route and vehicle (for convenience)
-    fileName = dirName + "/" + filePrefix + QString("%1.bmp").arg(i, FILE_NUMBER_FIELD_WIDTH, 10, QChar('0'));
+    fileName = dirName + "/" + filePrefix + QString("%1.bmp").arg(mTimerCounter, FILE_NUMBER_FIELD_WIDTH, 10, QChar('0'));
     result = mImage.save (fileName);
     if (!result)
     {
@@ -144,26 +150,17 @@ bool RGMapWidget::generateMovie(const QString &dirName, const QString &filePrefi
     }
   }
 
-  if (mVehicle) {
-    mVehicle->setStartPoint(mPathBackup[0]);
-    //Dummy call to initiate a correct start angle
-    //(otherwise it's 0 for the first few frames).
-    //We take a point further away to have a better start angle
-    mVehicle->getPixmap(0, mPathBackup[MIN_PATH_LENGTH - 1]);
-  }
 
-
-  for (i++; i < mPathBackup.count() && generationOK; i++)
+  for (mTimerCounter++; mTimerCounter < mRgr->getNumberFrame() && generationOK; mTimerCounter++)
   {
-    progress.setValue(i);
-    mPath.append(mPathBackup[i]);
+    progress.setValue(mTimerCounter);
     QPixmap newPixMap(mImage);
     QPainter painter(&newPixMap);
     painter.drawPixmap(0, 0, mImage);
     drawPath(painter);
-    if (i < mPathBackup.count() - 1 || !mGenerateBeginEndFrames)
-      drawVehicle(painter, i);
-    QString postFix = QString("%1.bmp").arg(i, FILE_NUMBER_FIELD_WIDTH, 10, QChar('0'));
+    //if (i < mRgr->getNumberFrame()) - 1 || !mGenerateBeginEndFrames)
+    //  drawVehicle(painter, i);
+    QString postFix = QString("%1.bmp").arg(mTimerCounter, FILE_NUMBER_FIELD_WIDTH, 10, QChar('0'));
     fileName = dirName + "/" + filePrefix + postFix;
     result = newPixMap.save (fileName);
     if (!result)
@@ -177,7 +174,7 @@ bool RGMapWidget::generateMovie(const QString &dirName, const QString &filePrefi
     }
     if (progress.wasCanceled()) break;
   }	
-  generationOK = (i == mPathBackup.count());
+  generationOK = (mTimerCounter == mRgr->getNumberFrame());
 
   emit busy(false);
 
@@ -193,8 +190,6 @@ void RGMapWidget::startDrawMode()
 {
   if (mInDrawMode) return;
   mInDrawMode = true;
-  mPath.clear();
-  mPathBackup.clear();
   while (!mUndoBuffer.empty())
     mUndoBuffer.pop();
   update();
@@ -208,21 +203,6 @@ void RGMapWidget::endDrawMode()
   if (!mInDrawMode) return;
   mInDrawMode = false;
   setCursor(Qt::ArrowCursor);
-  if (mRgr) delete mRgr;
-  if (RGSettings::getCurvedInterpolation())
-    mRgr = new RGRoute(mPath, RGSettings::getCurveRadius());
-  else
-    mRgr = new RGRoute(mPath);
-
-#ifdef _DEBUG
-  mRgr->dump();
-#endif
-  //TODO: Only use mPath while drawing, on all places where mPath is used
-  //      (e.g. paintEvent), use mRgr to request the raw or interpolated route.
-  if (mInterpolationMode)
-    mPath = mRgr->getInterpolatedRoute(mFPS * mRoutePlayTime);
-  else
-    mPath = mRgr->getRawRoute();
 
   emit drawModeChanged(false);
   update();
@@ -255,32 +235,26 @@ void RGMapWidget::setGenerateBeginEndFrames(bool val)
 void RGMapWidget::play()
 {
   //Disable draw mode automatically
-  if (mInterpolationMode && mInDrawMode)
+  //if (mInterpolationMode && mInDrawMode)
     endDrawMode();
 
   //Only usefull when route has more than MIN_PATH_LENGTH points
-  if (mPath.count() < MIN_PATH_LENGTH) return;
+  if (mRgr->stepCount() < MIN_PATH_LENGTH) return;
 
   emit busy(true);
-  if (mPlayTimer == NULL) {
-    mPlayTimer = new QTimer(this);
-    QObject::connect(mPlayTimer, SIGNAL(timeout()),
-                   this, SLOT(playTimerEvent()));
-  }
 
-  mSkip = 1;
-  mPathBackup = mPath;
-  mPath.clear();
-  mTimerCounter = 0;
-  if (mVehicle) {
+  /*if (mVehicle) {
     mVehicle->setStartPoint(mPathBackup[0]);
     //Dummy call to initiate a correct start angle
     //(otherwise it's 0 for the first few frames).
     //We take a point further away to have a better start angle
     mVehicle->getPixmap(0, mPathBackup[MIN_PATH_LENGTH - 1]);
-  }
+  }*/
+
 
   //Convert fps to interval time in ms
+
+  mTimerCounter = 0;
   mPlayTimer->start((1.0 / (double) mFPS) * 1000);
   update();
 }
@@ -290,7 +264,6 @@ void RGMapWidget::stop()
   if (mPlayTimer == NULL || !mPlayTimer->isActive()) return;
   //Finished
   mPlayTimer->stop();
-  mPath = mPathBackup;
   emit busy(false);
   update();
 }
@@ -301,101 +274,40 @@ void RGMapWidget::paintEvent ( QPaintEvent * event )
   QPainter painter(this);
   painter.drawPixmap(0, 0, mImage);
   drawPath(painter);
-  if (!mInDrawMode || (mPlayTimer != NULL && mPlayTimer->isActive()))
-    drawVehicle(painter, mPath.count());
-
-#ifdef RGROUTE_DEBUG
-  //TEST
-  if (mRgr)
-  {
-    QBrush brush(Qt::red, Qt::SolidPattern);
-    QPen pen(brush, 1, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin);
-    painter.setPen (pen);
-
-    const std::vector<RGRouteSegment *>& segments = mRgr->getSegments();
-    std::vector<RGRouteSegment *>::const_iterator it;
-    for (it = segments.begin(); it != segments.end(); it++)
-    {
-      RGLineSegment *rgline = dynamic_cast<RGLineSegment*>(*it);
-      if (rgline) {
-        pen.setColor(Qt::green);
-        painter.setPen(pen);
-        painter.drawLine ( rgline->getX1(), rgline->getY1(), rgline->getX2(), rgline->getY2());
-      } else {
-        pen.setColor(Qt::red);
-        painter.setPen(pen);
-        RGCircleSegment *rgcircle = dynamic_cast<RGCircleSegment*>(*it);
-        if (!rgcircle)
-        {
-          qDebug() << "WEIRD!!!!!!!!";
-          break;
-        }
-        painter.drawEllipse ( rgcircle->getXm() - rgcircle->getR(), rgcircle->getYm() - rgcircle->getR(),
-                              rgcircle->getR() * 2, rgcircle->getR() * 2) ;
-      }
-    }
-  }
-#endif
+  //if (!mInDrawMode || (mPlayTimer != NULL && mPlayTimer->isActive()))
 }
 
 void RGMapWidget::drawPath(QPainter &painter)
 {
+  QBrush brush(mPenColor, Qt::SolidPattern);
+  QPen pen(brush, mPenSize, mPenStyle, Qt::FlatCap, Qt::RoundJoin);
+  painter.setPen (pen);
   if (mInitPhase)
   {
     painter.setPen(mPenColor);
     painter.setFont(QFont("Arial", 30));
     painter.drawText(rect(), Qt::AlignCenter, applicationName);
   }
-  else if (mPath.count() > 1)
+  else if (!mInDrawMode)
   {
-    QPainterPath pPath;
-    QBrush brush(mPenColor, Qt::SolidPattern);
-    QPen pen(brush, mPenSize, mPenStyle, Qt::FlatCap, Qt::RoundJoin);
-    painter.setPen (pen);
-    QList<QPoint>::iterator i;
-    QPoint prev;
-    for (i = mPath.begin(); i != mPath.end(); ++i)
-    {
-      if (i == mPath.begin()) 
-        pPath.moveTo(*i);
-      else
-        pPath.lineTo(*i);
-    }
-    painter.drawPath(pPath);
+
+      QPainterPath path;
+      path =mRgr->getPathAt(mTimerCounter);
+      painter.drawPath(path);
+      if (mVehicle && path.elementCount()>1)
+      {
+          float angle;
+          angle=mRgr->getAngleAt(mTimerCounter);
+          QPixmap vehim = mVehicle->getPixmap(-angle);
+          //Draw vehicle with center on current point
+          int px = path.elementAt(path.elementCount()-1).x - vehim.size().width() / 2;
+          int py = path.elementAt(path.elementCount()-1).y - vehim.size().height() / 2;
+          painter.drawPixmap(px, py, vehim);
+      }
   }
-  else if (mInterpolationMode && mInDrawMode && mPath.count() == 1)
-  {
-    //Visualize start point
-    QBrush brush(mPenColor, Qt::SolidPattern);
-    QPen pen(brush, mPenSize, mPenStyle, Qt::FlatCap, Qt::RoundJoin);
-    painter.setPen (pen);
-    painter.drawPoint(mPath[0]);
-  }
+  else
+      painter.drawPath(mRgr->getPath());
 }
-
-//Draws vehicle on point idx in mPathBackup list
-void RGMapWidget::drawVehicle(QPainter &painter, int idx)
-{
-  if (mVehicle == NULL  || mPathBackup.count() == 0) return;
-
-  //Use mPathBackup, because mPath contains the path until now and
-  //mPathBackup contains all point
-  //(drawVehicle can be called with a to big index, in this case, just use the last point)
-  if (idx >= mPathBackup.count()) idx = mPathBackup.count() - 1;
-  QPoint point = mPathBackup[idx];
-
-  //Time between frames in ms.
-  int interval = (1.0 / (double) mFPS) * 1000;
-
-  QPixmap vehim = mVehicle->getPixmap(idx * interval, point);
-
-  //Draw vehicle with center on current point
-  int px = point.x() - vehim.size().width() / 2;
-  int py = point.y() - vehim.size().height() / 2;
-  painter.drawPixmap(px, py, vehim);
-
-}
-
 
 void RGMapWidget::resizeEvent ( QResizeEvent * event )
 {
@@ -409,26 +321,22 @@ void RGMapWidget::mousePressEvent ( QMouseEvent * event )
   if (mInDrawMode && event->button() == Qt::LeftButton)
   {
     qDebug() << "RGMapWidget::mousePressEvent -> " << event->pos();
-    mPath.append(event->pos());
-    mUndoBuffer.push(mPath.size() - 1);
+    mRgr->addPoint(QPoint(event->pos()));
   }
-
-  if (mInterpolationMode)
-    update();
+  update();
 }
 
 void RGMapWidget::mouseMoveEvent ( QMouseEvent * event )
 {
   //Since mouseTracking is off this event only occurs while the mouse button is pressed
 
-  qDebug() << QString::number(event->x()) + "," + QString::number(event->y());
-
-  //Only in raw mode (not interpolation) the user can drag the route line
-  if (mInDrawMode && !mInterpolationMode)
+  if (mInDrawMode)
   {
-    mPath.append(event->pos());
-    update();
-  }
+      qDebug() << QString::number(event->x()) + "," + QString::number(event->y());
+      mRgr->addPoint(QPoint(event->pos()));
+   }
+  update();
+
 }
 
 
@@ -436,16 +344,15 @@ void RGMapWidget::mouseReleaseEvent ( QMouseEvent * event )
 {
   if (mInDrawMode && event->button() == Qt::LeftButton)
   {
-    emit canGenerate(mPath.count() > 0);
+    emit canGenerate(mRgr->stepCount() > 1);
     update();
   }
 }
 
 void RGMapWidget::playTimerEvent()
 {
-  if (mTimerCounter < mPathBackup.count())
+  if (mTimerCounter < mRgr->getNumberFrame())
   {
-    mPath.append(mPathBackup[mTimerCounter]);
     ++mTimerCounter;
   }
   else
@@ -453,7 +360,8 @@ void RGMapWidget::playTimerEvent()
     //Finished
     mPlayTimer->stop();
     emit busy(false);
-  }
+    qDebug()<<"Last update of mTimerCounter"<<mTimerCounter ;
+   }
 
   update();
 }
@@ -467,12 +375,12 @@ void RGMapWidget::setBusy(bool _busy)
 
 void RGMapWidget::undo()
 {
-  if (mUndoBuffer.empty()) return;
+  /*if (mUndoBuffer.empty()) return;
   int idx = mUndoBuffer.top();
   while (idx < mPath.size())
     mPath.removeLast();
   mUndoBuffer.pop();
-  update();
+  update();*/
 }
 
 void RGMapWidget::redo()
@@ -484,38 +392,36 @@ void RGMapWidget::redo()
 void RGMapWidget::setFPS(int fps)
 {
   mFPS = fps;
-  if (mRgr && mInterpolationMode)
-    mPath = mRgr->getInterpolatedRoute(mFPS * mRoutePlayTime);
+  mRgr->setFPS(fps);
 }
 
 //Turns on/off interpolation mode (default is off)
 void RGMapWidget::setInterpolationMode(bool val)
 {
-  if (mInterpolationMode == val) return;
-  mInterpolationMode = val;
-  //The route should be drawn differently, so clear existing route
-  mPath.clear();
-  if (mRgr) {
-    delete mRgr;
-    mRgr = 0;
-  }
+
   RGSettings::setInterpolationMode(val);
+  mRgr->setPlayMode((int) val);
 }
 
 //The time that the total route animation takes (independent of the route length)
 void RGMapWidget::setRoutePlayTime(int time)
 {
-  if (mRoutePlayTime == time) return;
-  mRoutePlayTime = time;
-  if (mRgr && mInterpolationMode)
-    mPath = mRgr->getInterpolatedRoute(mFPS * mRoutePlayTime);
+  mRgr->setTotalTime(time);
   RGSettings::setRoutePlayTime(time);
 }
 
 
 int RGMapWidget::getNoFrames() const
 {
-  return mPath.size();
+  return mRgr->getNumberFrame();
+}
+
+void RGMapWidget::startNewRoute()
+{
+
+    mRgr->clear();
+    emit canGenerate(false);
+    update();
 }
 
 QColor RGMapWidget::getPenColor() const

@@ -48,6 +48,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   action_Quit = ui.action_Quit;
   actionSave_image = ui.actionSave_image;
   actionDraw_mode = ui.actionDraw_mode;
+  actionNew_route = ui.actionNew_route;
   action_Undo = ui.action_Undo;
   //action_Redo = ui.action_Redo;
   actionGenerate_map = ui.actionGenerate_map;
@@ -73,6 +74,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 
   actionSave_image->setEnabled(false);
   actionDraw_mode->setEnabled(false);
+  actionNew_route->setEnabled(false);
   action_Undo->setEnabled(false);
   //action_Redo->setEnabled(false);
   actionGenerate_map->setEnabled(false);
@@ -163,6 +165,7 @@ void RGMainWindow::on_actionOpen_image_triggered(bool checked)
       mRGMapWidget->loadImage(pm);
       actionSave_image->setEnabled(true);
       actionDraw_mode->setEnabled(true);
+      actionNew_route->setEnabled(true);
       RGSettings::setLastOpenDir(fileName);
     }
   }
@@ -235,6 +238,11 @@ void RGMainWindow::on_actionDraw_mode_triggered(bool checked)
 {
   if (checked) mRGMapWidget->startDrawMode();
   else         mRGMapWidget->endDrawMode();
+}
+
+void RGMainWindow::on_actionNew_route_triggered(bool)
+{
+  mRGMapWidget->startNewRoute();
 }
 
 void RGMainWindow::on_actionPlayback_triggered(bool checked)
@@ -498,6 +506,7 @@ void RGMainWindow::blockUserInteraction(bool busy)
   action_Quit->setEnabled(!busy);
   actionSave_image->setEnabled(!busy);
   actionDraw_mode->setEnabled(!busy);
+  actionNew_route->setEnabled(!busy);
   actionGenerate_map->setEnabled(!busy);
   actionPlayback->setEnabled(!busy);
   mRouteColorPB->setEnabled(!busy);

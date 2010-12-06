@@ -17,304 +17,184 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-//#define USE_SPLINE
 
 #include "RGRoute.h"
-#ifdef USE_SPLINE
-using namespace std;
-#include "spline.h"
-#endif
 #include <math.h>
 #include <QDebug>
 
-double RGLineSegment::getLength()
+
+const float Pi = 3.14159265f;
+
+
+RGRoute::RGRoute(QList<QPoint> listPoint)
+: mRawRoute(listPoint),mR(0),mTotalTime(10000),mPlayMode(0),mFPS(25)
 {
-  double dx = (double) mX2 - mX1;
-  double dy = (double) mY2 - mY1;
-  return fabs(sqrt((dx * dx) + (dy * dy)));
-}
+  mPath = createPath(listPoint);
 
-QPoint RGLineSegment::getPoint(double distance)
-{
-  QPoint calcPoint;
-  double alpha = atan2(double(mY2 - mY1), double(mX2 - mX1));
-  double dy = sin(alpha) * distance;
-  double dx = cos(alpha) * distance;
-  calcPoint.setX(mX1 + dx);
-  calcPoint.setY(mY1 + dy);
-
-  return calcPoint;
-}
-
-//#define CIRCLE_ALGO
-
-double RGCircleSegment::getLength()
-{
-  //TODO: Used in route interpolation, since getPoint is not implemented for
-  //      circle segments, yet, just return the length of a straight line,
-  //      later undef line below.
-#ifdef CIRCLE_ALGO
-  return fabs(mR * mPhi);
-#else
-  double dx = (double) mX2 - mX1;
-  double dy = (double) mY2 - mY1;
-  return fabs(sqrt((dx * dx) + (dy * dy)));
-#endif
-}
-
-QPoint RGCircleSegment::getPoint(double distance)
-{
-  QPoint calcPoint;
-
-#ifdef CIRCLE_ALGO
-  //double circum = 2 * M_PI * mR;
-  double alpha = -distance / mR;
-  double dxi = mX1 - mXm;
-  double dyi = mY1 - mYm;
-  double beta = atan2(dyi, dxi);
-  double gamma = beta + alpha;
-  
-  calcPoint.setX((int) cos(gamma) * mR);
-  calcPoint.setY((int) sin(gamma) * mR);
-#else
-  //TODO: Now equal to RGLineSegment::getPoint, but should be rewritten
-  //      to calculate coordinate on circle segment
-  double alpha = atan2(double(mY2 - mY1), double(mX2 - mX1));
-  double dy = sin(alpha) * distance;
-  double dx = cos(alpha) * distance;
-  calcPoint.setX(mX1 + dx);
-  calcPoint.setY(mY1 + dy);
-
-#endif //CIRCLE_ALGO
-
-  return calcPoint;
-}
-
-RGRoute::RGRoute(const QList<QPoint> &path, int R)
-: mR(R),
-  mRawRoute(path)
-{
-  if (path.count() < 3) return;
-  
-  int i;
-  int x1 = path[0].x();
-  int y1 = path[0].y();
-  int x2 = path[1].x();
-  int y2 = path[1].y();
-  int x3 = path[2].x();
-  int y3 = path[2].y();
-  for (i = 3; i < path.count(); i++)
-  {
-    addRouteSegments(x1, y1, x2, y2, x3, y3);
-    //Note x1, y2 will be overwritten by addRouteSegments
-    x2 = x3;
-    y2 = y3;
-    x3 = path[i].x();
-    y3 = path[i].y();
-  }
-  //One more and finish with a last line segment
-  addRouteSegments(x1, y1, x2, y2, x3, y3);
-  mRoute.push_back(new RGLineSegment(x1, y1, x3, y3));
-}
-
-RGRoute::RGRoute(const QList<QPoint> &path)
-: mR(0.0),
-  mRawRoute(path)
-{
-  if (path.count() < 2) return;
-
-  int x1 = path[0].x();
-  int y1 = path[0].y();
-  int x2 = path[1].x();
-  int y2 = path[1].y();
-
-  for (int i = 1; i < path.count(); i++)
-  {
-    mRoute.push_back(new RGLineSegment(x1, y1, x2, y2));
-    x1 = x2;
-    y1 = y2;
-    x2 = path[i].x();
-    y2 = path[i].y();
-  }
-  mRoute.push_back(new RGLineSegment(x1, y1, x2, y2));
 }
 
 RGRoute::~RGRoute()
 {
-  std::vector<RGRouteSegment *>::iterator i;
-  for (i = mRoute.begin(); i != mRoute.end(); ++i)
-  {
-    delete *i;
-  }
 
-  mRoute.clear();
 }
 
-
-QList<QPoint>
-RGRoute::getInterpolatedRoute(int npoints) const
+void RGRoute::addPoint(QPoint newPoint)
 {
-  QList<QPoint> out;
+    mRawRoute.append(newPoint);
+    mPath = createPath(mRawRoute);
+}
 
-//Test with spline lib
-#ifdef USE_SPLINE
+void RGRoute::clear()
+{
+    mRawRoute.clear();
+    mPath=createPath(mRawRoute);
+}
 
-  //Interpolate x over distance and y over distance and combine interpolated
-  double *xdata = new double[mRawRoute.size()];
-  double *ydata = new double[mRawRoute.size()];
-  double *tdata = new double[mRawRoute.size()];
-  for (int i = 0; i < mRawRoute.size(); i++)
-  {
-    xdata[i] = (double) mRawRoute[i].x();
-    ydata[i] = (double) mRawRoute[i].y();
-    if (i == 0)
+QPainterPath RGRoute::createPath(QList<QPoint> RawRoute)
+{
+    QPainterPath tmpPath;
+    //create path from data :
+    //make small segments out of big ones
+    //create curves for big angles
+    if (RawRoute.count()>=1)
+        tmpPath.moveTo(RawRoute.at(0));
+    for (int i=1;i<RawRoute.count();++i)
     {
-      tdata[i] = 0.0;
+        tmpPath.lineTo(RawRoute.at(i));
     }
+    return tmpPath;
+}
+
+QPainterPath RGRoute::getPath()
+{
+    return mPath;
+}
+
+QPainterPath RGRoute::getPathAt(int frame)
+{
+    if (mPlayMode==0) return getPathAtStep(frame);
+    if (mPlayMode==1) return getPathAtTime(frame*(1.0 / (double) mFPS) * 1000);
+}
+
+QPainterPath RGRoute::getPathAtStep(int step) //return Path at step (begin at 0)
+{
+    if (step==0 || mPath.elementCount()==0)
+        return QPainterPath();
+    if (step>=mPath.elementCount())
+        return mPath;
+    QPainterPath tmpPath;
+    tmpPath.moveTo(mPath.elementAt(0).x,mPath.elementAt(0).y);
+    for (int i=1;i<=step;++i)
+    {
+        tmpPath.lineTo(mPath.elementAt(i).x,mPath.elementAt(i).y);
+    }
+    return tmpPath;
+}
+
+QPainterPath RGRoute::getPathAtTime(int time) //return Path at time in ms
+{
+
+   QPointF newpointf;
+    qreal percent = (double) time / ((double) mTotalTime*1000);//mTotalTime should never be null
+    if(percent>1)
+        return mPath;
+    if (percent==0)
+        return QPainterPath();
+    newpointf = mPath.pointAtPercent(percent);
+    qreal newlength = percent*mPath.length();
+    //Now locate on which segment the length is obtained:
+    QPainterPath goodPath,testPath;
+    testPath.moveTo(mPath.elementAt(0).x,mPath.elementAt(0).y);
+    goodPath.moveTo(mPath.elementAt(0).x,mPath.elementAt(0).y);
+    for (int i=1;i<mPath.elementCount();++i)
+    {
+        testPath.lineTo(mPath.elementAt(i).x,mPath.elementAt(i).y);
+        if(testPath.length()>=newlength)
+        {
+            //the i element contains the point at time
+            goodPath.lineTo(newpointf);
+            break;
+        }
+        //if no break, the whole segment is added to the goodPath
+        goodPath.lineTo(mPath.elementAt(i).x,mPath.elementAt(i).y);
+    }
+    return goodPath;
+}
+
+float RGRoute::getAngleAt(int frame)
+{
+    if (mPlayMode==0) return getAngleAtStep(frame);
+    if (mPlayMode==1) return getAngleAtTime(frame*(1.0 / (double) mFPS) * 1000);
+}
+
+float RGRoute::getAngleAtTime(int time)
+{
+    qreal percent = (double) time / ((double) mTotalTime*1000);//mTotalTime should never be null
+    qreal angle=mPath.angleAtPercent(percent);
+    return angle;
+
+}
+
+float RGRoute::getAngleAtStep(int step)
+{
+    //return angle of the previous segment
+    int realstep=step;
+    if (step>=mPath.elementCount())
+        realstep=mPath.elementCount()-1;
+    if(step==0)//return angle of the first element
+        realstep=1;
+    float dx,dy;
+    dy=mPath.elementAt(realstep).y- mPath.elementAt(realstep-1).y;
+    dx=mPath.elementAt(realstep).x- mPath.elementAt(realstep-1).x;
+    if(dx==0 && dy>0)
+        return (float) 270;
+    if(dx==0 && dy<0)
+        return (float) 90;
+    float angle = ((atanf(dy /dx) / Pi) * 180.0);
+    if(dx>0 && dy>=0)
+        angle=-1*angle;
+    else if (dx<0 && dy>=0)
+        angle=180-angle;
+    else if (dx<0 && dy<=0)
+        angle=180-angle;
+    else if (dx>0 && dy<=0)
+        angle=-1*angle;
     else
-    {
-      //Add distance
-      double dx = xdata[i] - xdata[i - 1];
-      double dy = ydata[i] - ydata[i - 1];
-      tdata[i] = tdata[i - 1] + sqrt((dx * dx) + (dy * dy));
-    }
-  }
-
-  //Total distance interpolated over npoints (total distance is in last ddata point)
-  double beta1 = 10.0;
-  double beta2 = 10.0;
-  double ddistance = tdata[mRawRoute.size() - 1] / npoints;
-  double tval = 0.0;
-  for (int i = 0; i < npoints; i++)
-  {
-    //int x = (int) spline_b_val (mRawRoute.size(), tdata, xdata, tval);
-    //int y = (int) spline_b_val (mRawRoute.size(), tdata, ydata, tval);
-    int x = (int) spline_beta_val (beta1, beta2, mRawRoute.size(), tdata, xdata, tval);
-    int y = (int) spline_beta_val (beta1, beta2, mRawRoute.size(), tdata, ydata, tval);
-    out.append(QPoint(x, y));
-    tval += ddistance;
-  }
-
-  delete [] xdata;
-  delete [] ydata;
-  delete [] tdata;
-#else
-
-  if (mRoute.size() == 0) return out;
-
-  double totalLength = 0.0;
-  std::vector<RGRouteSegment *>::const_iterator i;
-  for (i = mRoute.begin(); i != mRoute.end(); ++i)
-  {
-    totalLength += (*i)->getLength();
-  }
-  //Distance between each interpolated point
-  double dDist = totalLength / npoints;
-  double idist = dDist; //Start with dDist
-  QPoint curPoint(mRoute[0]->getX1(), mRoute[0]->getY1());
-  out.push_back(curPoint);
-  for (unsigned int j = 0; j < mRoute.size(); ++j)
-  {
-    while (idist < mRoute[j]->getLength())
-    {
-      curPoint = mRoute[j]->getPoint(idist);
-      out.push_back(curPoint);
-      idist += dDist;
-    }
-    //Now calculate the remaining distance on next segment
-    idist = idist - mRoute[j]->getLength();
-  }
-#endif
-
-
-  return out;
+        angle = 0;
+    return angle;
 }
 
-
-
-//Adds new line/circle segment and overwites x1, y1 with the new values
-//for the next iteration.
-void
-RGRoute::addRouteSegments(int &x1, int &y1, int x2, int y2, int x3, int y3)
+void RGRoute::setTotalTime(int time)//set mTotaltime in ms
 {
-  double dx1, dy1, dx2, dy2;
-  double d1, d2, d3, d4;
-  double alpha, phi1, phi2, phi3, phi4;
-  double l, xm, ym;
-  double xi, yi, xj, yj; //New intermediate points
-  //Start with assumption of angle to the right
-  bool rightAngle = true;
- 
-  while (true) {
-    dx1 = (double) x2 - x1;
-    dy1 = (double) y2 - y1;
-    d1 = sqrt((dx1 * dx1) + (dy1 * dy1));
-    dx2 = (double) x3 - x2;
-    dy2 = (double) y3 - y2;
-    d2 = sqrt((dx2 * dx2) + (dy2 * dy2));
-    phi1 = atan2(dy1, dx1);
-    phi2 = atan2(dy2, dx2);
-    alpha = (phi1 - phi2) / 2.0;
-    d4 = mR * tan(alpha);
-
-    if (d4 > 0.0 || !rightAngle) {
-      //Angle to the right, ok
-      break;
-    } else {
-      //Angle to the left, swap points so we make it a right angle
-      rightAngle = false;
-      int tmpx3 = x3;
-      int tmpy3 = y3;
-      x3 = x1;
-      y3 = y1;
-      x1 = tmpx3;
-      y1 = tmpy3;
-    }
-  }
-  d3 = d1 - d4;
-  phi3 = atan2(mR, d3);
-  phi4 = phi1 - phi3;
-  l = sqrt((d3 * d3) + (mR * mR));
-  xm = l * cos(phi4) + x1;
-  ym = l * sin(phi4) + y1;
-  xi = x1 + cos(phi1) * d3;
-  yi = y1 + sin(phi1) * d3;
-  xj = x2 + cos(phi2) * d4;
-  yj = y2 + sin(phi2) * d4;
-
-  if (!rightAngle) {
-    //Swap back points
-    int tmpx3 = x3;
-    int tmpy3 = y3;
-    x3 = x1;
-    y3 = y1;
-    x1 = tmpx3;
-    y1 = tmpy3;
-
-    double tmpxj = xj;
-    double tmpyj = yj;
-    xj = xi;
-    yj = yi;
-    xi = tmpxj;
-    yi = tmpyj;
-  }
-  
-  //Add line/circle segment
-  mRoute.push_back(new RGLineSegment(x1, y1, xi, yi));
-  mRoute.push_back(new RGCircleSegment(xi, yi, xj, yj, xm, ym, 2*alpha, mR));
-
-  //The next segment will now start at xj, yj, instead of x2, y2, so overwrite.
-  x1 = xj;
-  y1 = yj;
+   if (time!=0)
+       mTotalTime=time;
+   //what to do if time=0 ?
 }
 
-void
-RGRoute::dump()
+void RGRoute::setPlayMode(int mode)
 {
-  std::vector<RGRouteSegment *>::iterator i;
-  qDebug() << "RGRoute::dump()=======================================";
-  for (i = mRoute.begin(); i != mRoute.end(); ++i)
-  {
-    qDebug() << (*i)->mX1 << ", " << (*i)->mY1 << " --> " << (*i)->mX2 << ", " << (*i)->mY2;
-  }
+    if (mode>=0 && mode<3)
+        mPlayMode=mode;
+    else
+        mPlayMode=0;
+}
+
+void RGRoute::setFPS(int FPS)
+{
+    mFPS=FPS;
+}
+
+int RGRoute::getNumberFrame()
+{
+    //stepbystep
+    if (mPlayMode==0) return mPath.elementCount();
+    //Interpolation TotalTime set
+    if (mPlayMode==1) return mFPS * mTotalTime;
+    //Interpolation Speed set
+    //if (mPlayMode==2) return
+}
+
+int RGRoute::stepCount()
+{
+    return mPath.elementCount();
 }

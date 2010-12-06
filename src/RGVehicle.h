@@ -79,7 +79,7 @@ public:
 	*   to      = coordinates of to point
     */
   QPixmap getPixmap(int time, const QPoint &to);
-
+  QPixmap getPixmap(float degrees);
   /**
    *Just returns the first pixmap without angle.
    */

@@ -46,16 +46,16 @@ public:
 	QPixmap getImage();
 	QPixmap getVehiclePixmap();
 	bool    generateMovie(const QString &dirName, const QString &filePrefix, QStringList &generatedBMPs);
-	int     getMapSize() const;  //Returns number of bytes that the map takes 
-	int     getNoFrames() const; //Returns number of frames in the route
-	QColor  getPenColor() const;
-	
-	QSize sizeHint () const;
+        int     getMapSize() const;  //Returns number of bytes that the map takes
+        int     getNoFrames() const; //Returns number of frames in the route
+        void    startNewRoute();
+        QColor  getPenColor() const;
+        QSize   sizeHint () const;
 
 signals:
 	void busy(bool);
 	void canGenerate(bool);
-  void drawModeChanged(bool activated);
+        void drawModeChanged(bool activated);
 
 public slots:
 	void loadImage(const QPixmap &pm);
@@ -69,16 +69,16 @@ public slots:
 	void play();
 	void stop();
 	void setBusy(bool);
-  void undo();
-  void redo();
+        void undo();
+        void redo();
   
-  //Change frame rate of generated movie
-  void setFPS(int fps);
-  //Turns on/off interpolation mode (default is off)
-  void setInterpolationMode(bool val);
-  //The time that the total route animation takes (independent of the route length)
-  //Only used in interpolation mode!
-  void setRoutePlayTime(int time);
+        //Change frame rate of generated movie
+        void setFPS(int fps);
+        //Turns on/off interpolation mode (default is off)
+        void setInterpolationMode(bool val);
+        //The time that the total route animation takes (independent of the route length)
+        //Only used in interpolation mode!
+         void setRoutePlayTime(int time);
 
 protected:
 	void paintEvent ( QPaintEvent * event );
@@ -92,8 +92,7 @@ private slots:
 	void playTimerEvent();
 
 private:
-	void drawPath(QPainter &painter);
-  void drawVehicle(QPainter &painter, int idx);
+        void drawPath(QPainter &painter);
 
 private:
 	//The image on which we paint
@@ -102,31 +101,26 @@ private:
 	//The icon that's drawn at the end of the path (e.g. train, bike)
 	RGVehicle    *mVehicle;
 
-	//The path itself
-	QList<QPoint>    mPath;
-  std::stack<int>  mUndoBuffer;
-  RGRoute         *mRgr;
+        //The path itself
+        std::stack<int>  mUndoBuffer;
+        RGRoute         *mRgr;
 
 	//Color of the route
 	QColor        mPenColor;
 
-  //Line style of the route
-  Qt::PenStyle  mPenStyle;
+        //Line style of the route
+        Qt::PenStyle  mPenStyle;
 
 	//Some other settings
 	bool          mInDrawMode;
 	bool          mInitPhase;
-	bool          mGenerateBeginEndFrames;
-  bool          mInterpolationMode;
+        bool          mGenerateBeginEndFrames;
 	int           mPenSize;
-  int           mFPS;      //Frames per second (directly related to mInterval)
-  int           mRoutePlayTime; //(in seconds)
+        int           mFPS;      //Frames per second (directly related to mInterval)
 
 	//We use this for preview and generating movie only
-	QTimer        *mPlayTimer;
-	QList<QPoint> mPathBackup; 
-	int           mSkip;
-	int           mTimerCounter;
+        QTimer        *mPlayTimer;
+        int           mTimerCounter;
 
 };
 

@@ -200,6 +200,14 @@ QPixmap RGVehicle::getPixmap(int time, const QPoint &to)
   return mCachedPm;
 }
 
+QPixmap RGVehicle::getPixmap(float degrees)
+{
+    if (mImages.size() > 0)
+      return QPixmap::fromImage(rotateImage(mImages[0],(int)degrees));
+    else
+      return QPixmap();
+}
+
 QPixmap RGVehicle::getPixmap()
 {
   if (mImages.size() > 0)

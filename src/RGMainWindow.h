@@ -51,6 +51,7 @@ private slots:
   void on_actionPreferences_triggered(bool );
   void on_actionImport_Google_Map_triggered(bool );
   void on_actionDraw_mode_triggered(bool );
+  void on_actionNew_route_triggered(bool );
   void on_actionGenerate_map_triggered(bool );
   void on_actionPlayback_triggered(bool );
   void on_actionStop_triggered(bool );
@@ -85,6 +86,7 @@ private:
   QAction *action_Quit;
   QAction *actionSave_image;
   QAction *actionDraw_mode;
+  QAction *actionNew_route;
   QAction *action_Undo;
   QAction *action_Redo;
   QAction *actionGenerate_map;

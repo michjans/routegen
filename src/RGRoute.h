@@ -21,100 +21,42 @@
 #define RG_ROUTE_H
 
 
-#include <vector>
 #include <QList>
 #include <QPoint>
-
-class RGRouteSegment
-{
-friend class RGRoute; //TODO: Remove (only used by dump)
-
-public:
-  virtual double getLength() = 0;
-
-  //Returns point with distance in pixels from start point
-  virtual QPoint getPoint(double distance) = 0; 
-
-  int getX1() const { return mX1; } 
-  int getY1() const { return mY1; }
-  int getX2() const { return mX2; }
-  int getY2() const { return mY2; }
-
-
-protected:
-  RGRouteSegment(int x1, int y1, int x2, int y2)
-    : mX1(x1), mY1(y1), mX2(x2), mY2(y2) 
-  {}
-  
-  int mX1, mX2, mY1, mY2;
-};
-
-class RGLineSegment : public RGRouteSegment
-{
-friend class RGRoute;
-
-public:
-  RGLineSegment(int x1, int y1, int x2, int y2)
-    : RGRouteSegment(x1, y1, x2, y2)
-  {}
-
-  double getLength();
-  QPoint getPoint(double distance); 
-
-};
-
-class RGCircleSegment : public RGRouteSegment
-{
-friend class RGRoute;
-
-public:
-  RGCircleSegment(int x1, int y1, int x2, int y2, int xm, int ym, double phi, int r)
-    : RGRouteSegment(x1, y1, x2, y2),
-      mXm(xm), mYm(ym), mPhi(phi), mR(r)
-  {}
-
-  double getLength();
-  QPoint getPoint(double distance); 
-
-  int getXm() const { return mXm; }
-  int getYm() const { return mYm; }
-  int getR()  const { return mR; }
-
-private:
-  int mXm, mYm, mR;
-  double mPhi; //Angle of circle segment
-
-};
+#include <QPainterPath>
 
 class RGRoute
 {
 public:
-  //Creates a route with line and circles segments, calculated from passed path
-  RGRoute(const QList<QPoint> &path, int R);
-
-  //Creates a route with only line segments
-  //Introduced this constructor to not add circle segments anymore, because
-  //the interpolation algorithm doesn't work yet (see CIRCLE_ALGO define in RGRoute.cpp)
-  //Leaving circle segments in results in 'shortcut' lines
-  RGRoute(const QList<QPoint> &path);
+  RGRoute(QList<QPoint> listpoint);
 
   ~RGRoute();
 
-  //Returns the route interpolated in npoints
-  QList<QPoint> getInterpolatedRoute(int npoints) const;
-  const QList<QPoint> &getRawRoute() const {return mRawRoute;}
-
-  const std::vector<RGRouteSegment *>& getSegments() const { return mRoute; }
-
-  void dump();
+  void addPoint(QPoint newPoint);
+  void clear();
+  QPainterPath getPath();
+  QPainterPath getPathAt(int frame);
+  float getAngleAt(int frame);
+  int getNumberFrame();
+  void setTotalTime(int time);
+  void setPlayMode(int playMode);
+  int stepCount();
+  void setFPS(int FPS);
 
 private:
-  void addRouteSegments(int &x1, int &y1, int x2, int y2, int x3, int y3);
+  QPainterPath createPath(QList<QPoint> RawPath);
+  QPainterPath getPathAtStep(int step);
+  QPainterPath getPathAtTime(int time);
+  float getAngleAtTime(int time);
+  float getAngleAtStep(int step);
 
 private:
-  std::vector<RGRouteSegment *> mRoute;
-  QList<QPoint>                 mRawRoute;
-  int                           mR; //Radius to use for circle segments
+  QList<QPoint>     mRawRoute;
+  QPainterPath      mPath; //Processed final path
+  int               mR; //Radius to use for circle segments
+  int               mTotalTime; //total time for interpolation
+  int               mPlayMode; //set the mode for the video generation(0=stepbystep,1=TotalTimeSet,2=speedSet)
+  int               mFPS;
 };
 
 
