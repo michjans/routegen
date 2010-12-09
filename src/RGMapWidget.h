@@ -49,7 +49,6 @@ public:
         int     getMapSize() const;  //Returns number of bytes that the map takes
         int     getNoFrames() const; //Returns number of frames in the route
         void    startNewRoute();
-        QColor  getPenColor() const;
         QSize   sizeHint () const;
 
 signals:
@@ -61,10 +60,8 @@ public slots:
 	void loadImage(const QPixmap &pm);
         void setVehicle(const QString &fileName, bool mirror, int startAngle, int size);
 	void startDrawMode();
-	void endDrawMode();
-	void setPenSize(int);
-	void setPenColor(const QColor &col);
-	void setPenStyle(const Qt::PenStyle style);
+        void endDrawMode();
+        void setPen(const QColor &color,int size,Qt::PenStyle style);
 	void setGenerateBeginEndFrames(bool);
 	void play();
 	void stop();
@@ -83,7 +80,6 @@ public slots:
 protected:
 	void paintEvent ( QPaintEvent * event );
 	void resizeEvent ( QResizeEvent * event );
-
 	void mousePressEvent ( QMouseEvent * event ) ;
 	void mouseMoveEvent ( QMouseEvent * event ) ;
 	void mouseReleaseEvent ( QMouseEvent * event ) ;
@@ -105,17 +101,10 @@ private:
         std::stack<int>  mUndoBuffer;
         RGRoute         *mRgr;
 
-	//Color of the route
-	QColor        mPenColor;
-
-        //Line style of the route
-        Qt::PenStyle  mPenStyle;
-
 	//Some other settings
 	bool          mInDrawMode;
 	bool          mInitPhase;
         bool          mGenerateBeginEndFrames;
-	int           mPenSize;
         int           mFPS;      //Frames per second (directly related to mInterval)
 
 	//We use this for preview and generating movie only

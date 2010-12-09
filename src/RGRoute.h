@@ -23,7 +23,10 @@
 
 #include <QList>
 #include <QPoint>
+#include <QPainter>
 #include <QPainterPath>
+#include <QPen>
+#include <QColor>
 
 class RGRoute
 {
@@ -34,14 +37,16 @@ public:
 
   void addPoint(QPoint newPoint);
   void clear();
-  QPainterPath getPath();
-  QPainterPath getPathAt(int frame);
+  void drawPath(QPainter &painter);
+  void drawPathAt(int frame,QPainter &painter);
   float getAngleAt(int frame);
   int getNumberFrame();
+  int stepCount();
   void setTotalTime(int time);
   void setPlayMode(int playMode);
-  int stepCount();
   void setFPS(int FPS);
+  QPen getPen();
+  void setPen(const QColor &color,int size,Qt::PenStyle style);
 
 private:
   QPainterPath createPath(QList<QPoint> RawPath);
@@ -57,6 +62,10 @@ private:
   int               mTotalTime; //total time for interpolation
   int               mPlayMode; //set the mode for the video generation(0=stepbystep,1=TotalTimeSet,2=speedSet)
   int               mFPS;
+  //Pen
+  QColor            mPenColor;
+  Qt::PenStyle      mPenStyle;
+  int               mPenSize;
 };
 
 

@@ -78,6 +78,7 @@ private slots:
 
 private:
   void  updateVehicleIcon(int idx);
+  void  setPen();
   QIcon createIconForStyle(Qt::PenStyle);
 
   RGMapWidget *mRGMapWidget;
@@ -95,6 +96,7 @@ private:
   QComboBox *mIconCB;
   QPushButton *mRouteColorPB;
   QComboBox *mLineStyleCB;
+  QSpinBox *mPenSizeSB;
   QCheckBox *mMirrorCB;
   QSpinBox  *mAngleSB;
   QSpinBox  *mSizeSB;

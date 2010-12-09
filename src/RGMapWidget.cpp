@@ -44,8 +44,6 @@ RGMapWidget::RGMapWidget(QWidget *parent)
  mVehicle(NULL),
  mRgr(NULL),
  mFPS(25),
- mPenColor(Qt::blue),
- mPenStyle(Qt::SolidLine),
  mInDrawMode(false),
  mInitPhase(true),
  mGenerateBeginEndFrames(false),
@@ -208,24 +206,11 @@ void RGMapWidget::endDrawMode()
   update();
 }
 
-void RGMapWidget::setPenSize(int size)
+void RGMapWidget::setPen(const QColor &color,int size,Qt::PenStyle style)
 {
-  mPenSize = size;
-  update();
+    mRgr->setPen(color,size,style);
+    update();
 }
-
-void RGMapWidget::setPenStyle(const Qt::PenStyle style)
-{
-  mPenStyle = style;
-  update();
-}
-
-void RGMapWidget::setPenColor(const QColor &col)
-{
-  mPenColor = col;
-  update();
-}
-
 
 void RGMapWidget::setGenerateBeginEndFrames(bool val)
 {
@@ -235,24 +220,12 @@ void RGMapWidget::setGenerateBeginEndFrames(bool val)
 void RGMapWidget::play()
 {
   //Disable draw mode automatically
-  //if (mInterpolationMode && mInDrawMode)
     endDrawMode();
 
   //Only usefull when route has more than MIN_PATH_LENGTH points
   if (mRgr->stepCount() < MIN_PATH_LENGTH) return;
 
   emit busy(true);
-
-  /*if (mVehicle) {
-    mVehicle->setStartPoint(mPathBackup[0]);
-    //Dummy call to initiate a correct start angle
-    //(otherwise it's 0 for the first few frames).
-    //We take a point further away to have a better start angle
-    mVehicle->getPixmap(0, mPathBackup[MIN_PATH_LENGTH - 1]);
-  }*/
-
-
-  //Convert fps to interval time in ms
 
   mTimerCounter = 0;
   mPlayTimer->start((1.0 / (double) mFPS) * 1000);
@@ -274,27 +247,24 @@ void RGMapWidget::paintEvent ( QPaintEvent * event )
   QPainter painter(this);
   painter.drawPixmap(0, 0, mImage);
   drawPath(painter);
-  //if (!mInDrawMode || (mPlayTimer != NULL && mPlayTimer->isActive()))
 }
 
 void RGMapWidget::drawPath(QPainter &painter)
 {
-  QBrush brush(mPenColor, Qt::SolidPattern);
-  QPen pen(brush, mPenSize, mPenStyle, Qt::FlatCap, Qt::RoundJoin);
-  painter.setPen (pen);
+  painter.setPen (mRgr->getPen());
   if (mInitPhase)
   {
-    painter.setPen(mPenColor);
     painter.setFont(QFont("Arial", 30));
     painter.drawText(rect(), Qt::AlignCenter, applicationName);
   }
   else if (!mInDrawMode)
   {
 
-      QPainterPath path;
-      path =mRgr->getPathAt(mTimerCounter);
-      painter.drawPath(path);
-      if (mVehicle && path.elementCount()>1)
+      //QPainterPath path;
+      //path =mRgr->getPathAt(mTimerCounter);
+      //painter.drawPath(path);
+      mRgr->drawPathAt(mTimerCounter,painter);
+      /*if (mVehicle && mRgr->stepCount()>1)
       {
           float angle;
           angle=mRgr->getAngleAt(mTimerCounter);
@@ -303,10 +273,10 @@ void RGMapWidget::drawPath(QPainter &painter)
           int px = path.elementAt(path.elementCount()-1).x - vehim.size().width() / 2;
           int py = path.elementAt(path.elementCount()-1).y - vehim.size().height() / 2;
           painter.drawPixmap(px, py, vehim);
-      }
+      }*/
   }
   else
-      painter.drawPath(mRgr->getPath());
+      mRgr->drawPath(painter);//painter.drawPath(mRgr->getPath());
 }
 
 void RGMapWidget::resizeEvent ( QResizeEvent * event )
@@ -422,11 +392,6 @@ void RGMapWidget::startNewRoute()
     mRgr->clear();
     emit canGenerate(false);
     update();
-}
-
-QColor RGMapWidget::getPenColor() const
-{
-  return mPenColor;
 }
 
 int RGMapWidget::getMapSize() const

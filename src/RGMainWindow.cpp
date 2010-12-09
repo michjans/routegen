@@ -58,6 +58,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mMirrorCB = ui.mirrorIconCB;
   mAngleSB = ui.angleSB;
   mSizeSB = ui.sizeSB;
+  mPenSizeSB = ui.penSizeSB;
   mRouteColorPB = ui.routeColorPB;
   mLineStyleCB = ui.lineStyleCB;
   mVehiclePreviewLabel = ui.vehiclePreviewLabel;
@@ -126,7 +127,6 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 
   //Enum mapping starts counting at 1 (see Qt::PenStyle definition)
   mLineStyleCB->setCurrentIndex(penStyle - 1);
-  mRGMapWidget->setPenStyle(penStyle);
 
   mRouteColorPB->setAutoFillBackground(true);
   mRouteColorPB->setFlat(true);
@@ -136,11 +136,10 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   QPalette pal = mRouteColorPB->palette();
   pal.setColor(QPalette::Button, penCol);
   mRouteColorPB->setPalette(pal);
-  mRGMapWidget->setPenColor(penCol);
 
   int penSize = RGSettings::getPenSize();
-  ui.penSizeSB->setValue(penSize);
-  mRGMapWidget->setPenSize(penSize);
+  mPenSizeSB->setValue(penSize);
+  setPen();
 
   mInterpolationCB->setChecked(RGSettings::getInterpolationMode());
   mRouteTimeSB->setValue(RGSettings::getRoutePlayTime());
@@ -418,33 +417,33 @@ void RGMainWindow::on_iconCB_activated(int index)
 
 void RGMainWindow::on_routeColorPB_clicked(bool)
 {
-  QColor newCol = QColorDialog::getColor ( mRGMapWidget->getPenColor(), this );
-  if (newCol.isValid()) {
-    mRGMapWidget->setPenColor(newCol);
     QPalette pal = mRouteColorPB->palette();
-    pal.setColor(QPalette::Button, mRGMapWidget->getPenColor());
-    mRouteColorPB->setPalette(pal);
+    QColor newCol = QColorDialog::getColor ( pal.color(QPalette::Button), this );
+    if (newCol.isValid()) {
+      QPalette pal = mRouteColorPB->palette();
+      pal.setColor(QPalette::Button, newCol);
+      mRouteColorPB->setPalette(pal);
 
-    //Store
-    RGSettings::setPenColor(newCol);
-  }
+      //Store
+      RGSettings::setPenColor(newCol);
+    }
+    setPen();
 }
 
 void RGMainWindow::on_penSizeSB_valueChanged(int size)
 {
-  mRGMapWidget->setPenSize(size);
+
   //Store
   RGSettings::setPenSize(size);
+  setPen();
 }
 
 void RGMainWindow::on_lineStyleCB_activated(int idx)
 {
   QVariant data = mLineStyleCB->itemData(idx);
-
   Qt::PenStyle style = (Qt::PenStyle) data.toInt();
-
-  mRGMapWidget->setPenStyle(style);
   RGSettings::setPenStyle(style);
+  setPen();
 }
 
 void RGMainWindow::on_angleSB_valueChanged(int angle)
@@ -633,3 +632,12 @@ QIcon RGMainWindow::createIconForStyle(Qt::PenStyle style)
   return QIcon(pm);
 }
 
+void RGMainWindow::setPen()
+{
+    QPalette pal = mRouteColorPB->palette();
+    QColor color = pal.color(QPalette::Button);
+    int size = mPenSizeSB->value();
+    QVariant data = mLineStyleCB->itemData(mLineStyleCB->currentIndex());
+    Qt::PenStyle style = (Qt::PenStyle) data.toInt();
+    mRGMapWidget->setPen(color,size,style);
+}

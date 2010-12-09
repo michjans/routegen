@@ -27,7 +27,14 @@ const float Pi = 3.14159265f;
 
 
 RGRoute::RGRoute(QList<QPoint> listPoint)
-: mRawRoute(listPoint),mR(0),mTotalTime(10000),mPlayMode(0),mFPS(25)
+: mRawRoute(listPoint),
+mR(0),
+mTotalTime(10000),
+mPlayMode(0),
+mFPS(25),
+mPenColor(Qt::blue),
+mPenSize(5),
+mPenStyle(Qt::SolidLine)
 {
   mPath = createPath(listPoint);
 
@@ -65,15 +72,15 @@ QPainterPath RGRoute::createPath(QList<QPoint> RawRoute)
     return tmpPath;
 }
 
-QPainterPath RGRoute::getPath()
+void RGRoute::drawPath(QPainter &painter)
 {
-    return mPath;
+    painter.drawPath(mPath);
 }
 
-QPainterPath RGRoute::getPathAt(int frame)
+void RGRoute::drawPathAt(int frame,QPainter &painter)
 {
-    if (mPlayMode==0) return getPathAtStep(frame);
-    if (mPlayMode==1) return getPathAtTime(frame*(1.0 / (double) mFPS) * 1000);
+    if (mPlayMode==0) painter.drawPath(getPathAtStep(frame));
+    if (mPlayMode==1) painter.drawPath( getPathAtTime(frame*(1.0 / (double) mFPS) * 1000));
 }
 
 QPainterPath RGRoute::getPathAtStep(int step) //return Path at step (begin at 0)
@@ -197,4 +204,17 @@ int RGRoute::getNumberFrame()
 int RGRoute::stepCount()
 {
     return mPath.elementCount();
+}
+
+
+QPen RGRoute::getPen()
+{
+    return QPen(QBrush(mPenColor, Qt::SolidPattern), mPenSize, mPenStyle, Qt::FlatCap, Qt::RoundJoin);
+}
+
+void RGRoute::setPen(const QColor &color,int size,Qt::PenStyle style)
+{
+    mPenColor=color;
+    mPenStyle=style;
+    mPenSize=size;
 }
