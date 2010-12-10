@@ -25,6 +25,7 @@
 #include "RGSettings.h"
 #include "RGSettingsDialog.h"
 #include "RGGoogleMap.h"
+#include "RGVehicleDialog.h"
 
 #include "ui_routegen.h"
 
@@ -33,10 +34,7 @@ extern const QString applicationName;
 
 RGMainWindow::RGMainWindow(QWidget *parent)
   :QMainWindow(parent),
-  mDrawMirroredIcon(false),
-  mStartAngle(0),
-  mSizeVehicle(0),
-  mIgnoreSignals(false)
+  mVehicle("")
 {
   
   setWindowIcon (QIcon(":/icons/icons/mapgen.png")); 
@@ -54,14 +52,10 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionGenerate_map = ui.actionGenerate_map;
   actionPlayback = ui.actionPlayback;
   actionStop = ui.actionStop;
-  mIconCB = ui.iconCB;
-  mMirrorCB = ui.mirrorIconCB;
-  mAngleSB = ui.angleSB;
-  mSizeSB = ui.sizeSB;
   mPenSizeSB = ui.penSizeSB;
   mRouteColorPB = ui.routeColorPB;
   mLineStyleCB = ui.lineStyleCB;
-  mVehiclePreviewLabel = ui.vehiclePreviewLabel;
+  mVehiclePreviewPB = ui.vehiclePreviewPB;
   mInterpolationCB = ui.interpolationCB;
   mRouteTimeSB = ui.routeTimeSB;
 
@@ -81,9 +75,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionGenerate_map->setEnabled(false);
   actionPlayback->setEnabled(false);
   actionStop->setEnabled(false);
-  mMirrorCB->setEnabled(false);
-  mAngleSB->setEnabled(false);
-  mSizeSB->setEnabled(false);
+  mVehiclePreviewPB->setEnabled(true);
 
 
 
@@ -98,21 +90,6 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 
   QObject::connect(mRGMapWidget, SIGNAL(drawModeChanged(bool)),
           this, SLOT(handleDrawModeChanged(bool)));
-
-  mIconCB->addItem("None", QString());
-
-  //Create vehicle icons from icons in vehicle dir
-  QDir vehicleDir = QDir::currentPath() + "/vehicles";
-  QStringList filters;
-    filters << "*.bmp" << "*.gif" << "*.png" << "*.jpg" << "*.tif";
-    vehicleDir.setNameFilters(filters); 
-  QFileInfoList vehicles = vehicleDir.entryInfoList();
-  for (QFileInfoList::iterator it = vehicles.begin(); it != vehicles.end(); it++)
-  {
-    QIcon veh = QIcon(it->absoluteFilePath());
-    if (veh.isNull()) continue;
-    mIconCB->addItem(veh, it->baseName(), it->absoluteFilePath());
-  }
 
   Qt::PenStyle penStyle = (Qt::PenStyle) RGSettings::getPenStyle();
 
@@ -385,36 +362,6 @@ void RGMainWindow::on_action_Quit_triggered(bool checked)
   qApp->quit();
 }
 
-void RGMainWindow::on_iconCB_activated(int index)
-{
-  mMirrorCB->setEnabled(index != 0);
-  mAngleSB->setEnabled(index != 0);
-  mSizeSB->setEnabled(index != 0);
-
-  mIgnoreSignals = true;
-
-  //Restore settings for current vehicle
-  if (index > 0) {
-    mDrawMirroredIcon = RGSettings::getVehicleMirrored(mIconCB->currentText());
-    mStartAngle = RGSettings::getVehicleAngle(mIconCB->currentText());
-    mSizeVehicle = RGSettings::getVehicleSize(mIconCB->currentText());
-    mMirrorCB->setChecked(mDrawMirroredIcon);
-    mAngleSB->setValue(mStartAngle);
-    mSizeSB->setValue(mSizeVehicle);
-
-  } else {
-    mDrawMirroredIcon = false;
-    mStartAngle = 0;
-    mMirrorCB->setChecked(false);
-    mAngleSB->setValue(0);
-    mSizeSB->setValue(0);
-    mSizeVehicle = 0;
-    }
-  updateVehicleIcon(index);
-
-  mIgnoreSignals = false;
-}
-
 void RGMainWindow::on_routeColorPB_clicked(bool)
 {
     QPalette pal = mRouteColorPB->palette();
@@ -446,47 +393,6 @@ void RGMainWindow::on_lineStyleCB_activated(int idx)
   setPen();
 }
 
-void RGMainWindow::on_angleSB_valueChanged(int angle)
-{
-  if (mIgnoreSignals) return;
-  
-  mStartAngle = angle;
-
-  //Store settings for current vehicle
-  if (mIconCB->currentIndex() > 0) {
-    RGSettings::setVehicleAngle(mIconCB->currentText(), angle);
-  }
-
-  updateVehicleIcon(mIconCB->currentIndex());
-}
-
-void RGMainWindow::on_sizeSB_valueChanged(int size)
-{
-  if (mIgnoreSignals) return;
-
-  mSizeVehicle = size;
-  //Store settings for current vehicle
-  if (mIconCB->currentIndex() > 0) {
-    RGSettings::setVehicleSize(mIconCB->currentText(), size);
-  }
-
-  updateVehicleIcon(mIconCB->currentIndex());
-}
-
-void RGMainWindow::on_mirrorIconCB_toggled(bool checked)
-{
-  if (mIgnoreSignals) return;
-
-  mDrawMirroredIcon = checked;
-
-  //Store settings for current vehicle
-  if (mIconCB->currentIndex() > 0) {
-    RGSettings::setVehicleMirrored(mIconCB->currentText(), checked);
-  }
-
-  updateVehicleIcon(mIconCB->currentIndex());
-}
-
 void RGMainWindow::on_interpolationCB_toggled(bool checked)
 {
   mRGMapWidget->setInterpolationMode(checked);
@@ -495,6 +401,18 @@ void RGMainWindow::on_interpolationCB_toggled(bool checked)
 void RGMainWindow::on_routeTimeSB_valueChanged(int time)
 {
   mRGMapWidget->setRoutePlayTime(time);
+}
+
+void RGMainWindow::on_vehiclePreviewPB_clicked(bool)
+{
+    RGVehicleDialog vehList(this);
+    if (vehList.exec() == QDialog::Accepted)
+    {
+        mVehicle = vehList.getVehicle();
+        QPixmap pm = mVehicle.getPixmap();
+        mVehiclePreviewPB->setIcon(QIcon(pm));
+        mRGMapWidget->setVehicle(mVehicle);
+    }
 }
 
 void RGMainWindow::blockUserInteraction(bool busy)
@@ -589,13 +507,13 @@ void RGMainWindow::handleVideoEncProcessError(QProcess::ProcessError)
 
 void RGMainWindow::updateVehicleIcon(int index)
 {
-  QString iconFile = mIconCB->itemData(index).toString();
+  //QString iconFile = mIconCB->itemData(index).toString();
 
-  mRGMapWidget->setVehicle(iconFile, mDrawMirroredIcon, mStartAngle, mSizeVehicle);
+  //mRGMapWidget->setVehicle(iconFile, mDrawMirroredIcon, mStartAngle, mSizeVehicle);
 
   //Set preview vehicle, and we draw an extra west to east orientation arrow in it
-  QPixmap pm = mRGMapWidget->getVehiclePixmap();
-  if (pm.isNull()) {
+  QPixmap pm = mVehicle.getPixmap();
+  /*if (pm.isNull()) {
     mVehiclePreviewLabel->setPixmap(pm);
   } else {
     QPixmap spm = pm.scaled(mVehiclePreviewLabel->width(),
@@ -617,7 +535,8 @@ void RGMainWindow::updateVehicleIcon(int index)
     if (bigsize<pm.height()) bigsize = pm.height();
     mSizeSB->setValue(bigsize);
     mSizeVehicle = bigsize;
-  }
+  }*/
+  //mVehiclePreviewLabel->setPixmap(pm);
 }
 
 QIcon RGMainWindow::createIconForStyle(Qt::PenStyle style)

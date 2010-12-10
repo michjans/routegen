@@ -41,7 +41,6 @@ extern const QString applicationName;
 
 RGMapWidget::RGMapWidget(QWidget *parent)
 :QWidget(parent),
- mVehicle(NULL),
  mRgr(NULL),
  mFPS(25),
  mInDrawMode(false),
@@ -75,20 +74,9 @@ void RGMapWidget::loadImage(const QPixmap &pm)
   //adjustSize();
 }
 
-void RGMapWidget::setVehicle(const QString &fileName, bool mirror, int startAngle, int size)
+void RGMapWidget::setVehicle(const RGVehicle &vehicle)
 {
-    if (mVehicle != NULL) {
-        delete mVehicle;
-        mVehicle=NULL;
-    }
-  if (!fileName.isNull()) {
-    mVehicle = new RGVehicle(fileName, mirror, startAngle, size);
-
-    //User might have overridden advanced settings for the vehicle
-    mVehicle->setForceCounter(RGSettings::getVehicleForceCounter());
-    mVehicle->setMinDistance(RGSettings::getVehicleMinDistance());
-    mVehicle->setStepAngle(RGSettings::getVehicleStepAngle());
-  }
+  mRgr->setVehicle(vehicle);
   update();
 }
   
@@ -101,12 +89,6 @@ QPixmap RGMapWidget::getImage()
   drawPath(painter);
 
   return newPixMap;
-}
-
-QPixmap RGMapWidget::getVehiclePixmap()
-{
-  if (mVehicle != NULL) return mVehicle->getPixmap();
-  else return QPixmap();
 }
 
 bool RGMapWidget::generateMovie(const QString &dirName, const QString &filePrefix, QStringList &generatedBMPs)
@@ -155,9 +137,8 @@ bool RGMapWidget::generateMovie(const QString &dirName, const QString &filePrefi
     QPixmap newPixMap(mImage);
     QPainter painter(&newPixMap);
     painter.drawPixmap(0, 0, mImage);
-    drawPath(painter);
-    //if (i < mRgr->getNumberFrame()) - 1 || !mGenerateBeginEndFrames)
-    //  drawVehicle(painter, i);
+    painter.setPen (mRgr->getPen());
+    mRgr->drawPathAt(mTimerCounter,painter);
     QString postFix = QString("%1.bmp").arg(mTimerCounter, FILE_NUMBER_FIELD_WIDTH, 10, QChar('0'));
     fileName = dirName + "/" + filePrefix + postFix;
     result = newPixMap.save (fileName);
@@ -173,6 +154,7 @@ bool RGMapWidget::generateMovie(const QString &dirName, const QString &filePrefi
     if (progress.wasCanceled()) break;
   }	
   generationOK = (mTimerCounter == mRgr->getNumberFrame());
+  //TODO: if mGenerateBeginEndFrames rewrite the last frame with no vehicle.
 
   emit busy(false);
 
@@ -192,7 +174,8 @@ void RGMapWidget::startDrawMode()
     mUndoBuffer.pop();
   update();
   setCursor(Qt::CrossCursor);
-  emit canGenerate(false);
+  if (mRgr->stepCount()<MIN_PATH_LENGTH)
+      emit canGenerate(false);
   emit drawModeChanged(true);
 }
 
@@ -260,23 +243,11 @@ void RGMapWidget::drawPath(QPainter &painter)
   else if (!mInDrawMode)
   {
 
-      //QPainterPath path;
-      //path =mRgr->getPathAt(mTimerCounter);
-      //painter.drawPath(path);
       mRgr->drawPathAt(mTimerCounter,painter);
-      /*if (mVehicle && mRgr->stepCount()>1)
-      {
-          float angle;
-          angle=mRgr->getAngleAt(mTimerCounter);
-          QPixmap vehim = mVehicle->getPixmap(-angle);
-          //Draw vehicle with center on current point
-          int px = path.elementAt(path.elementCount()-1).x - vehim.size().width() / 2;
-          int py = path.elementAt(path.elementCount()-1).y - vehim.size().height() / 2;
-          painter.drawPixmap(px, py, vehim);
-      }*/
+
   }
   else
-      mRgr->drawPath(painter);//painter.drawPath(mRgr->getPath());
+      mRgr->drawPath(painter);
 }
 
 void RGMapWidget::resizeEvent ( QResizeEvent * event )

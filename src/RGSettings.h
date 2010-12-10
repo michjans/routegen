@@ -61,6 +61,8 @@ public:
   static void setLastSaveDir(const QString &fileName);
   static QString getLastGenDir();
   static void setLastGenDir(const QString &fileName);
+  static QString getLastVehicleName();
+  static void setLastVehicleName(const QString &name);
   static int getVehicleAngle(const QString &name);
   static void setVehicleAngle(const QString &name, int angle);
   static int getVehicleSize(const QString &name);

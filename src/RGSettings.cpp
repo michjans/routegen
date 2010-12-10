@@ -283,6 +283,19 @@ RGSettings::setLastGenDir(const QString &dir)
   settings.setValue("lastGenDir", dir);
 }
 
+
+QString RGSettings::getLastVehicleName()
+{
+    QSettings settings;
+    return settings.value("lastVehicleName", "None").toString();
+}
+
+void RGSettings::setLastVehicleName(const QString &name)
+{
+    QSettings settings;
+    settings.setValue("lastVehicleName", name);
+}
+
 int
 RGSettings::getVehicleAngle(const QString &name)
 {

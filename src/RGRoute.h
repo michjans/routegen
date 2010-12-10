@@ -28,6 +28,8 @@
 #include <QPen>
 #include <QColor>
 
+#include "RGVehicle.h"
+
 class RGRoute
 {
 public:
@@ -39,7 +41,6 @@ public:
   void clear();
   void drawPath(QPainter &painter);
   void drawPathAt(int frame,QPainter &painter);
-  float getAngleAt(int frame);
   int getNumberFrame();
   int stepCount();
   void setTotalTime(int time);
@@ -47,11 +48,13 @@ public:
   void setFPS(int FPS);
   QPen getPen();
   void setPen(const QColor &color,int size,Qt::PenStyle style);
+  void setVehicle(const RGVehicle &vehicle);
 
 private:
   QPainterPath createPath(QList<QPoint> RawPath);
   QPainterPath getPathAtStep(int step);
   QPainterPath getPathAtTime(int time);
+  float getAngleAt(int frame);
   float getAngleAtTime(int time);
   float getAngleAtStep(int step);
 
@@ -66,6 +69,8 @@ private:
   QColor            mPenColor;
   Qt::PenStyle      mPenStyle;
   int               mPenSize;
+  //The icon that's drawn at the end of the path (e.g. train, bike)
+  RGVehicle         mVehicle;
 };
 
 

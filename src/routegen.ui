@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>985</width>
+    <width>1004</width>
     <height>600</height>
    </rect>
   </property>
@@ -67,76 +67,18 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="iconCB">
-        <property name="toolTip">
-         <string>Select the vehicle that should be used for the route</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="mirrorIconCB">
-        <property name="toolTip">
-         <string>Mirror the currently selected vehicle (direction should always match red arrow)</string>
-        </property>
-        <property name="text">
-         <string>Mirror</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QSpinBox" name="angleSB">
-        <property name="toolTip">
-         <string>Optional angle correction (adapt until vehicle's orientation/direction matches the red arrow)</string>
-        </property>
-        <property name="minimum">
-         <number>-90</number>
-        </property>
-        <property name="maximum">
-         <number>90</number>
-        </property>
-        <property name="value">
-         <number>0</number>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="vehiclePreviewLabel">
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>23</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>40</width>
-          <height>23</height>
-         </size>
+       <widget class="QPushButton" name="vehiclePreviewPB">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
         <property name="toolTip">
-         <string>Preview of vehicle orientation and direction</string>
+         <string>Select Vehicle</string>
         </property>
         <property name="text">
          <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QSpinBox" name="sizeSB">
-        <property name="toolTip">
-         <string>Renderd size in pixel of the vehicle</string>
-        </property>
-        <property name="correctionMode">
-         <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
-        </property>
-        <property name="minimum">
-         <number>0</number>
-        </property>
-        <property name="maximum">
-         <number>10000</number>
-        </property>
-        <property name="singleStep">
-         <number>10</number>
         </property>
        </widget>
       </item>
@@ -215,7 +157,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>971</width>
+         <width>990</width>
          <height>483</height>
         </rect>
        </property>
@@ -229,7 +171,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>985</width>
+     <width>1004</width>
      <height>21</height>
     </rect>
    </property>

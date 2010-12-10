@@ -24,6 +24,7 @@
 #include <QMainWindow>
 #include <QProcess>
 #include <QStringList>
+#include "RGVehicle.h"
 
 class QWidget;
 class QTimer;
@@ -62,12 +63,9 @@ private slots:
   void on_routeColorPB_clicked(bool);
   void on_penSizeSB_valueChanged(int);
   void on_lineStyleCB_activated(int);
-  void on_iconCB_activated(int index);
-  void on_angleSB_valueChanged(int);
-  void on_sizeSB_valueChanged(int);
-  void on_mirrorIconCB_toggled(bool );
   void on_interpolationCB_toggled(bool );
   void on_routeTimeSB_valueChanged(int);
+  void on_vehiclePreviewPB_clicked(bool);
 
 
   void blockUserInteraction(bool);
@@ -93,26 +91,18 @@ private:
   QAction *actionGenerate_map;
   QAction *actionPlayback;
   QAction *actionStop;
-  QComboBox *mIconCB;
   QPushButton *mRouteColorPB;
   QComboBox *mLineStyleCB;
   QSpinBox *mPenSizeSB;
-  QCheckBox *mMirrorCB;
-  QSpinBox  *mAngleSB;
-  QSpinBox  *mSizeSB;
-  QLabel      *mVehiclePreviewLabel;
+  QPushButton *mVehiclePreviewPB;
   QCheckBox *mInterpolationCB;
   QSpinBox  *mRouteTimeSB;
   QMessageBox    *mProcessWaitMessage;
 
-  bool mDrawMirroredIcon;
-  int  mStartAngle;
-  int  mSizeVehicle;
-
-  bool mIgnoreSignals;
-
   QProcess    *mVideoEncProcess;
   QStringList  mGeneratedBMPs;
+
+  RGVehicle     mVehicle;
 
 
 };

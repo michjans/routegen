@@ -43,8 +43,7 @@ Q_OBJECT
 public:
 	RGMapWidget(QWidget *parent = 0);
 
-	QPixmap getImage();
-	QPixmap getVehiclePixmap();
+        QPixmap getImage();
 	bool    generateMovie(const QString &dirName, const QString &filePrefix, QStringList &generatedBMPs);
         int     getMapSize() const;  //Returns number of bytes that the map takes
         int     getNoFrames() const; //Returns number of frames in the route
@@ -58,7 +57,7 @@ signals:
 
 public slots:
 	void loadImage(const QPixmap &pm);
-        void setVehicle(const QString &fileName, bool mirror, int startAngle, int size);
+        void setVehicle(const RGVehicle &vehicle);
 	void startDrawMode();
         void endDrawMode();
         void setPen(const QColor &color,int size,Qt::PenStyle style);
@@ -95,7 +94,7 @@ private:
 	QPixmap       mImage;
 
 	//The icon that's drawn at the end of the path (e.g. train, bike)
-	RGVehicle    *mVehicle;
+        //RGVehicle    *mVehicle;
 
         //The path itself
         std::stack<int>  mUndoBuffer;

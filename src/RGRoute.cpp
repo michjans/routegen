@@ -34,7 +34,8 @@ mPlayMode(0),
 mFPS(25),
 mPenColor(Qt::blue),
 mPenSize(5),
-mPenStyle(Qt::SolidLine)
+mPenStyle(Qt::SolidLine),
+mVehicle("")
 {
   mPath = createPath(listPoint);
 
@@ -61,8 +62,8 @@ QPainterPath RGRoute::createPath(QList<QPoint> RawRoute)
 {
     QPainterPath tmpPath;
     //create path from data :
-    //make small segments out of big ones
-    //create curves for big angles
+    //TODO:make small segments out of big ones
+    //TODO:create curves for big angles
     if (RawRoute.count()>=1)
         tmpPath.moveTo(RawRoute.at(0));
     for (int i=1;i<RawRoute.count();++i)
@@ -79,8 +80,20 @@ void RGRoute::drawPath(QPainter &painter)
 
 void RGRoute::drawPathAt(int frame,QPainter &painter)
 {
-    if (mPlayMode==0) painter.drawPath(getPathAtStep(frame));
-    if (mPlayMode==1) painter.drawPath( getPathAtTime(frame*(1.0 / (double) mFPS) * 1000));
+    QPainterPath tmpPath;
+    if (mPlayMode==0) tmpPath=getPathAtStep(frame);
+    if (mPlayMode==1) tmpPath= getPathAtTime(frame*(1.0 / (double) mFPS) * 1000);
+    painter.drawPath(tmpPath);
+    if (mVehicle.getSize()!=0 && tmpPath.elementCount()>1)
+    {
+        float angle;
+        angle=getAngleAt(frame);
+        QPixmap vehim = mVehicle.getPixmap(angle);
+        //Draw vehicle with center on current point
+        int px = tmpPath.elementAt(tmpPath.elementCount()-1).x - vehim.size().width() / 2;
+        int py = tmpPath.elementAt(tmpPath.elementCount()-1).y - vehim.size().height() / 2;
+        painter.drawPixmap(px, py, vehim);
+    }
 }
 
 QPainterPath RGRoute::getPathAtStep(int step) //return Path at step (begin at 0)
@@ -105,7 +118,7 @@ QPainterPath RGRoute::getPathAtTime(int time) //return Path at time in ms
     qreal percent = (double) time / ((double) mTotalTime*1000);//mTotalTime should never be null
     if(percent>1)
         return mPath;
-    if (percent==0)
+    if (percent==0 || mPath.elementCount()==0)
         return QPainterPath();
     newpointf = mPath.pointAtPercent(percent);
     qreal newlength = percent*mPath.length();
@@ -217,4 +230,9 @@ void RGRoute::setPen(const QColor &color,int size,Qt::PenStyle style)
     mPenColor=color;
     mPenStyle=style;
     mPenSize=size;
+}
+
+void RGRoute::setVehicle(const RGVehicle &vehicle)
+{
+    mVehicle = vehicle;
 }
