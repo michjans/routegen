@@ -33,8 +33,8 @@ mTotalTime(10000),
 mPlayMode(0),
 mFPS(25),
 mPenColor(Qt::blue),
-mPenSize(5),
 mPenStyle(Qt::SolidLine),
+mPenSize(5),
 mVehicle()
 {
   mPath = createPath(listPoint);
@@ -156,6 +156,7 @@ float RGRoute::getAngleAt(int frame)
 {
     if (mPlayMode==0) return getAngleAtStep(frame);
     if (mPlayMode==1) return getAngleAtTime(frame*(1.0 / (double) mFPS) * 1000);
+    return 0;
 }
 
 float RGRoute::getAngleAtTime(int time)
@@ -224,6 +225,7 @@ int RGRoute::getNumberFrame()
     if (mPlayMode==1) return mFPS * mTotalTime;
     //Interpolation Speed set
     //if (mPlayMode==2) return
+    return 0;
 }
 
 int RGRoute::stepCount()

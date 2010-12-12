@@ -42,10 +42,10 @@ extern const QString applicationName;
 RGMapWidget::RGMapWidget(QWidget *parent)
 :QWidget(parent),
  mRgr(NULL),
- mFPS(25),
  mInDrawMode(false),
  mInitPhase(true),
  mGenerateBeginEndFrames(false),
+ mFPS(25),
  mPlayTimer(NULL),
  mTimerCounter(0)
 {

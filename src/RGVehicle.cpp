@@ -23,10 +23,10 @@
 
 RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle,int frameDelay)
     :mFileName(fileName),
-    mSize(size),
-    mRawSize(0),
     mMirror(mirror),
     mStartAngle(startAngle),
+    mSize(size),
+    mRawSize(0),
     mFrameDelay(frameDelay)
 {
     qDebug() << "RGVehicle::RGVehicle( " << fileName << ")";
@@ -155,6 +155,7 @@ QImage RGVehicle::scaleImage(QImage &image, int size)
         if (size != image.height())
             return image.scaledToHeight(size,Qt::SmoothTransformation);
     }
+    return QImage();
 }
 
 QImage RGVehicle::mirrorImage(QImage &image)
@@ -167,7 +168,7 @@ void RGVehicle::createImages(int size, int angle, bool mirror)
     mImages.clear();
     if (mRawSize==0)
         return;
-    for (int i=0;i<mRawImages.size();++i)
+    for (int i=0;i<(int)mRawImages.size();++i)
     {
         QImage im;
         im=mRawImages.at(i);

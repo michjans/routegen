@@ -83,6 +83,7 @@ RGVehicle RGVehicleDialog::getVehicle()
 {
     if(mList.count()>mVehicleId)
         return *(mList.at(mVehicleId));
+    return RGVehicle();
 }
 
 int RGVehicleDialog::count()
