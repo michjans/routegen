@@ -54,7 +54,7 @@ void RGGoogleMap::on_goButton_clicked(bool)
 	}
 	if (latlon.isEmpty() || zoom.isEmpty())
 	{
-		int ret = QMessageBox::warning(this, tr("Web Test"),
+		QMessageBox::warning(this, tr("Web Test"),
 			tr("URL should have format similar like this:\n"
 			   "http://maps.google.nl/?ie=UTF8&ll=52.36428,4.847116&spn=0.035902,0.077162&z=14\n"
 			   "Copy it from the paste link option from Google Maps in your browser."));
@@ -71,7 +71,7 @@ void RGGoogleMap::on_fixButton_clicked(bool)
 	ui.webView->setFixedSize(QSize(ui.spinBoxX->value(), ui.spinBoxY->value()));
 }
 
-void RGGoogleMap::on_webView_loadFinished ( bool ok )
+void RGGoogleMap::on_webView_loadFinished ( bool )
 {
 	ui.progressBar->hide();
 }
