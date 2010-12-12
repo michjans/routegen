@@ -50,11 +50,13 @@ void RGSettings::initSettings()
   }
 
   if (bmp2aviExec.exists())
-  //Store new location
-  settings.setValue("videoEncoder", QString("bmp2avi"));
-  settings.setValue("videoEncExec", bmp2aviExecName);
+  {
+    //Store new location
+    settings.setValue("videoEncoder", QString("bmp2avi"));
+    settings.setValue("videoEncExec", bmp2aviExecName);
+  }
   else
-  QMessageBox::warning (NULL, "Not available", "Avi generation using bmp2avi will be unavailable");
+    QMessageBox::warning (NULL, "Not available", "Avi generation using bmp2avi will be unavailable");
 
   /*
    *Initialize the default command line arguments that we pass to bmp2avi.
