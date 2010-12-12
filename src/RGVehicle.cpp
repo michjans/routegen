@@ -124,8 +124,13 @@ QPixmap RGVehicle::getPixmap(int degrees)
 {
     if (mImages.size() == 0)
         return QPixmap();
-
-    return QPixmap::fromImage(rotateImage(mImages[0],(int)degrees));
+    int angle = (int) degrees%360;
+    QImage im = QImage(mImages[0]);
+    if (angle>90 && angle <270){
+        im=mirrorImage(im);
+        angle +=180;
+    }
+    return QPixmap::fromImage(rotateImage(im,angle));
 }
 
 QImage RGVehicle::rotateImage(QImage &image, int degrees)
