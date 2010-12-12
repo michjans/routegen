@@ -66,17 +66,19 @@ QPainterPath RGRoute::createPath(QList<QPoint> RawRoute)
     for (int i=1;i<RawRoute.count();++i)
     {
         //TODO:create curves for big angles
-        //Truncate segments > 20
-        QPainterPath singleElementPath = QPainterPath(RawRoute.at(i-1));
-        singleElementPath.lineTo(RawRoute.at(i));
-        while (singleElementPath.length()>20){
-            //get the new point after a distance of 20
-            QPointF newPoint=singleElementPath.pointAtPercent(singleElementPath.percentAtLength(20));
-            tmpPath.lineTo(newPoint);
-            singleElementPath = QPainterPath(newPoint);
+        if(mPlayMode>=1){
+            //Truncate segments > 20
+            QPainterPath singleElementPath = QPainterPath(RawRoute.at(i-1));
             singleElementPath.lineTo(RawRoute.at(i));
+            while (singleElementPath.length()>20){
+                //get the new point after a distance of 20
+                QPointF newPoint=singleElementPath.pointAtPercent(singleElementPath.percentAtLength(20));
+                tmpPath.lineTo(newPoint);
+                singleElementPath = QPainterPath(newPoint);
+                singleElementPath.lineTo(RawRoute.at(i));
+            }
+            //end of truncate
         }
-        //end of truncate
         tmpPath.lineTo(RawRoute.at(i));
     }
     return tmpPath;
@@ -206,6 +208,7 @@ void RGRoute::setPlayMode(int mode)
         mPlayMode=mode;
     else
         mPlayMode=0;
+    mPath = createPath(mRawRoute);
 }
 
 void RGRoute::setFPS(int FPS)
