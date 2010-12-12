@@ -121,6 +121,9 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mInterpolationCB->setChecked(RGSettings::getInterpolationMode());
   mRouteTimeSB->setValue(RGSettings::getRoutePlayTime());
 
+  //Set currentPath
+  QDir::setCurrent(QCoreApplication::applicationDirPath());
+
 }
 
 void RGMainWindow::on_actionOpen_image_triggered(bool checked)
