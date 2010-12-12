@@ -34,7 +34,7 @@ extern const QString applicationName;
 
 RGMainWindow::RGMainWindow(QWidget *parent)
   :QMainWindow(parent),
-  mVehicle("")
+  mVehicle()
 {
   
   setWindowIcon (QIcon(":/icons/icons/mapgen.png")); 

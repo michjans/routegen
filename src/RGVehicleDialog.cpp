@@ -36,7 +36,7 @@ RGVehicleDialog::RGVehicleDialog(QWidget *parent)
     vehicleDir.setNameFilters(filters);
     QFileInfoList vehicles = vehicleDir.entryInfoList();
     RGVehicle *vehicle;
-    vehicle= new RGVehicle("");
+    vehicle= new RGVehicle();
     mList.append(vehicle);
     QListWidgetItem *item = new QListWidgetItem(QIcon(vehicle->getPixmap()),QString("None"));
     ui.vehicleListWidget->addItem(item);
@@ -45,7 +45,7 @@ RGVehicleDialog::RGVehicleDialog(QWidget *parent)
         vehicle= new RGVehicle(it->absoluteFilePath(),RGSettings::getVehicleSize(it->baseName()),
                                RGSettings::getVehicleMirrored(it->baseName()),RGSettings::getVehicleAngle(it->baseName()));
         qDebug()<<"qSize du vehicle"<<vehicle->getSize();
-        if (vehicle->getSize()==0)
+        if (vehicle->getRawSize()==0)
         {
             delete vehicle;
             continue;

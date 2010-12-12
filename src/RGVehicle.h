@@ -30,7 +30,7 @@
 class RGVehicle
 {
 public:
-    RGVehicle(const QString &filename,int size=0,bool mirror=false,int startAngle=0,int frameDelay=80);
+    RGVehicle(const QString &filename="None",int size=0,bool mirror=false,int startAngle=0,int frameDelay=80);
     ~RGVehicle();
     int     getSize();
     int     getRawSize();

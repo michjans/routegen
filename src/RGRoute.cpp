@@ -35,7 +35,7 @@ mFPS(25),
 mPenColor(Qt::blue),
 mPenSize(5),
 mPenStyle(Qt::SolidLine),
-mVehicle("")
+mVehicle()
 {
   mPath = createPath(listPoint);
 }
