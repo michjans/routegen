@@ -38,7 +38,6 @@ mPenStyle(Qt::SolidLine),
 mVehicle("")
 {
   mPath = createPath(listPoint);
-
 }
 
 RGRoute::~RGRoute()
@@ -62,12 +61,22 @@ QPainterPath RGRoute::createPath(QList<QPoint> RawRoute)
 {
     QPainterPath tmpPath;
     //create path from data :
-    //TODO:make small segments out of big ones
-    //TODO:create curves for big angles
     if (RawRoute.count()>=1)
         tmpPath.moveTo(RawRoute.at(0));
     for (int i=1;i<RawRoute.count();++i)
     {
+        //TODO:create curves for big angles
+        //Truncate segments > 20
+        QPainterPath singleElementPath = QPainterPath(RawRoute.at(i-1));
+        singleElementPath.lineTo(RawRoute.at(i));
+        while (singleElementPath.length()>20){
+            //get the new point after a distance of 20
+            QPointF newPoint=singleElementPath.pointAtPercent(singleElementPath.percentAtLength(20));
+            tmpPath.lineTo(newPoint);
+            singleElementPath = QPainterPath(newPoint);
+            singleElementPath.lineTo(RawRoute.at(i));
+        }
+        //end of truncate
         tmpPath.lineTo(RawRoute.at(i));
     }
     return tmpPath;
