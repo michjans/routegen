@@ -31,7 +31,6 @@ RGVehicleDialog::RGVehicleDialog(QWidget *parent)
     ui.setupUi(this);
 
     QDir vehicleDir = QDir::currentPath() + "/vehicles";
-    qDebug() << vehicleDir;
     QStringList filters;
     filters << "*.bmp" << "*.gif" << "*.png" << "*.jpg" << "*.tif";
     vehicleDir.setNameFilters(filters);
