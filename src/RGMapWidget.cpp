@@ -226,7 +226,7 @@ void RGMapWidget::drawPath(QPainter &painter)
   }
   else if (!mInDrawMode)
   {
-
+      if (mRgr->userPointCount() < MIN_PATH_LENGTH) return;
       mRgr->drawPathAt(mTimerCounter,painter);
   }
   else
@@ -303,9 +303,10 @@ void RGMapWidget::undo()
   if (mUndoBuffer.isEmpty()) return;
   int idx = mUndoBuffer.takeLast();
   mRgr->removefromPoint(idx);
-  qDebug()<<"idx undo"<<idx<<"nb step"<<mRgr->userPointCount();
   if (idx < MIN_PATH_LENGTH)
       emit canGenerate(false);
+  if (mTimerCounter>=mRgr->getNumberFrame())
+      mTimerCounter=mRgr->getNumberFrame()-1;
   update();
 }
 

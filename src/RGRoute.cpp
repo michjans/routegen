@@ -35,7 +35,8 @@ mFPS(25),
 mPenColor(Qt::blue),
 mPenStyle(Qt::SolidLine),
 mPenSize(5),
-mVehicle()
+mVehicle(),
+mIconlessBeginEndFrames(false)
 {
   mPath = createPath(listPoint);
   mUndoBuffer.append(0);
@@ -99,7 +100,7 @@ void RGRoute::drawPathAt(int frame,QPainter &painter)
     painter.drawPath(tmpPath);
     if (mVehicle.getSize()==0 || tmpPath.elementCount()==0)
         return;
-    if (mIconlessBeginEndFrames && (frame==0 || frame==(getNumberFrame()-1)))
+    if (mIconlessBeginEndFrames && (frame==0 || frame>=(getNumberFrame()-1)))
         return;
     //TODO: get animated gif working
     float angle;
