@@ -184,7 +184,7 @@ void RGMapWidget::endDrawMode()
   if (!mInDrawMode) return;
   mInDrawMode = false;
   setCursor(Qt::ArrowCursor);
-
+  mTimerCounter = mRgr->getNumberFrame();
   emit drawModeChanged(false);
   update();
 }
