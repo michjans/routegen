@@ -373,9 +373,19 @@ void RGMainWindow::on_routeColorPB_clicked(bool)
       QPalette pal = mRouteColorPB->palette();
       pal.setColor(QPalette::Button, newCol);
       mRouteColorPB->setPalette(pal);
-
       //Store
       RGSettings::setPenColor(newCol);
+
+      //update mLineStyleCB
+      int penStyle = mLineStyleCB->currentIndex();
+      mLineStyleCB->clear();
+      mLineStyleCB->addItem(createIconForStyle(Qt::SolidLine),      QString(), QVariant((unsigned) Qt::SolidLine));
+      mLineStyleCB->addItem(createIconForStyle(Qt::DashLine),       QString(), QVariant((unsigned) Qt::DashLine));
+      mLineStyleCB->addItem(createIconForStyle(Qt::DotLine),        QString(), QVariant((unsigned) Qt::DotLine));
+      mLineStyleCB->addItem(createIconForStyle(Qt::DashDotLine),    QString(), QVariant((unsigned) Qt::DashDotLine));
+      mLineStyleCB->addItem(createIconForStyle(Qt::DashDotDotLine), QString(), QVariant((unsigned) Qt::DashDotDotLine));
+      mLineStyleCB->addItem(createIconForStyle(Qt::NoPen),          QString(), QVariant((unsigned) Qt::NoPen));
+      mLineStyleCB->setCurrentIndex(penStyle);
     }
     setPen();
 }
