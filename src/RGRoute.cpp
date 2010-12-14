@@ -38,6 +38,7 @@ mPenSize(5),
 mVehicle()
 {
   mPath = createPath(listPoint);
+  mUndoBuffer.append(0);
 }
 
 RGRoute::~RGRoute()
@@ -47,6 +48,7 @@ RGRoute::~RGRoute()
 
 void RGRoute::addPoint(QPoint newPoint)
 {
+    mUndoBuffer.append(mRawRoute.size());
     mRawRoute.append(newPoint);
     mPath = createPath(mRawRoute);
 }
@@ -228,9 +230,9 @@ int RGRoute::getNumberFrame()
     return 0;
 }
 
-int RGRoute::stepCount()
+int RGRoute::userPointCount()
 {
-    return mPath.elementCount();
+    return mRawRoute.size();
 }
 
 
@@ -250,3 +252,11 @@ void RGRoute::setVehicle(const RGVehicle &vehicle)
 {
     mVehicle = vehicle;
 }
+
+void RGRoute::removefromPoint(int idx)
+{
+    while (idx < mRawRoute.size())
+        mRawRoute.removeLast();
+    mPath=createPath(mRawRoute);
+}
+

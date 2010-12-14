@@ -42,13 +42,14 @@ public:
   void drawPath(QPainter &painter);
   void drawPathAt(int frame,QPainter &painter);
   int getNumberFrame();
-  int stepCount();
+  int userPointCount();
   void setTotalTime(int time);
   void setPlayMode(int playMode);
   void setFPS(int FPS);
   QPen getPen();
   void setPen(const QColor &color,int size,Qt::PenStyle style);
   void setVehicle(const RGVehicle &vehicle);
+  void removefromPoint(int);
 
 private:
   QPainterPath createPath(QList<QPoint> RawPath);
@@ -71,6 +72,7 @@ private:
   int               mPenSize;
   //The icon that's drawn at the end of the path (e.g. train, bike)
   RGVehicle         mVehicle;
+  QList<int>        mUndoBuffer;
 };
 
 

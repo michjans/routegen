@@ -97,7 +97,7 @@ private:
         //RGVehicle    *mVehicle;
 
         //The path itself
-        std::stack<int>  mUndoBuffer;
+        QList<int>  mUndoBuffer;
         RGRoute         *mRgr;
 
 	//Some other settings

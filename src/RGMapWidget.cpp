@@ -99,14 +99,14 @@ bool RGMapWidget::generateMovie(const QString &dirName, const QString &filePrefi
 
   generatedBMPs.clear();
   //Only usefull when route has more than MIN_PATH_LENGTH points
-  if (mRgr->stepCount() < MIN_PATH_LENGTH) {
+  if (mRgr->userPointCount() < MIN_PATH_LENGTH) {
     QMessageBox::warning (this, "Route too short", "Sorry, this route is too short to generate a valid route.");
     return false;
   }
 
   bool generationOK = true;
   emit busy(true);
-  //QString text = QString("Number of frames: ") + QString::number(mRgr->stepCount());
+  //QString text = QString("Number of frames: ") + QString::number(mRgr->userPointCount());
 
   QProgressDialog progress("Generating files...", "Abort", 0, mRgr->getNumberFrame(), this);
   progress.setWindowModality(Qt::WindowModal);
@@ -170,11 +170,11 @@ void RGMapWidget::startDrawMode()
 {
   if (mInDrawMode) return;
   mInDrawMode = true;
-  while (!mUndoBuffer.empty())
-    mUndoBuffer.pop();
+  /*while (!mUndoBuffer.empty())
+    mUndoBuffer.pop();*/
   update();
   setCursor(Qt::CrossCursor);
-  if (mRgr->stepCount()<MIN_PATH_LENGTH)
+  if (mRgr->userPointCount()<MIN_PATH_LENGTH)
       emit canGenerate(false);
   emit drawModeChanged(true);
 }
@@ -206,7 +206,7 @@ void RGMapWidget::play()
     endDrawMode();
 
   //Only usefull when route has more than MIN_PATH_LENGTH points
-  if (mRgr->stepCount() < MIN_PATH_LENGTH) return;
+  if (mRgr->userPointCount() < MIN_PATH_LENGTH) return;
 
   emit busy(true);
 
@@ -262,6 +262,7 @@ void RGMapWidget::mousePressEvent ( QMouseEvent * event )
   if (mInDrawMode && event->button() == Qt::LeftButton)
   {
     qDebug() << "RGMapWidget::mousePressEvent -> " << event->pos();
+    mUndoBuffer.append(mRgr->userPointCount());//mUndoBuffer contains the number Id of the new step
     mRgr->addPoint(QPoint(event->pos()));
   }
   update();
@@ -285,7 +286,7 @@ void RGMapWidget::mouseReleaseEvent ( QMouseEvent * event )
 {
   if (mInDrawMode && event->button() == Qt::LeftButton)
   {
-    emit canGenerate(mRgr->stepCount() > 1);
+    emit canGenerate(mRgr->userPointCount() >= MIN_PATH_LENGTH);
     update();
   }
 }
@@ -316,12 +317,13 @@ void RGMapWidget::setBusy(bool _busy)
 
 void RGMapWidget::undo()
 {
-  /*if (mUndoBuffer.empty()) return;
-  int idx = mUndoBuffer.top();
-  while (idx < mPath.size())
-    mPath.removeLast();
-  mUndoBuffer.pop();
-  update();*/
+  if (mUndoBuffer.isEmpty()) return;
+  int idx = mUndoBuffer.takeLast();
+  mRgr->removefromPoint(idx);
+  qDebug()<<"idx undo"<<idx<<"nb step"<<mRgr->userPointCount();
+  if (idx < MIN_PATH_LENGTH)
+      emit canGenerate(false);
+  update();
 }
 
 void RGMapWidget::redo()
@@ -361,6 +363,7 @@ void RGMapWidget::startNewRoute()
 {
 
     mRgr->clear();
+    mUndoBuffer.clear();
     emit canGenerate(false);
     update();
 }
