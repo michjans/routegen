@@ -106,7 +106,6 @@ bool RGMapWidget::generateMovie(const QString &dirName, const QString &filePrefi
 
   bool generationOK = true;
   emit busy(true);
-  //QString text = QString("Number of frames: ") + QString::number(mRgr->userPointCount());
 
   QProgressDialog progress("Generating files...", "Abort", 0, mRgr->getNumberFrame(), this);
   progress.setWindowModality(Qt::WindowModal);
@@ -114,24 +113,8 @@ bool RGMapWidget::generateMovie(const QString &dirName, const QString &filePrefi
 
   QString fileName;
   bool result;
-  mTimerCounter = 0;
-  if (mGenerateBeginEndFrames) {
-    //First save first frame without route and vehicle (for convenience)
-    fileName = dirName + "/" + filePrefix + QString("%1.bmp").arg(mTimerCounter, FILE_NUMBER_FIELD_WIDTH, 10, QChar('0'));
-    result = mImage.save (fileName);
-    if (!result)
-    {
-      QMessageBox::critical (this, "Oops", "Problems saving file " + fileName);
-      generationOK = false;
-    }
-    else
-    {
-      generatedBMPs.append(fileName);
-    }
-  }
 
-
-  for (mTimerCounter++; mTimerCounter < mRgr->getNumberFrame() && generationOK; mTimerCounter++)
+  for (mTimerCounter=0; mTimerCounter < mRgr->getNumberFrame() && generationOK; mTimerCounter++)
   {
     progress.setValue(mTimerCounter);
     QPixmap newPixMap(mImage);
@@ -154,7 +137,6 @@ bool RGMapWidget::generateMovie(const QString &dirName, const QString &filePrefi
     if (progress.wasCanceled()) break;
   }	
   generationOK = (mTimerCounter == mRgr->getNumberFrame());
-  //TODO: if mGenerateBeginEndFrames rewrite the last frame with no vehicle.
 
   emit busy(false);
 
@@ -184,7 +166,7 @@ void RGMapWidget::endDrawMode()
   if (!mInDrawMode) return;
   mInDrawMode = false;
   setCursor(Qt::ArrowCursor);
-  mTimerCounter = mRgr->getNumberFrame();
+  mTimerCounter = mRgr->getNumberFrame()-1;
   emit drawModeChanged(false);
   update();
 }
@@ -198,6 +180,8 @@ void RGMapWidget::setPen(const QColor &color,int size,Qt::PenStyle style)
 void RGMapWidget::setGenerateBeginEndFrames(bool val)
 {
   mGenerateBeginEndFrames = val;
+  mRgr->setIconlessBeginEndFrames(val);
+  update();
 }
 
 void RGMapWidget::play()
@@ -244,7 +228,6 @@ void RGMapWidget::drawPath(QPainter &painter)
   {
 
       mRgr->drawPathAt(mTimerCounter,painter);
-
   }
   else
       mRgr->drawPath(painter);
@@ -293,7 +276,7 @@ void RGMapWidget::mouseReleaseEvent ( QMouseEvent * event )
 
 void RGMapWidget::playTimerEvent()
 {
-  if (mTimerCounter < mRgr->getNumberFrame())
+  if (mTimerCounter < mRgr->getNumberFrame()-1)
   {
     ++mTimerCounter;
   }

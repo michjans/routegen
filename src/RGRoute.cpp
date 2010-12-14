@@ -97,21 +97,23 @@ void RGRoute::drawPathAt(int frame,QPainter &painter)
     if (mPlayMode==0) tmpPath=getPathAtStep(frame);
     if (mPlayMode==1) tmpPath= getPathAtTime(frame*(1.0 / (double) mFPS) * 1000);
     painter.drawPath(tmpPath);
-    if (mVehicle.getSize()!=0 && tmpPath.elementCount()>1)
-    {
-        float angle;
-        angle=getAngleAt(frame);
-        QPixmap vehim = mVehicle.getPixmap(angle);
-        //Draw vehicle with center on current point
-        int px = tmpPath.elementAt(tmpPath.elementCount()-1).x - vehim.size().width() / 2;
-        int py = tmpPath.elementAt(tmpPath.elementCount()-1).y - vehim.size().height() / 2;
-        painter.drawPixmap(px, py, vehim);
-    }
+    if (mVehicle.getSize()==0 || tmpPath.elementCount()==0)
+        return;
+    if (mIconlessBeginEndFrames && (frame==0 || frame==(getNumberFrame()-1)))
+        return;
+    //TODO: get animated gif working
+    float angle;
+    angle=getAngleAt(frame);
+    QPixmap vehim = mVehicle.getPixmap(angle);
+    //Draw vehicle with center on current point
+    int px = tmpPath.elementAt(tmpPath.elementCount()-1).x - vehim.size().width() / 2;
+    int py = tmpPath.elementAt(tmpPath.elementCount()-1).y - vehim.size().height() / 2;
+    painter.drawPixmap(px, py, vehim);
 }
 
 QPainterPath RGRoute::getPathAtStep(int step) //return Path at step (begin at 0)
 {
-    if (step==0 || mPath.elementCount()==0)
+    if (mPath.elementCount()==0)
         return QPainterPath();
     if (step>=mPath.elementCount())
         return mPath;
@@ -129,9 +131,9 @@ QPainterPath RGRoute::getPathAtTime(int time) //return Path at time in ms
 
    QPointF newpointf;
     qreal percent = (double) time / ((double) mTotalTime*1000);//mTotalTime should never be null
-    if(percent>1)
+    if(percent>=1)
         return mPath;
-    if (percent==0 || mPath.elementCount()==0)
+    if (mPath.elementCount()==0)
         return QPainterPath();
     newpointf = mPath.pointAtPercent(percent);
     qreal newlength = percent*mPath.length();
@@ -224,7 +226,7 @@ int RGRoute::getNumberFrame()
     //stepbystep
     if (mPlayMode==0) return mPath.elementCount();
     //Interpolation TotalTime set
-    if (mPlayMode==1) return mFPS * mTotalTime;
+    if (mPlayMode==1) return mFPS * mTotalTime+1;
     //Interpolation Speed set
     //if (mPlayMode==2) return
     return 0;
@@ -251,6 +253,11 @@ void RGRoute::setPen(const QColor &color,int size,Qt::PenStyle style)
 void RGRoute::setVehicle(const RGVehicle &vehicle)
 {
     mVehicle = vehicle;
+}
+
+void RGRoute::setIconlessBeginEndFrames(bool val)
+{
+    mIconlessBeginEndFrames=val;
 }
 
 void RGRoute::removefromPoint(int idx)

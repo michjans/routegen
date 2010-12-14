@@ -49,6 +49,7 @@ public:
   QPen getPen();
   void setPen(const QColor &color,int size,Qt::PenStyle style);
   void setVehicle(const RGVehicle &vehicle);
+  void setIconlessBeginEndFrames(bool);
   void removefromPoint(int);
 
 private:
@@ -72,6 +73,7 @@ private:
   int               mPenSize;
   //The icon that's drawn at the end of the path (e.g. train, bike)
   RGVehicle         mVehicle;
+  bool              mIconlessBeginEndFrames;
   QList<int>        mUndoBuffer;
 };
 
