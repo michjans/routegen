@@ -25,6 +25,9 @@
         <property name="toolTip">
          <string>Modify the width of the drawn route line</string>
         </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
         <property name="value">
          <number>5</number>
         </property>
@@ -95,7 +98,7 @@
          <string>Turns on/off automatic route interpolation</string>
         </property>
         <property name="text">
-         <string>Interpolation</string>
+         <string>set Total Time (s) :</string>
         </property>
        </widget>
       </item>
@@ -106,6 +109,9 @@
         </property>
         <property name="toolTip">
          <string>Length of generated route in seconds</string>
+        </property>
+        <property name="minimum">
+         <number>1</number>
         </property>
        </widget>
       </item>
