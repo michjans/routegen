@@ -328,6 +328,7 @@ void RGMapWidget::setInterpolationMode(bool val)
 
   RGSettings::setInterpolationMode(val);
   mRgr->setPlayMode((int) val);
+  update();
 }
 
 //The time that the total route animation takes (independent of the route length)
@@ -337,6 +338,17 @@ void RGMapWidget::setRoutePlayTime(int time)
   RGSettings::setRoutePlayTime(time);
 }
 
+void RGMapWidget::setSmoothPath(bool smooth)
+{
+  mRgr->setSmoothPath(smooth);
+  update();
+}
+
+void RGMapWidget::setSmoothCoef(int dsmooth)
+{
+  mRgr->setSmoothCoef(dsmooth);
+  update();
+}
 
 int RGMapWidget::getNoFrames() const
 {

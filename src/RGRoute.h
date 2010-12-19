@@ -50,6 +50,8 @@ public:
   void setPen(const QColor &color,int size,Qt::PenStyle style);
   void setVehicle(const RGVehicle &vehicle);
   void setIconlessBeginEndFrames(bool);
+  void setSmoothPath(bool);
+  void setSmoothCoef(int);
   void removefromPoint(int);
 
 private:
@@ -67,6 +69,8 @@ private:
   int               mTotalTime; //total time for interpolation
   int               mPlayMode; //set the mode for the video generation(0=stepbystep,1=TotalTimeSet,2=speedSet)
   int               mFPS;
+  int               mDSmooth;
+  bool              mSmoothPath;
   //Pen
   QColor            mPenColor;
   Qt::PenStyle      mPenStyle;

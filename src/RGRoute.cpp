@@ -19,6 +19,7 @@
 
 
 #include "RGRoute.h"
+#include "RGSmoothRoute.h"
 #include <math.h>
 #include <QDebug>
 
@@ -62,29 +63,42 @@ void RGRoute::clear()
 
 QPainterPath RGRoute::createPath(QList<QPoint> RawRoute)
 {
-    QPainterPath tmpPath;
+    QPainterPath tmpPath,goodPath;
     //create path from data :
-    if (RawRoute.count()>=1)
-        tmpPath.moveTo(RawRoute.at(0));
-    for (int i=1;i<RawRoute.count();++i)
-    {
-        //TODO:create curves for big angles
-        if(mPlayMode>=1){
-            //Truncate segments > 20
-            QPainterPath singleElementPath = QPainterPath(RawRoute.at(i-1));
-            singleElementPath.lineTo(RawRoute.at(i));
-            while (singleElementPath.length()>20){
-                //get the new point after a distance of 20
-                QPointF newPoint=singleElementPath.pointAtPercent(singleElementPath.percentAtLength(20));
-                tmpPath.lineTo(newPoint);
-                singleElementPath = QPainterPath(newPoint);
-                singleElementPath.lineTo(RawRoute.at(i));
-            }
-            //end of truncate
-        }
-        tmpPath.lineTo(RawRoute.at(i));
+    if (RawRoute.count()<=1)
+        return tmpPath;
+    if(mSmoothPath){
+      tmpPath = RGSmoothRoute::SmoothRoute(RawRoute,mDSmooth);
     }
-    return tmpPath;
+    else {
+        tmpPath.moveTo(RawRoute.at(0));
+        for (int i=1;i<RawRoute.count();++i)
+        {
+          tmpPath.lineTo(RawRoute.at(i));
+        }
+    }
+
+    //truncate every 20 if mPlayMode>=1
+    if(mPlayMode>=1){
+      QPoint A=QPoint(tmpPath.elementAt(0).x,tmpPath.elementAt(0).y),B;
+      goodPath.moveTo(A);
+      int dAB=0;
+      for (int i=1;i<tmpPath.elementCount();++i)
+      {
+        B=QPoint(tmpPath.elementAt(i).x,tmpPath.elementAt(i).y);
+        dAB=sqrt(pow((B-A).x(), 2) + pow((B-A).y(), 2));
+        while (dAB>20){
+          A=A+20/(double) dAB*(B-A);
+          goodPath.lineTo(A);
+          dAB-=20;
+        }
+        goodPath.lineTo(B);
+        A=B;
+      }
+    }
+    else
+      goodPath=tmpPath;
+    return goodPath;
 }
 
 void RGRoute::drawPath(QPainter &painter)
@@ -259,6 +273,18 @@ void RGRoute::setVehicle(const RGVehicle &vehicle)
 void RGRoute::setIconlessBeginEndFrames(bool val)
 {
     mIconlessBeginEndFrames=val;
+}
+
+void RGRoute::setSmoothPath(bool smooth)
+{
+  mSmoothPath=smooth;
+  mPath=createPath(mRawRoute);
+}
+
+void RGRoute::setSmoothCoef(int dsmooth)
+{
+  mDSmooth=dsmooth;
+  mPath=createPath(mRawRoute);
 }
 
 void RGRoute::removefromPoint(int idx)

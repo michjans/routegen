@@ -120,6 +120,8 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 
   mInterpolationCB->setChecked(RGSettings::getInterpolationMode());
   mRouteTimeSB->setValue(RGSettings::getRoutePlayTime());
+  mRGMapWidget->setSmoothPath(RGSettings::getCurvedInterpolation());
+  mRGMapWidget->setSmoothCoef(RGSettings::getCurveRadius());
 
   //Set currentPath
   QDir::setCurrent(QCoreApplication::applicationDirPath());
@@ -182,7 +184,10 @@ void RGMainWindow::on_action_Redo_triggered(bool)
 void RGMainWindow::on_actionPreferences_triggered(bool)
 {
   RGSettingsDialog rgsettings;
-  rgsettings.exec();
+  if(rgsettings.exec()==QDialog::Accepted){
+    mRGMapWidget->setSmoothPath(RGSettings::getCurvedInterpolation());
+    mRGMapWidget->setSmoothCoef(RGSettings::getCurveRadius());
+  }
 }
 
 void RGMainWindow::on_actionImport_Google_Map_triggered(bool)

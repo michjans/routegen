@@ -75,6 +75,8 @@ public slots:
         //The time that the total route animation takes (independent of the route length)
         //Only used in interpolation mode!
          void setRoutePlayTime(int time);
+         void setSmoothPath(bool smooth);
+         void setSmoothCoef(int dsmooth);
 
 protected:
 	void paintEvent ( QPaintEvent * event );
