@@ -349,6 +349,10 @@
    </property>
   </action>
   <action name="action_Undo">
+   <property name="icon">
+    <iconset resource="routegen.qrc">
+     <normaloff>:/icons/icons/undo.png</normaloff>:/icons/icons/undo.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Undo</string>
    </property>
@@ -378,7 +382,7 @@
   <action name="actionNew_route">
    <property name="icon">
     <iconset resource="routegen.qrc">
-     <normaloff>:/icons/icons/mapgen.png</normaloff>:/icons/icons/mapgen.png</iconset>
+     <normaloff>:/icons/icons/new-route.png</normaloff>:/icons/icons/new-route.png</iconset>
    </property>
    <property name="text">
     <string>&amp;New Route</string>

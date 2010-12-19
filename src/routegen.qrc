@@ -1,13 +1,17 @@
 <RCC>
-  <qresource prefix="/icons">
-    <file>icons/google-maps-logo.png</file>
-    <file>icons/desktop-32.png</file>
-    <file>icons/exit.png</file>
-    <file>icons/fileopen.png</file>
-    <file>icons/filesave.png</file>
-    <file>icons/generate.png</file>
-    <file>icons/mapgen.png</file>
-    <file>icons/player_play.png</file>
-    <file>icons/player_stop.png</file>
-  </qresource>
+    <qresource prefix="/icons">
+        <file>icons/google-maps-logo.png</file>
+        <file>icons/desktop-32.png</file>
+        <file>icons/exit.png</file>
+        <file>icons/fileopen.png</file>
+        <file>icons/filesave.png</file>
+        <file>icons/generate.png</file>
+        <file>icons/mapgen.png</file>
+        <file>icons/player_play.png</file>
+        <file>icons/player_stop.png</file>
+        <file>icons/new-route.png</file>
+        <file>icons/draw-path.png</file>
+        <file>icons/reset.png</file>
+        <file>icons/undo.png</file>
+    </qresource>
 </RCC>
