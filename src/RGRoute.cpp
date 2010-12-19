@@ -79,7 +79,7 @@ QPainterPath RGRoute::createPath(QList<QPoint> RawRoute)
     }
 
     //truncate every 20 if mPlayMode>=1
-    if(mPlayMode>=1){
+    /*if(mPlayMode>=1){
       QPoint A=QPoint(tmpPath.elementAt(0).x,tmpPath.elementAt(0).y),B;
       goodPath.moveTo(A);
       int dAB=0;
@@ -96,7 +96,7 @@ QPainterPath RGRoute::createPath(QList<QPoint> RawRoute)
         A=B;
       }
     }
-    else
+    else*/
       goodPath=tmpPath;
     return goodPath;
 }

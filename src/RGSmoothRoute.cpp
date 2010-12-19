@@ -12,18 +12,21 @@
 QPainterPath RGSmoothRoute::SmoothRoute(QList<QPoint> RawRoute, int dsmooth)
 {
 
-  if(RawRoute.size()<1)
+  if(RawRoute.size()<=1)
     return QPainterPath();
   QPainterPath newPath(RawRoute.at(0));
   QPoint A=RawRoute.at(0),B=RawRoute.at(1),p1,c1,p2,c2,sc2;
   int dist1=0;
   bool haveP2=false;
   double dAB;
+  c1=B;
   if(sqrt(pow((B-A).x(), 2) + pow((B-A).y(), 2)) > dsmooth) {
     p1=getPointAtLength(B,A,dsmooth);
-    c1=B;
-    newPath.lineTo(p1);
   }
+  else{
+    p1=getPointAtLength(A,B,1);//line one point before connect(path)
+  }
+  newPath.lineTo(p1);
 
   for (int i=1;i<RawRoute.count()-1;++i)
   {
@@ -36,11 +39,6 @@ QPainterPath RGSmoothRoute::SmoothRoute(QList<QPoint> RawRoute, int dsmooth)
         sc2=getPointAtLength(B,A,dist1-dsmooth);
         c2=2*p2-sc2;
         newPath.connectPath(pathLineCubic(p1,(c1-p1)/4+p1,(c2-p2)/4+p2,p2));
-        /*newPath.addRect(c1.x(),c1.y(),5,5);
-        newPath.addRect(c2.x(),c2.y(),8,8);
-        newPath.addEllipse(p1,3,5);
-        newPath.addEllipse(p2,8,8);
-        newPath.addEllipse(sc2,6,3);*/
         p1=p2;
         c1=2*p1-c2;
         if (dAB>dsmooth){
