@@ -18,9 +18,9 @@ QPainterPath RGSmoothRoute::SmoothRoute(QList<QPoint> RawRoute, int dsmooth)
   QPoint A=RawRoute.at(0),B=RawRoute.at(1),p1,c1,p2,c2,sc2;
   int dist1=0;
   bool haveP2=false;
-  double dAB;
+  double dAB=sqrt(pow((B-A).x(), 2) + pow((B-A).y(), 2));
   c1=B;
-  if(sqrt(pow((B-A).x(), 2) + pow((B-A).y(), 2)) > dsmooth) {
+  if(dAB > dsmooth) {
     p1=getPointAtLength(B,A,dsmooth);
   }
   else{
@@ -82,56 +82,12 @@ QPainterPath RGSmoothRoute::SmoothRoute(QList<QPoint> RawRoute, int dsmooth)
       }
     }
   }
-  newPath.connectPath(pathLineCubic(p1,(c1-p1)/4+p1,(A-B)/4+B,B));
+  if(dAB>=dsmooth)
+    newPath.lineTo(B);
+  else
+    newPath.connectPath(pathLineCubic(p1,(c1-p1)/4+p1,(A-B)/4+B,B));
   return newPath;
 }
-
-//second method : bezier curve if 2 segments longer than dsmooth else joining center of segments
-/*QPainterPath RGSmoothRoute::SmoothRoute(QList<QPoint> RawRoute, int dsmooth)
-{
-
-  if(RawRoute.size()<1)
-    return QPainterPath();
-  QPainterPath newPath(RawRoute.at(0));
-  QPoint A=RawRoute.at(0),B=RawRoute.at(1),p1,c1,p2,c2,sc2;
-  int dist1=0;
-  bool haveP2=false;
-  double dAB;
-  if(sqrt(pow((B-A).x(), 2) + pow((B-A).y(), 2)) > dsmooth) {
-    p1=getPointAtLength(B,A,dsmooth);
-    c1=B;
-    newPath.lineTo(p1);
-  }
-
-  for (int i=1;i<RawRoute.count()-1;++i)
-  {
-    A=RawRoute.at(i);
-    B=RawRoute.at(i+1);
-    dAB=sqrt(pow((B-A).x(), 2) + pow((B-A).y(), 2));
-    if(dAB>=2*dsmooth){
-      p2=getPointAtLength(A,B,dsmooth);
-      newPath.connectPath(pathLineQuad(p1,c1,p2));
-      //newPath.addRect(c1.x(),c1.y(),2,2);
-      p1=getPointAtLength(B,A,dsmooth);
-      newPath.lineTo(p1);
-      c1=B;
-    }
-    else if (dAB>=dsmooth){
-      p2=A+(B-A)/2;
-      c2=A;
-      newPath.connectPath(pathLineCubic(p1,c1,c2,p2));
-      p1=p2;
-      c1=B;
-    }
-    else {
-      p1=A+(B-A)/2;
-      newPath.lineTo(p1);
-      c1=B;
-    }
-  }
-  newPath.lineTo(RawRoute.at(RawRoute.size()-1));
-  return newPath;
-}*/
 
 QPoint RGSmoothRoute::getPointAtLength(QPoint start,QPoint end,int length)
 {
