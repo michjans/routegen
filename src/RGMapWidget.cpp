@@ -119,6 +119,7 @@ bool RGMapWidget::generateMovie(const QString &dirName, const QString &filePrefi
     progress.setValue(mTimerCounter);
     QPixmap newPixMap(mImage);
     QPainter painter(&newPixMap);
+    painter.setRenderHints(QPainter::Antialiasing);
     painter.drawPixmap(0, 0, mImage);
     painter.setPen (mRgr->getPen());
     mRgr->drawPathAt(mTimerCounter,painter);
@@ -212,6 +213,7 @@ void RGMapWidget::paintEvent ( QPaintEvent * event )
 {
   Q_UNUSED(event);
   QPainter painter(this);
+  painter.setRenderHints(QPainter::Antialiasing);
   painter.drawPixmap(0, 0, mImage);
   drawPath(painter);
 }
