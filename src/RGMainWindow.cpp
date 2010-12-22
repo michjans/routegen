@@ -55,7 +55,8 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mPenSizeSB = ui.penSizeSB;
   mRouteColorPB = ui.routeColorPB;
   mLineStyleCB = ui.lineStyleCB;
-  mVehiclePreviewPB = ui.vehiclePreviewPB;
+  mVehicleCB = ui.vehicleCB;
+  mVehicleSettingsPB = ui.vehicleSettingsPB;
   mInterpolationCB = ui.interpolationCB;
   mRouteTimeSB = ui.routeTimeSB;
 
@@ -75,7 +76,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionGenerate_map->setEnabled(false);
   actionPlayback->setEnabled(false);
   actionStop->setEnabled(false);
-  mVehiclePreviewPB->setEnabled(true);
+  mVehicleSettingsPB->setEnabled(true);
 
 
 
@@ -104,6 +105,15 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 
   //Enum mapping starts counting at 1 (see Qt::PenStyle definition)
   mLineStyleCB->setCurrentIndex(penStyle - 1);
+
+
+  RGVehicleDialog vehlist(this);
+  QStringList vlistname=vehlist.getNameList();
+  QList<QIcon> vlisticon=vehlist.getIconList();
+  for (int i=0;i<vlistname.count();++i)
+  {
+    mVehicleCB->addItem(vlisticon.at(i),vlistname.at(i));
+  }
 
   mRouteColorPB->setAutoFillBackground(true);
   mRouteColorPB->setFlat(true);
@@ -421,14 +431,27 @@ void RGMainWindow::on_routeTimeSB_valueChanged(int time)
   mRGMapWidget->setRoutePlayTime(time);
 }
 
-void RGMainWindow::on_vehiclePreviewPB_clicked(bool)
+void RGMainWindow::on_vehicleCB_activated(int index)
+{
+  RGSettings::setLastVehicleName(mVehicleCB->itemText(index));
+  RGVehicleDialog vehList(this);
+  mRGMapWidget->setVehicle(vehList.getVehicle());
+}
+
+void RGMainWindow::on_vehicleSettingsPB_clicked(bool)
 {
     RGVehicleDialog vehList(this);
     if (vehList.exec() == QDialog::Accepted)
     {
         mVehicle = vehList.getVehicle();
-        QPixmap pm = mVehicle.getPixmap();
-        mVehiclePreviewPB->setIcon(QIcon(pm));
+        QString baseName=mVehicle.getName();
+        for (int i=0;i<mVehicleCB->count(); i++)
+        {
+          if(mVehicleCB->itemText(i)==baseName){
+            mVehicleCB->setItemIcon(i,QIcon(mVehicle.getPixmap()));
+            mVehicleCB->setCurrentIndex(i);
+          }
+        }
         mRGMapWidget->setVehicle(mVehicle);
     }
 }

@@ -13,5 +13,6 @@
         <file>icons/draw-path.png</file>
         <file>icons/reset.png</file>
         <file>icons/undo.png</file>
+        <file>icons/settings.png</file>
     </qresource>
 </RCC>

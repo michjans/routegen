@@ -36,6 +36,8 @@ public:
     RGVehicleDialog(QWidget *parent);
     ~RGVehicleDialog();
     RGVehicle getVehicle();
+    QList<QIcon> getIconList();
+    QStringList getNameList();
     int count();
 
 public slots:

@@ -19,6 +19,7 @@
 
 #include "RGVehicle.h"
 #include <QDebug>
+#include <QFileInfo>
 #include <QImageReader>
 
 RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle,int frameDelay)
@@ -135,6 +136,11 @@ QPixmap RGVehicle::getPixmap(int degrees)
         angle +=180;
     }
     return QPixmap::fromImage(rotateImage(im,angle));
+}
+
+QString RGVehicle::getName()
+{
+  return QFileInfo(mFileName).baseName();
 }
 
 QImage RGVehicle::rotateImage(QImage &image, int degrees)

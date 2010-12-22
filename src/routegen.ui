@@ -70,18 +70,29 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="vehiclePreviewPB">
+       <widget class="QComboBox" name="vehicleCB">
+        <property name="toolTip">
+         <string>Select vehicle for the route</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="vehicleSettingsPB">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="toolTip">
-         <string>Select Vehicle</string>
+         <string>Vehicle Settings</string>
         </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="routegen.qrc">
+          <normaloff>:/icons/icons/settings.png</normaloff>:/icons/icons/settings.png</iconset>
         </property>
        </widget>
       </item>
@@ -164,7 +175,7 @@
          <x>0</x>
          <y>0</y>
          <width>990</width>
-         <height>483</height>
+         <height>482</height>
         </rect>
        </property>
       </widget>

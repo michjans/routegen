@@ -39,6 +39,7 @@ public:
     int     getDelay();
     QPixmap getPixmap();
     QPixmap getPixmap(int degrees);
+    QString getName();
 
     void    setSize(int size);
     void    setMirror(bool mirror);

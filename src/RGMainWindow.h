@@ -65,7 +65,8 @@ private slots:
   void on_lineStyleCB_activated(int);
   void on_interpolationCB_toggled(bool );
   void on_routeTimeSB_valueChanged(int);
-  void on_vehiclePreviewPB_clicked(bool);
+  void on_vehicleCB_activated(int);
+  void on_vehicleSettingsPB_clicked(bool);
 
 
   void blockUserInteraction(bool);
@@ -94,7 +95,8 @@ private:
   QPushButton *mRouteColorPB;
   QComboBox *mLineStyleCB;
   QSpinBox *mPenSizeSB;
-  QPushButton *mVehiclePreviewPB;
+  QComboBox *mVehicleCB;
+  QPushButton *mVehicleSettingsPB;
   QCheckBox *mInterpolationCB;
   QSpinBox  *mRouteTimeSB;
   QMessageBox    *mProcessWaitMessage;

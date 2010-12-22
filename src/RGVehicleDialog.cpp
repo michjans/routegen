@@ -86,6 +86,26 @@ RGVehicle RGVehicleDialog::getVehicle()
     return RGVehicle();
 }
 
+QList<QIcon> RGVehicleDialog::getIconList()
+{
+  QList<QIcon> listicon;
+  for (int i=0;i<mList.count();++i)
+  {
+      listicon.append(ui.vehicleListWidget->item(i)->icon());
+  }
+  return listicon;
+}
+
+QStringList RGVehicleDialog::getNameList()
+{
+  QStringList listname=QStringList();
+  for (int i=0;i<mList.count();++i)
+  {
+      listname.append(ui.vehicleListWidget->item(i)->text());
+  }
+  return listname;
+}
+
 int RGVehicleDialog::count()
 {
     return mList.count();
