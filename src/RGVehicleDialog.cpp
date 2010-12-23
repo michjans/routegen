@@ -20,6 +20,7 @@
 #include <QDir>
 #include <QDebug>
 #include <QIcon>
+#include <QPainter>
 
 #include "RGVehicleDialog.h"
 #include "RGSettings.h"
@@ -66,8 +67,20 @@ RGVehicleDialog::RGVehicleDialog(QWidget *parent)
             }
         }
     }
-
     //TODO : error if no vehicles
+    //arrow:
+    QPixmap arrow(100,15);
+    arrow.fill(Qt::transparent);
+    QPainter painter(&arrow);
+    QPen pen(Qt::DashLine);
+    pen.setColor(Qt::red);
+    painter.setPen(pen);
+    painter.drawLine(0, 7, 99, 7);
+    pen.setStyle(Qt::SolidLine);
+    painter.setPen(pen);
+    painter.drawLine(99,7,95,3);
+    painter.drawLine(99,7,95,11);
+    ui.arrowPix->setPixmap(arrow);
 }
 
 RGVehicleDialog::~RGVehicleDialog()
@@ -164,5 +177,7 @@ void RGVehicleDialog::on_mirrorCB_toggled(bool state)
 
 void RGVehicleDialog::updateVehiclePreview()
 {
+    //QPixmap pmvehicle=mList.at(mVehicleId)->getPixmap();
+
     ui.vehiclePreviewLabel->setPixmap(mList.at(mVehicleId)->getPixmap());
 }
