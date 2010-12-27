@@ -18,7 +18,7 @@ QPainterPath RGSmoothRoute::SmoothRoute(QList<QPoint> RawRoute, int dsmooth)
   QPoint A=RawRoute.at(0),B=RawRoute.at(1),p1,c1,p2,c2,sc2;
   int dist1=0;
   bool haveP2=false;
-  double dAB=sqrt(pow((B-A).x(), 2) + pow((B-A).y(), 2));
+  double dAB=sqrt(pow(double((B-A).x()), 2) + pow(double((B-A).y()), 2));
   c1=B;
   if(dAB > dsmooth) {
     p1=getPointAtLength(B,A,dsmooth);
@@ -32,7 +32,7 @@ QPainterPath RGSmoothRoute::SmoothRoute(QList<QPoint> RawRoute, int dsmooth)
   {
     A=RawRoute.at(i);
     B=RawRoute.at(i+1);
-    dAB=sqrt(pow((B-A).x(), 2) + pow((B-A).y(), 2));
+    dAB=sqrt(pow(double((B-A).x()), 2) + pow(double((B-A).y()), 2));
     if (haveP2) {
       dist1+= (int) dAB;
       if (dist1>=dsmooth){
@@ -58,7 +58,7 @@ QPainterPath RGSmoothRoute::SmoothRoute(QList<QPoint> RawRoute, int dsmooth)
         }
         else {
           p2=c1;
-          dist1=sqrt(pow((B-p2).x(), 2) + pow((B-p2).y(), 2));
+          dist1=sqrt(pow(double((B-p2).x()), 2) + pow(double((B-p2).y()), 2));
         }
       }
     }
@@ -77,7 +77,7 @@ QPainterPath RGSmoothRoute::SmoothRoute(QList<QPoint> RawRoute, int dsmooth)
         if (dist1>=dsmooth){
           p2=getPointAtLength(B,A,dist1-dsmooth);
           haveP2=true;
-          dist1=sqrt(pow((B-p2).x(), 2) + pow((B-p2).y(), 2));
+          dist1=sqrt(pow(double((B-p2).x()), 2) + pow(double((B-p2).y()), 2));
         }
       }
     }
@@ -92,7 +92,7 @@ QPainterPath RGSmoothRoute::SmoothRoute(QList<QPoint> RawRoute, int dsmooth)
 QPoint RGSmoothRoute::getPointAtLength(QPoint start,QPoint end,int length)
 {
   QPoint dv = end-start;
-  double totlength=sqrt(pow((end-start).x(), 2) + pow((end-start).y(), 2));
+  double totlength=sqrt(pow(double((end-start).x()), 2) + pow(double((end-start).y()), 2));
   return QPoint(start+length/totlength*dv);
 }
 
