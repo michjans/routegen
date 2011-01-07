@@ -37,7 +37,10 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mVehicle()
 {
   
-  setWindowIcon (QIcon(":/icons/icons/mapgen.png")); 
+  //Set currentPath
+  QDir::setCurrent(QCoreApplication::applicationDirPath());
+
+  setWindowIcon (QIcon(":/icons/icons/mapgen.png"));
   Ui::MainWindow ui;
   ui.setupUi(this);
 
@@ -133,8 +136,6 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mRGMapWidget->setSmoothPath(RGSettings::getCurvedInterpolation());
   mRGMapWidget->setSmoothCoef(RGSettings::getCurveRadius());
 
-  //Set currentPath
-  QDir::setCurrent(QCoreApplication::applicationDirPath());
 
 }
 
