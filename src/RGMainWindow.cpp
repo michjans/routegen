@@ -133,8 +133,8 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 
   mInterpolationCB->setChecked(RGSettings::getInterpolationMode());
   mRouteTimeSB->setValue(RGSettings::getRoutePlayTime());
-  mRGMapWidget->setSmoothPath(RGSettings::getCurvedInterpolation());
-  mRGMapWidget->setSmoothCoef(RGSettings::getCurveRadius());
+  mRGMapWidget->setSmoothPath(RGSettings::getSmoothPathMode());
+  mRGMapWidget->setSmoothCoef(RGSettings::getSmoothLength());
 
 
 }
@@ -196,8 +196,8 @@ void RGMainWindow::on_actionPreferences_triggered(bool)
 {
   RGSettingsDialog rgsettings;
   if(rgsettings.exec()==QDialog::Accepted){
-    mRGMapWidget->setSmoothPath(RGSettings::getCurvedInterpolation());
-    mRGMapWidget->setSmoothCoef(RGSettings::getCurveRadius());
+    mRGMapWidget->setSmoothPath(RGSettings::getSmoothPathMode());
+    mRGMapWidget->setSmoothCoef(RGSettings::getSmoothLength());
   }
 }
 

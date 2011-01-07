@@ -412,35 +412,35 @@ RGSettings::getGMYResolution()
 }
 
 void
-RGSettings::setCurvedInterpolation(bool enable)
+RGSettings::setSmoothPathMode(bool enable)
 {
   QSettings settings;
-  settings.setValue("curvedInterPolation", enable);
+  settings.setValue("SmoothPathMode", enable);
 }
 
 bool
-RGSettings::getCurvedInterpolation(bool defaultVal)
+RGSettings::getSmoothPathMode(bool defaultVal)
 {
   QSettings settings;
   if (defaultVal)
     return false;
   else
-    return settings.value("curvedInterPolation", false).toBool();
+    return settings.value("SmoothPathMode", false).toBool();
 }
 
 void
-RGSettings::setCurveRadius(int val)
+RGSettings::setSmoothLength(int val)
 {
   QSettings settings;
-  settings.setValue("curveRadius", val);
+  settings.setValue("SmoothLength", val);
 }
 
 int
-RGSettings::getCurveRadius(bool defaultVal)
+RGSettings::getSmoothLength(bool defaultVal)
 {
   QSettings settings;
   if (defaultVal)
     return 10;
   else
-    return settings.value("curveRadius",10).toInt();
+    return settings.value("SmoothLength",10).toInt();
 }

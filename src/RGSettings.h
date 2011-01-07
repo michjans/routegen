@@ -87,10 +87,10 @@ public:
 
   //Enable experimental curve interpolation for routes?
   //(Still needs to be fixed, so made experimental)
-  static void setCurvedInterpolation(bool enable);
-  static bool getCurvedInterpolation(bool defaultVal = false);
-  static void setCurveRadius(int val);
-  static int  getCurveRadius(bool defaultVal = false);
+  static void setSmoothPathMode(bool enable);
+  static bool getSmoothPathMode(bool defaultVal = false);
+  static void setSmoothLength(int val);
+  static int  getSmoothLength(bool defaultVal = false);
 
 };
 

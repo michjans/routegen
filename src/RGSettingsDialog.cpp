@@ -37,12 +37,12 @@ RGSettingsDialog::RGSettingsDialog(QWidget *parent)
   mFpsSB = ui.mFpsSB;
   mKeyFrSB = ui.mKeyFrSB;
   mCodecCB = ui.mCodecCB;
-  mSmoothCurvesModeCB = ui.mSmoothCurvesModeCB;
-  mCurveRadiusSB = ui.mCurveRadiusSB;
+  mSmoothPathModeCB = ui.mSmoothPathModeCB;
+  mSmoothLengthSB = ui.mSmoothLengthSB;
   mResetDefaultsPB = ui.mResetDefaultsPB;
 
   QObject::connect(mBrowsePB, SIGNAL(clicked(bool)), this, SLOT(browseClicked()));
-  QObject::connect(mSmoothCurvesModeCB, SIGNAL(toggled(bool)), mCurveRadiusSB, SLOT(setEnabled(bool)));
+  QObject::connect(mSmoothPathModeCB, SIGNAL(toggled(bool)), mSmoothLengthSB, SLOT(setEnabled(bool)));
 
   //Deactivate Path to bmp2avi.exe on linux :
   #ifdef Q_WS_X11
@@ -55,8 +55,8 @@ RGSettingsDialog::RGSettingsDialog(QWidget *parent)
 
 void RGSettingsDialog::on_mResetDefaultsPB_clicked(bool)
 {
-  mSmoothCurvesModeCB->setChecked(RGSettings::getCurvedInterpolation(true));
-  mCurveRadiusSB->setValue(RGSettings::getCurveRadius(true));
+  mSmoothPathModeCB->setChecked(RGSettings::getSmoothPathMode(true));
+  mSmoothLengthSB->setValue(RGSettings::getSmoothLength(true));
 }
 
 void RGSettingsDialog::browseClicked()
@@ -83,8 +83,8 @@ void RGSettingsDialog::accept()
   RGSettings::setAviCompression(codec.toString());
 
   //Advanced settings
-  RGSettings::setCurvedInterpolation(mSmoothCurvesModeCB->isChecked());
-  RGSettings::setCurveRadius(mCurveRadiusSB->value());
+  RGSettings::setSmoothPathMode(mSmoothPathModeCB->isChecked());
+  RGSettings::setSmoothLength(mSmoothLengthSB->value());
 
   QDialog::accept();
 }
@@ -101,10 +101,10 @@ void RGSettingsDialog::initFromSettings()
   mKeyFrSB->setValue(RGSettings::getKeyFrameRate());
 
   //Advanced tab
-  mSmoothCurvesModeCB->setChecked(RGSettings::getCurvedInterpolation());
-  mCurveRadiusSB->setValue(RGSettings::getCurveRadius());
-  mCurveRadiusSB->setRange(1, 1000);
-  mCurveRadiusSB->setEnabled(RGSettings::getCurvedInterpolation());
+  mSmoothPathModeCB->setChecked(RGSettings::getSmoothPathMode());
+  mSmoothLengthSB->setValue(RGSettings::getSmoothLength());
+  mSmoothLengthSB->setRange(1, 1000);
+  mSmoothLengthSB->setEnabled(RGSettings::getSmoothPathMode());
 
   //Collect codecs from bmp2avi
   QString bmp2aviExecName = RGSettings::getVideoEncExec();

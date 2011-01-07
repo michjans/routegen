@@ -167,12 +167,12 @@
          </property>
          <layout class="QGridLayout">
           <item row="0" column="0" colspan="4">
-           <widget class="QCheckBox" name="mSmoothCurvesModeCB">
+           <widget class="QCheckBox" name="mSmoothPathModeCB">
             <property name="toolTip">
              <string/>
             </property>
             <property name="text">
-             <string>Enable automatic route smoothing (may still have some bugs)</string>
+             <string>Enable automatic route smoothing</string>
             </property>
            </widget>
           </item>
@@ -184,7 +184,7 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QSpinBox" name="mCurveRadiusSB">
+           <widget class="QSpinBox" name="mSmoothLengthSB">
             <property name="minimum">
              <number>2</number>
             </property>
