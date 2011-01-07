@@ -213,95 +213,23 @@
             </property>
            </spacer>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="3">
-        <widget class="QGroupBox" name="groupBox_2">
-         <property name="title">
-          <string>Vehicle orientation parameters (influences how often the vehicle orientation should change)</string>
-         </property>
-         <layout class="QGridLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>Minimum angle change of route before new vehicle orientation is calculated</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QSpinBox" name="mStepAngleSB">
-            <property name="toolTip">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_8">
-            <property name="text">
-             <string>Minimum distance change of route before new vehicle orientation is calculated</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QSpinBox" name="mMinDistanceSB">
-            <property name="toolTip">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_9">
-            <property name="text">
-             <string>Maximum number of frames to always force calculating a new vehicle orientation</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="1">
-           <widget class="QSpinBox" name="mForceCounterSB">
-            <property name="toolTip">
-             <string>This setting overrules minimum angle and distance settings</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <spacer>
+           <spacer name="verticalSpacer">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Vertical</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>20</width>
+              <height>40</height>
              </size>
             </property>
            </spacer>
           </item>
-          <item row="2" column="2">
-           <widget class="QLabel" name="label_12">
-            <property name="text">
-             <string>(frames)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QLabel" name="label_13">
-            <property name="text">
-             <string>(degrees)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="label_14">
-            <property name="text">
-             <string>(pixels)</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="1" column="0">
         <spacer>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -314,7 +242,7 @@
          </property>
         </spacer>
        </item>
-       <item row="2" column="1">
+       <item row="1" column="1">
         <widget class="QPushButton" name="mResetDefaultsPB">
          <property name="toolTip">
           <string>Reset to original settings</string>
@@ -324,7 +252,7 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="2">
+       <item row="1" column="2">
         <spacer>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>

@@ -39,9 +39,6 @@ RGSettingsDialog::RGSettingsDialog(QWidget *parent)
   mCodecCB = ui.mCodecCB;
   mSmoothCurvesModeCB = ui.mSmoothCurvesModeCB;
   mCurveRadiusSB = ui.mCurveRadiusSB;
-  mStepAngleSB = ui.mStepAngleSB;
-  mMinDistanceSB = ui.mMinDistanceSB;
-  mForceCounterSB = ui.mForceCounterSB;
   mResetDefaultsPB = ui.mResetDefaultsPB;
 
   QObject::connect(mBrowsePB, SIGNAL(clicked(bool)), this, SLOT(browseClicked()));
@@ -59,26 +56,8 @@ RGSettingsDialog::RGSettingsDialog(QWidget *parent)
 void RGSettingsDialog::on_mResetDefaultsPB_clicked(bool)
 {
   mSmoothCurvesModeCB->setChecked(RGSettings::getCurvedInterpolation(true));
-  mStepAngleSB->setValue(RGSettings::getVehicleStepAngle(true));
-  mMinDistanceSB->setValue(RGSettings::getVehicleMinDistance(true));
-  mForceCounterSB->setValue(RGSettings::getVehicleForceCounter(true));
   mCurveRadiusSB->setValue(RGSettings::getCurveRadius(true));
 }
-
-void RGSettingsDialog::on_mForceCounterSB_valueChanged(int val)
-{
-  //See RGVehicle (force counter should be higher than min distance)
-  if (val <= mMinDistanceSB->value())
-    mMinDistanceSB->setValue(val - 1);
-}
-
-void RGSettingsDialog::on_mMinDistanceSB_valueChanged(int val)
-{
-  //See RGVehicle (min distance should always be smaller than force counter)
-  if (val >= mForceCounterSB->value())
-    mForceCounterSB->setValue(val + 1);
-}
-
 
 void RGSettingsDialog::browseClicked()
 {
@@ -106,9 +85,6 @@ void RGSettingsDialog::accept()
   //Advanced settings
   RGSettings::setCurvedInterpolation(mSmoothCurvesModeCB->isChecked());
   RGSettings::setCurveRadius(mCurveRadiusSB->value());
-  RGSettings::setVehicleStepAngle(mStepAngleSB->value());
-  RGSettings::setVehicleMinDistance(mMinDistanceSB->value());
-  RGSettings::setVehicleForceCounter(mForceCounterSB->value());
 
   QDialog::accept();
 }
@@ -126,16 +102,9 @@ void RGSettingsDialog::initFromSettings()
 
   //Advanced tab
   mSmoothCurvesModeCB->setChecked(RGSettings::getCurvedInterpolation());
-  mStepAngleSB->setValue(RGSettings::getVehicleStepAngle());
-  mMinDistanceSB->setValue(RGSettings::getVehicleMinDistance());
-  mForceCounterSB->setValue(RGSettings::getVehicleForceCounter());
   mCurveRadiusSB->setValue(RGSettings::getCurveRadius());
   mCurveRadiusSB->setRange(1, 1000);
   mCurveRadiusSB->setEnabled(RGSettings::getCurvedInterpolation());
-  mStepAngleSB->setRange(1, 45);
-  //See RGVehicle (distance must be smaller than force counter)
-  mMinDistanceSB->setRange(0, 99);
-  mForceCounterSB->setRange(1, 100);
 
   //Collect codecs from bmp2avi
   QString bmp2aviExecName = RGSettings::getVideoEncExec();

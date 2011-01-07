@@ -92,15 +92,6 @@ public:
   static void setCurveRadius(int val);
   static int  getCurveRadius(bool defaultVal = false);
 
-  //Advanced parameters for calculating vehicle orientation
-  static void setVehicleStepAngle(int angle);
-  static int  getVehicleStepAngle(bool defaultVal = false);
-  static void setVehicleMinDistance(int dist);
-  static int  getVehicleMinDistance(bool defaultVal = false);
-  static void setVehicleForceCounter(int ctr);
-  static int  getVehicleForceCounter(bool defaultVal = false);
-
-
 };
 
 #endif

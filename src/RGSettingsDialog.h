@@ -39,8 +39,6 @@ public:
 
 private slots:
   void on_mResetDefaultsPB_clicked(bool);
-  void on_mForceCounterSB_valueChanged(int);
-  void on_mMinDistanceSB_valueChanged(int);
 
   void browseClicked();
   void accept();
@@ -58,9 +56,6 @@ private:
   QComboBox *mCodecCB;
   QCheckBox *mSmoothCurvesModeCB;
   QSpinBox *mCurveRadiusSB;
-  QSpinBox *mStepAngleSB;
-  QSpinBox *mMinDistanceSB;
-  QSpinBox *mForceCounterSB;
   QPushButton *mResetDefaultsPB;
 
 };
