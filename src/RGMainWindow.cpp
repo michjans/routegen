@@ -317,8 +317,9 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
           arguments << "-f" << fps << "-k" << key << "-o" << outname << "-c" << compress;
       }
       if (videoEncoder==QString("ffmpeg")){
-          outname.append(".mpg");
-          arguments << "-y" << "-f" << "image2" << "-i" << "map\%05d.bmp" << "-g" << key <<"-r"<<fps<< outname;
+          outname.append(".avi");
+          QString bitrate= QString("1500k");
+          arguments << "-y" << "-i" << "map\%05d.bmp" << "-g" << key <<"-r"<<fps<< "-b" <<bitrate << outname;
       }
       mVideoEncProcess = new QProcess(this);
       QObject::connect(mVideoEncProcess, SIGNAL(finished (int , QProcess::ExitStatus)),
