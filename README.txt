@@ -3,7 +3,7 @@ This is Route Generator version 1.4
 Route Generator can be used to generate route maps to be used in video editing
 software.
 
-Copyright (C) 2008-2010 Michiel Jansen.
+Copyright (C) 2008-2011 Michiel Jansen.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

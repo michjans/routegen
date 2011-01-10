@@ -1,5 +1,6 @@
 /*
-    Copyright (C) 2008  Michiel Jansen
+    Copyright (C) 2008-2011  Michiel Jansen
+    Copyright (C) 2010-2011  Fabien Valthier
 
   This file is part of Route Generator.
 
