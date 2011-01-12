@@ -39,7 +39,8 @@ public:
     int     getStartAngle();
     int     getDelay();
     QPixmap getPixmap();
-    QPixmap getPixmap(int degrees);
+    QPixmap getPixmapAtSize(int);
+    QPixmap getPixmapAtAngle(int degrees);
     QString getName();
 
     void    setSize(int size);

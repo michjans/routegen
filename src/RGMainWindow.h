@@ -24,7 +24,6 @@
 #include <QMainWindow>
 #include <QProcess>
 #include <QStringList>
-#include "RGVehicle.h"
 
 class QWidget;
 class QTimer;
@@ -36,6 +35,7 @@ class QPushButton;
 class QMessageBox;
 class QLabel;
 class RGMapWidget;
+class RGVehicleList;
 
 class RGMainWindow : public QMainWindow
 {
@@ -77,11 +77,11 @@ private slots:
   void handleVideoEncProcessError(QProcess::ProcessError error);
 
 private:
-  void  updateVehicleIcon(int idx);
   void  setPen();
   QIcon createIconForStyle(Qt::PenStyle);
 
   RGMapWidget *mRGMapWidget;
+  RGVehicleList     *mVehicleList;
 
   QAction *actionOpen_image;
   QAction *action_Quit;
@@ -105,9 +105,6 @@ private:
 
   QProcess    *mVideoEncProcess;
   QStringList  mGeneratedBMPs;
-
-  RGVehicle     mVehicle;
-
 
 };
 

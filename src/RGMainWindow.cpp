@@ -26,6 +26,7 @@
 #include "RGSettingsDialog.h"
 #include "RGGoogleMap.h"
 #include "RGVehicleDialog.h"
+#include "RGVehicleList.h"
 
 #include "ui_routegen.h"
 
@@ -33,8 +34,7 @@
 extern const QString applicationName;
 
 RGMainWindow::RGMainWindow(QWidget *parent)
-  :QMainWindow(parent),
-  mVehicle()
+  :QMainWindow(parent)
 {
   
   //Set currentPath
@@ -82,8 +82,6 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionStop->setEnabled(false);
   mVehicleSettingsPB->setEnabled(true);
 
-
-
   QObject::connect(ui.genFramesCB, SIGNAL(toggled ( bool )),
           mRGMapWidget, SLOT(setGenerateBeginEndFrames(bool)));
 
@@ -110,18 +108,8 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   //Enum mapping starts counting at 1 (see Qt::PenStyle definition)
   mLineStyleCB->setCurrentIndex(penStyle - 1);
 
-
-  RGVehicleDialog vehlist(this);
-  QStringList vlistname=vehlist.getNameList();
-  QList<QIcon> vlisticon=vehlist.getIconList();
-  for (int i=0;i<vlistname.count();++i)
-  {
-    mVehicleCB->addItem(vlisticon.at(i),vlistname.at(i));
-  }
-
   mRouteColorPB->setAutoFillBackground(true);
   mRouteColorPB->setFlat(true);
-
   //Restore some initial settings
   QColor penCol = RGSettings::getPenColor();
   QPalette pal = mRouteColorPB->palette();
@@ -137,7 +125,13 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mRouteTimeSB->setValue(RGSettings::getRoutePlayTime());
   mRGMapWidget->setSmoothCoef(RGSettings::getSmoothLength());
 
-
+  mVehicleList = new RGVehicleList();
+  for (int i=0;i<mVehicleList->count();++i)
+  {
+    mVehicleCB->addItem(QIcon(mVehicleList->getVehicle(i)->getPixmap()),mVehicleList->getVehicle(i)->getName());
+  }
+  mVehicleCB->setCurrentIndex(mVehicleList->getCurrentVehicleId());
+  mRGMapWidget->setVehicle(*mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId()));
 }
 
 void RGMainWindow::on_actionOpen_image_triggered(bool checked)
@@ -441,26 +435,21 @@ void RGMainWindow::on_routeTimeSB_valueChanged(int time)
 
 void RGMainWindow::on_vehicleCB_activated(int index)
 {
-  RGSettings::setLastVehicleName(mVehicleCB->itemText(index));
-  RGVehicleDialog vehList(this);
-  mRGMapWidget->setVehicle(vehList.getVehicle());
+  mVehicleList->setCurrentVehicleId(index);
+  mRGMapWidget->setVehicle(*mVehicleList->getVehicle(index));
 }
 
 void RGMainWindow::on_vehicleSettingsPB_clicked(bool)
 {
-    RGVehicleDialog vehList(this);
-    if (vehList.exec() == QDialog::Accepted)
+    RGVehicleDialog vehicleDialog(this,mVehicleList);
+    if (vehicleDialog.exec() == QDialog::Accepted)
     {
-        mVehicle = vehList.getVehicle();
-        QString baseName=mVehicle.getName();
-        for (int i=0;i<mVehicleCB->count(); i++)
-        {
-          if(mVehicleCB->itemText(i)==baseName){
-            mVehicleCB->setItemIcon(i,QIcon(mVehicle.getPixmap()));
-            mVehicleCB->setCurrentIndex(i);
-          }
-        }
-        mRGMapWidget->setVehicle(mVehicle);
+        mVehicleCB->setCurrentIndex(mVehicleList->getCurrentVehicleId());
+        mRGMapWidget->setVehicle(*mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId()));
+    }
+    //update icons of the comboBox
+    for(int i=0;i<mVehicleList->count();i++){
+      mVehicleCB->setItemIcon(i,QIcon(mVehicleList->getVehicle(i)->getPixmap()));
     }
 }
 
@@ -475,8 +464,6 @@ void RGMainWindow::blockUserInteraction(bool busy)
   actionNew_route->setEnabled(!busy);
   actionGenerate_map->setEnabled(!busy);
   actionPlayback->setEnabled(!busy);
-  mRouteColorPB->setEnabled(!busy);
-  mLineStyleCB->setEnabled(!busy);
   //Stop is only enabled while playing back
   actionStop->setEnabled(false);
 }
@@ -552,40 +539,6 @@ void RGMainWindow::handleVideoEncProcessError(QProcess::ProcessError)
 
   mVideoEncProcess->deleteLater();
   blockUserInteraction(false);
-}
-
-void RGMainWindow::updateVehicleIcon(int index)
-{
-  //QString iconFile = mIconCB->itemData(index).toString();
-
-  //mRGMapWidget->setVehicle(iconFile, mDrawMirroredIcon, mStartAngle, mSizeVehicle);
-
-  //Set preview vehicle, and we draw an extra west to east orientation arrow in it
-  QPixmap pm = mVehicle.getPixmap();
-  /*if (pm.isNull()) {
-    mVehiclePreviewLabel->setPixmap(pm);
-  } else {
-    QPixmap spm = pm.scaled(mVehiclePreviewLabel->width(),
-                            mVehiclePreviewLabel->height(),
-                            Qt::IgnoreAspectRatio,
-                            Qt::SmoothTransformation);
-    QPainter painter(&spm);
-    QPen pen(Qt::DashLine);
-    pen.setColor(Qt::red);
-    painter.setPen(pen);
-    painter.drawLine(0, spm.height() / 2, spm.width() - 1, spm.height() / 2);
-    pen.setStyle(Qt::SolidLine);
-    painter.setPen(pen);
-    painter.drawLine(spm.width() - 1, spm.height() / 2, spm.width() - 4, spm.height() / 2 - 3);
-    painter.drawLine(spm.width() - 1, spm.height() / 2, spm.width() - 4, spm.height() / 2 + 3);
-    mVehiclePreviewLabel->setPixmap(spm);
-    // update size of the vehicle in the spinBox
-    int bigsize = pm.width();
-    if (bigsize<pm.height()) bigsize = pm.height();
-    mSizeSB->setValue(bigsize);
-    mSizeVehicle = bigsize;
-  }*/
-  //mVehiclePreviewLabel->setPixmap(pm);
 }
 
 QIcon RGMainWindow::createIconForStyle(Qt::PenStyle style)

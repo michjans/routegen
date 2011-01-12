@@ -23,8 +23,8 @@
 
 #include "ui_vehicledialog.h"
 #include <QString>
-#include <QList>
 #include "RGVehicle.h"
+#include "RGVehicleList.h"
 
 class RGVehicleDialog : public QDialog
 {
@@ -34,15 +34,12 @@ public:
     /**
    * Creates a new RGVehicleDialog object.
    */
-    RGVehicleDialog(QWidget *parent);
+    RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList);
     ~RGVehicleDialog();
-    RGVehicle getVehicle();
-    QList<QIcon> getIconList();
-    QStringList getNameList();
-    int count();
 
 public slots:
     void accept();
+    void reject();
 
 private  slots:
     void on_vehicleListWidget_currentRowChanged(int);
@@ -56,8 +53,12 @@ private:
     void updateVehiclePreview();
 
     Ui_vehicleDialog ui;
-    QList<RGVehicle*>  mList;
-    int mVehicleId;
+    int mCurrentVehicleId;
+    int mLastVehicleId;
+    int mLastVehicleSize;
+    int mLastVehicleMirror;
+    int mLastVehicleStartAngle;
+    RGVehicleList *mVehicleList;
 };
 
 #endif

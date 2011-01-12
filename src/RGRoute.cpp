@@ -100,7 +100,7 @@ void RGRoute::drawPathAt(int frame,QPainter &painter)
     //TODO: get animated gif working
     float angle;
     angle=getAngleAt(frame);
-    QPixmap vehim = mVehicle.getPixmap(angle);
+    QPixmap vehim = mVehicle.getPixmapAtAngle(angle);
     //Draw vehicle with center on current point
     int px = tmpPath.elementAt(tmpPath.elementCount()-1).x - vehim.size().width() / 2;
     int py = tmpPath.elementAt(tmpPath.elementCount()-1).y - vehim.size().height() / 2;

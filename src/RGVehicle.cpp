@@ -126,7 +126,20 @@ QPixmap RGVehicle::getPixmap()
         return QPixmap();
 }
 
-QPixmap RGVehicle::getPixmap(int degrees)
+QPixmap RGVehicle::getPixmapAtSize(int size)
+{
+  QPixmap pm = QPixmap(40,40);
+  pm.fill(Qt::transparent);
+  if (mImages.size() > 0){
+    int lastSize=mSize;
+    createImages(size,mStartAngle,mMirror);
+    pm = QPixmap::fromImage(mImages[0]);
+    createImages(lastSize,mStartAngle,mMirror);
+  }
+  return pm;
+}
+
+QPixmap RGVehicle::getPixmapAtAngle(int degrees)
 {
     if (mImages.size() == 0)
         return QPixmap();
