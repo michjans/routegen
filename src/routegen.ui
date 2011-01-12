@@ -134,6 +134,20 @@
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="smoothPathCB">
+        <property name="text">
+         <string>Smooth route</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_4">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="genFramesCB">
         <property name="toolTip">
          <string>Generate begin/end frames, without the vehicle icon</string>

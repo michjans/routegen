@@ -61,6 +61,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mVehicleCB = ui.vehicleCB;
   mVehicleSettingsPB = ui.vehicleSettingsPB;
   mInterpolationCB = ui.interpolationCB;
+  mSmoothPathCB = ui.smoothPathCB;
   mRouteTimeSB = ui.routeTimeSB;
 
   action_Undo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
@@ -132,8 +133,8 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   setPen();
 
   mInterpolationCB->setChecked(RGSettings::getInterpolationMode());
+  mSmoothPathCB->setChecked(RGSettings::getSmoothPathMode());
   mRouteTimeSB->setValue(RGSettings::getRoutePlayTime());
-  mRGMapWidget->setSmoothPath(RGSettings::getSmoothPathMode());
   mRGMapWidget->setSmoothCoef(RGSettings::getSmoothLength());
 
 
@@ -196,7 +197,6 @@ void RGMainWindow::on_actionPreferences_triggered(bool)
 {
   RGSettingsDialog rgsettings;
   if(rgsettings.exec()==QDialog::Accepted){
-    mRGMapWidget->setSmoothPath(RGSettings::getSmoothPathMode());
     mRGMapWidget->setSmoothCoef(RGSettings::getSmoothLength());
   }
 }
@@ -426,6 +426,12 @@ void RGMainWindow::on_lineStyleCB_activated(int idx)
 void RGMainWindow::on_interpolationCB_toggled(bool checked)
 {
   mRGMapWidget->setInterpolationMode(checked);
+}
+
+void RGMainWindow::on_smoothPathCB_toggled(bool checked)
+{
+  mRGMapWidget->setSmoothPath(checked);
+  RGSettings::setSmoothPathMode(checked);
 }
 
 void RGMainWindow::on_routeTimeSB_valueChanged(int time)

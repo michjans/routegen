@@ -54,7 +54,6 @@ private:
   QSpinBox *mFpsSB;
   QSpinBox *mKeyFrSB;
   QComboBox *mCodecCB;
-  QCheckBox *mSmoothPathModeCB;
   QSpinBox *mSmoothLengthSB;
   QPushButton *mResetDefaultsPB;
 
