@@ -82,7 +82,7 @@ available on my website.
 Route Generator is developed using the GPL version of Qt 4.7, which can be
 downloaded from: http://qt.nokia.com/downloads
 
-Route Generator makes use of a freeware 3rdparty tool:
+On Windows, Route Generator makes use of a freeware 3rdparty tool:
 Bmp2Avi (Copyright (C) Paul Roberts 1996 - 1998)
 This tool is available in the subdirectory bmp2avi. By default Route Generator
 tries to find bmp2avi.exe in that directory, so you can leave it there.
@@ -92,6 +92,12 @@ you to browse to a different location.
 Bmp2Avi can freely be re-distributed as long as you provide the documentation
 with it (also located in the bmp2avi sub-directory).
 
+On linux, Route Generator makes use of a 3rdparty tool:
+FFmpeg licensed under the LGPLv2.1.
+This tool is not included in the source, so you will have to install it on
+your computer before running Route Generator. Make sure it is installed if you
+want to be able to generate a movie.
+
 AVAILABILTY
 I've only build the executable version of Route Generator for Windows, because
 I'm using Pinnacle Studio as video editing software, which is only available
@@ -99,12 +105,12 @@ for windows.
 However, it's developed using Trolltechs's cross-platform GUI toolkit, Qt,
 which is also available for other OS's, like Linux. So it is also possible
 to build and run Route Generator on Linux as well, but you have to build it
-yourself from the source code. I've tested it myself on a Suse 10 system
-and it works (see building instructions below).
-NOTE: Route Generator makes use of Bmp2Avi which is only available for
-Windows! However, Bmp2Avi is not required to run Route Generator. The only thing
-that will not work without Bmp2Avi is the last stage of the generation process:
-converting a list of bmp files to an avi file.
+yourself from the source code (see building instructions below).
+NOTE: Route Generator makes use of a video encoder (Bmp2Avi on Windows and 
+ffmpeg on linux)! However, the video encoder is not required to run Route
+Generator. The only thing that will not work without the video encoder is the
+last stage of the generation process:converting a list of bmp files to an avi
+file.
 
 BUILDING ROUTE GENERATOR FROM THE SOURCE CODE
 Route Generator should be build, using Qt 4.7 or higher. So Qt 4.7 should be
