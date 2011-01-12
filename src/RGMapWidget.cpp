@@ -330,6 +330,9 @@ void RGMapWidget::setInterpolationMode(bool val)
 
   RGSettings::setInterpolationMode(val);
   mRgr->setPlayMode((int) val);
+  if(!mPlayTimer->isActive()){
+    mTimerCounter=mRgr->getNumberFrame();
+  }
   update();
 }
 

@@ -162,6 +162,7 @@ float RGRoute::getAngleAt(int frame)
 float RGRoute::getAngleAtTime(int time)
 {
     qreal percent = (double) time / ((double) mTotalTime*1000);//mTotalTime should never be null
+    if (percent>1) percent=1;
     qreal angle=mPath.angleAtPercent(percent);
     return angle;
 
