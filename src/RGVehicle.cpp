@@ -66,6 +66,8 @@ RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle
     mRawImages.push_back(im);
     mFrameDelay = 0; //Means, no animation
   }
+  if(size==0)
+    size=mRawSize;
   createImages(size,startAngle,mirror);
 }
 

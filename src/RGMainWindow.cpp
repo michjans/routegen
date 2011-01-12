@@ -127,7 +127,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 
   mVehicleList = new RGVehicleList();
   for (int i=0;i<mVehicleList->count();++i){
-    mVehicleCB->addItem(QIcon(mVehicleList->getVehicle(i)->getPixmap()),mVehicleList->getVehicle(i)->getName());
+    mVehicleCB->addItem(QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(16)),mVehicleList->getVehicle(i)->getName());
   }
   mVehicleCB->setCurrentIndex(mVehicleList->getCurrentVehicleId());
   mRGMapWidget->setVehicle(*mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId()));
@@ -441,7 +441,7 @@ void RGMainWindow::on_vehicleSettingsPB_clicked(bool)
   }
   //update icons of the comboBox
   for(int i=0;i<mVehicleList->count();i++){
-    mVehicleCB->setItemIcon(i,QIcon(mVehicleList->getVehicle(i)->getPixmap()));
+    mVehicleCB->setItemIcon(i,QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(16)));
   }
 }
 
