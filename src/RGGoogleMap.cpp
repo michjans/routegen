@@ -28,13 +28,13 @@ RGGoogleMap::RGGoogleMap(QWidget *parent)
 	ui.setupUi(this);
 
 	QFile file("google-maps-template.html");
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        return;
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+		return;
 
-    QTextStream in(&file);
-    while (!in.atEnd()) {
-        m_html_template.append(in.readLine());
-    }
+	QTextStream in(&file);
+	while (!in.atEnd()) {
+		m_html_template.append(in.readLine());
+	}
 
 	ui.progressBar->hide();
 	ui.progressBar->setRange(0, 100);
@@ -61,22 +61,20 @@ void RGGoogleMap::on_goButton_clicked(bool)
 {
 	QUrl url = ui.lineEdit->text();
 
-    //This is what we expect:
+	//This is what we expect:
 	//http://maps.google.nl/?ie=UTF8&ll=52.36428,4.847116&spn=0.035902,0.077162&z=14
 
 	QString latlon;
 	QString zoom;
-	if (url.hasFragment() || url.host().contains("google"))
-	{
+	if (url.hasFragment() || url.host().contains("google")){
 		latlon = url.queryItemValue ("ll");
 		zoom = url.queryItemValue ("z");
 	}
-	if (latlon.isEmpty() || zoom.isEmpty())
-	{
+	if (latlon.isEmpty() || zoom.isEmpty()){
 		QMessageBox::warning(this, tr("Web Test"),
-			tr("URL should have format similar like this:\n"
-			   "http://maps.google.nl/?ie=UTF8&ll=52.36428,4.847116&spn=0.035902,0.077162&z=14\n"
-			   "Copy it from the paste link option from Google Maps in your browser."));
+												 tr("URL should have format similar like this:\n"
+														"http://maps.google.nl/?ie=UTF8&ll=52.36428,4.847116&spn=0.035902,0.077162&z=14\n"
+														"Copy it from the paste link option from Google Maps in your browser."));
 		return;
 	}
 
@@ -114,8 +112,7 @@ QString RGGoogleMap::genHtml(const QString &latlon, const QString &zoom) const
 
 #if 0
 	QFile file("out.html");
-	if (file.open(QIODevice::WriteOnly | QIODevice::Text))
-	{
+	if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
 		QTextStream out(&file);
 		out << html;
 	}

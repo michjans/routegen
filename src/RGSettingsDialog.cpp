@@ -43,10 +43,10 @@ RGSettingsDialog::RGSettingsDialog(QWidget *parent)
   QObject::connect(mBrowsePB, SIGNAL(clicked(bool)), this, SLOT(browseClicked()));
 
   //Deactivate Path to bmp2avi.exe on linux :
-  #ifdef Q_WS_X11
-    mBmp2AviLocLE->setDisabled(true);
-    mBrowsePB->setDisabled(true);
-  #endif
+#ifdef Q_WS_X11
+  mBmp2AviLocLE->setDisabled(true);
+  mBrowsePB->setDisabled(true);
+#endif
 
   initFromSettings();
 }
@@ -60,10 +60,9 @@ void RGSettingsDialog::browseClicked()
 {
   QString bmp2AviLoc = mBmp2AviLocLE->text();
   bmp2AviLoc = QFileDialog::getOpenFileName(this, tr("Select BMP2AVI location"),
-                                                 bmp2AviLoc,
-                                                 tr("Bmp2Avi (bmp2avi.exe)")); 
-  if (!bmp2AviLoc.isNull())
-  {
+                                            bmp2AviLoc,
+                                            tr("Bmp2Avi (bmp2avi.exe)"));
+  if (!bmp2AviLoc.isNull()){
     mBmp2AviLocLE->setText(bmp2AviLoc);
     RGSettings::setVideoEncoder(QString("bmp2avi"));
   }
@@ -106,14 +105,13 @@ void RGSettingsDialog::initFromSettings()
   if (bmp2aviExec.exists()) {
     QProcess *bmp2AviProcess = new QProcess(this);
     QStringList arguments;
-   
+
     //List codecs
     arguments << "-l";
 
     bmp2AviProcess = new QProcess(this);
     bmp2AviProcess->start(bmp2aviExecName, arguments);
-    if (bmp2AviProcess->waitForFinished())
-    {
+    if (bmp2AviProcess->waitForFinished()){
       QString currentCodec = RGSettings::getAviCompression();
       int currentIndex = 0;
       //First add "Uncompressed" codec to combobox
@@ -121,10 +119,9 @@ void RGSettingsDialog::initFromSettings()
       QByteArray output = bmp2AviProcess->readAllStandardOutput();
       QList<QByteArray> lines = output.split('\n');
       bool inHeader = true;
-      for (int i = 0; i < lines.size(); i++)
-      {
+      for (int i = 0; i < lines.size(); i++){
         QString line = lines[i].data();
-        if (inHeader) {
+        if (inHeader){
           //Skip header
           if (!line.startsWith("------")) continue;
           else inHeader = false;
@@ -145,8 +142,7 @@ void RGSettingsDialog::initFromSettings()
       //Set current setting
       mCodecCB->setCurrentIndex(currentIndex);
     }
-    else
-    {
+    else{
       QMessageBox::critical (this, "Error", "Could not run bmp2avi to collect codec selection!");
     }
 

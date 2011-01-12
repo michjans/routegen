@@ -31,37 +31,37 @@
 class RGVehicle
 {
 public:
-    RGVehicle(const QString &filename="None",int size=0,bool mirror=false,int startAngle=0,int frameDelay=80);
-    ~RGVehicle();
-    int     getSize();
-    int     getRawSize();
-    bool    getMirror();
-    int     getStartAngle();
-    int     getDelay();
-    QPixmap getPixmap();
-    QPixmap getPixmapAtSize(int);
-    QPixmap getPixmapAtAngle(int degrees);
-    QString getName();
+  RGVehicle(const QString &filename="None",int size=0,bool mirror=false,int startAngle=0,int frameDelay=80);
+  ~RGVehicle();
+  int     getSize();
+  int     getRawSize();
+  bool    getMirror();
+  int     getStartAngle();
+  int     getDelay();
+  QPixmap getPixmap();
+  QPixmap getPixmapAtSize(int);
+  QPixmap getPixmapAtAngle(int degrees);
+  QString getName();
 
-    void    setSize(int size);
-    void    setMirror(bool mirror);
-    void    setStartAngle(int selfAngle);
+  void    setSize(int size);
+  void    setMirror(bool mirror);
+  void    setStartAngle(int selfAngle);
 
 
 private:
-    QImage  rotateImage(QImage &image, int degrees);
-    QImage  scaleImage(QImage &image, int size);
-    QImage  mirrorImage(QImage &image);
-    void    createImages(int size,int angle,bool mirror);//create mImages from mRawImages
+  QImage  rotateImage(QImage &image, int degrees);
+  QImage  scaleImage(QImage &image, int size);
+  QImage  mirrorImage(QImage &image);
+  void    createImages(int size,int angle,bool mirror);//create mImages from mRawImages
 
-    QString             mFileName;
-    bool                mMirror;
-    int                 mStartAngle;
-    int                 mSize;
-    int                 mRawSize;
-    int                 mFrameDelay;
-    std::vector<QImage> mImages;
-    std::vector<QImage> mRawImages;
+  QString             mFileName;
+  bool                mMirror;
+  int                 mStartAngle;
+  int                 mSize;
+  int                 mRawSize;
+  int                 mFrameDelay;
+  std::vector<QImage> mImages;
+  std::vector<QImage> mRawImages;
 };
 
 #endif // RGVEHICLE_H

@@ -28,12 +28,12 @@
 class RGSmoothRoute
 {
 public:
-    static QPainterPath SmoothRoute(QList<QPoint> RawRoute, int dsmooth=10);
+  static QPainterPath SmoothRoute(QList<QPoint> RawRoute, int dsmooth=10);
 
 private:
-    static QPainterPath pathLineQuad(QPoint start,QPoint coef, QPoint end);
-    static QPainterPath pathLineCubic(QPoint start,QPoint coef1,QPoint coef2, QPoint end);
-    static QPoint getPointAtLength(QPoint start,QPoint end,int length);
+  static QPainterPath pathLineQuad(QPoint start,QPoint coef, QPoint end);
+  static QPainterPath pathLineCubic(QPoint start,QPoint coef1,QPoint coef2, QPoint end);
+  static QPoint getPointAtLength(QPoint start,QPoint end,int length);
 };
 
 #endif // RGSMOOTHROUTE_H

@@ -83,16 +83,16 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mVehicleSettingsPB->setEnabled(true);
 
   QObject::connect(ui.genFramesCB, SIGNAL(toggled ( bool )),
-          mRGMapWidget, SLOT(setGenerateBeginEndFrames(bool)));
+                   mRGMapWidget, SLOT(setGenerateBeginEndFrames(bool)));
 
   QObject::connect(mRGMapWidget, SIGNAL(busy(bool)),
-          this, SLOT(blockUserInteraction(bool)));
+                   this, SLOT(blockUserInteraction(bool)));
 
   QObject::connect(mRGMapWidget, SIGNAL(canGenerate(bool)),
-          this, SLOT(enableGenerateActions(bool)));
+                   this, SLOT(enableGenerateActions(bool)));
 
   QObject::connect(mRGMapWidget, SIGNAL(drawModeChanged(bool)),
-          this, SLOT(handleDrawModeChanged(bool)));
+                   this, SLOT(handleDrawModeChanged(bool)));
 
   Qt::PenStyle penStyle = (Qt::PenStyle) RGSettings::getPenStyle();
 
@@ -126,8 +126,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mRGMapWidget->setSmoothCoef(RGSettings::getSmoothLength());
 
   mVehicleList = new RGVehicleList();
-  for (int i=0;i<mVehicleList->count();++i)
-  {
+  for (int i=0;i<mVehicleList->count();++i){
     mVehicleCB->addItem(QIcon(mVehicleList->getVehicle(i)->getPixmap()),mVehicleList->getVehicle(i)->getName());
   }
   mVehicleCB->setCurrentIndex(mVehicleList->getCurrentVehicleId());
@@ -140,14 +139,12 @@ void RGMainWindow::on_actionOpen_image_triggered(bool checked)
   QString lastOpenDir = RGSettings::getLastOpenDir();
   
   QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                                 lastOpenDir,
-                                                 tr("Images (*.bmp *.jpg *.gif *.png *.tif)")); 
-  if (!fileName.isNull())
-  {
+                                                  lastOpenDir,
+                                                  tr("Images (*.bmp *.jpg *.gif *.png *.tif)"));
+  if (!fileName.isNull()){
     QPixmap pm(fileName);
     if (pm.isNull()) QMessageBox::critical (this, "Oops", "Could not load image");
-    else
-    {
+    else{
       //TODO:Duplicated in on_actionImport_Google_Map_triggered
       mRGMapWidget->loadImage(pm);
       actionSave_image->setEnabled(true);
@@ -165,11 +162,10 @@ void RGMainWindow::on_actionSave_image_triggered(bool checked)
   QString lastSaveDir = RGSettings::getLastSaveDir();
 
   QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                            lastSaveDir,
-                            tr("Images (*.bmp *.jpg)")); 
+                                                  lastSaveDir,
+                                                  tr("Images (*.bmp *.jpg)"));
 
-  if (!fileName.isNull())
-  {
+  if (!fileName.isNull()){
     QPixmap pm = mRGMapWidget->getImage();
     bool result = pm.save (fileName);
     if (!result) QMessageBox::critical (this, "Oops", "Problems saving file");
@@ -198,8 +194,7 @@ void RGMainWindow::on_actionPreferences_triggered(bool)
 void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 {
   RGGoogleMap gm(this);
-  if (gm.exec() == QDialog::Accepted)
-  {
+  if (gm.exec() == QDialog::Accepted){
     QPixmap map = gm.getMap();
     if (map.isNull())
       return;
@@ -208,8 +203,8 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
     //from the main window
     QString lastSaveDir = RGSettings::getLastOpenDir();
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-						  lastSaveDir,
-						  tr("Images (*.bmp)"));
+                                                    lastSaveDir,
+                                                    tr("Images (*.bmp)"));
     if (fileName.isEmpty())
       return;
 
@@ -261,23 +256,21 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
   // so we're safe)
   int sizeEstimate = int ((mRGMapWidget->getNoFrames() * mRGMapWidget->getMapSize()) / 1048576.0) * 2;
   QString dirInfoText = QString("Select an empty directory on a drive with at least ") + 
-                      QString::number(sizeEstimate) +
-              QString(" MB of free diskspace, where the map should be generated.");
+                        QString::number(sizeEstimate) +
+                        QString(" MB of free diskspace, where the map should be generated.");
   QString dir = QFileDialog::getExistingDirectory(this,
-            dirInfoText,
-            lastGenDir,
-            QFileDialog::ShowDirsOnly
-            | QFileDialog::DontResolveSymlinks); 
+                                                  dirInfoText,
+                                                  lastGenDir,
+                                                  QFileDialog::ShowDirsOnly
+                                                  | QFileDialog::DontResolveSymlinks);
 
-  if (!dir.isNull())
-  {
+  if (!dir.isNull()){
     //First generate the bmp files into a directory
     QDir qDir(dir);
     //Directory should be empty (i.e. contain 2 items: current dir and upper dir)
     if (qDir.count() == 2 ||
-      QMessageBox::question (this, "Directory not empty", "Directory not empty, continue anyway?",
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
-    {
+        QMessageBox::question (this, "Directory not empty", "Directory not empty, continue anyway?",
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes){
       RGSettings::setLastGenDir(dir);
       generateBMPOK = mRGMapWidget->generateMovie(dir, QString("map"), mGeneratedBMPs);
     }
@@ -288,7 +281,7 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
       QString videoEncoder = RGSettings::getVideoEncoder();
       qWarning()<< "videoenc: " << videoEncoder;
       if (videoEncoder.isEmpty()){
-          QString txt = QString(
+        QString txt = QString(
             "<html>"
             "<p>"
             "Your route has been generated in the selected directory. "
@@ -296,10 +289,10 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
             "</p>"
             "<p><b>NOTE: Since no video encoder is available, no avi file is generated!</b></p>"
             "</html>"
-          );
+            );
 
-          QMessageBox::information (this, "Map Generation Finished", txt );
-          return;
+        QMessageBox::information (this, "Map Generation Finished", txt );
+        return;
       }
       QString videoEncoderName = RGSettings::getVideoEncExec();
       QString fps      = QString::number(RGSettings::getFps());
@@ -308,12 +301,12 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
       QString key      = QString::number(RGSettings::getKeyFrameRate());
       QStringList arguments;
       if (videoEncoder==QString("bmp2avi")){
-          arguments << "-f" << fps << "-k" << key << "-o" << outname << "-c" << compress;
+        arguments << "-f" << fps << "-k" << key << "-o" << outname << "-c" << compress;
       }
       if (videoEncoder==QString("ffmpeg")){
-          outname.append(".avi");
-          QString bitrate= QString("1500k");
-          arguments << "-y" << "-i" << "map\%05d.bmp" << "-g" << key <<"-r"<<fps<< "-b" <<bitrate << outname;
+        outname.append(".avi");
+        QString bitrate= QString("1500k");
+        arguments << "-y" << "-i" << "map\%05d.bmp" << "-g" << key <<"-r"<<fps<< "-b" <<bitrate << outname;
       }
       mVideoEncProcess = new QProcess(this);
       QObject::connect(mVideoEncProcess, SIGNAL(finished (int , QProcess::ExitStatus)),
@@ -350,22 +343,22 @@ void RGMainWindow::on_action_About_triggered(bool checked)
 {
   Q_UNUSED(checked);
   QString txt = QString(
-              "<html>"
-              "<center>"
-              "<p><b>") + applicationName + QString(" Copyright (C) 2008-2011  Michiel Jansen </b></p>"
-              "<p>This program comes with ABSOLUTELY NO WARRANTY</p>"
-              "This is free software, and you are welcome to redistribute it "
-              "under certain conditions; see LICENSE file for details.</p>"
-              "<p>This program was developed using the GPL version of Qt 4.7.0<br>"
-              "(Copyright (C) 2008-2011 Nokia Corporation.),<br>"
-              "Qt can be <a href=\"http://qt.nokia.com/downloads\"> downloaded </a>"
-              "from the <a href=\"http://qt.nokia.com\">Nokia Qt</a> website. </p>"
-              "<p>The conversion from BMP to AVI is provided by:<br>"
-              "<i>bmp2avi Copyright (C)) Paul Roberts 1996 - 1998</i></p>"
-              "<p>For more information or questions about Route Generator you can "
-              "<a href=\"mailto:info@routegenerator.net\">contact</a> me by e-mail.</p>"
-              "</center>"
-              "</html>");
+      "<html>"
+      "<center>"
+      "<p><b>") + applicationName + QString(" Copyright (C) 2008-2011  Michiel Jansen </b></p>"
+                                            "<p>This program comes with ABSOLUTELY NO WARRANTY</p>"
+                                            "This is free software, and you are welcome to redistribute it "
+                                            "under certain conditions; see LICENSE file for details.</p>"
+                                            "<p>This program was developed using the GPL version of Qt 4.7.0<br>"
+                                            "(Copyright (C) 2008-2011 Nokia Corporation.),<br>"
+                                            "Qt can be <a href=\"http://qt.nokia.com/downloads\"> downloaded </a>"
+                                            "from the <a href=\"http://qt.nokia.com\">Nokia Qt</a> website. </p>"
+                                            "<p>The conversion from BMP to AVI is provided by:<br>"
+                                            "<i>bmp2avi Copyright (C)) Paul Roberts 1996 - 1998</i></p>"
+                                            "<p>For more information or questions about Route Generator you can "
+                                            "<a href=\"mailto:info@routegenerator.net\">contact</a> me by e-mail.</p>"
+                                            "</center>"
+                                            "</html>");
   QMessageBox::about (this, "About Route Generator", txt );
 }
 
@@ -378,27 +371,27 @@ void RGMainWindow::on_action_Quit_triggered(bool checked)
 
 void RGMainWindow::on_routeColorPB_clicked(bool)
 {
+  QPalette pal = mRouteColorPB->palette();
+  QColor newCol = QColorDialog::getColor ( pal.color(QPalette::Button), this );
+  if (newCol.isValid()) {
     QPalette pal = mRouteColorPB->palette();
-    QColor newCol = QColorDialog::getColor ( pal.color(QPalette::Button), this );
-    if (newCol.isValid()) {
-      QPalette pal = mRouteColorPB->palette();
-      pal.setColor(QPalette::Button, newCol);
-      mRouteColorPB->setPalette(pal);
-      //Store
-      RGSettings::setPenColor(newCol);
+    pal.setColor(QPalette::Button, newCol);
+    mRouteColorPB->setPalette(pal);
+    //Store
+    RGSettings::setPenColor(newCol);
 
-      //update mLineStyleCB
-      int penStyle = mLineStyleCB->currentIndex();
-      mLineStyleCB->clear();
-      mLineStyleCB->addItem(createIconForStyle(Qt::SolidLine),      QString(), QVariant((unsigned) Qt::SolidLine));
-      mLineStyleCB->addItem(createIconForStyle(Qt::DashLine),       QString(), QVariant((unsigned) Qt::DashLine));
-      mLineStyleCB->addItem(createIconForStyle(Qt::DotLine),        QString(), QVariant((unsigned) Qt::DotLine));
-      mLineStyleCB->addItem(createIconForStyle(Qt::DashDotLine),    QString(), QVariant((unsigned) Qt::DashDotLine));
-      mLineStyleCB->addItem(createIconForStyle(Qt::DashDotDotLine), QString(), QVariant((unsigned) Qt::DashDotDotLine));
-      mLineStyleCB->addItem(createIconForStyle(Qt::NoPen),          QString(), QVariant((unsigned) Qt::NoPen));
-      mLineStyleCB->setCurrentIndex(penStyle);
-    }
-    setPen();
+    //update mLineStyleCB
+    int penStyle = mLineStyleCB->currentIndex();
+    mLineStyleCB->clear();
+    mLineStyleCB->addItem(createIconForStyle(Qt::SolidLine),      QString(), QVariant((unsigned) Qt::SolidLine));
+    mLineStyleCB->addItem(createIconForStyle(Qt::DashLine),       QString(), QVariant((unsigned) Qt::DashLine));
+    mLineStyleCB->addItem(createIconForStyle(Qt::DotLine),        QString(), QVariant((unsigned) Qt::DotLine));
+    mLineStyleCB->addItem(createIconForStyle(Qt::DashDotLine),    QString(), QVariant((unsigned) Qt::DashDotLine));
+    mLineStyleCB->addItem(createIconForStyle(Qt::DashDotDotLine), QString(), QVariant((unsigned) Qt::DashDotDotLine));
+    mLineStyleCB->addItem(createIconForStyle(Qt::NoPen),          QString(), QVariant((unsigned) Qt::NoPen));
+    mLineStyleCB->setCurrentIndex(penStyle);
+  }
+  setPen();
 }
 
 void RGMainWindow::on_penSizeSB_valueChanged(int size)
@@ -441,16 +434,15 @@ void RGMainWindow::on_vehicleCB_activated(int index)
 
 void RGMainWindow::on_vehicleSettingsPB_clicked(bool)
 {
-    RGVehicleDialog vehicleDialog(this,mVehicleList);
-    if (vehicleDialog.exec() == QDialog::Accepted)
-    {
-        mVehicleCB->setCurrentIndex(mVehicleList->getCurrentVehicleId());
-        mRGMapWidget->setVehicle(*mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId()));
-    }
-    //update icons of the comboBox
-    for(int i=0;i<mVehicleList->count();i++){
-      mVehicleCB->setItemIcon(i,QIcon(mVehicleList->getVehicle(i)->getPixmap()));
-    }
+  RGVehicleDialog vehicleDialog(this,mVehicleList);
+  if (vehicleDialog.exec() == QDialog::Accepted){
+    mVehicleCB->setCurrentIndex(mVehicleList->getCurrentVehicleId());
+    mRGMapWidget->setVehicle(*mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId()));
+  }
+  //update icons of the comboBox
+  for(int i=0;i<mVehicleList->count();i++){
+    mVehicleCB->setItemIcon(i,QIcon(mVehicleList->getVehicle(i)->getPixmap()));
+  }
 }
 
 void RGMainWindow::blockUserInteraction(bool busy)
@@ -508,16 +500,16 @@ void RGMainWindow::handleVideoEncProcessFinished(int exitCode, QProcess::ExitSta
 
 
     QString txt = QString(
-      "<html>"
-      "<center>"
-      "<p>"
-      "Your route has been generated in the selected directory."
-      "Each frame is generated as a *.bmp file in that directory."
-      "The name of the generated movie is <b>") + outname + QString(".avi</b>."
-      "</p>"
-      "</center>"
-      "</html>"
-    );
+        "<html>"
+        "<center>"
+        "<p>"
+        "Your route has been generated in the selected directory."
+        "Each frame is generated as a *.bmp file in that directory."
+        "The name of the generated movie is <b>") + outname + QString(".avi</b>."
+                                                                      "</p>"
+                                                                      "</center>"
+                                                                      "</html>"
+                                                                      );
     QMessageBox::information (this, "Map Generation Finished", txt );
     
   } else {
@@ -555,10 +547,10 @@ QIcon RGMainWindow::createIconForStyle(Qt::PenStyle style)
 
 void RGMainWindow::setPen()
 {
-    QPalette pal = mRouteColorPB->palette();
-    QColor color = pal.color(QPalette::Button);
-    int size = mPenSizeSB->value();
-    QVariant data = mLineStyleCB->itemData(mLineStyleCB->currentIndex());
-    Qt::PenStyle style = (Qt::PenStyle) data.toInt();
-    mRGMapWidget->setPen(color,size,style);
+  QPalette pal = mRouteColorPB->palette();
+  QColor color = pal.color(QPalette::Button);
+  int size = mPenSizeSB->value();
+  QVariant data = mLineStyleCB->itemData(mLineStyleCB->currentIndex());
+  Qt::PenStyle style = (Qt::PenStyle) data.toInt();
+  mRGMapWidget->setPen(color,size,style);
 }

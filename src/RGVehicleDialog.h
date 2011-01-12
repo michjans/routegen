@@ -28,37 +28,37 @@
 
 class RGVehicleDialog : public QDialog
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    /**
+  /**
    * Creates a new RGVehicleDialog object.
    */
-    RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList);
-    ~RGVehicleDialog();
+  RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList);
+  ~RGVehicleDialog();
 
 public slots:
-    void accept();
-    void reject();
+  void accept();
+  void reject();
 
 private  slots:
-    void on_vehicleListWidget_currentRowChanged(int);
-    void on_sizeSB_valueChanged(int);
-    void on_angleSB_valueChanged(int);
-    void on_resetSizePB_clicked(bool);
-    void on_resetAnglePB_clicked(bool);
-    void on_mirrorCB_toggled(bool);
+  void on_vehicleListWidget_currentRowChanged(int);
+  void on_sizeSB_valueChanged(int);
+  void on_angleSB_valueChanged(int);
+  void on_resetSizePB_clicked(bool);
+  void on_resetAnglePB_clicked(bool);
+  void on_mirrorCB_toggled(bool);
 
 private:
-    void updateVehiclePreview();
+  void updateVehiclePreview();
 
-    Ui_vehicleDialog ui;
-    int mCurrentVehicleId;
-    int mLastVehicleId;
-    int mLastVehicleSize;
-    int mLastVehicleMirror;
-    int mLastVehicleStartAngle;
-    RGVehicleList *mVehicleList;
+  Ui_vehicleDialog ui;
+  int mCurrentVehicleId;
+  int mLastVehicleId;
+  int mLastVehicleSize;
+  int mLastVehicleMirror;
+  int mLastVehicleStartAngle;
+  RGVehicleList *mVehicleList;
 };
 
 #endif

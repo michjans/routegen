@@ -35,8 +35,8 @@ public slots:
 	void accept();
 
 private slots:
-    void on_goButton_clicked(bool);
-    void on_fixButton_clicked(bool);
+  void on_goButton_clicked(bool);
+  void on_fixButton_clicked(bool);
 
 	void on_webView_loadFinished ( bool ok );
 	void on_webView_loadProgress ( int progress );

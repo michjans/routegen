@@ -18,7 +18,6 @@
 */
 
 #include <QtGui>
-
 #include <RGSettings.h>
 
 
@@ -28,29 +27,26 @@ void RGSettings::initSettings()
   QSettings settings;
   settings.setValue("videoEncoder", QString());
 
-  #ifdef Q_WS_WIN
+#ifdef Q_WS_WIN
   //Currently we only initialize bmp2avi
   QString bmp2aviExecName = settings.value("videoEncExec", QDir::currentPath() + "/bmp2avi/bmp2avi.exe").toString();
   QFile bmp2aviExec(bmp2aviExecName);
-  while (bmp2aviExec.exists() == false || !bmp2aviExec.fileName().contains(QString("bmp2avi")))
-  {
+  while (bmp2aviExec.exists() == false || !bmp2aviExec.fileName().contains(QString("bmp2avi"))){
     //Bmp2avi not found, ask user for different directory
     if (QMessageBox::question (NULL, "Bmp2Avi not found",
-                             "Could not find bmp2avi.exe, do you want to browse for it?",
-                       QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes)
-    {
+                               "Could not find bmp2avi.exe, do you want to browse for it?",
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
       bmp2aviExecName = QFileDialog::getOpenFileName(NULL,
-                      QString("Select the directory where bmp2avi.exe is located."),
-                      QDir::currentPath(),
-                      "Executables (*.exe)");
+                                                     QString("Select the directory where bmp2avi.exe is located."),
+                                                     QDir::currentPath(),
+                                                     "Executables (*.exe)");
       bmp2aviExec.setFileName(bmp2aviExecName);
     } else {
       break;
     }
   }
 
-  if (bmp2aviExec.exists())
-  {
+  if (bmp2aviExec.exists()){
     //Store new location
     settings.setValue("videoEncoder", QString("bmp2avi"));
     settings.setValue("videoEncExec", bmp2aviExecName);
@@ -67,20 +63,20 @@ void RGSettings::initSettings()
    *compression encoders, using the -c argument.
    */
 
-  #endif
-  #ifdef Q_WS_X11
-    QProcess checkFFmpeg;
-    checkFFmpeg.setProcessChannelMode(QProcess::MergedChannels);
-    checkFFmpeg.start("ffmpeg -version");
-    if (!checkFFmpeg.waitForFinished())
-      QMessageBox::warning (NULL, "No video encoder", "No video encoder has been found, video generation will be unavailable.\nInstall FFmpeg and restart the application.");
-    else
-      settings.setValue("videoEncoder", QString("ffmpeg"));
-      settings.setValue("videoEncExec", QString("ffmpeg"));
+#endif
+#ifdef Q_WS_X11
+  QProcess checkFFmpeg;
+  checkFFmpeg.setProcessChannelMode(QProcess::MergedChannels);
+  checkFFmpeg.start("ffmpeg -version");
+  if (!checkFFmpeg.waitForFinished())
+    QMessageBox::warning (NULL, "No video encoder", "No video encoder has been found, video generation will be unavailable.\nInstall FFmpeg and restart the application.");
+  else
+    settings.setValue("videoEncoder", QString("ffmpeg"));
+  settings.setValue("videoEncExec", QString("ffmpeg"));
 
-      //qWarning() << "Make output:" << checkFFmpeg.readAll();
+  //qWarning() << "Make output:" << checkFFmpeg.readAll();
 
-  #endif
+#endif
   QVariant fps      = settings.value("bmp2aviArgFps",          QString("25"));
   QVariant outname  = settings.value("bmp2aviArgOutname",      QString("out"));
   QVariant key      = settings.value("bmp2aviArgKeyFrameRate", QString("25"));//-g in ffmpeg
@@ -93,100 +89,86 @@ void RGSettings::initSettings()
 
 }
 
-QString
-RGSettings::getVideoEncoder()
+QString RGSettings::getVideoEncoder()
 {
   QSettings settings;
   return settings.value("videoEncoder").toString();
 }
 
-void
-RGSettings::setVideoEncoder(const QString &videoEnc)
+void RGSettings::setVideoEncoder(const QString &videoEnc)
 {
   QSettings settings;
   settings.setValue("videoEncoder", videoEnc);
 }
 
-QString
-RGSettings::getVideoEncExec()
+QString RGSettings::getVideoEncExec()
 {
   QSettings settings;
   return settings.value("videoEncExec").toString();
 }
 
-void
-RGSettings::setVideoEncExec(const QString &exec)
+void RGSettings::setVideoEncExec(const QString &exec)
 {
   QSettings settings;
   settings.setValue("videoEncExec", exec);
 }
 
-QString
-RGSettings::getAviOutName()
+QString RGSettings::getAviOutName()
 {
   QSettings settings;
   return settings.value("bmp2aviArgOutname", QString("out")).toString();
 }
 
-void
-RGSettings::setAviOutName(const QString &outname)
+void RGSettings::setAviOutName(const QString &outname)
 {
   QSettings settings;
   settings.setValue("bmp2aviArgOutname", outname);
 }
 
-int
-RGSettings::getFps()
+int RGSettings::getFps()
 {
   QSettings settings;
   return settings.value("bmp2aviArgFps").toInt();
 }
 
-void
-RGSettings::setFps(int fps)
+void RGSettings::setFps(int fps)
 {
   QSettings settings;
   settings.setValue("bmp2aviArgFps", fps);
   //TODO: When FPS is changed, RGMapWidget should be notified somehow!!!!!
 }
 
-int
-RGSettings::getKeyFrameRate()
+int RGSettings::getKeyFrameRate()
 {
   QSettings settings;
   return settings.value("bmp2aviArgKeyFrameRate").toInt();
 }
 
-void
-RGSettings::setKeyFrameRate(int rate)
+void RGSettings::setKeyFrameRate(int rate)
 {
   QSettings settings;
   settings.setValue("bmp2aviArgKeyFrameRate", rate);
 }
 
-QString
-RGSettings::getAviCompression()
+QString RGSettings::getAviCompression()
 {
   QSettings settings;
   return settings.value("bmp2aviArgCompression").toString();
 }
 
-void
-RGSettings::setAviCompression(const QString &comp)
+void RGSettings::setAviCompression(const QString &comp)
 {
   QSettings settings;
   settings.setValue("bmp2aviArgCompression", comp);
 }
 
-bool
-RGSettings::getDeleteBMPs()
+bool RGSettings::getDeleteBMPs()
 {
   QSettings settings;
   return settings.value("bmp2aviDeleteBMPs", false).toBool();
 }
 
-void
-RGSettings::setDeleteBMPs(bool val)
+void RGSettings::setDeleteBMPs(bool val)
 {
   QSettings settings;
   settings.setValue("bmp2aviDeleteBMPs", val);
@@ -204,8 +186,7 @@ QColor RGSettings::getPenColor()
   return penCol;
 }
 
-void
-RGSettings::setPenColor(const QColor &newCol)
+void RGSettings::setPenColor(const QColor &newCol)
 {
   QSettings settings;
   settings.beginGroup("routeColor");
@@ -216,70 +197,60 @@ RGSettings::setPenColor(const QColor &newCol)
 }
 
 
-int
-RGSettings::getPenSize()
+int RGSettings::getPenSize()
 {
   QSettings settings;
   return settings.value("routeWidth", 5).toInt();
 }
 
-void
-RGSettings::setPenSize(int size)
+void RGSettings::setPenSize(int size)
 {
   QSettings settings;
   settings.setValue("routeStyle", size);
 }
 
-int
-RGSettings::getPenStyle()
+int RGSettings::getPenStyle()
 {
   QSettings settings;
   return settings.value("routeStyle", 1).toInt();
 }
 
-void
-RGSettings::setPenStyle(int style)
+void RGSettings::setPenStyle(int style)
 {
   QSettings settings;
   settings.setValue("routeStyle", style);
 }
 
-QString
-RGSettings::getLastOpenDir()
+QString RGSettings::getLastOpenDir()
 {
   QSettings settings;
   return settings.value("lastOpenDir", QDir::homePath()).toString();
 }
 
-void
-RGSettings::setLastOpenDir(const QString &fileName)
+void RGSettings::setLastOpenDir(const QString &fileName)
 {
   QSettings settings;
   settings.setValue("lastOpenDir", fileName);
 }
-QString
-RGSettings::getLastSaveDir()
+QString RGSettings::getLastSaveDir()
 {
   QSettings settings;
   return settings.value("lastSaveDir", QDir::homePath()).toString();
 }
 
-void
-RGSettings::setLastSaveDir(const QString &fileName)
+void RGSettings::setLastSaveDir(const QString &fileName)
 {
   QSettings settings;
   settings.setValue("lastSaveDir", fileName);
 }
 
-QString
-RGSettings::getLastGenDir()
+QString RGSettings::getLastGenDir()
 {
   QSettings settings;
   return settings.value("lastGenDir", QDir::homePath()).toString();
 }
 
-void
-RGSettings::setLastGenDir(const QString &dir)
+void RGSettings::setLastGenDir(const QString &dir)
 {
   QSettings settings;
   settings.setValue("lastGenDir", dir);
@@ -288,18 +259,17 @@ RGSettings::setLastGenDir(const QString &dir)
 
 QString RGSettings::getLastVehicleName()
 {
-    QSettings settings;
-    return settings.value("lastVehicleName", "None").toString();
+  QSettings settings;
+  return settings.value("lastVehicleName", "None").toString();
 }
 
 void RGSettings::setLastVehicleName(const QString &name)
 {
-    QSettings settings;
-    settings.setValue("lastVehicleName", name);
+  QSettings settings;
+  settings.setValue("lastVehicleName", name);
 }
 
-int
-RGSettings::getVehicleAngle(const QString &name)
+int RGSettings::getVehicleAngle(const QString &name)
 {
   QSettings settings;
   settings.beginGroup("vehicleAngles");
@@ -308,8 +278,7 @@ RGSettings::getVehicleAngle(const QString &name)
   return angle;
 }
 
-void
-RGSettings::setVehicleAngle(const QString &name, int angle)
+void RGSettings::setVehicleAngle(const QString &name, int angle)
 {
   QSettings settings;
   settings.beginGroup("vehicleAngles");
@@ -317,8 +286,7 @@ RGSettings::setVehicleAngle(const QString &name, int angle)
   settings.endGroup();
 }
 
-int
-RGSettings::getVehicleSize(const QString &name)
+int RGSettings::getVehicleSize(const QString &name)
 {
   QSettings settings;
   settings.beginGroup("vehicleSizes");
@@ -327,8 +295,7 @@ RGSettings::getVehicleSize(const QString &name)
   return size;
 }
 
-void
-RGSettings::setVehicleSize(const QString &name, int size)
+void RGSettings::setVehicleSize(const QString &name, int size)
 {
   QSettings settings;
   settings.beginGroup("vehicleSizes");
@@ -336,8 +303,7 @@ RGSettings::setVehicleSize(const QString &name, int size)
   settings.endGroup();
 }
 
-bool
-RGSettings::getVehicleMirrored(const QString &name)
+bool RGSettings::getVehicleMirrored(const QString &name)
 {
   QSettings settings;
   settings.beginGroup("vehicleMirror");
@@ -346,8 +312,7 @@ RGSettings::getVehicleMirrored(const QString &name)
   return mirrored;
 }
 
-void
-RGSettings::setVehicleMirrored(const QString &name, bool mirror)
+void RGSettings::setVehicleMirrored(const QString &name, bool mirror)
 {
   QSettings settings;
   settings.beginGroup("vehicleMirror");
@@ -355,71 +320,61 @@ RGSettings::setVehicleMirrored(const QString &name, bool mirror)
   settings.endGroup();
 }
 
-void
-RGSettings::setInterpolationMode(bool val)
+void RGSettings::setInterpolationMode(bool val)
 {
   QSettings settings;
   settings.setValue("interPolationMode", val);
 }
 
-bool
-RGSettings::getInterpolationMode()
+bool RGSettings::getInterpolationMode()
 {
   QSettings settings;
   return settings.value("interPolationMode", true).toBool();
 }
 
-void
-RGSettings::setRoutePlayTime(int time)
+void RGSettings::setRoutePlayTime(int time)
 {
   QSettings settings;
   settings.setValue("routePlayTime", time);
 }
 
-int
-RGSettings::getRoutePlayTime()
+int RGSettings::getRoutePlayTime()
 {
   QSettings settings;
   return settings.value("routePlayTime", 5).toInt();
 }
 
-void
-RGSettings::setGMXResolution(int xres)
+void RGSettings::setGMXResolution(int xres)
 {
   QSettings settings;
   settings.setValue("gmXResolution", xres);
 }
 
-int
-RGSettings::getGMXResolution()
+int RGSettings::getGMXResolution()
 {
   QSettings settings;
   return settings.value("gmXResolution", 768).toInt();
 }
 
-void
-RGSettings::setGMYResolution(int yres)
+void RGSettings::setGMYResolution(int yres)
 {
   QSettings settings;
   settings.setValue("gmYResolution", yres);
 }
 
-int
-RGSettings::getGMYResolution()
+int RGSettings::getGMYResolution()
 {
   QSettings settings;
   return settings.value("gmYResolution", 576).toInt();
 }
 
-void
-RGSettings::setSmoothPathMode(bool enable)
+void RGSettings::setSmoothPathMode(bool enable)
 {
   QSettings settings;
   settings.setValue("SmoothPathMode", enable);
 }
 
-bool
-RGSettings::getSmoothPathMode(bool defaultVal)
+bool RGSettings::getSmoothPathMode(bool defaultVal)
 {
   QSettings settings;
   if (defaultVal)
@@ -428,15 +383,13 @@ RGSettings::getSmoothPathMode(bool defaultVal)
     return settings.value("SmoothPathMode", false).toBool();
 }
 
-void
-RGSettings::setSmoothLength(int val)
+void RGSettings::setSmoothLength(int val)
 {
   QSettings settings;
   settings.setValue("SmoothLength", val);
 }
 
-int
-RGSettings::getSmoothLength(bool defaultVal)
+int RGSettings::getSmoothLength(bool defaultVal)
 {
   QSettings settings;
   if (defaultVal)

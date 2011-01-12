@@ -40,20 +40,20 @@ extern const QString applicationName;
 
 
 RGMapWidget::RGMapWidget(QWidget *parent)
-:QWidget(parent),
- mRgr(NULL),
- mInDrawMode(false),
- mInitPhase(true),
- mGenerateBeginEndFrames(false),
- mFPS(25),
- mPlayTimer(NULL),
- mTimerCounter(0)
+  :QWidget(parent),
+  mRgr(NULL),
+  mInDrawMode(false),
+  mInitPhase(true),
+  mGenerateBeginEndFrames(false),
+  mFPS(25),
+  mPlayTimer(NULL),
+  mTimerCounter(0)
 {
   setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
   mFPS = RGSettings::getFps();
   if (mRgr)
-      delete mRgr;
+    delete mRgr;
   QList<QPoint> test;
   mRgr = new RGRoute(test);
   mRgr->setFPS(mFPS);
@@ -79,7 +79,7 @@ void RGMapWidget::setVehicle(const RGVehicle &vehicle)
   mRgr->setVehicle(vehicle);
   update();
 }
-  
+
 
 QPixmap RGMapWidget::getImage()
 {
@@ -114,8 +114,7 @@ bool RGMapWidget::generateMovie(const QString &dirName, const QString &filePrefi
   QString fileName;
   bool result;
 
-  for (mTimerCounter=0; mTimerCounter < mRgr->getNumberFrame() && generationOK; mTimerCounter++)
-  {
+  for (mTimerCounter=0; mTimerCounter < mRgr->getNumberFrame() && generationOK; mTimerCounter++){
     progress.setValue(mTimerCounter);
     QPixmap newPixMap(mImage);
     QPainter painter(&newPixMap);
@@ -126,13 +125,11 @@ bool RGMapWidget::generateMovie(const QString &dirName, const QString &filePrefi
     QString postFix = QString("%1.bmp").arg(mTimerCounter, FILE_NUMBER_FIELD_WIDTH, 10, QChar('0'));
     fileName = dirName + "/" + filePrefix + postFix;
     result = newPixMap.save (fileName);
-    if (!result)
-    {
+    if (!result){
       QMessageBox::critical (this, "Oops", "Problems saving file " + fileName);
       break;
     }
-    else
-    {
+    else{
       generatedBMPs.append(fileName);
     }
     if (progress.wasCanceled()) break;
@@ -158,7 +155,7 @@ void RGMapWidget::startDrawMode()
   update();
   setCursor(Qt::CrossCursor);
   if (mRgr->userPointCount()<MIN_PATH_LENGTH)
-      emit canGenerate(false);
+    emit canGenerate(false);
   emit drawModeChanged(true);
 }
 
@@ -174,8 +171,8 @@ void RGMapWidget::endDrawMode()
 
 void RGMapWidget::setPen(const QColor &color,int size,Qt::PenStyle style)
 {
-    mRgr->setPen(color,size,style);
-    update();
+  mRgr->setPen(color,size,style);
+  update();
 }
 
 void RGMapWidget::setGenerateBeginEndFrames(bool val)
@@ -188,7 +185,7 @@ void RGMapWidget::setGenerateBeginEndFrames(bool val)
 void RGMapWidget::play()
 {
   //Disable draw mode automatically
-    endDrawMode();
+  endDrawMode();
 
   //Only usefull when route has more than MIN_PATH_LENGTH points
   if (mRgr->userPointCount() < MIN_PATH_LENGTH) return;
@@ -221,18 +218,16 @@ void RGMapWidget::paintEvent ( QPaintEvent * event )
 void RGMapWidget::drawPath(QPainter &painter)
 {
   painter.setPen (mRgr->getPen());
-  if (mInitPhase)
-  {
+  if (mInitPhase){
     painter.setFont(QFont("Arial", 30));
     painter.drawText(rect(), Qt::AlignCenter, applicationName);
   }
-  else if (!mInDrawMode)
-  {
-      if (mRgr->userPointCount() < MIN_PATH_LENGTH) return;
-      mRgr->drawPathAt(mTimerCounter,painter);
+  else if (!mInDrawMode){
+    if (mRgr->userPointCount() < MIN_PATH_LENGTH) return;
+    mRgr->drawPathAt(mTimerCounter,painter);
   }
   else
-      mRgr->drawPath(painter);
+    mRgr->drawPath(painter);
 }
 
 void RGMapWidget::resizeEvent ( QResizeEvent * event )
@@ -244,8 +239,7 @@ void RGMapWidget::resizeEvent ( QResizeEvent * event )
 
 void RGMapWidget::mousePressEvent ( QMouseEvent * event )
 {
-  if (mInDrawMode && event->button() == Qt::LeftButton)
-  {
+  if (mInDrawMode && event->button() == Qt::LeftButton){
     qDebug() << "RGMapWidget::mousePressEvent -> " << event->pos();
     mUndoBuffer.append(mRgr->userPointCount());//mUndoBuffer contains the number Id of the new step
     mRgr->addPoint(QPoint(event->pos()));
@@ -257,11 +251,10 @@ void RGMapWidget::mouseMoveEvent ( QMouseEvent * event )
 {
   //Since mouseTracking is off this event only occurs while the mouse button is pressed
 
-  if (mInDrawMode)
-  {
-      qDebug() << QString::number(event->x()) + "," + QString::number(event->y());
-      mRgr->addPoint(QPoint(event->pos()));
-   }
+  if (mInDrawMode){
+    qDebug() << QString::number(event->x()) + "," + QString::number(event->y());
+    mRgr->addPoint(QPoint(event->pos()));
+  }
   update();
 
 }
@@ -269,8 +262,7 @@ void RGMapWidget::mouseMoveEvent ( QMouseEvent * event )
 
 void RGMapWidget::mouseReleaseEvent ( QMouseEvent * event ) 
 {
-  if (mInDrawMode && event->button() == Qt::LeftButton)
-  {
+  if (mInDrawMode && event->button() == Qt::LeftButton){
     emit canGenerate(mRgr->userPointCount() >= MIN_PATH_LENGTH);
     update();
   }
@@ -278,8 +270,7 @@ void RGMapWidget::mouseReleaseEvent ( QMouseEvent * event )
 
 void RGMapWidget::playTimerEvent()
 {
-  if (mTimerCounter < mRgr->getNumberFrame()-1)
-  {
+  if (mTimerCounter < mRgr->getNumberFrame()-1){
     ++mTimerCounter;
   }
   else
@@ -288,7 +279,7 @@ void RGMapWidget::playTimerEvent()
     mPlayTimer->stop();
     emit busy(false);
     qDebug()<<"Last update of mTimerCounter"<<mTimerCounter ;
-   }
+  }
 
   update();
 }
@@ -306,9 +297,9 @@ void RGMapWidget::undo()
   int idx = mUndoBuffer.takeLast();
   mRgr->removefromPoint(idx);
   if (idx < MIN_PATH_LENGTH)
-      emit canGenerate(false);
+    emit canGenerate(false);
   if (mTimerCounter>=mRgr->getNumberFrame())
-      mTimerCounter=mRgr->getNumberFrame()-1;
+    mTimerCounter=mRgr->getNumberFrame()-1;
   update();
 }
 
@@ -363,10 +354,10 @@ int RGMapWidget::getNoFrames() const
 void RGMapWidget::startNewRoute()
 {
 
-    mRgr->clear();
-    mUndoBuffer.clear();
-    emit canGenerate(false);
-    update();
+  mRgr->clear();
+  mUndoBuffer.clear();
+  emit canGenerate(false);
+  update();
 }
 
 int RGMapWidget::getMapSize() const

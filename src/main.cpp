@@ -59,7 +59,7 @@ extern const QString applicationName("Route Generator version 1.4");
 int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);
- 
+
   //For storing application settings
   app.setOrganizationName("MJProductions");
   app.setApplicationName("Route Generator");

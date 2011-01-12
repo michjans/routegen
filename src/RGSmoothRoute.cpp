@@ -116,8 +116,7 @@ QPainterPath RGSmoothRoute::pathLineQuad(QPoint start,QPoint coef, QPoint end)
   QPainterPath curvePath(start),linearPath(start);
   curvePath.quadTo(coef,end);
   int nbPoints = (int) curvePath.length()/4;
-  for (int i=0;i<nbPoints;i++)
-  {
+  for (int i=0;i<nbPoints;i++){
     linearPath.lineTo(curvePath.pointAtPercent(i*1.0/nbPoints));
   }
   linearPath.lineTo(end);
@@ -130,8 +129,7 @@ QPainterPath RGSmoothRoute::pathLineCubic(QPoint start,QPoint coef1,QPoint coef2
   QPainterPath curvePath(start),linearPath(start);
   curvePath.cubicTo(coef1,coef2,end);
   int nbPoints = (int) curvePath.length()/4;
-  for (int i=0;i<nbPoints;i++)
-  {
+  for (int i=0;i<nbPoints;i++){
     linearPath.lineTo(curvePath.pointAtPercent(i*1.0/nbPoints));
   }
   linearPath.lineTo(end);

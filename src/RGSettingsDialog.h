@@ -32,7 +32,7 @@ class QCheckBox;
 
 class RGSettingsDialog : public QDialog
 {
-Q_OBJECT
+  Q_OBJECT
 
 public:
   RGSettingsDialog(QWidget *parent = 0);

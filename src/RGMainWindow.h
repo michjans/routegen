@@ -17,7 +17,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #ifndef RGMAIN_WINDOW_H
 #define RGMAIN_WINDOW_H
 
@@ -39,7 +38,7 @@ class RGVehicleList;
 
 class RGMainWindow : public QMainWindow
 {
-Q_OBJECT
+  Q_OBJECT
 
 public:
   RGMainWindow(QWidget *parent = 0);

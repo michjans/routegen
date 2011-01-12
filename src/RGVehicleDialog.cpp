@@ -25,101 +25,101 @@
 #include "RGVehicleDialog.h"
 
 RGVehicleDialog::RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList)
-    : QDialog(parent),
-    mVehicleList(vehicleList)
+  : QDialog(parent),
+  mVehicleList(vehicleList)
 {
-    mCurrentVehicleId=mVehicleList->getCurrentVehicleId();
-    mLastVehicleId=mCurrentVehicleId;
-    mLastVehicleSize=mVehicleList->getVehicle(mCurrentVehicleId)->getSize();
-    mLastVehicleMirror=mVehicleList->getVehicle(mCurrentVehicleId)->getMirror();
-    mLastVehicleStartAngle=mVehicleList->getVehicle(mCurrentVehicleId)->getStartAngle();
-    ui.setupUi(this);
-    for(int i=0;i<vehicleList->count();i++){
-      QListWidgetItem *item = new QListWidgetItem(QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(40)),mVehicleList->getVehicle(i)->getName());
-      ui.vehicleListWidget->addItem(item);
-    }
+  mCurrentVehicleId=mVehicleList->getCurrentVehicleId();
+  mLastVehicleId=mCurrentVehicleId;
+  mLastVehicleSize=mVehicleList->getVehicle(mCurrentVehicleId)->getSize();
+  mLastVehicleMirror=mVehicleList->getVehicle(mCurrentVehicleId)->getMirror();
+  mLastVehicleStartAngle=mVehicleList->getVehicle(mCurrentVehicleId)->getStartAngle();
+  ui.setupUi(this);
+  for(int i=0;i<vehicleList->count();i++){
+    QListWidgetItem *item = new QListWidgetItem(QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(40)),mVehicleList->getVehicle(i)->getName());
+    ui.vehicleListWidget->addItem(item);
+  }
 
-    ui.vehicleListWidget->setCurrentRow(mCurrentVehicleId);
+  ui.vehicleListWidget->setCurrentRow(mCurrentVehicleId);
 
-    //arrow:
-    QPixmap arrow(100,15);
-    arrow.fill(Qt::transparent);
-    QPainter painter(&arrow);
-    QPen pen(Qt::DashLine);
-    pen.setColor(Qt::red);
-    painter.setPen(pen);
-    painter.drawLine(0, 7, 99, 7);
-    pen.setStyle(Qt::SolidLine);
-    painter.setPen(pen);
-    painter.drawLine(99,7,95,3);
-    painter.drawLine(99,7,95,11);
-    ui.arrowPix->setPixmap(arrow);
+  //arrow:
+  QPixmap arrow(100,15);
+  arrow.fill(Qt::transparent);
+  QPainter painter(&arrow);
+  QPen pen(Qt::DashLine);
+  pen.setColor(Qt::red);
+  painter.setPen(pen);
+  painter.drawLine(0, 7, 99, 7);
+  pen.setStyle(Qt::SolidLine);
+  painter.setPen(pen);
+  painter.drawLine(99,7,95,3);
+  painter.drawLine(99,7,95,11);
+  ui.arrowPix->setPixmap(arrow);
 }
 
 RGVehicleDialog::~RGVehicleDialog()
 {
-    //qDebug() << "RGVehicleDialog::~RGVehicleDialog";
+  //qDebug() << "RGVehicleDialog::~RGVehicleDialog";
 }
 
 void RGVehicleDialog::accept()
 {
-    mCurrentVehicleId = ui.vehicleListWidget->currentRow();
-    mVehicleList->setCurrentVehicleId(mCurrentVehicleId);
-    QDialog::accept();
+  mCurrentVehicleId = ui.vehicleListWidget->currentRow();
+  mVehicleList->setCurrentVehicleId(mCurrentVehicleId);
+  QDialog::accept();
 }
 
 void RGVehicleDialog::reject()
 {
-    mVehicleList->getVehicle(mLastVehicleId)->setSize(mLastVehicleSize);
-    mVehicleList->getVehicle(mLastVehicleId)->setMirror(mLastVehicleMirror);
-    mVehicleList->getVehicle(mLastVehicleId)->setStartAngle(mLastVehicleStartAngle);
-    mVehicleList->setCurrentVehicleId(mLastVehicleId);
-    QDialog::reject();
+  mVehicleList->getVehicle(mLastVehicleId)->setSize(mLastVehicleSize);
+  mVehicleList->getVehicle(mLastVehicleId)->setMirror(mLastVehicleMirror);
+  mVehicleList->getVehicle(mLastVehicleId)->setStartAngle(mLastVehicleStartAngle);
+  mVehicleList->setCurrentVehicleId(mLastVehicleId);
+  QDialog::reject();
 }
 
 void RGVehicleDialog::on_vehicleListWidget_currentRowChanged(int currentRow)
 {
-    mCurrentVehicleId = currentRow;
-    ui.sizeSB->setValue(mVehicleList->getVehicle(mCurrentVehicleId)->getSize());
-    ui.angleSB->setValue(mVehicleList->getVehicle(mCurrentVehicleId)->getStartAngle());
-    ui.mirrorCB->setChecked(mVehicleList->getVehicle(mCurrentVehicleId)->getMirror());
-    updateVehiclePreview();
+  mCurrentVehicleId = currentRow;
+  ui.sizeSB->setValue(mVehicleList->getVehicle(mCurrentVehicleId)->getSize());
+  ui.angleSB->setValue(mVehicleList->getVehicle(mCurrentVehicleId)->getStartAngle());
+  ui.mirrorCB->setChecked(mVehicleList->getVehicle(mCurrentVehicleId)->getMirror());
+  updateVehiclePreview();
 }
 
 void RGVehicleDialog::on_sizeSB_valueChanged(int size)
 {
-    mVehicleList->getVehicle(mCurrentVehicleId)->setSize(size);
-    updateVehiclePreview();
+  mVehicleList->getVehicle(mCurrentVehicleId)->setSize(size);
+  updateVehiclePreview();
 }
 
 void RGVehicleDialog::on_angleSB_valueChanged(int angle)
 {
-    mVehicleList->getVehicle(mCurrentVehicleId)->setStartAngle(angle);
-    updateVehiclePreview();
+  mVehicleList->getVehicle(mCurrentVehicleId)->setStartAngle(angle);
+  updateVehiclePreview();
 }
 
 void RGVehicleDialog::on_resetSizePB_clicked(bool)
 {
-    mVehicleList->getVehicle(mCurrentVehicleId)->setSize(mVehicleList->getVehicle(mCurrentVehicleId)->getRawSize());
-    ui.sizeSB->setValue(mVehicleList->getVehicle(mCurrentVehicleId)->getSize());
-    updateVehiclePreview();
+  mVehicleList->getVehicle(mCurrentVehicleId)->setSize(mVehicleList->getVehicle(mCurrentVehicleId)->getRawSize());
+  ui.sizeSB->setValue(mVehicleList->getVehicle(mCurrentVehicleId)->getSize());
+  updateVehiclePreview();
 }
 
 void RGVehicleDialog::on_resetAnglePB_clicked(bool)
 {
-    mVehicleList->getVehicle(mCurrentVehicleId)->setStartAngle(0);
-    ui.angleSB->setValue(mVehicleList->getVehicle(mCurrentVehicleId)->getStartAngle());
-    updateVehiclePreview();
+  mVehicleList->getVehicle(mCurrentVehicleId)->setStartAngle(0);
+  ui.angleSB->setValue(mVehicleList->getVehicle(mCurrentVehicleId)->getStartAngle());
+  updateVehiclePreview();
 }
 
 void RGVehicleDialog::on_mirrorCB_toggled(bool state)
 {
-    mVehicleList->getVehicle(mCurrentVehicleId)->setMirror(state);
-    updateVehiclePreview();
+  mVehicleList->getVehicle(mCurrentVehicleId)->setMirror(state);
+  updateVehiclePreview();
 }
 
 void RGVehicleDialog::updateVehiclePreview()
 {
-    ui.vehiclePreviewLabel->setPixmap(mVehicleList->getVehicle(mCurrentVehicleId)->getPixmap());
-    ui.vehicleListWidget->currentItem()->setIcon(QIcon(mVehicleList->getVehicle(mCurrentVehicleId)->getPixmapAtSize(40)));
+  ui.vehiclePreviewLabel->setPixmap(mVehicleList->getVehicle(mCurrentVehicleId)->getPixmap());
+  ui.vehicleListWidget->currentItem()->setIcon(QIcon(mVehicleList->getVehicle(mCurrentVehicleId)->getPixmapAtSize(40)));
 }

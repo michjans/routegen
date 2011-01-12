@@ -21,7 +21,6 @@
 #ifndef RG_ROUTE_H
 #define RG_ROUTE_H
 
-
 #include <QList>
 #include <QPoint>
 #include <QPainter>
