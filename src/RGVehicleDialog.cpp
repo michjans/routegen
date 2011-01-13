@@ -68,6 +68,12 @@ RGVehicleDialog::~RGVehicleDialog()
   //qDebug() << "RGVehicleDialog::~RGVehicleDialog";
 }
 
+void RGVehicleDialog::setPen(const QPen &pen)
+{
+  mPen=pen;
+  updateVehiclePreview();
+}
+
 void RGVehicleDialog::accept()
 {
   mCurrentVehicleId = ui.vehicleListWidget->currentRow();
@@ -140,6 +146,16 @@ void RGVehicleDialog::playTimerEvent()
 
 void RGVehicleDialog::updateVehiclePreview()
 {
-  ui.vehiclePreviewLabel->setPixmap(mVehicleList->getVehicle(mCurrentVehicleId)->getPixmap(mTimerCounter*mPlayTimer->interval()));
+  QPixmap pm(200,200);
+  pm.fill(Qt::transparent);
+  QPainter painter(&pm);
+  painter.setPen(mPen);
+  QPixmap pmVehicle=mVehicleList->getVehicle(mCurrentVehicleId)->getPixmap(mTimerCounter*mPlayTimer->interval());
+  //Draw vehicle in the center
+  int px = pm.size().width()/2 - pmVehicle.size().width() / 2;
+  int py = pm.size().height()/2 - pmVehicle.size().height() / 2;
+  painter.drawLine(pm.size().width()/2,pm.size().height()/2,0,pm.size().height()/2);
+  painter.drawPixmap(px,py,pmVehicle);
+  ui.vehiclePreviewLabel->setPixmap(pm);
   ui.vehicleListWidget->currentItem()->setIcon(QIcon(mVehicleList->getVehicle(mCurrentVehicleId)->getPixmapAtSize(40)));
 }

@@ -434,7 +434,13 @@ void RGMainWindow::on_vehicleCB_activated(int index)
 
 void RGMainWindow::on_vehicleSettingsPB_clicked(bool)
 {
+  //get Pen properties:
+  QPen pen((Qt::PenStyle) mLineStyleCB->itemData(mLineStyleCB->currentIndex()).toInt());
+  pen.setColor(mRouteColorPB->palette().color(QPalette::Button));
+  pen.setWidth(mPenSizeSB->value());
+
   RGVehicleDialog vehicleDialog(this,mVehicleList);
+  vehicleDialog.setPen(pen);
   if (vehicleDialog.exec() == QDialog::Accepted){
     mVehicleCB->setCurrentIndex(mVehicleList->getCurrentVehicleId());
     mRGMapWidget->setVehicle(*mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId()));

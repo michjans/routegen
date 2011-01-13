@@ -24,6 +24,7 @@
 #include "ui_vehicledialog.h"
 #include <QString>
 #include <QTimer>
+#include <QPen>
 #include "RGVehicle.h"
 #include "RGVehicleList.h"
 
@@ -37,6 +38,7 @@ public:
    */
   RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList);
   ~RGVehicleDialog();
+  void setPen(const QPen &pen);
 
 public slots:
   void accept();
@@ -63,6 +65,7 @@ private:
   RGVehicleList *mVehicleList;
   QTimer *mPlayTimer;
   int mTimerCounter;
+  QPen mPen;
 };
 
 #endif
