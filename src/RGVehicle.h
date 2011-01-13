@@ -38,7 +38,7 @@ public:
   bool    getMirror();
   int     getStartAngle();
   int     getDelay();
-  QPixmap getPixmap();
+  QPixmap getPixmap(int time=0);
   QPixmap getPixmapAtSize(int);
   QPixmap getPixmapAtAngle(int degrees,int time=0);
   QString getName();

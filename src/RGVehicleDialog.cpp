@@ -26,7 +26,9 @@
 
 RGVehicleDialog::RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList)
   : QDialog(parent),
-  mVehicleList(vehicleList)
+  mVehicleList(vehicleList),
+  mPlayTimer(NULL),
+  mTimerCounter(0)
 {
   mCurrentVehicleId=mVehicleList->getCurrentVehicleId();
   mLastVehicleId=mCurrentVehicleId;
@@ -37,6 +39,11 @@ RGVehicleDialog::RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList)
   for(int i=0;i<vehicleList->count();i++){
     QListWidgetItem *item = new QListWidgetItem(QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(40)),mVehicleList->getVehicle(i)->getName());
     ui.vehicleListWidget->addItem(item);
+  }
+
+  if (mPlayTimer == NULL) {
+    mPlayTimer = new QTimer(this);
+    QObject::connect(mPlayTimer, SIGNAL(timeout()), this, SLOT(playTimerEvent()));
   }
 
   ui.vehicleListWidget->setCurrentRow(mCurrentVehicleId);
@@ -79,11 +86,18 @@ void RGVehicleDialog::reject()
 
 void RGVehicleDialog::on_vehicleListWidget_currentRowChanged(int currentRow)
 {
+  if(mPlayTimer->isActive())
+    mPlayTimer->stop();
+  mTimerCounter=0;
   mCurrentVehicleId = currentRow;
   ui.sizeSB->setValue(mVehicleList->getVehicle(mCurrentVehicleId)->getSize());
   ui.angleSB->setValue(mVehicleList->getVehicle(mCurrentVehicleId)->getStartAngle());
   ui.mirrorCB->setChecked(mVehicleList->getVehicle(mCurrentVehicleId)->getMirror());
   updateVehiclePreview();
+  if (mVehicleList->getVehicle(mCurrentVehicleId)->getDelay()>0){
+    mPlayTimer->setInterval(mVehicleList->getVehicle(mCurrentVehicleId)->getDelay());
+    mPlayTimer->start();
+  }
 }
 
 void RGVehicleDialog::on_sizeSB_valueChanged(int size)
@@ -118,8 +132,14 @@ void RGVehicleDialog::on_mirrorCB_toggled(bool state)
   updateVehiclePreview();
 }
 
+void RGVehicleDialog::playTimerEvent()
+{
+  updateVehiclePreview();
+  mTimerCounter++;
+}
+
 void RGVehicleDialog::updateVehiclePreview()
 {
-  ui.vehiclePreviewLabel->setPixmap(mVehicleList->getVehicle(mCurrentVehicleId)->getPixmap());
+  ui.vehiclePreviewLabel->setPixmap(mVehicleList->getVehicle(mCurrentVehicleId)->getPixmap(mTimerCounter*mPlayTimer->interval()));
   ui.vehicleListWidget->currentItem()->setIcon(QIcon(mVehicleList->getVehicle(mCurrentVehicleId)->getPixmapAtSize(40)));
 }

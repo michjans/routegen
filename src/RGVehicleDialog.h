@@ -23,6 +23,7 @@
 
 #include "ui_vehicledialog.h"
 #include <QString>
+#include <QTimer>
 #include "RGVehicle.h"
 #include "RGVehicleList.h"
 
@@ -48,6 +49,7 @@ private  slots:
   void on_resetSizePB_clicked(bool);
   void on_resetAnglePB_clicked(bool);
   void on_mirrorCB_toggled(bool);
+  void playTimerEvent();
 
 private:
   void updateVehiclePreview();
@@ -59,6 +61,8 @@ private:
   int mLastVehicleMirror;
   int mLastVehicleStartAngle;
   RGVehicleList *mVehicleList;
+  QTimer *mPlayTimer;
+  int mTimerCounter;
 };
 
 #endif

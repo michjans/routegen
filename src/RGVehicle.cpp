@@ -120,12 +120,10 @@ int RGVehicle::getDelay()
   return mFrameDelay;
 }
 
-QPixmap RGVehicle::getPixmap()
+QPixmap RGVehicle::getPixmap(int time)
 {
-  if (mImages.size() > 0)
-    return QPixmap::fromImage(mImages[0]);
-  else
-    return QPixmap();
+  return getPixmapAtAngle(0,time);
+
 }
 
 QPixmap RGVehicle::getPixmapAtSize(int size)
