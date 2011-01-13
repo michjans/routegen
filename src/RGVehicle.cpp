@@ -141,12 +141,15 @@ QPixmap RGVehicle::getPixmapAtSize(int size)
   return pm;
 }
 
-QPixmap RGVehicle::getPixmapAtAngle(int degrees)
+QPixmap RGVehicle::getPixmapAtAngle(int degrees, int time)
 {
   if (mImages.size() == 0)
     return QPixmap();
   int angle = (int) degrees%360;
-  QImage im = QImage(mImages[0]);
+  int numImage=0;
+  if (time!=0 && mFrameDelay!=0)
+    numImage=time/mFrameDelay%mImages.size();
+  QImage im = QImage(mImages[numImage]);
   if (angle>90 && angle <270){
     im=mirrorImage(im);
     angle +=180;

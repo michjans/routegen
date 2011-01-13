@@ -40,7 +40,7 @@ public:
   int     getDelay();
   QPixmap getPixmap();
   QPixmap getPixmapAtSize(int);
-  QPixmap getPixmapAtAngle(int degrees);
+  QPixmap getPixmapAtAngle(int degrees,int time=0);
   QString getName();
 
   void    setSize(int size);

@@ -89,17 +89,17 @@ void RGRoute::drawPath(QPainter &painter)
 void RGRoute::drawPathAt(int frame,QPainter &painter)
 {
   QPainterPath tmpPath;
+  int time=frame*(1.0 / (double) mFPS) * 1000;
   if (mPlayMode==0) tmpPath=getPathAtStep(frame);
-  if (mPlayMode==1) tmpPath= getPathAtTime(frame*(1.0 / (double) mFPS) * 1000);
+  if (mPlayMode==1) tmpPath= getPathAtTime(time);
   painter.drawPath(tmpPath);
   if (mVehicle.getSize()==0 || tmpPath.elementCount()==0)
     return;
   if (mIconlessBeginEndFrames && (frame==0 || frame>=(getNumberFrame()-1)))
     return;
-  //TODO: get animated gif working
   float angle;
   angle=getAngleAt(frame);
-  QPixmap vehim = mVehicle.getPixmapAtAngle(angle);
+  QPixmap vehim = mVehicle.getPixmapAtAngle(angle,time);
   //Draw vehicle with center on current point
   int px = tmpPath.elementAt(tmpPath.elementCount()-1).x - vehim.size().width() / 2;
   int py = tmpPath.elementAt(tmpPath.elementCount()-1).y - vehim.size().height() / 2;
