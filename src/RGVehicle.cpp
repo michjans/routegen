@@ -196,12 +196,12 @@ void RGVehicle::createImages(int size, int angle, bool mirror)
   for (int i=0;i<(int)mRawImages.size();++i){
     QImage im;
     im=mRawImages.at(i);
-    if (mirror==true)
-      im=mirrorImage(im);
     if (size!=mRawSize)
       im=scaleImage(im, size);
     if (angle!=0)
       im=rotateImage(im, angle);
+    if (mirror==true)
+      im=mirrorImage(im);
     mImages.push_back(im);
     mMirror=mirror;
     mStartAngle=angle;
