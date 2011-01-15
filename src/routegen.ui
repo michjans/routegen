@@ -109,7 +109,7 @@
          <string>Turns on/off automatic route interpolation</string>
         </property>
         <property name="text">
-         <string>set Total Time (s) :</string>
+         <string>Set total time (s) :</string>
         </property>
        </widget>
       </item>

@@ -318,7 +318,7 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
       mVideoEncProcess->start(videoEncoderName, arguments);
       mProcessWaitMessage = new QMessageBox(this);
       mProcessWaitMessage->setWindowTitle("One moment please...");
-      mProcessWaitMessage->setText("Executing videoEncoder to convert BMP files to video file, one moment please...");
+      mProcessWaitMessage->setText(QString("Executing ") + videoEncoder + " to convert BMP files to video file, one moment please...");
       mProcessWaitMessage->setStandardButtons(QMessageBox::NoButton);
       mProcessWaitMessage->setCursor(Qt::WaitCursor);
       mProcessWaitMessage->show();
@@ -483,12 +483,15 @@ void RGMainWindow::handleVideoEncProcessFinished(int exitCode, QProcess::ExitSta
 {
   delete mProcessWaitMessage;
   QByteArray output = mVideoEncProcess->readAllStandardOutput();
-  QFile logFile(mVideoEncProcess->workingDirectory() + "/bmp2avi.log");
+  QString logFile = RGSettings::getVideoEncoder() +".log";
+
+  QFile logFile(mVideoEncProcess->workingDirectory() + "/" + logFile);
   if (logFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
     logFile.write(output);
     logFile.close();
   } else {
-    QMessageBox::critical (this, "Error", "Unable to write bmp2avi.log! Disk full or no permissions?");
+    QMessageBox::critical (this, "Error", 
+                           QString("Unable to write "+logFile+"! Disk full or no permissions?");
   }
 
   if (RGSettings::getDeleteBMPs()) {
@@ -519,7 +522,7 @@ void RGMainWindow::handleVideoEncProcessFinished(int exitCode, QProcess::ExitSta
     QMessageBox::information (this, "Map Generation Finished", txt );
     
   } else {
-    QMessageBox::critical (this, "Error", QString("Bmp2avi did not finish successfully! See file bmp2avi.log in output directory for details."));
+    QMessageBox::critical (this, "Error", RGSettings::getVideoEncoder() + " did not finish successfully! See file "+ logFile +" in output directory for details."));
   }
 
   mVideoEncProcess->deleteLater();
@@ -528,12 +531,12 @@ void RGMainWindow::handleVideoEncProcessFinished(int exitCode, QProcess::ExitSta
 
 void RGMainWindow::handleVideoEncProcessError(QProcess::ProcessError)
 {
-  QMessageBox::critical (this, "Error", "Bmp2avi execution failed!" );
+  QMessageBox::critical (this, "Error", RGSettings::getVideoEncoder() + " execution failed!" );
 
   mVideoEncProcess->kill();
 
   if (mVideoEncProcess->state() != QProcess::NotRunning)
-    QMessageBox::critical (this, "Error", "Unable to kill bmp2avi.exe, check your processes!" );
+    QMessageBox::critical (this, "Error", QString("Unable to kill ") + RGSettings::getVideoEncExec() + ", check your processes!" );
 
   mVideoEncProcess->deleteLater();
   blockUserInteraction(false);

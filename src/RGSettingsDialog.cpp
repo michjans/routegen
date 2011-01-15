@@ -19,6 +19,7 @@
 
 
 #include <QtGui>
+#include <QDebug>
 
 #include "RGSettingsDialog.h"
 #include "RGSettings.h"
@@ -46,6 +47,9 @@ RGSettingsDialog::RGSettingsDialog(QWidget *parent)
 #ifdef Q_WS_X11
   mBmp2AviLocLE->setDisabled(true);
   mBrowsePB->setDisabled(true);
+  mCodecCB->setDisabled(true);
+  ui.tabWidget->setTabText(0, "ffmpeg");
+  ui.locationLabel->setText("ffmpeg location");
 #endif
 
   initFromSettings();
@@ -102,7 +106,9 @@ void RGSettingsDialog::initFromSettings()
   //Collect codecs from bmp2avi
   QString bmp2aviExecName = RGSettings::getVideoEncExec();
   QFile bmp2aviExec(bmp2aviExecName);
+  qDebug() << bmp2aviExecName;
   if (bmp2aviExec.exists()) {
+    qDebug() << "-->exists";
     QProcess *bmp2AviProcess = new QProcess(this);
     QStringList arguments;
 

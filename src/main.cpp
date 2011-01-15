@@ -52,9 +52,12 @@
  *          when in interpolation mode, so the interpolation algorithm is triggered first.
  *          Show first route point as will after first click (interpolation mode)
  *  v1.4:   Added Google Maps importer
+ *  v1.5:   Route generation improvements (smooth route, using bezier curves)
+ *          Vehicle orientation and settings improved
+ *          Google maps importer fix (map scrollable)
  */
 
-extern const QString applicationName("Route Generator version 1.4");
+extern const QString applicationName("Route Generator version 1.5");
 
 int main(int argc, char *argv[])
 {
