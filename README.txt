@@ -1,4 +1,4 @@
-This is Route Generator version 1.4
+This is Route Generator version 1.5
 
 Route Generator can be used to generate route maps to be used in video editing
 software.
@@ -56,6 +56,11 @@ VERSION HISTORY
        Generate route.
       -Show first route point as will after first click (interpolation mode)
 1.4   -Import from Google Maps
+1.5   -Route generation improvements (smooth route, using bezier curves)
+      -Start new route button on toolbar
+      -Vehicle orientation and settings improved
+      -Generate iconless begin/end frames checkbox moved to preferences dialog
+      -Google maps importer fix (map scrollable and zoomable)
 
 INSTALLATION
 You don't need to install it, you can just unzip everything in a directory of
