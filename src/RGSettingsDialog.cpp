@@ -35,6 +35,7 @@ RGSettingsDialog::RGSettingsDialog(QWidget *parent)
   mBrowsePB = ui.mBrowsePB;
   mBmp2AviOutNameLE = ui.mBmp2AviOutNameLE;
   mDeleteBMPsCB = ui.mDeleteBMPsCB;
+  mGenerateBeginEndFramesCB = ui.mIconLessBeginEndFramesCB;
   mFpsSB = ui.mFpsSB;
   mKeyFrSB = ui.mKeyFrSB;
   mCodecCB = ui.mCodecCB;
@@ -77,6 +78,8 @@ void RGSettingsDialog::accept()
   RGSettings::setVideoEncExec(mBmp2AviLocLE->text());
   RGSettings::setAviOutName(mBmp2AviOutNameLE->text());
   RGSettings::setDeleteBMPs(mDeleteBMPsCB->isChecked());
+  //Yes, it's inverse!
+  RGSettings::setIconLessBeginEndFrames(!mGenerateBeginEndFramesCB->isChecked());
   RGSettings::setFps(mFpsSB->value());
   RGSettings::setKeyFrameRate(mKeyFrSB->value());
   QVariant codec = mCodecCB->itemData(mCodecCB->currentIndex());
@@ -96,6 +99,8 @@ void RGSettingsDialog::initFromSettings()
   mBmp2AviLocLE->setText(RGSettings::getVideoEncExec());
   mBmp2AviOutNameLE->setText(RGSettings::getAviOutName());
   mDeleteBMPsCB->setChecked(RGSettings::getDeleteBMPs());
+  //Yes, it's inverse!
+  mGenerateBeginEndFramesCB->setChecked(!RGSettings::getIconLessBeginEndFrames());
   mFpsSB->setValue(RGSettings::getFps());
   mKeyFrSB->setValue(RGSettings::getKeyFrameRate());
 

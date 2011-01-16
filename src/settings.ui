@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>656</width>
-    <height>350</height>
+    <width>581</width>
+    <height>333</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,7 @@
       <attribute name="toolTip">
        <string>Change bmp2avi settings</string>
       </attribute>
-      <layout class="QGridLayout">
+      <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
         <widget class="QLabel" name="locationLabel">
          <property name="text">
@@ -72,7 +72,7 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1" colspan="2">
+       <item row="2" column="1">
         <widget class="QCheckBox" name="mDeleteBMPsCB">
          <property name="toolTip">
           <string>Delete BMP's after AVI generation</string>
@@ -83,47 +83,37 @@
         </widget>
        </item>
        <item row="3" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Vehicle in begin/end frames</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QCheckBox" name="mIconLessBeginEndFramesCB">
+         <property name="toolTip">
+          <string>Check if first and last frame should contain the vehicle icon</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
         <widget class="QLabel" name="label_3">
          <property name="text">
           <string>FPS</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="QSpinBox" name="mFpsSB">
          <property name="toolTip">
           <string>Select frame rate of output AVI</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
-        <spacer>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>221</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Key frame rate</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QSpinBox" name="mKeyFrSB">
-         <property name="toolTip">
-          <string>Select key frame rate of output AVI</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
+       <item row="4" column="2" colspan="2">
         <spacer>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -137,13 +127,40 @@
         </spacer>
        </item>
        <item row="5" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Key frame rate</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QSpinBox" name="mKeyFrSB">
+         <property name="toolTip">
+          <string>Select key frame rate of output AVI</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2" colspan="2">
+        <spacer>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>221</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="6" column="0">
         <widget class="QLabel" name="label_4">
          <property name="text">
           <string>Codec</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="1" colspan="2">
+       <item row="6" column="1">
         <widget class="QComboBox" name="mCodecCB">
          <property name="toolTip">
           <string>Select codec used for output AVI</string>

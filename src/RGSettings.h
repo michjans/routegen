@@ -45,6 +45,8 @@ public:
   static void setAviCompression(const QString &);
   static bool getDeleteBMPs();
   static void setDeleteBMPs(bool val);
+  static bool getIconLessBeginEndFrames();
+  static void setIconLessBeginEndFrames(bool val);
 
   /*
    * Application settings

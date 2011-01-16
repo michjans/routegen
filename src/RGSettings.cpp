@@ -174,6 +174,19 @@ void RGSettings::setDeleteBMPs(bool val)
   settings.setValue("bmp2aviDeleteBMPs", val);
 }
 
+bool RGSettings::getIconLessBeginEndFrames()
+{
+  QSettings settings;
+  return settings.value("iconLessBeginEndFrames", false).toBool();
+}
+
+void RGSettings::setIconLessBeginEndFrames(bool val)
+{
+  QSettings settings;
+  settings.setValue("iconLessBeginEndFrames", val);
+}
+
+
 QColor RGSettings::getPenColor()
 {
   QSettings settings;

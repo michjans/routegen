@@ -61,7 +61,6 @@ public slots:
 	void startDrawMode();
 	void endDrawMode();
 	void setPen(const QColor &color,int size,Qt::PenStyle style);
-	void setGenerateBeginEndFrames(bool);
 	void play();
 	void stop();
 	void setBusy(bool);
@@ -76,7 +75,7 @@ public slots:
   //Only used in interpolation mode!
   void setRoutePlayTime(int time);
   void setSmoothPath(bool smooth);
-  void setSmoothCoef(int dsmooth);
+  void updateRouteParametersFromSettings();
 
 protected:
 	void paintEvent ( QPaintEvent * event );

@@ -82,9 +82,6 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionStop->setEnabled(false);
   mVehicleSettingsPB->setEnabled(true);
 
-  QObject::connect(ui.genFramesCB, SIGNAL(toggled ( bool )),
-                   mRGMapWidget, SLOT(setGenerateBeginEndFrames(bool)));
-
   QObject::connect(mRGMapWidget, SIGNAL(busy(bool)),
                    this, SLOT(blockUserInteraction(bool)));
 
@@ -123,7 +120,6 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mInterpolationCB->setChecked(RGSettings::getInterpolationMode());
   mSmoothPathCB->setChecked(RGSettings::getSmoothPathMode());
   mRouteTimeSB->setValue(RGSettings::getRoutePlayTime());
-  mRGMapWidget->setSmoothCoef(RGSettings::getSmoothLength());
 
   mVehicleList = new RGVehicleList();
   for (int i=0;i<mVehicleList->count();++i){
@@ -187,7 +183,7 @@ void RGMainWindow::on_actionPreferences_triggered(bool)
 {
   RGSettingsDialog rgsettings;
   if(rgsettings.exec()==QDialog::Accepted){
-    mRGMapWidget->setSmoothCoef(RGSettings::getSmoothLength());
+    mRGMapWidget->updateRouteParametersFromSettings();
   }
 }
 
@@ -483,15 +479,15 @@ void RGMainWindow::handleVideoEncProcessFinished(int exitCode, QProcess::ExitSta
 {
   delete mProcessWaitMessage;
   QByteArray output = mVideoEncProcess->readAllStandardOutput();
-  QString logFile = RGSettings::getVideoEncoder() +".log";
+  QString logFileName = RGSettings::getVideoEncoder() +".log";
 
-  QFile logFile(mVideoEncProcess->workingDirectory() + "/" + logFile);
+  QFile logFile(mVideoEncProcess->workingDirectory() + "/" + logFileName);
   if (logFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
     logFile.write(output);
     logFile.close();
   } else {
     QMessageBox::critical (this, "Error", 
-                           QString("Unable to write "+logFile+"! Disk full or no permissions?");
+                           QString("Unable to write ") + logFileName + "! Disk full or no permissions?");
   }
 
   if (RGSettings::getDeleteBMPs()) {
@@ -522,7 +518,7 @@ void RGMainWindow::handleVideoEncProcessFinished(int exitCode, QProcess::ExitSta
     QMessageBox::information (this, "Map Generation Finished", txt );
     
   } else {
-    QMessageBox::critical (this, "Error", RGSettings::getVideoEncoder() + " did not finish successfully! See file "+ logFile +" in output directory for details."));
+    QMessageBox::critical (this, "Error", RGSettings::getVideoEncoder() + " did not finish successfully! See file "+ logFileName +" in output directory for details.");
   }
 
   mVideoEncProcess->deleteLater();

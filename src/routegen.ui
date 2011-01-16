@@ -148,16 +148,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="genFramesCB">
-        <property name="toolTip">
-         <string>Generate begin/end frames, without the vehicle icon</string>
-        </property>
-        <property name="text">
-         <string>Generate iconless begin/end frames</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <spacer>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -188,8 +178,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>990</width>
-         <height>482</height>
+         <width>984</width>
+         <height>476</height>
         </rect>
        </property>
       </widget>
@@ -203,7 +193,7 @@
      <x>0</x>
      <y>0</y>
      <width>1004</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">

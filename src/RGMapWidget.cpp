@@ -59,6 +59,9 @@ RGMapWidget::RGMapWidget(QWidget *parent)
   mRgr->setFPS(mFPS);
   mRgr->setTotalTime(RGSettings::getRoutePlayTime());
   mRgr->setPlayMode((int) RGSettings::getInterpolationMode());
+  mRgr->setIconlessBeginEndFrames(RGSettings::getIconLessBeginEndFrames());
+  mRgr->setSmoothCoef(RGSettings::getSmoothLength());
+
   if (mPlayTimer == NULL) {
     mPlayTimer = new QTimer(this);
     QObject::connect(mPlayTimer, SIGNAL(timeout()), this, SLOT(playTimerEvent()));
@@ -172,13 +175,6 @@ void RGMapWidget::endDrawMode()
 void RGMapWidget::setPen(const QColor &color,int size,Qt::PenStyle style)
 {
   mRgr->setPen(color,size,style);
-  update();
-}
-
-void RGMapWidget::setGenerateBeginEndFrames(bool val)
-{
-  mGenerateBeginEndFrames = val;
-  mRgr->setIconlessBeginEndFrames(val);
   update();
 }
 
@@ -340,9 +336,10 @@ void RGMapWidget::setSmoothPath(bool smooth)
   update();
 }
 
-void RGMapWidget::setSmoothCoef(int dsmooth)
+void RGMapWidget::updateRouteParametersFromSettings()
 {
-  mRgr->setSmoothCoef(dsmooth);
+  mRgr->setSmoothCoef(RGSettings::getSmoothLength());
+  mRgr->setIconlessBeginEndFrames(RGSettings::getIconLessBeginEndFrames());
   update();
 }
 

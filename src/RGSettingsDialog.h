@@ -51,6 +51,7 @@ private:
   QPushButton *mBrowsePB;
   QLineEdit *mBmp2AviOutNameLE;
   QCheckBox *mDeleteBMPsCB;
+  QCheckBox *mGenerateBeginEndFramesCB;
   QSpinBox *mFpsSB;
   QSpinBox *mKeyFrSB;
   QComboBox *mCodecCB;

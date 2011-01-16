@@ -53,8 +53,10 @@
  *          Show first route point as will after first click (interpolation mode)
  *  v1.4:   Added Google Maps importer
  *  v1.5:   Route generation improvements (smooth route, using bezier curves)
+ *          Start new route button on toolbar
  *          Vehicle orientation and settings improved
- *          Google maps importer fix (map scrollable)
+ *          Generate iconless begin/end frames checkbox moved to preferences dialog
+ *          Google maps importer fix (map scrollable and zoomable)
  */
 
 extern const QString applicationName("Route Generator version 1.5");
