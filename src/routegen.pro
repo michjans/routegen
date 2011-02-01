@@ -3,9 +3,13 @@
 ######################################################################
 
 TEMPLATE = app
+CONFIG += debug #release
 TARGET = routegen
-DEPENDPATH += . debug
+DEPENDPATH += .
 INCLUDEPATH += .
+MOC_DIR = ./build/moc
+OBJECTS_DIR = ./build/obj
+UI_DIR = ./build/ui
 QT += webkit
 
 # Input
@@ -24,3 +28,34 @@ RESOURCES += routegen.qrc
 win32 {
   RC_FILE = routegen.rc
 } 
+
+
+# deployment on Linux
+unix:!macx{
+    isEmpty(PREFIX):PREFIX = /usr/local
+    DEFINES += APP_PATH=\\\"$$PREFIX/share/routegen\\\"
+
+    target.path = $$PREFIX/bin
+
+    icon.files = ./icons/mapgen.png
+    icon.path = $$PREFIX/share/pixmaps
+
+    dfile.files = routegen.desktop
+    dfile.path = $$PREFIX/share/applications
+
+    doc.files += ./doc/*
+    doc.path = $$PREFIX/share/routegen/doc/
+
+    data.files += ./google-maps-template.html
+    data.path = $$PREFIX/share/routegen
+
+    vehicles.files += ./vehicles/*
+    vehicles.path = $$PREFIX/share/routegen/vehicles
+
+    INSTALLS += target \
+        icon \
+        dfile \
+        doc \
+        data \
+        vehicles
+}

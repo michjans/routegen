@@ -36,9 +36,14 @@ extern const QString applicationName;
 RGMainWindow::RGMainWindow(QWidget *parent)
   :QMainWindow(parent)
 {
-  
   //Set currentPath
   QDir::setCurrent(QCoreApplication::applicationDirPath());
+  #ifdef Q_WS_X11
+  QDir vehicleDir = QDir::currentPath() + "/vehicles";
+  if(!vehicleDir.exists()){
+    QDir::setCurrent(QDir::cleanPath(QCoreApplication::applicationDirPath()+"/../share/routegen"));
+  }
+  #endif
 
   setWindowIcon (QIcon(":/icons/icons/mapgen.png"));
   Ui::MainWindow ui;

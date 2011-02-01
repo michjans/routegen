@@ -31,6 +31,14 @@ RGVehicleList::RGVehicleList()
   filters << "*.bmp" << "*.gif" << "*.png" << "*.jpg" << "*.tif";
   vehicleDir.setNameFilters(filters);
   QFileInfoList vehicles = vehicleDir.entryInfoList();
+
+  //check folder ~/.routegen/vehicles in linux
+  #ifdef Q_WS_X11
+    vehicleDir.mkpath(QDir::homePath() + "/.routegen/vehicles");
+    vehicleDir.setPath( QDir::homePath() + "/.routegen/vehicles");
+    vehicles.append(vehicleDir.entryInfoList());
+  #endif
+
   RGVehicle *vehicle;
   vehicle= new RGVehicle();
   mMap.insert(0,vehicle);

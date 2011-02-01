@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=RouteGenerator
+Comment=Create videos of your route on a map
+GenericName=Route Generator
+Exec=routegen
+Terminal=false
+Type=Application
+Icon=maproute.png
+Categories=Multimedia;
+StartupNotify=true
