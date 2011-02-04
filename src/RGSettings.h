@@ -26,13 +26,10 @@
 class RGSettings
 {
 public:
-  static void initSettings();
 
   /*
    * Movie generation settings
    */
-  static QString getVideoEncoder();
-  static void setVideoEncoder(const QString &);
   static QString getVideoEncExec();
   static void setVideoEncExec(const QString &);
   static QString getAviOutName();
@@ -41,6 +38,8 @@ public:
   static void setFps(int);
   static int getKeyFrameRate();
   static void setKeyFrameRate(int);
+  static QString getBitRate();
+  static void setBitRate(const QString &);
   static QString getAviCompression();
   static void setAviCompression(const QString &);
   static bool getDeleteBMPs();

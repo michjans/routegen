@@ -23,6 +23,7 @@
 
 #include <QDialog>
 #include <QProcess>
+#include "RGEncVideo.h"
 
 class QLineEdit;
 class QSpinBox;
@@ -35,7 +36,7 @@ class RGSettingsDialog : public QDialog
   Q_OBJECT
 
 public:
-  RGSettingsDialog(QWidget *parent = 0);
+  RGSettingsDialog(RGEncVideo *videoEncoder,QWidget *parent = 0);
 
 private slots:
   void on_mResetDefaultsPB_clicked(bool);
@@ -57,6 +58,7 @@ private:
   QComboBox *mCodecCB;
   QSpinBox *mSmoothLengthSB;
   QPushButton *mResetDefaultsPB;
+  RGEncVideo *mVideoEncoder;
 
 };
 

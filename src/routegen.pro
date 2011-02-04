@@ -16,13 +16,19 @@ QT += webkit
 HEADERS += RGMainWindow.h RGMapWidget.h RGVehicleDialog.h RGRoute.h RGSettings.h RGSettingsDialog.h RGGoogleMap.h \
     RGVehicle.h \
     RGSmoothRoute.h \
-    RGVehicleList.h
+    RGVehicleList.h \
+    RGEncVideo.h \
+    RGEncFFmpeg.h \
+    RGEncBmp2avi.h
 FORMS += routegen.ui settings.ui googlemap.ui \
     vehicledialog.ui
 SOURCES += main.cpp RGMainWindow.cpp RGMapWidget.cpp RGVehicleDialog.cpp RGRoute.cpp RGSettings.cpp RGSettingsDialog.cpp RGGoogleMap.cpp \
     RGVehicle.cpp \
     RGSmoothRoute.cpp \
-    RGVehicleList.cpp
+    RGVehicleList.cpp \
+    RGEncVideo.cpp \
+    RGEncFFmpeg.cpp \
+    RGEncBmp2avi.cpp
 RESOURCES += routegen.qrc
 
 win32 {

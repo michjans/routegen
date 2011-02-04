@@ -25,10 +25,11 @@
 #include "RGSettings.h"
 #include "ui_settings.h"
 
-RGSettingsDialog::RGSettingsDialog(QWidget *parent)
-  :QDialog(parent)
+RGSettingsDialog::RGSettingsDialog(RGEncVideo *videoEncoder,QWidget *parent)
+  :QDialog(parent),
+  mVideoEncoder(videoEncoder)
 {
-  Ui::Dialog ui;
+  Ui::Dialog ui;  
   ui.setupUi(this);
 
   mBmp2AviLocLE = ui.mBmp2AviLocLE;
@@ -48,12 +49,16 @@ RGSettingsDialog::RGSettingsDialog(QWidget *parent)
 #ifdef Q_WS_X11
   mBmp2AviLocLE->setDisabled(true);
   mBrowsePB->setDisabled(true);
+  mBmp2AviLocLE->setVisible(false);
+  ui.locationLabel->setVisible(false);
+  mBrowsePB->setVisible(false);
   mCodecCB->setDisabled(true);
   ui.tabWidget->setTabText(0, "ffmpeg");
   ui.locationLabel->setText("ffmpeg location");
 #endif
 
   initFromSettings();
+ mVideoEncoder->fillSettingsUi(ui);
 }
 
 void RGSettingsDialog::on_mResetDefaultsPB_clicked(bool)
@@ -69,7 +74,8 @@ void RGSettingsDialog::browseClicked()
                                             tr("Bmp2Avi (bmp2avi.exe)"));
   if (!bmp2AviLoc.isNull()){
     mBmp2AviLocLE->setText(bmp2AviLoc);
-    RGSettings::setVideoEncoder(QString("bmp2avi"));
+    //TODO!
+    //RGSettings::setVideoEncoder(QString("bmp2avi"));
   }
 }
 
@@ -87,7 +93,7 @@ void RGSettingsDialog::accept()
 
   //Advanced settings
   RGSettings::setSmoothLength(mSmoothLengthSB->value());
-
+  //mVideoEncoder->getFromSettingsUi(ui);
   QDialog::accept();
 }
 

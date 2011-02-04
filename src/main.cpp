@@ -25,7 +25,6 @@
 #include <QFileDialog>
 
 #include "RGMainWindow.h"
-#include "RGSettings.h"
 
 /*
  * Version history:
@@ -68,7 +67,6 @@ int main(int argc, char *argv[])
   //For storing application settings
   app.setOrganizationName("MJProductions");
   app.setApplicationName("Route Generator");
-  RGSettings::initSettings();
 
   RGMainWindow *mainWindow = new RGMainWindow;
   mainWindow->setWindowTitle(applicationName);

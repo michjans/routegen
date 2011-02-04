@@ -35,6 +35,7 @@ class QMessageBox;
 class QLabel;
 class RGMapWidget;
 class RGVehicleList;
+class RGEncVideo;
 
 class RGMainWindow : public QMainWindow
 {
@@ -72,8 +73,7 @@ private slots:
   void blockUserInteraction(bool);
   void enableGenerateActions(bool);
   void handleDrawModeChanged(bool);
-  void handleVideoEncProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
-  void handleVideoEncProcessError(QProcess::ProcessError error);
+  void movieGenerationFinished();
 
 private:
   void  setPen();
@@ -81,6 +81,7 @@ private:
 
   RGMapWidget *mRGMapWidget;
   RGVehicleList     *mVehicleList;
+  RGEncVideo        *mVideoEncoder;
 
   QAction *actionOpen_image;
   QAction *action_Quit;

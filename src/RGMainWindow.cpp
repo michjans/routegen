@@ -27,6 +27,9 @@
 #include "RGGoogleMap.h"
 #include "RGVehicleDialog.h"
 #include "RGVehicleList.h"
+#include "RGEncVideo.h"
+#include "RGEncFFmpeg.h"
+#include "RGEncBmp2avi.h"
 
 #include "ui_routegen.h"
 
@@ -132,6 +135,15 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   }
   mVehicleCB->setCurrentIndex(mVehicleList->getCurrentVehicleId());
   mRGMapWidget->setVehicle(*mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId()));
+
+  //Video Encoder:
+  #ifdef Q_WS_WIN
+    mVideoEncoder = new RGEncBmp2avi();
+  #else
+    mVideoEncoder = new RGEncFFmpeg();
+  #endif
+  if(mVideoEncoder->exists())
+    qDebug()<<"encoder found !";
 }
 
 void RGMainWindow::on_actionOpen_image_triggered(bool checked)
@@ -186,7 +198,7 @@ void RGMainWindow::on_action_Redo_triggered(bool)
 
 void RGMainWindow::on_actionPreferences_triggered(bool)
 {
-  RGSettingsDialog rgsettings;
+  RGSettingsDialog rgsettings(mVideoEncoder);
   if(rgsettings.exec()==QDialog::Accepted){
     mRGMapWidget->updateRouteParametersFromSettings();
   }
@@ -249,7 +261,6 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
 {
   Q_UNUSED(checked);
   bool generateBMPOK = false;
-
   QString lastGenDir = RGSettings::getLastGenDir();
 
   //Calculate MB the full movie (all uncompressed BMP's + AVI) will take
@@ -277,52 +288,10 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
     }
 
     if (generateBMPOK) {
-      //Now use bmp2avi to convert the bmp files into an avi file
-      //location of bmp2avi should already be stored in the settings
-      QString videoEncoder = RGSettings::getVideoEncoder();
-      qWarning()<< "videoenc: " << videoEncoder;
-      if (videoEncoder.isEmpty()){
-        QString txt = QString(
-            "<html>"
-            "<p>"
-            "Your route has been generated in the selected directory. "
-            "Each frame is generated as a *.bmp file in that directory. "
-            "</p>"
-            "<p><b>NOTE: Since no video encoder is available, no avi file is generated!</b></p>"
-            "</html>"
-            );
+      mVideoEncoder->generateMovie(dir, QString("map"));
 
-        QMessageBox::information (this, "Map Generation Finished", txt );
-        return;
-      }
-      QString videoEncoderName = RGSettings::getVideoEncExec();
-      QString fps      = QString::number(RGSettings::getFps());
-      QString outname  = RGSettings::getAviOutName();
-      QString compress = RGSettings::getAviCompression();
-      QString key      = QString::number(RGSettings::getKeyFrameRate());
-      QStringList arguments;
-      if (videoEncoder==QString("bmp2avi")){
-        arguments << "-f" << fps << "-k" << key << "-o" << outname << "-c" << compress;
-      }
-      if (videoEncoder==QString("ffmpeg")){
-        outname.append(".avi");
-        QString bitrate= QString("1500k");
-        arguments << "-y" << "-i" << "map\%05d.bmp" << "-g" << key <<"-r"<<fps<< "-b" <<bitrate << outname;
-      }
-      mVideoEncProcess = new QProcess(this);
-      QObject::connect(mVideoEncProcess, SIGNAL(finished (int , QProcess::ExitStatus)),
-                       this, SLOT(handleVideoEncProcessFinished(int , QProcess::ExitStatus)));
-      QObject::connect(mVideoEncProcess, SIGNAL(error (QProcess::ProcessError)),
-                       this, SLOT(handleVideoEncProcessError(QProcess::ProcessError)));
-      mVideoEncProcess->setWorkingDirectory(dir);
       blockUserInteraction(true);
-      mVideoEncProcess->start(videoEncoderName, arguments);
-      mProcessWaitMessage = new QMessageBox(this);
-      mProcessWaitMessage->setWindowTitle("One moment please...");
-      mProcessWaitMessage->setText(QString("Executing ") + videoEncoder + " to convert BMP files to video file, one moment please...");
-      mProcessWaitMessage->setStandardButtons(QMessageBox::NoButton);
-      mProcessWaitMessage->setCursor(Qt::WaitCursor);
-      mProcessWaitMessage->show();
+      QObject::connect(mVideoEncoder,SIGNAL(movieGenerationFinished()),this,SLOT(movieGenerationFinished()));
     }
   }
 }
@@ -480,21 +449,8 @@ void RGMainWindow::handleDrawModeChanged(bool activated)
   actionDraw_mode->setChecked(activated);
 }
 
-void RGMainWindow::handleVideoEncProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
+void RGMainWindow::movieGenerationFinished()
 {
-  delete mProcessWaitMessage;
-  QByteArray output = mVideoEncProcess->readAllStandardOutput();
-  QString logFileName = RGSettings::getVideoEncoder() +".log";
-
-  QFile logFile(mVideoEncProcess->workingDirectory() + "/" + logFileName);
-  if (logFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-    logFile.write(output);
-    logFile.close();
-  } else {
-    QMessageBox::critical (this, "Error", 
-                           QString("Unable to write ") + logFileName + "! Disk full or no permissions?");
-  }
-
   if (RGSettings::getDeleteBMPs()) {
     //Delete generated BMP's except for first and last frame (user might want to use them)
     for (int i = 1; i < mGeneratedBMPs.size() - 1; i++) {
@@ -504,43 +460,8 @@ void RGMainWindow::handleVideoEncProcessFinished(int exitCode, QProcess::ExitSta
       }
     }
   }
-  
-  if (exitStatus == QProcess::NormalExit && exitCode == 0 && !output.contains("Error")) {
-    QString outname  = RGSettings::getAviOutName();
-
-
-    QString txt = QString(
-        "<html>"
-        "<center>"
-        "<p>"
-        "Your route has been generated in the selected directory."
-        "Each frame is generated as a *.bmp file in that directory."
-        "The name of the generated movie is <b>") + outname + QString(".avi</b>."
-                                                                      "</p>"
-                                                                      "</center>"
-                                                                      "</html>"
-                                                                      );
-    QMessageBox::information (this, "Map Generation Finished", txt );
-    
-  } else {
-    QMessageBox::critical (this, "Error", RGSettings::getVideoEncoder() + " did not finish successfully! See file "+ logFileName +" in output directory for details.");
-  }
-
-  mVideoEncProcess->deleteLater();
   blockUserInteraction(false);
-}
-
-void RGMainWindow::handleVideoEncProcessError(QProcess::ProcessError)
-{
-  QMessageBox::critical (this, "Error", RGSettings::getVideoEncoder() + " execution failed!" );
-
-  mVideoEncProcess->kill();
-
-  if (mVideoEncProcess->state() != QProcess::NotRunning)
-    QMessageBox::critical (this, "Error", QString("Unable to kill ") + RGSettings::getVideoEncExec() + ", check your processes!" );
-
-  mVideoEncProcess->deleteLater();
-  blockUserInteraction(false);
+  mVideoEncoder->disconnect();
 }
 
 QIcon RGMainWindow::createIconForStyle(Qt::PenStyle style)
