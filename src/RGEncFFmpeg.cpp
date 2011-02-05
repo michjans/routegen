@@ -26,7 +26,8 @@ RGEncFFmpeg::RGEncFFmpeg(QWidget *parent) :
     RGEncVideo(parent),
     mBitRate(100)
 {
-
+  mCompressDefault=QString("mpeg4");
+  updateFromSettings();
   qDebug()<<"FFMpeg encoder class";
   //Check if FFmpeg is present
   QProcess checkFFmpeg;
@@ -37,10 +38,51 @@ RGEncFFmpeg::RGEncFFmpeg(QWidget *parent) :
   else
     mExists=true;
 
+  QProcess *ffmpegProcess = new QProcess(this);
+  QStringList arguments;
+  //List codecs
+  arguments << "-codecs";
+  //ffmpegProcess = new QProcess(this);
+  ffmpegProcess->start("ffmpeg", arguments);
+  if (ffmpegProcess->waitForFinished()){
+    int currentIndex = 0;
+    QByteArray output = ffmpegProcess->readAllStandardOutput();
+    QList<QByteArray> lines = output.split('\n');
+    bool inHeader = true;
+    qDebug()<<"lines"<<lines.size();
+    for (int i = 0; i < lines.size(); i++){
+      QString line = lines[i].data();
+
+      if (inHeader){
+        //Skip header
+        if (!line.startsWith(" ------")) continue;
+        else inHeader = false;
+      } else {
+        if (line.size()<10)continue;
+        //select only video encoder codec
+        if (line.at(2)!=QString("E").at(0)) continue;
+        if (line.at(3)!=QString("V").at(0)) continue;
+        //List of codecs starts
+        line.remove(0,8);
+        qDebug()<<line;
+        QString codec,codecDesc ;
+        codec=line.left(line.indexOf(" ")).trimmed();
+        codecDesc=(line.remove(0,(line.indexOf(" "))).trimmed());
+        if (codec==mCompressDefault) codecDesc.append("<----Default codec for Routegen");
+        mUi.codecCB->addItem(codecDesc, codec);
+        if (codec == mCompress) currentIndex = mUi.codecCB->count() - 1;
+      }
+    }
+    //Set current setting
+    mUi.codecCB->setCurrentIndex(currentIndex);
+  }
+  else{
+    QMessageBox::critical (this, "Error", "Could not run ffmpeg to collect codec selection!");
+  }
+
   mUi.bitRateLabel->setVisible(true);
   mUi.bitRateLabel->setVisible(true);
   mUi.bitRateSB->setVisible(true);
-  updateFromSettings();
 }
 
 void RGEncFFmpeg::updateFromSettings()
@@ -60,7 +102,7 @@ void RGEncFFmpeg::saveInSettings()
 void RGEncFFmpeg::generateMovie(const QString &dirName, const QString &filePrefix)
 {
   QStringList arguments;
-  arguments << "-y" << "-i" << QString(filePrefix).append("\%05d.bmp") << "-g" << QString("%1").arg(mKeyFrameRate) <<"-r"<<QString("%1").arg(mFps)<< "-b" <<QString("%1k").arg(mBitRate) << QString(mOutName).append(".avi");
+  arguments << "-y" << "-i" << QString(filePrefix).append("\%05d.bmp") << "-g" << QString("%1").arg(mKeyFrameRate) <<"-r"<<QString("%1").arg(mFps)<< "-b" <<QString("%1k").arg(mBitRate) <<"-vcodec"<<mCompress<< QString(mOutName).append(".avi");
 
   this->createEncodingProcess(dirName,"ffmpeg",arguments);
 }

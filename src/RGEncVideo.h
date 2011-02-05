@@ -53,6 +53,8 @@ protected:
   int mKeyFrameRate;
   QMessageBox    *mProcessWaitMessage;
   QProcess    *mVideoEncProcess;
+  QString mCompress;
+  QString mCompressDefault;
   Ui::videoSettings mUi;
 
 };

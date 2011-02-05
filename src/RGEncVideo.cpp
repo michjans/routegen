@@ -27,12 +27,14 @@ RGEncVideo::RGEncVideo(QWidget *parent) :
     mExists(false),
     mFps(0),
     mOutName(QString()),
-    mKeyFrameRate(0)
+    mKeyFrameRate(0),
+    mCompress(QString()),
+    mCompressDefault(QString())
 {
   mUi.setupUi(this);
   // hide all specific part of the Ui
   mUi.bitRateLabel->setVisible(false);
-  mUi.bitRateLabel->setVisible(false);
+  mUi.bitRateLabel2->setVisible(false);
   mUi.bitRateSB->setVisible(false);
   mUi.bmp2AviLocBrowsePB->setVisible(false);
   mUi.bmp2AviLocLabel->setVisible(false);
@@ -59,6 +61,12 @@ void RGEncVideo::updateFromSettings()
   mKeyFrameRate=RGSettings::getKeyFrameRate();
   mUi.keyFrSB->setValue(mKeyFrameRate);
   mUi.deleteBMPsCB->setChecked(RGSettings::getDeleteBMPs());
+  mCompress=RGSettings::getAviCompression();
+  if(mCompress==QString())
+    mCompress=mCompressDefault;
+  int index=mUi.codecCB->findData(mCompress);
+  if (index>=0)
+    mUi.codecCB->setCurrentIndex(index);
 }
 
 void RGEncVideo::saveInSettings()
@@ -70,9 +78,8 @@ void RGEncVideo::saveInSettings()
   RGSettings::setFps(mFps);
   mKeyFrameRate=mUi.keyFrSB->value();
   RGSettings::setKeyFrameRate(mKeyFrameRate);
-
-  //QVariant codec = mCodecCB->itemData(mCodecCB->currentIndex());
-  //RGSettings::setAviCompression(codec.toString());
+  mCompress = mUi.codecCB->itemData(mUi.codecCB->currentIndex()).toString();
+  RGSettings::setAviCompression(mCompress);
 
 }
 
@@ -90,9 +97,10 @@ void RGEncVideo::createEncodingProcess(const QString &dirName,const QString &vid
         );
 
     QMessageBox::information (NULL, "Map Generation Finished", txt );
-    return ;
+    emit movieGenerationFinished();
+    return;
   }
-
+  qDebug()<<"you shoudl'nt see that";
   mVideoEncProcess = new QProcess(this);
   QObject::connect(mVideoEncProcess, SIGNAL(finished (int , QProcess::ExitStatus)),
                    this, SLOT(encodingProcessFinished(int , QProcess::ExitStatus)));
@@ -150,6 +158,7 @@ void RGEncVideo::encodingProcessFinished(int exitCode, QProcess::ExitStatus exit
 
 void RGEncVideo::encodingProcessError(QProcess::ProcessError)
 {
+  delete mProcessWaitMessage;
   QMessageBox::critical (NULL, "Error", encoderName() + " execution failed!" );
 
   mVideoEncProcess->kill();

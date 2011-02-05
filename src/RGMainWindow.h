@@ -31,7 +31,6 @@ class QComboBox;
 class QCheckBox;
 class QSpinBox;
 class QPushButton;
-class QMessageBox;
 class QLabel;
 class RGMapWidget;
 class RGVehicleList;
@@ -86,6 +85,7 @@ private:
   QAction *actionOpen_image;
   QAction *action_Quit;
   QAction *actionSave_image;
+  QAction *actionImport_Google_Map;
   QAction *actionDraw_mode;
   QAction *actionNew_route;
   QAction *action_Undo;
@@ -101,8 +101,6 @@ private:
   QCheckBox *mInterpolationCB;
   QCheckBox *mSmoothPathCB;
   QSpinBox  *mRouteTimeSB;
-  QMessageBox    *mProcessWaitMessage;
-
   QProcess    *mVideoEncProcess;
   QStringList  mGeneratedBMPs;
 

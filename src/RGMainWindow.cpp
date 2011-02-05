@@ -56,6 +56,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionOpen_image = ui.actionOpen_image;
   action_Quit = ui.action_Quit;
   actionSave_image = ui.actionSave_image;
+  actionImport_Google_Map = ui.actionImport_Google_Map;
   actionDraw_mode = ui.actionDraw_mode;
   actionNew_route = ui.actionNew_route;
   action_Undo = ui.action_Undo;
@@ -144,7 +145,6 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   #endif
   if(mVideoEncoder->exists())
     qDebug()<<"encoder found !";
-    qDebug()<<"parent :"<<mVideoEncoder->parent();
 }
 
 void RGMainWindow::on_actionOpen_image_triggered(bool checked)
@@ -293,10 +293,9 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
     }
 
     if (generateBMPOK) {
-      mVideoEncoder->generateMovie(dir, QString("map"));
-
       blockUserInteraction(true);
       QObject::connect(mVideoEncoder,SIGNAL(movieGenerationFinished()),this,SLOT(movieGenerationFinished()));
+      mVideoEncoder->generateMovie(dir, QString("map"));
     }
   }
 }
@@ -437,6 +436,7 @@ void RGMainWindow::blockUserInteraction(bool busy)
   actionNew_route->setEnabled(!busy);
   actionGenerate_map->setEnabled(!busy);
   actionPlayback->setEnabled(!busy);
+  actionImport_Google_Map->setEnabled(!busy);
   //Stop is only enabled while playing back
   actionStop->setEnabled(false);
 }
@@ -456,6 +456,7 @@ void RGMainWindow::handleDrawModeChanged(bool activated)
 
 void RGMainWindow::movieGenerationFinished()
 {
+  qDebug()<<"Movie generation finished";
   if (RGSettings::getDeleteBMPs()) {
     //Delete generated BMP's except for first and last frame (user might want to use them)
     for (int i = 1; i < mGeneratedBMPs.size() - 1; i++) {

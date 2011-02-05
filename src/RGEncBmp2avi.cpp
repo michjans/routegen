@@ -24,42 +24,44 @@
 
 RGEncBmp2avi::RGEncBmp2avi(QWidget *parent) :
     RGEncVideo(parent),
-    mExecName(QString()),
-    mCompress(QString())
+    mExecName(QString())
 {
+  mCompressDefault=QString("DIB");
+  updateFromSettings();
   qDebug()<<"Bmp2avi encoder class";
   //Currently we only initialize bmp2avi
-  mExecName = RGSettings::getVideoEncExec();
-  mCompress=RGSettings::getAviCompression();
-  QFile bmp2aviExec(mExecName);
-  while (bmp2aviExec.exists() == false || !bmp2aviExec.fileName().contains(QString("bmp2avi"))){
+
+  while (checkForBmp2avi(mExecName)==false){
     //Bmp2avi not found, ask user for different directory
     if (QMessageBox::question (NULL, "Bmp2Avi not found",
                                "Could not find bmp2avi.exe, do you want to browse for it?",
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
       mExecName = QFileDialog::getOpenFileName(NULL,
-                                                     QString("Select the directory where bmp2avi.exe is located."),
-                                                     QDir::currentPath(),
-                                                     "Executables (*.exe)");
-      bmp2aviExec.setFileName(mExecName);
+                                               QString("Select the directory where bmp2avi.exe is located."),
+                                               QDir::currentPath(),
+                                               "Executables (*.exe)");
     } else {
       break;
     }
   }
 
-  if (bmp2aviExec.exists()){
-    //Store new location
-    RGSettings::setVideoEncExec(mExecName);
+  if (checkForBmp2avi(mExecName)==true){
     mExists=true;
+    setCodecs();
   }
-  else
-    QMessageBox::warning (NULL, "Not available", "Avi generation using bmp2avi will be unavailable");
+  else {
+    QMessageBox::warning (NULL, "No video encoder", "bmp2avi.exe has not been found, therefore video generation will be unavailable."
+                          "\nYou can set bmp2avi directory in the preferences");
+    mExecName=QString();
+  }
+  RGSettings::setVideoEncExec(mExecName);
+  mUi.bmp2AviLocLE->setText(mExecName);
 
   mUi.bmp2AviLocBrowsePB->setVisible(true);
   mUi.bmp2AviLocLabel->setVisible(true);
   mUi.bmp2AviLocLE->setVisible(true);
   QObject::connect(mUi.bmp2AviLocBrowsePB, SIGNAL(clicked(bool)), this, SLOT(browseClicked()));
-  updateFromSettings();
+
 }
 
 void RGEncBmp2avi::updateFromSettings()
@@ -96,30 +98,32 @@ void RGEncBmp2avi::browseClicked()
   bmp2AviLoc = QFileDialog::getOpenFileName(this, tr("Select BMP2AVI location"),
                                             bmp2AviLoc,
                                             tr("Bmp2Avi (bmp2avi.exe)"));
-  if (!bmp2AviLoc.isNull()){
-    mUi.bmp2AviLocLE->setText(bmp2AviLoc);
+  if (bmp2AviLoc==QString()) return;//cancel pressed
+  if (checkForBmp2avi(bmp2AviLoc)){
+    mExecName=bmp2AviLoc;
+    mUi.bmp2AviLocLE->setText(mExecName);
+    mExists=true;
+    setCodecs();
   }
+  else
+    mExists=false;
+    mExecName=QString();
+    mUi.bmp2AviLocLE->setText(mExecName);
 }
 
-//Collect codecs from bmp2avi
-/*QString bmp2aviExecName = RGSettings::getVideoEncExec();
-QFile bmp2aviExec(bmp2aviExecName);
-qDebug() << bmp2aviExecName;
-if (bmp2aviExec.exists()) {
-  qDebug() << "-->exists";
+void RGEncBmp2avi::setCodecs()
+{
+  //Collect codecs from bmp2avi
+  mUi.codecCB->clear();
   QProcess *bmp2AviProcess = new QProcess(this);
   QStringList arguments;
-
   //List codecs
   arguments << "-l";
-
-  bmp2AviProcess = new QProcess(this);
-  bmp2AviProcess->start(bmp2aviExecName, arguments);
+  bmp2AviProcess->start(mExecName, arguments);
   if (bmp2AviProcess->waitForFinished()){
-    QString currentCodec = RGSettings::getAviCompression();
     int currentIndex = 0;
     //First add "Uncompressed" codec to combobox
-    mCodecCB->addItem("Uncompressed", "DIB");
+    mUi.codecCB->addItem("Uncompressed", "DIB");
     QByteArray output = bmp2AviProcess->readAllStandardOutput();
     QList<QByteArray> lines = output.split('\n');
     bool inHeader = true;
@@ -137,14 +141,14 @@ if (bmp2aviExec.exists()) {
           //qDebug() << "CODE: " << codec[0].trimmed();
           //qDebug() << "DESCR:" << codec[1].trimmed();
           //Add description to combobox and codec code as data
-          mCodecCB->addItem(codec[1].trimmed(), codec[0].trimmed());
-          if (codec[0].trimmed() == currentCodec) currentIndex = mCodecCB->count() - 1;
+          mUi.codecCB->addItem(codec[1].trimmed(), codec[0].trimmed());
+          if (codec[0].trimmed() == mCompress) currentIndex = mUi.codecCB->count() - 1;
         }
         //else: don't know what this would be...
       }
     }
     //Set current setting
-    mCodecCB->setCurrentIndex(currentIndex);
+    mUi.codecCB->setCurrentIndex(currentIndex);
   }
   else{
     QMessageBox::critical (this, "Error", "Could not run bmp2avi to collect codec selection!");
@@ -152,4 +156,10 @@ if (bmp2aviExec.exists()) {
 
 }
 
-*/
+bool RGEncBmp2avi::checkForBmp2avi(const QString &path)
+{
+  QFile bmp2aviExec(path);
+  if (bmp2aviExec.exists() == false) return false;
+  if (!bmp2aviExec.fileName().contains(QString("bmp2avi"))) return false;
+  return true;
+}

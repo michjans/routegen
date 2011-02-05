@@ -25,20 +25,25 @@
 
 class RGEncBmp2avi : public RGEncVideo
 {
+  Q_OBJECT
 public:
-  RGEncBmp2avi(QWidget *parent = 0);
 
-  virtual void updateFromSettings();
-  virtual void saveInSettings();
+  RGEncBmp2avi(QWidget *parent = 0);
   virtual void generateMovie(const QString &dirName, const QString &filePrefix);
   virtual QString encoderName();
 
-private slots:
-  void browseClicked();
+protected slots:
+  virtual void browseClicked();
+
+private:
+  virtual void updateFromSettings();
+  virtual void saveInSettings();
+  void setCodecs();
+  bool checkForBmp2avi(const QString &path);
+
 
 private:
   QString mExecName;
-  QString mCompress;
 };
 
 #endif // RGENCBMP2AVI_H

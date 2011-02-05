@@ -85,7 +85,7 @@ void RGSettings::setBitRate(int bitrate)
 QString RGSettings::getAviCompression()
 {
   QSettings settings;
-  return settings.value("videoArgCompression",QString("DIB")).toString();
+  return settings.value("videoArgCompression",QString("")).toString();
 }
 
 void RGSettings::setAviCompression(const QString &comp)
