@@ -22,13 +22,10 @@
 #define RGSETTINGS_DIALOG_H
 
 #include <QDialog>
-#include <QProcess>
-#include "RGEncVideo.h"
+#include "ui_settings.h"
 
-class QLineEdit;
 class QSpinBox;
 class QPushButton;
-class QComboBox;
 class QCheckBox;
 
 class RGSettingsDialog : public QDialog
@@ -36,29 +33,18 @@ class RGSettingsDialog : public QDialog
   Q_OBJECT
 
 public:
-  RGSettingsDialog(RGEncVideo *videoEncoder,QWidget *parent = 0);
+  RGSettingsDialog(QWidget *videoSettings,QWidget *parent = 0);
+  ~RGSettingsDialog();
 
 private slots:
   void on_mResetDefaultsPB_clicked(bool);
-
-  void browseClicked();
   void accept();
 
 private:
-  void initFromSettings();
-
-private:
-  QLineEdit *mBmp2AviLocLE;
-  QPushButton *mBrowsePB;
-  QLineEdit *mBmp2AviOutNameLE;
-  QCheckBox *mDeleteBMPsCB;
   QCheckBox *mGenerateBeginEndFramesCB;
-  QSpinBox *mFpsSB;
-  QSpinBox *mKeyFrSB;
-  QComboBox *mCodecCB;
   QSpinBox *mSmoothLengthSB;
   QPushButton *mResetDefaultsPB;
-  RGEncVideo *mVideoEncoder;
+  Ui::Dialog ui;
 
 };
 

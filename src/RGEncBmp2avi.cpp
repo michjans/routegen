@@ -22,7 +22,7 @@
 #include <QtGui>
 #include <RGSettings.h>
 
-RGEncBmp2avi::RGEncBmp2avi(QObject *parent) :
+RGEncBmp2avi::RGEncBmp2avi(QWidget *parent) :
     RGEncVideo(parent),
     mExecName(QString()),
     mCompress(QString())
@@ -54,6 +54,26 @@ RGEncBmp2avi::RGEncBmp2avi(QObject *parent) :
   }
   else
     QMessageBox::warning (NULL, "Not available", "Avi generation using bmp2avi will be unavailable");
+
+  mUi.bmp2AviLocBrowsePB->setVisible(true);
+  mUi.bmp2AviLocLabel->setVisible(true);
+  mUi.bmp2AviLocLE->setVisible(true);
+  QObject::connect(mUi.bmp2AviLocBrowsePB, SIGNAL(clicked(bool)), this, SLOT(browseClicked()));
+  updateFromSettings();
+}
+
+void RGEncBmp2avi::updateFromSettings()
+{
+  RGEncVideo::updateFromSettings();
+  mExecName=RGSettings::getVideoEncExec();
+  mUi.bmp2AviLocLE->setText(mExecName);
+}
+
+void RGEncBmp2avi::saveInSettings()
+{
+  RGEncVideo::saveInSettings();
+  mExecName=mUi.bmp2AviLocLE->text();
+  RGSettings::setVideoEncExec(mExecName);
 }
 
 void RGEncBmp2avi::generateMovie(const QString &dirName, const QString &filePrefix)
@@ -69,3 +89,67 @@ QString RGEncBmp2avi::encoderName()
 {
   return QString("Bmp2avi");
 }
+
+void RGEncBmp2avi::browseClicked()
+{
+  QString bmp2AviLoc = mUi.bmp2AviLocLE->text();
+  bmp2AviLoc = QFileDialog::getOpenFileName(this, tr("Select BMP2AVI location"),
+                                            bmp2AviLoc,
+                                            tr("Bmp2Avi (bmp2avi.exe)"));
+  if (!bmp2AviLoc.isNull()){
+    mUi.bmp2AviLocLE->setText(bmp2AviLoc);
+  }
+}
+
+//Collect codecs from bmp2avi
+/*QString bmp2aviExecName = RGSettings::getVideoEncExec();
+QFile bmp2aviExec(bmp2aviExecName);
+qDebug() << bmp2aviExecName;
+if (bmp2aviExec.exists()) {
+  qDebug() << "-->exists";
+  QProcess *bmp2AviProcess = new QProcess(this);
+  QStringList arguments;
+
+  //List codecs
+  arguments << "-l";
+
+  bmp2AviProcess = new QProcess(this);
+  bmp2AviProcess->start(bmp2aviExecName, arguments);
+  if (bmp2AviProcess->waitForFinished()){
+    QString currentCodec = RGSettings::getAviCompression();
+    int currentIndex = 0;
+    //First add "Uncompressed" codec to combobox
+    mCodecCB->addItem("Uncompressed", "DIB");
+    QByteArray output = bmp2AviProcess->readAllStandardOutput();
+    QList<QByteArray> lines = output.split('\n');
+    bool inHeader = true;
+    for (int i = 0; i < lines.size(); i++){
+      QString line = lines[i].data();
+      if (inHeader){
+        //Skip header
+        if (!line.startsWith("------")) continue;
+        else inHeader = false;
+      } else {
+        if (!line.contains("|")) continue;
+        //List of codecs starts
+        QStringList codec = line.split('|');
+        if (codec.size() == 2) {
+          //qDebug() << "CODE: " << codec[0].trimmed();
+          //qDebug() << "DESCR:" << codec[1].trimmed();
+          //Add description to combobox and codec code as data
+          mCodecCB->addItem(codec[1].trimmed(), codec[0].trimmed());
+          if (codec[0].trimmed() == currentCodec) currentIndex = mCodecCB->count() - 1;
+        }
+        //else: don't know what this would be...
+      }
+    }
+    //Set current setting
+    mCodecCB->setCurrentIndex(currentIndex);
+  }
+  else{
+    QMessageBox::critical (this, "Error", "Could not run bmp2avi to collect codec selection!");
+  }
+
+}
+
+*/

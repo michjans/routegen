@@ -23,42 +23,28 @@
 
 #include "RGSettingsDialog.h"
 #include "RGSettings.h"
-#include "ui_settings.h"
 
-RGSettingsDialog::RGSettingsDialog(RGEncVideo *videoEncoder,QWidget *parent)
-  :QDialog(parent),
-  mVideoEncoder(videoEncoder)
+RGSettingsDialog::RGSettingsDialog(QWidget *videoSettings,QWidget *parent)
+  :QDialog(parent)
 {
-  Ui::Dialog ui;  
   ui.setupUi(this);
 
-  mBmp2AviLocLE = ui.mBmp2AviLocLE;
-  mBrowsePB = ui.mBrowsePB;
-  mBmp2AviOutNameLE = ui.mBmp2AviOutNameLE;
-  mDeleteBMPsCB = ui.mDeleteBMPsCB;
   mGenerateBeginEndFramesCB = ui.mIconLessBeginEndFramesCB;
-  mFpsSB = ui.mFpsSB;
-  mKeyFrSB = ui.mKeyFrSB;
-  mCodecCB = ui.mCodecCB;
   mSmoothLengthSB = ui.mSmoothLengthSB;
   mResetDefaultsPB = ui.mResetDefaultsPB;
 
-  QObject::connect(mBrowsePB, SIGNAL(clicked(bool)), this, SLOT(browseClicked()));
+  //Advanced tab
+  mSmoothLengthSB->setValue(RGSettings::getSmoothLength());
+  mGenerateBeginEndFramesCB->setChecked(!RGSettings::getIconLessBeginEndFrames());
 
-  //Deactivate Path to bmp2avi.exe on linux :
-#ifdef Q_WS_X11
-  mBmp2AviLocLE->setDisabled(true);
-  mBrowsePB->setDisabled(true);
-  mBmp2AviLocLE->setVisible(false);
-  ui.locationLabel->setVisible(false);
-  mBrowsePB->setVisible(false);
-  mCodecCB->setDisabled(true);
-  ui.tabWidget->setTabText(0, "ffmpeg");
-  ui.locationLabel->setText("ffmpeg location");
-#endif
+  ui.tabWidget->insertTab(0,videoSettings,QString("Movie Generation"));
+  ui.tabWidget->setCurrentIndex(0);
+}
 
-  initFromSettings();
- mVideoEncoder->fillSettingsUi(ui);
+RGSettingsDialog::~RGSettingsDialog()
+{
+  qDebug()<<"~RGSettingsDialog";
+  ui.tabWidget->widget(0)->setParent(NULL);
 }
 
 void RGSettingsDialog::on_mResetDefaultsPB_clicked(bool)
@@ -66,108 +52,10 @@ void RGSettingsDialog::on_mResetDefaultsPB_clicked(bool)
   mSmoothLengthSB->setValue(RGSettings::getSmoothLength(true));
 }
 
-void RGSettingsDialog::browseClicked()
-{
-  QString bmp2AviLoc = mBmp2AviLocLE->text();
-  bmp2AviLoc = QFileDialog::getOpenFileName(this, tr("Select BMP2AVI location"),
-                                            bmp2AviLoc,
-                                            tr("Bmp2Avi (bmp2avi.exe)"));
-  if (!bmp2AviLoc.isNull()){
-    mBmp2AviLocLE->setText(bmp2AviLoc);
-    //TODO!
-    //RGSettings::setVideoEncoder(QString("bmp2avi"));
-  }
-}
-
 void RGSettingsDialog::accept()
 {
-  RGSettings::setVideoEncExec(mBmp2AviLocLE->text());
-  RGSettings::setAviOutName(mBmp2AviOutNameLE->text());
-  RGSettings::setDeleteBMPs(mDeleteBMPsCB->isChecked());
-  //Yes, it's inverse!
-  RGSettings::setIconLessBeginEndFrames(!mGenerateBeginEndFramesCB->isChecked());
-  RGSettings::setFps(mFpsSB->value());
-  RGSettings::setKeyFrameRate(mKeyFrSB->value());
-  QVariant codec = mCodecCB->itemData(mCodecCB->currentIndex());
-  RGSettings::setAviCompression(codec.toString());
-
   //Advanced settings
   RGSettings::setSmoothLength(mSmoothLengthSB->value());
-  //mVideoEncoder->getFromSettingsUi(ui);
+  RGSettings::setIconLessBeginEndFrames(!mGenerateBeginEndFramesCB->isChecked());
   QDialog::accept();
 }
-
-void RGSettingsDialog::initFromSettings()
-{
-  mFpsSB->setRange(0,50);
-  mKeyFrSB->setRange(0,50);
-
-  mBmp2AviLocLE->setText(RGSettings::getVideoEncExec());
-  mBmp2AviOutNameLE->setText(RGSettings::getAviOutName());
-  mDeleteBMPsCB->setChecked(RGSettings::getDeleteBMPs());
-  //Yes, it's inverse!
-  mGenerateBeginEndFramesCB->setChecked(!RGSettings::getIconLessBeginEndFrames());
-  mFpsSB->setValue(RGSettings::getFps());
-  mKeyFrSB->setValue(RGSettings::getKeyFrameRate());
-
-  //Advanced tab
-  mSmoothLengthSB->setValue(RGSettings::getSmoothLength());
-  mSmoothLengthSB->setRange(1, 1000);
-
-  //Collect codecs from bmp2avi
-  QString bmp2aviExecName = RGSettings::getVideoEncExec();
-  QFile bmp2aviExec(bmp2aviExecName);
-  qDebug() << bmp2aviExecName;
-  if (bmp2aviExec.exists()) {
-    qDebug() << "-->exists";
-    QProcess *bmp2AviProcess = new QProcess(this);
-    QStringList arguments;
-
-    //List codecs
-    arguments << "-l";
-
-    bmp2AviProcess = new QProcess(this);
-    bmp2AviProcess->start(bmp2aviExecName, arguments);
-    if (bmp2AviProcess->waitForFinished()){
-      QString currentCodec = RGSettings::getAviCompression();
-      int currentIndex = 0;
-      //First add "Uncompressed" codec to combobox
-      mCodecCB->addItem("Uncompressed", "DIB");
-      QByteArray output = bmp2AviProcess->readAllStandardOutput();
-      QList<QByteArray> lines = output.split('\n');
-      bool inHeader = true;
-      for (int i = 0; i < lines.size(); i++){
-        QString line = lines[i].data();
-        if (inHeader){
-          //Skip header
-          if (!line.startsWith("------")) continue;
-          else inHeader = false;
-        } else {
-          if (!line.contains("|")) continue;
-          //List of codecs starts
-          QStringList codec = line.split('|');
-          if (codec.size() == 2) {
-            //qDebug() << "CODE: " << codec[0].trimmed();
-            //qDebug() << "DESCR:" << codec[1].trimmed();
-            //Add description to combobox and codec code as data
-            mCodecCB->addItem(codec[1].trimmed(), codec[0].trimmed());
-            if (codec[0].trimmed() == currentCodec) currentIndex = mCodecCB->count() - 1;
-          }
-          //else: don't know what this would be...
-        }
-      }
-      //Set current setting
-      mCodecCB->setCurrentIndex(currentIndex);
-    }
-    else{
-      QMessageBox::critical (this, "Error", "Could not run bmp2avi to collect codec selection!");
-    }
-
-  }
-}
-
-//void RGSettingsDialog::on_mCodecCB_activated(int index)
-//{
-//  QVariant data = mCodecCB->itemData(index);
-//  qDebug() << "CODECCHANGE:" << data.toString();
-//}

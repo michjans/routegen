@@ -22,17 +22,27 @@
 #include <QtGui>
 #include <RGSettings.h>
 
-RGEncVideo::RGEncVideo(QObject *parent) :
-    QObject(parent),
+RGEncVideo::RGEncVideo(QWidget *parent) :
+    QWidget(parent),
     mExists(false),
     mFps(0),
     mOutName(QString()),
     mKeyFrameRate(0)
 {
+  mUi.setupUi(this);
+  // hide all specific part of the Ui
+  mUi.bitRateLabel->setVisible(false);
+  mUi.bitRateLabel->setVisible(false);
+  mUi.bitRateSB->setVisible(false);
+  mUi.bmp2AviLocBrowsePB->setVisible(false);
+  mUi.bmp2AviLocLabel->setVisible(false);
+  mUi.bmp2AviLocLE->setVisible(false);
   qDebug()<<"RGEncVideo";
-  mFps=RGSettings::getFps();
-  mOutName=RGSettings::getAviOutName();
-  mKeyFrameRate=RGSettings::getKeyFrameRate();
+
+}
+RGEncVideo::~RGEncVideo()
+{
+  qDebug()<<"~RGEncVideo";
 }
 
 bool RGEncVideo::exists() const
@@ -40,15 +50,32 @@ bool RGEncVideo::exists() const
   return mExists;
 }
 
-void RGEncVideo::fillSettingsUi(Ui::Dialog ui)
+void RGEncVideo::updateFromSettings()
 {
-  ui.mBmp2AviOutNameLE->setText("TTTTT");
+  mFps=RGSettings::getFps();
+  mUi.fpsSB->setValue(mFps);
+  mOutName=RGSettings::getAviOutName();
+  mUi.nameOutputLE->setText(mOutName);
+  mKeyFrameRate=RGSettings::getKeyFrameRate();
+  mUi.keyFrSB->setValue(mKeyFrameRate);
+  mUi.deleteBMPsCB->setChecked(RGSettings::getDeleteBMPs());
 }
 
-void RGEncVideo::getFromSettingsUi(Ui::Dialog ui)
+void RGEncVideo::saveInSettings()
 {
+  mOutName=mUi.nameOutputLE->text();
+  RGSettings::setAviOutName(mOutName);
+  RGSettings::setDeleteBMPs(mUi.deleteBMPsCB->isChecked());
+  mFps=mUi.fpsSB->value();
+  RGSettings::setFps(mFps);
+  mKeyFrameRate=mUi.keyFrSB->value();
+  RGSettings::setKeyFrameRate(mKeyFrameRate);
+
+  //QVariant codec = mCodecCB->itemData(mCodecCB->currentIndex());
+  //RGSettings::setAviCompression(codec.toString());
 
 }
+
 void RGEncVideo::createEncodingProcess(const QString &dirName,const QString &videoEncExec,const QStringList &arguments)
 {
   if (!mExists){

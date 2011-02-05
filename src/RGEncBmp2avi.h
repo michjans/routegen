@@ -26,9 +26,15 @@
 class RGEncBmp2avi : public RGEncVideo
 {
 public:
-  RGEncBmp2avi(QObject *parent = 0);
+  RGEncBmp2avi(QWidget *parent = 0);
+
+  virtual void updateFromSettings();
+  virtual void saveInSettings();
   virtual void generateMovie(const QString &dirName, const QString &filePrefix);
   virtual QString encoderName();
+
+private slots:
+  void browseClicked();
 
 private:
   QString mExecName;

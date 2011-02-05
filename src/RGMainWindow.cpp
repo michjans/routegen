@@ -144,6 +144,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   #endif
   if(mVideoEncoder->exists())
     qDebug()<<"encoder found !";
+    qDebug()<<"parent :"<<mVideoEncoder->parent();
 }
 
 void RGMainWindow::on_actionOpen_image_triggered(bool checked)
@@ -199,9 +200,13 @@ void RGMainWindow::on_action_Redo_triggered(bool)
 void RGMainWindow::on_actionPreferences_triggered(bool)
 {
   RGSettingsDialog rgsettings(mVideoEncoder);
+
   if(rgsettings.exec()==QDialog::Accepted){
+    mVideoEncoder->saveInSettings();
     mRGMapWidget->updateRouteParametersFromSettings();
   }
+  else
+    mVideoEncoder->updateFromSettings();
 }
 
 void RGMainWindow::on_actionImport_Google_Map_triggered(bool)

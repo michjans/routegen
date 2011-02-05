@@ -22,11 +22,11 @@
 #include <QtGui>
 #include <RGSettings.h>
 
-RGEncFFmpeg::RGEncFFmpeg(QObject *parent) :
+RGEncFFmpeg::RGEncFFmpeg(QWidget *parent) :
     RGEncVideo(parent),
-    mBitRate(QString())
+    mBitRate(100)
 {
-  mBitRate = RGSettings::getBitRate();
+
   qDebug()<<"FFMpeg encoder class";
   //Check if FFmpeg is present
   QProcess checkFFmpeg;
@@ -36,12 +36,31 @@ RGEncFFmpeg::RGEncFFmpeg(QObject *parent) :
     QMessageBox::warning (NULL, "No video encoder", "FFmpeg has not been found, video generation will be unavailable.\nPlease install FFmpeg and restart the application.");
   else
     mExists=true;
+
+  mUi.bitRateLabel->setVisible(true);
+  mUi.bitRateLabel->setVisible(true);
+  mUi.bitRateSB->setVisible(true);
+  updateFromSettings();
+}
+
+void RGEncFFmpeg::updateFromSettings()
+{
+  RGEncVideo::updateFromSettings();
+  mBitRate = RGSettings::getBitRate();
+  mUi.bitRateSB->setValue(mBitRate);
+}
+
+void RGEncFFmpeg::saveInSettings()
+{
+  RGEncVideo::saveInSettings();
+  mBitRate=mUi.bitRateSB->value();
+  RGSettings::setBitRate(mBitRate);
 }
 
 void RGEncFFmpeg::generateMovie(const QString &dirName, const QString &filePrefix)
 {
   QStringList arguments;
-  arguments << "-y" << "-i" << QString(filePrefix).append("\%05d.bmp") << "-g" << QString("%1").arg(mKeyFrameRate) <<"-r"<<QString("%1").arg(mFps)<< "-b" <<mBitRate << QString(mOutName).append(".avi");
+  arguments << "-y" << "-i" << QString(filePrefix).append("\%05d.bmp") << "-g" << QString("%1").arg(mKeyFrameRate) <<"-r"<<QString("%1").arg(mFps)<< "-b" <<QString("%1k").arg(mBitRate) << QString(mOutName).append(".avi");
 
   this->createEncodingProcess(dirName,"ffmpeg",arguments);
 }
@@ -50,3 +69,5 @@ QString RGEncFFmpeg::encoderName()
 {
   return QString("FFmpeg");
 }
+
+

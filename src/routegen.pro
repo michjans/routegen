@@ -21,7 +21,8 @@ HEADERS += RGMainWindow.h RGMapWidget.h RGVehicleDialog.h RGRoute.h RGSettings.h
     RGEncFFmpeg.h \
     RGEncBmp2avi.h
 FORMS += routegen.ui settings.ui googlemap.ui \
-    vehicledialog.ui
+    vehicledialog.ui \
+    videosettings.ui
 SOURCES += main.cpp RGMainWindow.cpp RGMapWidget.cpp RGVehicleDialog.cpp RGRoute.cpp RGSettings.cpp RGSettingsDialog.cpp RGGoogleMap.cpp \
     RGVehicle.cpp \
     RGSmoothRoute.cpp \

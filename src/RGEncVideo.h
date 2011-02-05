@@ -24,18 +24,19 @@
 #include <QObject>
 #include <QProcess>
 #include <QMessageBox>
-#include "ui_settings.h"
+#include "ui_videosettings.h"
 
-class RGEncVideo : public QObject
+class RGEncVideo : public QWidget
 {
   Q_OBJECT
 public:
-  explicit RGEncVideo(QObject *parent = 0);
+  explicit RGEncVideo(QWidget *parent = 0);
+  ~RGEncVideo();
   bool exists() const;
+  virtual void updateFromSettings();
+  virtual void saveInSettings();
   virtual void generateMovie(const QString &dirName, const QString &filePrefix)=0;
   virtual QString encoderName()=0;
-  void fillSettingsUi(Ui::Dialog ui);
-  void getFromSettingsUi(Ui::Dialog ui);
 
 signals:
   void movieGenerationFinished();
@@ -52,6 +53,7 @@ protected:
   int mKeyFrameRate;
   QMessageBox    *mProcessWaitMessage;
   QProcess    *mVideoEncProcess;
+  Ui::videoSettings mUi;
 
 };
 

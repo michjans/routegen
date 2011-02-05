@@ -26,12 +26,15 @@
 class RGEncFFmpeg : public RGEncVideo
 {
 public:
-  RGEncFFmpeg(QObject *parent = 0);
+  RGEncFFmpeg(QWidget *parent = 0);
+
+  virtual void updateFromSettings();
+  virtual void saveInSettings();
   virtual void generateMovie(const QString &dirName, const QString &filePrefix);
   virtual QString encoderName();
 
 private:
-  QString mBitRate;
+  int mBitRate;
 };
 
 #endif // RGENCFFMPEG_H

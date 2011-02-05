@@ -38,8 +38,8 @@ public:
   static void setFps(int);
   static int getKeyFrameRate();
   static void setKeyFrameRate(int);
-  static QString getBitRate();
-  static void setBitRate(const QString &);
+  static int getBitRate();
+  static void setBitRate(const int);
   static QString getAviCompression();
   static void setAviCompression(const QString &);
   static bool getDeleteBMPs();
