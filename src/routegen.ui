@@ -19,7 +19,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout">
     <item>
-     <layout class="QHBoxLayout">
+     <layout class="QHBoxLayout" name="routeProperties">
       <item>
        <widget class="QSpinBox" name="penSizeSB">
         <property name="toolTip">
@@ -178,8 +178,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>984</width>
-         <height>476</height>
+         <width>990</width>
+         <height>482</height>
         </rect>
        </property>
       </widget>
@@ -193,7 +193,7 @@
      <x>0</x>
      <y>0</y>
      <width>1004</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">

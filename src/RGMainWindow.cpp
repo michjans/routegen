@@ -30,6 +30,7 @@
 #include "RGEncVideo.h"
 #include "RGEncFFmpeg.h"
 #include "RGEncBmp2avi.h"
+#include "RGRoute2.h"
 
 #include "ui_routegen.h"
 
@@ -145,6 +146,9 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   #endif
   if(mVideoEncoder->exists())
     qDebug()<<"encoder found !";
+
+  mRoute= new RGRoute2();
+  ui.routeProperties->insertWidget(0,mRoute->widgetSettings());
 }
 
 void RGMainWindow::on_actionOpen_image_triggered(bool checked)

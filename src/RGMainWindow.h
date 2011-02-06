@@ -35,6 +35,7 @@ class QLabel;
 class RGMapWidget;
 class RGVehicleList;
 class RGEncVideo;
+class RGRoute2;
 
 class RGMainWindow : public QMainWindow
 {
@@ -81,6 +82,7 @@ private:
   RGMapWidget *mRGMapWidget;
   RGVehicleList     *mVehicleList;
   RGEncVideo        *mVideoEncoder;
+  RGRoute2          *mRoute;
 
   QAction *actionOpen_image;
   QAction *action_Quit;
