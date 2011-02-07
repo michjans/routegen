@@ -71,8 +71,8 @@ public:
   static bool getVehicleMirrored(const QString &name);
   static void setVehicleMirrored(const QString &name, bool mirror);
   
-  static void setInterpolationMode(bool val);
-  static bool getInterpolationMode();
+  static void setTotalTimeMode(bool val);
+  static bool getTotalTimeMode();
   static void setRoutePlayTime(int time);
   static int  getRoutePlayTime();
 

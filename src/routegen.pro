@@ -21,7 +21,11 @@ HEADERS += RGMainWindow.h RGMapWidget.h RGVehicleDialog.h RGRoute.h RGSettings.h
     RGEncFFmpeg.h \
     RGEncBmp2avi.h \
     RGRouteUi.h \
-    RGRoute2.h
+    RGRoute2.h \
+    RGPath.h \
+    RGViewWidget.h \
+    RGEditPathPoint.h \
+    RGEditPath.h
 FORMS += routegen.ui settings.ui googlemap.ui \
     vehicledialog.ui \
     videosettings.ui \
@@ -34,7 +38,11 @@ SOURCES += main.cpp RGMainWindow.cpp RGMapWidget.cpp RGVehicleDialog.cpp RGRoute
     RGEncFFmpeg.cpp \
     RGEncBmp2avi.cpp \
     RGRouteUi.cpp \
-    RGRoute2.cpp
+    RGRoute2.cpp \
+    RGPath.cpp \
+    RGViewWidget.cpp \
+    RGEditPathPoint.cpp \
+    RGEditPath.cpp
 RESOURCES += routegen.qrc
 
 win32 {

@@ -265,16 +265,16 @@ void RGSettings::setVehicleMirrored(const QString &name, bool mirror)
   settings.endGroup();
 }
 
-void RGSettings::setInterpolationMode(bool val)
+void RGSettings::setTotalTimeMode(bool val)
 {
   QSettings settings;
-  settings.setValue("interPolationMode", val);
+  settings.setValue("totalTimeMode", val);
 }
 
-bool RGSettings::getInterpolationMode()
+bool RGSettings::getTotalTimeMode()
 {
   QSettings settings;
-  return settings.value("interPolationMode", true).toBool();
+  return settings.value("totalTimeMode", true).toBool();
 }
 
 void RGSettings::setRoutePlayTime(int time)

@@ -31,6 +31,7 @@
 #include "RGEncFFmpeg.h"
 #include "RGEncBmp2avi.h"
 #include "RGRoute2.h"
+#include "RGViewWidget.h"
 
 #include "ui_routegen.h"
 
@@ -65,23 +66,25 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionGenerate_map = ui.actionGenerate_map;
   actionPlayback = ui.actionPlayback;
   actionStop = ui.actionStop;
-  mPenSizeSB = ui.penSizeSB;
+  /*mPenSizeSB = ui.penSizeSB;
   mRouteColorPB = ui.routeColorPB;
   mLineStyleCB = ui.lineStyleCB;
   mVehicleCB = ui.vehicleCB;
   mVehicleSettingsPB = ui.vehicleSettingsPB;
   mInterpolationCB = ui.interpolationCB;
   mSmoothPathCB = ui.smoothPathCB;
-  mRouteTimeSB = ui.routeTimeSB;
+  mRouteTimeSB = ui.routeTimeSB;*/
 
   action_Undo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
   //action_Redo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
 
   //Qt designer by default creates a widget in the QScrollArea, but we want our own widget inside it
-  delete ui.scrollAreaWidgetContents;
-  mRGMapWidget = new RGMapWidget();
-  ui.scrollArea->setWidget(mRGMapWidget);
-
+  //delete ui.scrollAreaWidgetContents;
+  //mRGMapWidget = new RGMapWidget();
+  //ui.scrollArea->setWidget(mRGMapWidget);
+  mRGViewWidget = new RGViewWidget();
+  ui.centralwidget->layout()->addWidget(mRGViewWidget);
+  /*
   actionSave_image->setEnabled(false);
   actionDraw_mode->setEnabled(false);
   actionNew_route->setEnabled(false);
@@ -127,7 +130,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mPenSizeSB->setValue(penSize);
   setPen();
 
-  mInterpolationCB->setChecked(RGSettings::getInterpolationMode());
+  mInterpolationCB->setChecked(RGSettings::getTotalTimeMode());
   mSmoothPathCB->setChecked(RGSettings::getSmoothPathMode());
   mRouteTimeSB->setValue(RGSettings::getRoutePlayTime());
 
@@ -137,7 +140,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   }
   mVehicleCB->setCurrentIndex(mVehicleList->getCurrentVehicleId());
   mRGMapWidget->setVehicle(*mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId()));
-
+  */
   //Video Encoder:
   #ifdef Q_WS_WIN
     mVideoEncoder = new RGEncBmp2avi();
@@ -149,6 +152,8 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 
   mRoute= new RGRoute2();
   ui.routeProperties->insertWidget(0,mRoute->widgetSettings());
+  mRoute->setZValue(1);
+  mRGViewWidget->addItem(mRoute);
 }
 
 void RGMainWindow::on_actionOpen_image_triggered(bool checked)
@@ -164,7 +169,8 @@ void RGMainWindow::on_actionOpen_image_triggered(bool checked)
     if (pm.isNull()) QMessageBox::critical (this, "Oops", "Could not load image");
     else{
       //TODO:Duplicated in on_actionImport_Google_Map_triggered
-      mRGMapWidget->loadImage(pm);
+      //mRGMapWidget->loadImage(pm);
+      mRGViewWidget->loadImage(pm);
       actionSave_image->setEnabled(true);
       actionDraw_mode->setEnabled(true);
       actionNew_route->setEnabled(true);
@@ -184,7 +190,7 @@ void RGMainWindow::on_actionSave_image_triggered(bool checked)
                                                   tr("Images (*.bmp *.jpg)"));
 
   if (!fileName.isNull()){
-    QPixmap pm = mRGMapWidget->getImage();
+    QPixmap pm = QPixmap();//mRGMapWidget->getImage();
     bool result = pm.save (fileName);
     if (!result) QMessageBox::critical (this, "Oops", "Problems saving file");
     RGSettings::setLastSaveDir(fileName);
@@ -193,12 +199,12 @@ void RGMainWindow::on_actionSave_image_triggered(bool checked)
 
 void RGMainWindow::on_action_Undo_triggered(bool)
 {
-  mRGMapWidget->undo();
+  //mRGMapWidget->undo();
 }
 
 void RGMainWindow::on_action_Redo_triggered(bool)
 {
-  mRGMapWidget->redo();
+  //mRGMapWidget->redo();
 }
 
 void RGMainWindow::on_actionPreferences_triggered(bool)
@@ -207,7 +213,7 @@ void RGMainWindow::on_actionPreferences_triggered(bool)
 
   if(rgsettings.exec()==QDialog::Accepted){
     mVideoEncoder->saveInSettings();
-    mRGMapWidget->updateRouteParametersFromSettings();
+    //mRGMapWidget->updateRouteParametersFromSettings();
   }
   else
     mVideoEncoder->updateFromSettings();
@@ -233,7 +239,8 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 	  map.save(fileName);
 
     //TODO:Duplicated in on_actionOpen_image_triggered
-    mRGMapWidget->loadImage(map);
+    //mRGMapWidget->loadImage(map);
+    mRGViewWidget->loadImage(map);
     actionSave_image->setEnabled(true);
     actionDraw_mode->setEnabled(true);
     RGSettings::setLastOpenDir(fileName);
@@ -242,26 +249,26 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 
 void RGMainWindow::on_actionDraw_mode_triggered(bool checked)
 {
-  if (checked) mRGMapWidget->startDrawMode();
-  else         mRGMapWidget->endDrawMode();
+  //if (checked) mRGMapWidget->startDrawMode();
+  //else         mRGMapWidget->endDrawMode();
 }
 
 void RGMainWindow::on_actionNew_route_triggered(bool)
 {
-  mRGMapWidget->startNewRoute();
+  //mRGMapWidget->startNewRoute();
 }
 
 void RGMainWindow::on_actionPlayback_triggered(bool checked)
 {
   Q_UNUSED(checked);
-  mRGMapWidget->play();
+  //mRGMapWidget->play();
   actionStop->setEnabled(true);
 }
 
 void RGMainWindow::on_actionStop_triggered(bool checked)
 {
   Q_UNUSED(checked);
-  mRGMapWidget->stop();
+  //mRGMapWidget->stop();
   actionStop->setEnabled(false);
 }
 
@@ -275,7 +282,7 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
   //Calculate MB the full movie (all uncompressed BMP's + AVI) will take
   //(This is a rough proximation, but the calculated number is always higher,
   // so we're safe)
-  int sizeEstimate = int ((mRGMapWidget->getNoFrames() * mRGMapWidget->getMapSize()) / 1048576.0) * 2;
+  int sizeEstimate = 4555;//int ((mRGMapWidget->getNoFrames() * mRGMapWidget->getMapSize()) / 1048576.0) * 2;
   QString dirInfoText = QString("Select an empty directory on a drive with at least ") + 
                         QString::number(sizeEstimate) +
                         QString(" MB of free diskspace, where the map should be generated.");
@@ -293,7 +300,7 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
         QMessageBox::question (this, "Directory not empty", "Directory not empty, continue anyway?",
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes){
       RGSettings::setLastGenDir(dir);
-      generateBMPOK = mRGMapWidget->generateMovie(dir, QString("map"), mGeneratedBMPs);
+      //generateBMPOK = mRGMapWidget->generateMovie(dir, QString("map"), mGeneratedBMPs);
     }
 
     if (generateBMPOK) {
@@ -347,7 +354,7 @@ void RGMainWindow::on_action_Quit_triggered(bool checked)
   qApp->quit();
 }
 
-void RGMainWindow::on_routeColorPB_clicked(bool)
+/*void RGMainWindow::on_routeColorPB_clicked(bool)
 {
   QPalette pal = mRouteColorPB->palette();
   QColor newCol = QColorDialog::getColor ( pal.color(QPalette::Button), this );
@@ -427,11 +434,11 @@ void RGMainWindow::on_vehicleSettingsPB_clicked(bool)
   for(int i=0;i<mVehicleList->count();i++){
     mVehicleCB->setItemIcon(i,QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(16)));
   }
-}
+}*/
 
 void RGMainWindow::blockUserInteraction(bool busy)
 {
-  mRGMapWidget->setBusy(busy);
+  //mRGMapWidget->setBusy(busy);
 
   actionOpen_image->setEnabled(!busy);
   action_Quit->setEnabled(!busy);
@@ -474,7 +481,7 @@ void RGMainWindow::movieGenerationFinished()
   mVideoEncoder->disconnect();
 }
 
-QIcon RGMainWindow::createIconForStyle(Qt::PenStyle style)
+/*QIcon RGMainWindow::createIconForStyle(Qt::PenStyle style)
 {
   QPixmap pm(40, 10);
   pm.fill();
@@ -494,4 +501,4 @@ void RGMainWindow::setPen()
   QVariant data = mLineStyleCB->itemData(mLineStyleCB->currentIndex());
   Qt::PenStyle style = (Qt::PenStyle) data.toInt();
   mRGMapWidget->setPen(color,size,style);
-}
+}*/

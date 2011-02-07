@@ -3,7 +3,9 @@
 
 #include "RGVehicleDialog.h"
 #include "RGSettings.h"
+#include <QDebug>
 #include <QPainter>
+#include <QColorDialog>
 
 RGRouteUi::RGRouteUi(QWidget *parent) :
     QWidget(parent),
@@ -36,11 +38,14 @@ RGRouteUi::RGRouteUi(QWidget *parent) :
 
   int penSize = RGSettings::getPenSize();
   ui->penSizeSB->setValue(penSize);
-  setPen();
 
-  ui->totalTimeCB->setChecked(RGSettings::getInterpolationMode());
+  ui->totalTimeCB->setChecked(RGSettings::getTotalTimeMode());
   ui->smoothPathCB->setChecked(RGSettings::getSmoothPathMode());
   ui->routeTimeSB->setValue(RGSettings::getRoutePlayTime());
+
+  //Connects signals :
+  //QObject::connect(ui->vehicleCB,SIGNAL(activated(int)),this,SIGNAL(vehicleChanged(int)));
+
 }
 
 RGRouteUi::~RGRouteUi()
@@ -52,10 +57,21 @@ void RGRouteUi::setVehicleList(RGVehicleList *vehicleList)
 {
   //set vehicleList and fill comboBox
   mVehicleList = vehicleList;
+  ui->vehicleCB->blockSignals(true);//block to stop calling CurrentIndexChanged while vehicle are added
   for (int i=0;i<mVehicleList->count();++i){
     ui->vehicleCB->addItem(QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(16)),mVehicleList->getVehicle(i)->getName());
   }
+  ui->vehicleCB->blockSignals(false);
   ui->vehicleCB->setCurrentIndex(mVehicleList->getCurrentVehicleId());
+}
+
+void RGRouteUi::init()
+{
+  //send initial signals
+  setPen();
+  emit totalTimeChecked(ui->totalTimeCB->isChecked());
+  emit smoothPathChecked(ui->smoothPathCB->isChecked());
+  emit routeTimeChanged(ui->routeTimeSB->value());
 }
 
 void RGRouteUi::on_vehicleSettingsPB_clicked(bool)
@@ -77,6 +93,69 @@ void RGRouteUi::on_vehicleSettingsPB_clicked(bool)
   }
 }
 
+void RGRouteUi::on_penSizeSB_valueChanged(int size)
+{
+  //Store
+  RGSettings::setPenSize(size);
+  setPen();
+}
+
+void RGRouteUi::on_lineStyleCB_activated(int idx)
+{
+  QVariant data = ui->lineStyleCB->itemData(idx);
+  Qt::PenStyle style = (Qt::PenStyle) data.toInt();
+  RGSettings::setPenStyle(style);
+  setPen();
+}
+
+void RGRouteUi::on_totalTimeCB_toggled(bool checked)
+{
+  RGSettings::setTotalTimeMode(checked);
+  emit totalTimeChecked(checked);
+}
+
+void RGRouteUi::on_smoothPathCB_toggled(bool checked)
+{
+  RGSettings::setSmoothPathMode(checked);
+  emit smoothPathChecked(checked);
+}
+
+void RGRouteUi::on_routeTimeSB_valueChanged(int time)
+{
+  RGSettings::setRoutePlayTime(time);
+  emit routeTimeChanged(time);
+}
+
+void RGRouteUi::on_vehicleCB_currentIndexChanged(int index)
+{
+  emit vehicleChanged(index);
+}
+
+void RGRouteUi::on_routeColorPB_clicked(bool)
+{
+  QPalette pal = ui->routeColorPB->palette();
+  QColor newCol = QColorDialog::getColor ( pal.color(QPalette::Button), this );
+  if (newCol.isValid()) {
+    QPalette pal = ui->routeColorPB->palette();
+    pal.setColor(QPalette::Button, newCol);
+    ui->routeColorPB->setPalette(pal);
+    //Store
+    RGSettings::setPenColor(newCol);
+
+    //update mLineStyleCB
+    int penStyle = ui->lineStyleCB->currentIndex();
+    ui->lineStyleCB->clear();
+    ui->lineStyleCB->addItem(createIconForStyle(Qt::SolidLine),      QString(), QVariant((unsigned) Qt::SolidLine));
+    ui->lineStyleCB->addItem(createIconForStyle(Qt::DashLine),       QString(), QVariant((unsigned) Qt::DashLine));
+    ui->lineStyleCB->addItem(createIconForStyle(Qt::DotLine),        QString(), QVariant((unsigned) Qt::DotLine));
+    ui->lineStyleCB->addItem(createIconForStyle(Qt::DashDotLine),    QString(), QVariant((unsigned) Qt::DashDotLine));
+    ui->lineStyleCB->addItem(createIconForStyle(Qt::DashDotDotLine), QString(), QVariant((unsigned) Qt::DashDotDotLine));
+    ui->lineStyleCB->addItem(createIconForStyle(Qt::NoPen),          QString(), QVariant((unsigned) Qt::NoPen));
+    ui->lineStyleCB->setCurrentIndex(penStyle);
+  }
+  setPen();
+}
+
 QIcon RGRouteUi::createIconForStyle(Qt::PenStyle style)
 {
   QPixmap pm(40, 10);
@@ -91,10 +170,11 @@ QIcon RGRouteUi::createIconForStyle(Qt::PenStyle style)
 
 void RGRouteUi::setPen()
 {
-  QPalette pal = ui->routeColorPB->palette();
-  QColor color = pal.color(QPalette::Button);
-  int size = ui->penSizeSB->value();
-  QVariant data = ui->lineStyleCB->itemData(ui->lineStyleCB->currentIndex());
-  Qt::PenStyle style = (Qt::PenStyle) data.toInt();
-  emit penChanged(color,size,style);
+  QPen pen;
+  pen.setWidth(ui->penSizeSB->value());
+  pen.setColor(ui->routeColorPB->palette().color(QPalette::Button));
+  pen.setStyle((Qt::PenStyle) ui->lineStyleCB->itemData(ui->lineStyleCB->currentIndex()).toInt());
+  pen.setCapStyle(Qt::FlatCap);
+  pen.setJoinStyle(Qt::RoundJoin);
+  emit penChanged(pen);
 }

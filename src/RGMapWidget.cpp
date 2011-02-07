@@ -58,7 +58,7 @@ RGMapWidget::RGMapWidget(QWidget *parent)
   mRgr = new RGRoute(test);
   mRgr->setFPS(mFPS);
   mRgr->setTotalTime(RGSettings::getRoutePlayTime());
-  mRgr->setPlayMode((int) RGSettings::getInterpolationMode());
+  mRgr->setPlayMode((int) RGSettings::getTotalTimeMode());
   mRgr->setIconlessBeginEndFrames(RGSettings::getIconLessBeginEndFrames());
   mRgr->setSmoothCoef(RGSettings::getSmoothLength());
 
@@ -315,7 +315,7 @@ void RGMapWidget::setFPS(int fps)
 void RGMapWidget::setInterpolationMode(bool val)
 {
 
-  RGSettings::setInterpolationMode(val);
+  RGSettings::setTotalTimeMode(val);
   mRgr->setPlayMode((int) val);
   if(!mPlayTimer->isActive()){
     mTimerCounter=mRgr->getNumberFrame();

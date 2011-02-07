@@ -1,15 +1,28 @@
 #include "RGRoute2.h"
 
-RGRoute2::RGRoute2(QObject *parent) :
-    QGraphicsItem()
+#include <QDebug>
+
+RGRoute2::RGRoute2(QGraphicsItem *parent) :
+    QGraphicsItem(parent)
 {
+  mPath=new RGPath(this);
+  mEditPath=new RGEditPath(this);
+  QObject::connect(mEditPath,SIGNAL(newPointList(QList<QPoint>)),mPath,SLOT(newPointList(QList<QPoint>)));
+
   mRouteUi = new RGRouteUi();
+  QObject::connect(mRouteUi,SIGNAL(penChanged(const QPen &)),this,SLOT(on_penChanged(const QPen &)));
+  QObject::connect(mRouteUi,SIGNAL(smoothPathChecked(bool)),this,SLOT(on_smoothPathChecked(bool)));
+  QObject::connect(mRouteUi,SIGNAL(totalTimeChecked(bool)),this,SLOT(on_totalTimeChecked(bool)));
+  QObject::connect(mRouteUi,SIGNAL(routeTimeChanged(int)),this,SLOT(on_routeTimeChanged(int)));
+  QObject::connect(mRouteUi,SIGNAL(vehicleChanged(int)),this,SLOT(on_vehicleChanged(int)));
 
   //create and set up vehicleList
   mVehicleList = new RGVehicleList();
   mRouteUi->setVehicleList(mVehicleList);
-  //QObject::connect(mRouteUi,SIGNAL((QList<QPoint>)),this,SLOT(getNewPointList(QList<QPoint>)));
-}
+
+  //set initial by sending signals
+  mRouteUi->init();
+  }
 
 QRectF RGRoute2::boundingRect() const
 {
@@ -25,4 +38,31 @@ void RGRoute2::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
 QWidget *RGRoute2::widgetSettings()
 {
   return mRouteUi;
+}
+
+void RGRoute2::on_penChanged(const QPen & pen)
+{
+  qDebug()<<"on_penChanged";
+  mPath->setPen(pen);
+}
+
+void RGRoute2::on_totalTimeChecked(bool checked)
+{
+  qDebug()<<"on_setTotalTimeChecked";
+}
+void RGRoute2::on_smoothPathChecked(bool checked)
+{
+  qDebug()<<"on_smoothPathChecked";
+}
+
+void RGRoute2::on_routeTimeChanged(int time)
+{
+  qDebug()<<"on_routeTimeChanged";
+}
+
+void RGRoute2::on_vehicleChanged(int index)
+{
+  qDebug()<<"on_vehicleChanged";
+  mVehicleList->setCurrentVehicleId(index);
+  //mRGMapWidget->setVehicle(*mVehicleList->getVehicle(index));
 }
