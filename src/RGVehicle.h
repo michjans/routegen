@@ -26,13 +26,16 @@
 #include <vector>
 #include <QImage>
 #include <QPixmap>
+#include <QGraphicsItem>
 
 
-class RGVehicle
+class RGVehicle : public QGraphicsItem
 {
 public:
   RGVehicle(const QString &filename="None",int size=0,bool mirror=false,int startAngle=0,int frameDelay=80);
   ~RGVehicle();
+  QRectF  boundingRect() const;
+  void    paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget);
   int     getSize();
   int     getRawSize();
   bool    getMirror();

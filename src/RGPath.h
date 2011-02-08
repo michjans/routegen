@@ -12,13 +12,16 @@ public:
     RGPath(QGraphicsItem *parent = 0);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget);
+    int countFrames();
+    int setCurrentFrame(int);
+    QPointF getEndPos();
+    float getAngle();
 
 signals:
 
 public slots:
     void newPointList(QList<QPoint>);
     void setDrawTime(int);
-    void setIconlessBeginEndFrames(bool);
     void setSmoothPath(bool);
     void setSmoothCoef(int);
     void setTotalTime(int time);
@@ -26,8 +29,17 @@ public slots:
     void setFPS(int FPS);
     void setPen(const QPen & pen);
 
+
 private:
-  void createPath();
+    QPainterPath getPathAtStep(int step);
+    QPainterPath getPathAtTime(int time);
+    void createPath();
+  void createSmoothPath();
+  QPainterPath pathLineQuad(QPoint start,QPoint coef, QPoint end);
+  QPainterPath pathLineCubic(QPoint start,QPoint coef1,QPoint coef2, QPoint end);
+  QPoint getPointAtLength(QPoint start,QPoint end,int length);
+  float getAngleAtTime(int time);
+  float getAngleAtStep(int step);
 
 private:
   QList<QPoint>     mRawPath;
@@ -36,10 +48,11 @@ private:
   int               mTotalTime; //total time for interpolation
   int               mPlayMode; //set the mode for the video generation(0=stepbystep,1=TotalTimeSet,2=speedSet)
   int               mFPS;
-  bool              mIconlessBeginEndFrames;
   int               mDSmooth;
   bool              mSmoothPath;
   QPen              mPen;
+  int               mCurrentFrame;
+  QPointF            mEndPos;
 
 };
 

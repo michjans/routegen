@@ -77,6 +77,9 @@ int RGVehicleList::getCurrentVehicleId()
 
 void RGVehicleList::setCurrentVehicleId(int idx)
 {
+  //set no parent:
+  mMap.value(mCurrentVehicleId)->setParentItem(NULL);
+  mMap.value(mCurrentVehicleId)->setVisible(false);
   mCurrentVehicleId=idx;
   //save settings
   for (int i=1;i<mMap.count();i++){

@@ -11,13 +11,13 @@ RGEditPathPoint::RGEditPathPoint(QGraphicsItem *parent,QPoint point) :
 
 QRectF RGEditPathPoint::boundingRect() const
 {
-     return QRectF(-10,-10,20,20);
+     return QRectF(-5,-5,10,10);
  }
 
 void RGEditPathPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
   painter->setBrush(Qt::black);
-  painter->drawRect(-10,-10,20,20);
+  painter->drawRect(this->boundingRect());
 }
 
 void RGEditPathPoint::mousePressEvent ( QGraphicsSceneMouseEvent * event )

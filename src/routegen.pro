@@ -13,7 +13,7 @@ UI_DIR = ./build/ui
 QT += webkit
 
 # Input
-HEADERS += RGMainWindow.h RGMapWidget.h RGVehicleDialog.h RGRoute.h RGSettings.h RGSettingsDialog.h RGGoogleMap.h \
+HEADERS += RGMainWindow.h RGVehicleDialog.h RGSettings.h RGSettingsDialog.h RGGoogleMap.h \
     RGVehicle.h \
     RGSmoothRoute.h \
     RGVehicleList.h \
@@ -30,7 +30,7 @@ FORMS += routegen.ui settings.ui googlemap.ui \
     vehicledialog.ui \
     videosettings.ui \
     routeui.ui
-SOURCES += main.cpp RGMainWindow.cpp RGMapWidget.cpp RGVehicleDialog.cpp RGRoute.cpp RGSettings.cpp RGSettingsDialog.cpp RGGoogleMap.cpp \
+SOURCES += main.cpp RGMainWindow.cpp RGVehicleDialog.cpp RGSettings.cpp RGSettingsDialog.cpp RGGoogleMap.cpp \
     RGVehicle.cpp \
     RGSmoothRoute.cpp \
     RGVehicleList.cpp \

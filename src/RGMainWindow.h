@@ -32,7 +32,7 @@ class QCheckBox;
 class QSpinBox;
 class QPushButton;
 class QLabel;
-class RGMapWidget;
+//class RGMapWidget;
 //class RGVehicleList;
 class RGEncVideo;
 class RGRoute2;
@@ -80,8 +80,8 @@ private:
   //void  setPen();
   //QIcon createIconForStyle(Qt::PenStyle);
 
-  RGMapWidget *mRGMapWidget;
-  RGViewWidget *mRGViewWidget;
+  //RGMapWidget *mRGMapWidget;
+  RGViewWidget *mView;
   //RGVehicleList     *mVehicleList;
   RGEncVideo        *mVideoEncoder;
   RGRoute2          *mRoute;

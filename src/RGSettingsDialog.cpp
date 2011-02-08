@@ -47,6 +47,17 @@ RGSettingsDialog::~RGSettingsDialog()
   ui.tabWidget->widget(0)->setParent(NULL);
 }
 
+int RGSettingsDialog::getSmoothCoef()
+{
+  return mSmoothLengthSB->value();
+}
+
+
+bool RGSettingsDialog::getIconlessBeginEndFrames()
+{
+  return !mGenerateBeginEndFramesCB->isChecked();
+}
+
 void RGSettingsDialog::on_mResetDefaultsPB_clicked(bool)
 {
   mSmoothLengthSB->setValue(RGSettings::getSmoothLength(true));

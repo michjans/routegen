@@ -35,6 +35,8 @@ class RGSettingsDialog : public QDialog
 public:
   RGSettingsDialog(QWidget *videoSettings,QWidget *parent = 0);
   ~RGSettingsDialog();
+  int getSmoothCoef();
+  bool getIconlessBeginEndFrames();
 
 private slots:
   void on_mResetDefaultsPB_clicked(bool);

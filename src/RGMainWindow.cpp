@@ -21,7 +21,7 @@
 #include <QtGui>
 
 #include "RGMainWindow.h"
-#include "RGMapWidget.h"
+//#include "RGMapWidget.h"
 #include "RGSettings.h"
 #include "RGSettingsDialog.h"
 #include "RGGoogleMap.h"
@@ -82,8 +82,8 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   //delete ui.scrollAreaWidgetContents;
   //mRGMapWidget = new RGMapWidget();
   //ui.scrollArea->setWidget(mRGMapWidget);
-  mRGViewWidget = new RGViewWidget();
-  ui.centralwidget->layout()->addWidget(mRGViewWidget);
+  mView = new RGViewWidget();
+  ui.centralwidget->layout()->addWidget(mView);
   /*
   actionSave_image->setEnabled(false);
   actionDraw_mode->setEnabled(false);
@@ -153,7 +153,8 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mRoute= new RGRoute2();
   ui.routeProperties->insertWidget(0,mRoute->widgetSettings());
   mRoute->setZValue(1);
-  mRGViewWidget->addItem(mRoute);
+  mRoute->setSmoothCoef(RGSettings::getSmoothLength());
+  mView->addRoute(mRoute);
 }
 
 void RGMainWindow::on_actionOpen_image_triggered(bool checked)
@@ -170,7 +171,7 @@ void RGMainWindow::on_actionOpen_image_triggered(bool checked)
     else{
       //TODO:Duplicated in on_actionImport_Google_Map_triggered
       //mRGMapWidget->loadImage(pm);
-      mRGViewWidget->loadImage(pm);
+      mView->loadImage(pm);
       actionSave_image->setEnabled(true);
       actionDraw_mode->setEnabled(true);
       actionNew_route->setEnabled(true);
@@ -213,6 +214,8 @@ void RGMainWindow::on_actionPreferences_triggered(bool)
 
   if(rgsettings.exec()==QDialog::Accepted){
     mVideoEncoder->saveInSettings();
+    mRoute->setSmoothCoef(rgsettings.getSmoothCoef());
+    mRoute->setIconlessBeginEndFrames(rgsettings.getIconlessBeginEndFrames());
     //mRGMapWidget->updateRouteParametersFromSettings();
   }
   else
@@ -240,7 +243,7 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 
     //TODO:Duplicated in on_actionOpen_image_triggered
     //mRGMapWidget->loadImage(map);
-    mRGViewWidget->loadImage(map);
+    mView->loadImage(map);
     actionSave_image->setEnabled(true);
     actionDraw_mode->setEnabled(true);
     RGSettings::setLastOpenDir(fileName);
@@ -251,27 +254,29 @@ void RGMainWindow::on_actionDraw_mode_triggered(bool checked)
 {
   //if (checked) mRGMapWidget->startDrawMode();
   //else         mRGMapWidget->endDrawMode();
+  mRoute->setEditMode(checked);
 }
 
 void RGMainWindow::on_actionNew_route_triggered(bool)
 {
   //mRGMapWidget->startNewRoute();
+  mRoute->clearPath();
 }
 
 void RGMainWindow::on_actionPlayback_triggered(bool checked)
 {
   Q_UNUSED(checked);
   //mRGMapWidget->play();
+  mView->play();
   actionStop->setEnabled(true);
 }
 
 void RGMainWindow::on_actionStop_triggered(bool checked)
 {
   Q_UNUSED(checked);
-  //mRGMapWidget->stop();
+  mView->stop();
   actionStop->setEnabled(false);
 }
-
 
 void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
 {
@@ -300,7 +305,7 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
         QMessageBox::question (this, "Directory not empty", "Directory not empty, continue anyway?",
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes){
       RGSettings::setLastGenDir(dir);
-      //generateBMPOK = mRGMapWidget->generateMovie(dir, QString("map"), mGeneratedBMPs);
+      generateBMPOK = mView->generateMovie(dir, QString("map"), mGeneratedBMPs);
     }
 
     if (generateBMPOK) {

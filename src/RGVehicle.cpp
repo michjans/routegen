@@ -22,9 +22,11 @@
 #include <QDebug>
 #include <QFileInfo>
 #include <QImageReader>
+#include <QPainter>
 
 RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle,int frameDelay)
-  :mFileName(fileName),
+  :QGraphicsItem(),
+  mFileName(fileName),
   mMirror(mirror),
   mStartAngle(startAngle),
   mSize(size),
@@ -74,6 +76,17 @@ RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle
 RGVehicle::~RGVehicle()
 {
   //qDebug() << "RGVehicle::~RGVehicle( " << mFileName << ")";
+}
+
+QRectF RGVehicle::boundingRect() const
+{
+     return QRectF(-10,-10,200,200);
+ }
+
+void RGVehicle::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+{
+  //painter->setBrush(Qt::black);
+  painter->drawPixmap(0,0,getPixmap(0));
 }
 
 int RGVehicle::getSize()
