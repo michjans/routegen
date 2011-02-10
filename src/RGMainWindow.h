@@ -73,7 +73,6 @@ private slots:
 
   void blockUserInteraction(bool);
   void enableGenerateActions(bool);
-  void handleDrawModeChanged(bool);
   void movieGenerationFinished();
 
 private:
@@ -104,8 +103,8 @@ private:
   QPushButton *mVehicleSettingsPB;
   QCheckBox *mInterpolationCB;
   QCheckBox *mSmoothPathCB;
-  QSpinBox  *mRouteTimeSB;*/
-  QProcess    *mVideoEncProcess;
+  QSpinBox  *mRouteTimeSB;
+  QProcess    *mVideoEncProcess;*/
   QStringList  mGeneratedBMPs;
 
 };

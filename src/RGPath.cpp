@@ -29,7 +29,12 @@ void RGPath::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget 
 {
   painter->setPen(mPen);
   //painter->drawPath(mPath);
-  qDebug()<<"New Current Frame "<<mCurrentFrame;
+  qDebug()<<"paint path at Current Frame "<<mCurrentFrame;
+  if (mCurrentFrame<0){
+    painter->drawPath(mPath);
+    mEndPos=mPath.pointAtPercent(1);
+    return;
+  }
   QPainterPath tmpPath;
   int time=mCurrentFrame*(1.0 / (double) mFPS) * 1000;
   if (mPlayMode==0) tmpPath=getPathAtStep(mCurrentFrame);
@@ -115,8 +120,8 @@ float RGPath::getAngleAtTime(int time)
   qreal percent = (double) time / ((double) mTotalTime*1000);//mTotalTime should never be null
   if (percent>1) percent=1;
   qreal angle=mPath.angleAtPercent(percent);
-  return angle;
-
+  qDebug()<<"pre angle"<<angle<<"angle path return"<<(360-angle);
+  return (360-angle);
 }
 
 float RGPath::getAngleAtStep(int step)

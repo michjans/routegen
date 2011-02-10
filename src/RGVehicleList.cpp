@@ -70,6 +70,11 @@ RGVehicle * RGVehicleList::getVehicle(int idx)
   return new RGVehicle();
 }
 
+RGVehicle * RGVehicleList::getCurrentVehicle()
+{
+  return mMap.value(mCurrentVehicleId);
+}
+
 int RGVehicleList::getCurrentVehicleId()
 {
   return mCurrentVehicleId;
@@ -80,17 +85,30 @@ void RGVehicleList::setCurrentVehicleId(int idx)
   //set no parent:
   mMap.value(mCurrentVehicleId)->setParentItem(NULL);
   mMap.value(mCurrentVehicleId)->setVisible(false);
+
   mCurrentVehicleId=idx;
-  //save settings
-  for (int i=1;i<mMap.count();i++){
-    RGSettings::setVehicleAngle(mMap.value(i)->getName(),mMap.value(i)->getStartAngle());
-    RGSettings::setVehicleSize(mMap.value(i)->getName(),mMap.value(i)->getSize());
-    RGSettings::setVehicleMirrored(mMap.value(i)->getName(),mMap.value(i)->getMirror());
-  }
   RGSettings::setLastVehicleName(mMap.value(idx)->getName());
 }
 
 int RGVehicleList::count()
 {
   return mMap.count();
+}
+
+void RGVehicleList::saveVehiclesSettings()
+{
+  for (int i=1;i<mMap.count();i++){
+    RGSettings::setVehicleAngle(mMap.value(i)->getName(),mMap.value(i)->getStartAngle());
+    RGSettings::setVehicleSize(mMap.value(i)->getName(),mMap.value(i)->getSize());
+    RGSettings::setVehicleMirrored(mMap.value(i)->getName(),mMap.value(i)->getMirror());
+  }
+}
+
+void RGVehicleList::loadVehiclesSettings()
+{
+  for (int i=1;i<mMap.count();i++){
+    mMap.value(i)->setStartAngle(RGSettings::getVehicleAngle(mMap.value(i)->getName()));
+    mMap.value(i)->setSize(RGSettings::getVehicleSize(mMap.value(i)->getName()));
+    mMap.value(i)->setMirror(RGSettings::getVehicleMirrored(mMap.value(i)->getName()));
+  }
 }

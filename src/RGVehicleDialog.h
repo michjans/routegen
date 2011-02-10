@@ -27,6 +27,7 @@
 #include <QPen>
 #include "RGVehicle.h"
 #include "RGVehicleList.h"
+#include <QGraphicsScene>
 
 class RGVehicleDialog : public QDialog
 {
@@ -57,15 +58,11 @@ private:
   void updateVehiclePreview();
 
   Ui_vehicleDialog ui;
-  int mCurrentVehicleId;
-  int mLastVehicleId;
-  int mLastVehicleSize;
-  int mLastVehicleMirror;
-  int mLastVehicleStartAngle;
   RGVehicleList *mVehicleList;
   QTimer *mPlayTimer;
   int mTimerCounter;
   QPen mPen;
+  QGraphicsScene *mScene;
 };
 
 #endif

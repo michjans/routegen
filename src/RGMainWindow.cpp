@@ -84,15 +84,18 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   //ui.scrollArea->setWidget(mRGMapWidget);
   mView = new RGViewWidget();
   ui.centralwidget->layout()->addWidget(mView);
-  /*
+
+
+  actionStop->setEnabled(false);
+  actionGenerate_map->setEnabled(false);
+  actionPlayback->setEnabled(false);
   actionSave_image->setEnabled(false);
   actionDraw_mode->setEnabled(false);
   actionNew_route->setEnabled(false);
   action_Undo->setEnabled(false);
+  /*
+
   //action_Redo->setEnabled(false);
-  actionGenerate_map->setEnabled(false);
-  actionPlayback->setEnabled(false);
-  actionStop->setEnabled(false);
   mVehicleSettingsPB->setEnabled(true);
 
   QObject::connect(mRGMapWidget, SIGNAL(busy(bool)),
@@ -155,6 +158,10 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mRoute->setZValue(1);
   mRoute->setSmoothCoef(RGSettings::getSmoothLength());
   mView->addRoute(mRoute);
+  QObject::connect(mRoute, SIGNAL(canGenerate(bool)),
+                   this, SLOT(enableGenerateActions(bool)));
+  QObject::connect(mView, SIGNAL(playbackStopped(bool)),
+                   this, SLOT(enableGenerateActions(bool)));
 }
 
 void RGMainWindow::on_actionOpen_image_triggered(bool checked)
@@ -260,13 +267,16 @@ void RGMainWindow::on_actionDraw_mode_triggered(bool checked)
 void RGMainWindow::on_actionNew_route_triggered(bool)
 {
   //mRGMapWidget->startNewRoute();
+  actionDraw_mode->trigger();
   mRoute->clearPath();
+  enableGenerateActions(false);
 }
 
 void RGMainWindow::on_actionPlayback_triggered(bool checked)
 {
   Q_UNUSED(checked);
-  //mRGMapWidget->play();
+  mRoute->setEditMode(false);
+  actionDraw_mode->setChecked(false);
   mView->play();
   actionStop->setEnabled(true);
 }
@@ -359,88 +369,6 @@ void RGMainWindow::on_action_Quit_triggered(bool checked)
   qApp->quit();
 }
 
-/*void RGMainWindow::on_routeColorPB_clicked(bool)
-{
-  QPalette pal = mRouteColorPB->palette();
-  QColor newCol = QColorDialog::getColor ( pal.color(QPalette::Button), this );
-  if (newCol.isValid()) {
-    QPalette pal = mRouteColorPB->palette();
-    pal.setColor(QPalette::Button, newCol);
-    mRouteColorPB->setPalette(pal);
-    //Store
-    RGSettings::setPenColor(newCol);
-
-    //update mLineStyleCB
-    int penStyle = mLineStyleCB->currentIndex();
-    mLineStyleCB->clear();
-    mLineStyleCB->addItem(createIconForStyle(Qt::SolidLine),      QString(), QVariant((unsigned) Qt::SolidLine));
-    mLineStyleCB->addItem(createIconForStyle(Qt::DashLine),       QString(), QVariant((unsigned) Qt::DashLine));
-    mLineStyleCB->addItem(createIconForStyle(Qt::DotLine),        QString(), QVariant((unsigned) Qt::DotLine));
-    mLineStyleCB->addItem(createIconForStyle(Qt::DashDotLine),    QString(), QVariant((unsigned) Qt::DashDotLine));
-    mLineStyleCB->addItem(createIconForStyle(Qt::DashDotDotLine), QString(), QVariant((unsigned) Qt::DashDotDotLine));
-    mLineStyleCB->addItem(createIconForStyle(Qt::NoPen),          QString(), QVariant((unsigned) Qt::NoPen));
-    mLineStyleCB->setCurrentIndex(penStyle);
-  }
-  setPen();
-}
-
-void RGMainWindow::on_penSizeSB_valueChanged(int size)
-{
-
-  //Store
-  RGSettings::setPenSize(size);
-  setPen();
-}
-
-void RGMainWindow::on_lineStyleCB_activated(int idx)
-{
-  QVariant data = mLineStyleCB->itemData(idx);
-  Qt::PenStyle style = (Qt::PenStyle) data.toInt();
-  RGSettings::setPenStyle(style);
-  setPen();
-}
-
-void RGMainWindow::on_interpolationCB_toggled(bool checked)
-{
-  mRGMapWidget->setInterpolationMode(checked);
-}
-
-void RGMainWindow::on_smoothPathCB_toggled(bool checked)
-{
-  mRGMapWidget->setSmoothPath(checked);
-  RGSettings::setSmoothPathMode(checked);
-}
-
-void RGMainWindow::on_routeTimeSB_valueChanged(int time)
-{
-  mRGMapWidget->setRoutePlayTime(time);
-}
-
-void RGMainWindow::on_vehicleCB_activated(int index)
-{
-  mVehicleList->setCurrentVehicleId(index);
-  mRGMapWidget->setVehicle(*mVehicleList->getVehicle(index));
-}
-
-void RGMainWindow::on_vehicleSettingsPB_clicked(bool)
-{
-  //get Pen properties:
-  QPen pen((Qt::PenStyle) mLineStyleCB->itemData(mLineStyleCB->currentIndex()).toInt());
-  pen.setColor(mRouteColorPB->palette().color(QPalette::Button));
-  pen.setWidth(mPenSizeSB->value());
-
-  RGVehicleDialog vehicleDialog(this,mVehicleList);
-  vehicleDialog.setPen(pen);
-  if (vehicleDialog.exec() == QDialog::Accepted){
-    mVehicleCB->setCurrentIndex(mVehicleList->getCurrentVehicleId());
-    mRGMapWidget->setVehicle(*mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId()));
-  }
-  //update icons of the comboBox
-  for(int i=0;i<mVehicleList->count();i++){
-    mVehicleCB->setItemIcon(i,QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(16)));
-  }
-}*/
-
 void RGMainWindow::blockUserInteraction(bool busy)
 {
   //mRGMapWidget->setBusy(busy);
@@ -462,12 +390,8 @@ void RGMainWindow::enableGenerateActions(bool val)
   actionGenerate_map->setEnabled(val);
   actionPlayback->setEnabled(val);
   action_Undo->setEnabled(val);
+  actionStop->setEnabled(false);
   //TODO: Redo not implemented yet, so keep disabled for now
-}
-
-void RGMainWindow::handleDrawModeChanged(bool activated)
-{
-  actionDraw_mode->setChecked(activated);
 }
 
 void RGMainWindow::movieGenerationFinished()

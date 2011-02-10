@@ -30,9 +30,13 @@ public:
   RGVehicleList();
   ~RGVehicleList();
   RGVehicle* getVehicle(int);
+  RGVehicle * getCurrentVehicle();
   int getCurrentVehicleId();
   void setCurrentVehicleId(int);
   int count();
+  void saveVehiclesSettings();
+  void loadVehiclesSettings();
+
 
 private:
   QMap<int,RGVehicle*>  mMap;

@@ -13,7 +13,7 @@ QRectF RGEditPath::boundingRect() const
   /*if(this->scene()!=0)
     return this->scene()->sceneRect();
   else return QRectF();*/
-  qDebug()<<"mEditPath boundingRect :"<<mBoundingRect;
+  //qDebug()<<"mEditPath boundingRect :"<<mBoundingRect;
   return mBoundingRect;
  }
 

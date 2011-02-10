@@ -24,6 +24,7 @@ public:
     void sceneRectChanged(const QRectF & rect);
 
 signals:
+    void canGenerate(bool);
 
 private slots:
     void on_penChanged(const QPen & pen);
@@ -31,15 +32,16 @@ private slots:
     void on_smoothPathChecked(bool);
     void on_routeTimeChanged(int);
     void on_vehicleChanged(int);
+    void on_pathChanged(QList<QPoint>);
 
 private:
     QRectF mBoundingRect;
     RGRouteUi *mRouteUi;
-    RGVehicleList     *mVehicleList;
+    RGVehicleList *mVehicleList;
     //RGVehicle *mVehicle;
     RGPath  *mPath;
     RGEditPath * mEditPath;
-    bool              mIconlessBeginEndFrames;
+    bool mIconlessBeginEndFrames;
 };
 
 #endif // RGROUTE2_H

@@ -27,11 +27,13 @@
 RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle,int frameDelay)
   :QGraphicsItem(),
   mFileName(fileName),
-  mMirror(mirror),
+  mMirror(0),
   mStartAngle(startAngle),
   mSize(size),
   mRawSize(0),
-  mFrameDelay(frameDelay)
+  mFrameDelay(frameDelay),
+  mOriginPoint(QPointF(0,0)),
+  mXmirror(false)
 {
   qDebug() << "RGVehicle::RGVehicle( " << fileName << ")";
   QImageReader qir(fileName);
@@ -42,9 +44,9 @@ RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle
   if (qir.supportsAnimation()) {
     qDebug() << "   supports animation";
     //Store all frames
-    mFrameDelay = qir.nextImageDelay();
-    //If delay not given in file, use passed delay
-    if (mFrameDelay == 0) mFrameDelay = frameDelay;
+    int delay = qir.nextImageDelay();
+    //If delay given in file, use delay
+    if (delay != 0) mFrameDelay = delay;
     qDebug() << "   using delay = " << mFrameDelay;
     QImage im;
     do {
@@ -68,9 +70,10 @@ RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle
     mRawImages.push_back(im);
     mFrameDelay = 0; //Means, no animation
   }
-  if(size==0)
-    size=mRawSize;
-  createImages(size,startAngle,mirror);
+  mOriginPoint=QPointF(mRawSize/2,mRawSize/2);
+  this->setSize(size);
+  this->setStartAngle(startAngle);
+  this->setMirror(mirror);
 }
 
 RGVehicle::~RGVehicle()
@@ -80,27 +83,34 @@ RGVehicle::~RGVehicle()
 
 QRectF RGVehicle::boundingRect() const
 {
-     return QRectF(-10,-10,200,200);
+     return QRectF(0-mOriginPoint.x(),0-mOriginPoint.y(),mRawSize,mRawSize);
  }
 
 void RGVehicle::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
   //painter->setBrush(Qt::black);
-  painter->drawPixmap(0,0,getPixmap(0));
+  if(mRawImages.size()>=1){
+      painter->drawPixmap(0-mOriginPoint.x(),0-mOriginPoint.y(),QPixmap::fromImage(mRawImages.at(0)));//getPixmap(0));
+      painter->setBrush(QBrush(Qt::black));
+      painter->drawEllipse(QPointF(0,0),5,5);
+    }
 }
 
 int RGVehicle::getSize()
 {
-  if (mSize==0)
-    return mRawSize;
   return mSize;
 }
 
 void RGVehicle::setSize(int size)
 {
-  if(size==0)
+  if(size==0) //set to default
     size=mRawSize;
-  createImages(size,mStartAngle,mMirror);
+  mSize=size;
+  if(mRawSize!=0){
+    qreal scale = (double) size/mRawSize;
+    qDebug()<<"scale :"<< scale;
+    this->setScale(scale);
+  }
 }
 
 int RGVehicle::getRawSize()
@@ -115,7 +125,11 @@ bool RGVehicle::getMirror()
 
 void RGVehicle::setMirror(bool mirror)
 {
-  createImages(mSize,mStartAngle,mirror);
+  //qDebug()<<"pre mirrorrect :"<<this->mapToScene(this->boundingRect());
+  if(mMirror!=mirror)
+    this->scale(-1,1);
+  //qDebug()<<"post mirrorrect :"<<this->mapToScene(this->boundingRect());
+  mMirror=mirror;
 }
 
 int RGVehicle::getStartAngle()
@@ -125,7 +139,22 @@ int RGVehicle::getStartAngle()
 
 void RGVehicle::setStartAngle(int startAngle)
 {
-  createImages(mSize,startAngle,mMirror);
+  mStartAngle=startAngle;
+  this->setRotation(0);//update rotation
+}
+
+void RGVehicle::setRotation(qreal angle)
+{
+  qDebug()<<"angle"<<angle;
+  if(angle<270 && angle>90 && mXmirror==false){
+    mXmirror=true;
+    this->scale(1,-1);
+  }
+  if((angle>270 || angle<90) && mXmirror==true){
+    mXmirror=false;
+    this->scale(1,-1);
+  }
+  QGraphicsItem::setRotation(angle+mStartAngle);
 }
 
 int RGVehicle::getDelay()
@@ -133,7 +162,7 @@ int RGVehicle::getDelay()
   return mFrameDelay;
 }
 
-QPixmap RGVehicle::getPixmap(int time)
+/*QPixmap RGVehicle::getPixmap(int time)
 {
   return getPixmapAtAngle(0,time);
 
@@ -166,14 +195,14 @@ QPixmap RGVehicle::getPixmapAtAngle(int degrees, int time)
     angle +=180;
   }
   return QPixmap::fromImage(rotateImage(im,angle));
-}
+}*/
 
 QString RGVehicle::getName()
 {
   return QFileInfo(mFileName).baseName();
 }
 
-QImage RGVehicle::rotateImage(QImage &image, int degrees)
+/*QImage RGVehicle::rotateImage(QImage &image, int degrees)
 {
   QMatrix matrix;
   matrix.rotate((-1)*(qreal) degrees);
@@ -219,3 +248,4 @@ void RGVehicle::createImages(int size, int angle, bool mirror)
     mSize=size;
   }
 }
+*/

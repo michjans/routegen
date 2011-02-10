@@ -41,21 +41,22 @@ public:
   bool    getMirror();
   int     getStartAngle();
   int     getDelay();
-  QPixmap getPixmap(int time=0);
+  /*QPixmap getPixmap(int time=0);
   QPixmap getPixmapAtSize(int);
-  QPixmap getPixmapAtAngle(int degrees,int time=0);
+  QPixmap getPixmapAtAngle(int degrees,int time=0);*/
   QString getName();
 
   void    setSize(int size);
   void    setMirror(bool mirror);
   void    setStartAngle(int selfAngle);
+  void    setRotation(qreal angle);
 
 
 private:
-  QImage  rotateImage(QImage &image, int degrees);
+  /*QImage  rotateImage(QImage &image, int degrees);
   QImage  scaleImage(QImage &image, int size);
   QImage  mirrorImage(QImage &image);
-  void    createImages(int size,int angle,bool mirror);//create mImages from mRawImages
+  void    createImages(int size,int angle,bool mirror);//create mImages from mRawImages*/
 
   QString             mFileName;
   bool                mMirror;
@@ -65,6 +66,8 @@ private:
   int                 mFrameDelay;
   std::vector<QImage> mImages;
   std::vector<QImage> mRawImages;
+  QPointF             mOriginPoint;
+  bool                mXmirror;
 };
 
 #endif // RGVEHICLE_H

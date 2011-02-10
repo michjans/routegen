@@ -133,6 +133,7 @@ void RGViewWidget::playTimerEvent()
     mPlayTimer->stop();
     //emit busy(false);
     qDebug()<<"Last update of mTimerCounter"<<mTimerCounter ;
+    emit playbackStopped(true);
   }
   mRoute->setCurrentFrame(mTimerCounter);
 }

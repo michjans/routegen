@@ -10,7 +10,8 @@ RGRoute2::RGRoute2(QGraphicsItem *parent) :
   mPath=new RGPath(this);
   mEditPath=new RGEditPath(this);
   mEditPath->setVisible(false);
-  QObject::connect(mEditPath,SIGNAL(newPointList(QList<QPoint>)),mPath,SLOT(newPointList(QList<QPoint>)));
+  //QObject::connect(mEditPath,SIGNAL(newPointList(QList<QPoint>)),mPath,SLOT(newPointList(QList<QPoint>)));
+  QObject::connect(mEditPath,SIGNAL(newPointList(QList<QPoint>)),this,SLOT(on_pathChanged(QList<QPoint>)));
 
   mRouteUi = new RGRouteUi();
   QObject::connect(mRouteUi,SIGNAL(penChanged(const QPen &)),this,SLOT(on_penChanged(const QPen &)));
@@ -85,15 +86,27 @@ void RGRoute2::on_routeTimeChanged(int time)
 void RGRoute2::on_vehicleChanged(int index)
 {
   qDebug()<<"on_vehicleChanged";
-  mVehicleList->setCurrentVehicleId(index);
-  mVehicleList->getVehicle(index)->setParentItem(this);
+  mVehicleList->getCurrentVehicle()->setParentItem(this);
+  mVehicleList->getCurrentVehicle()->setVisible(true);
   //mVehicle=mVehicleList->getVehicle(index);
   //mRGMapWidget->setVehicle(*mVehicleList->getVehicle(index));
+}
+
+void RGRoute2::on_pathChanged(QList<QPoint> pointlist)
+{
+  mPath->newPointList(pointlist);
+  qDebug()<<"pointlist size"<<pointlist.size();
+  if(pointlist.size()==2)
+    emit canGenerate(true);
+  if(pointlist.size()<2)
+    emit canGenerate(false);
 }
 
 void RGRoute2::setEditMode(bool checked)
 {
   mEditPath->setVisible(checked);
+  mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId())->setVisible(!checked);
+  mPath->setCurrentFrame(-1);
 }
 
 void RGRoute2::clearPath()
@@ -114,6 +127,7 @@ void RGRoute2::setCurrentFrame(int frame)
   //else
     //mVehicle->setVisible(true);
  qDebug()<<"endPos "<<mPath->getEndPos();
+ //mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId())->setVisible();
   mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId())->setPos(mPath->getEndPos());
   mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId())->setRotation(mPath->getAngle());
 }

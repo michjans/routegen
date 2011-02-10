@@ -19,6 +19,7 @@ public:
 
 
 signals:
+  void playbackStopped(bool);
 
 public slots:
   void loadImage(const QPixmap &pm);
