@@ -43,6 +43,7 @@ RGVehicleDialog::RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList)
 
 
   ui.vehiclePreview->setRenderHint(QPainter::Antialiasing);
+  ui.vehiclePreview->setRenderHint(QPainter::SmoothPixmapTransform);
   mScene = new QGraphicsScene(0,0,200,200);
   ui.vehiclePreview->setScene(mScene);
   ui.vehicleListWidget->setCurrentRow(mVehicleList->getCurrentVehicleId());

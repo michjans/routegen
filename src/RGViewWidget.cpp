@@ -15,6 +15,8 @@ RGViewWidget::RGViewWidget(QWidget *parent) :
 {
   mScene = new QGraphicsScene;
   this->setScene(mScene);
+  this->setRenderHint(QPainter::Antialiasing);
+  this->setRenderHint(QPainter::SmoothPixmapTransform);
 
   //init text
   mWelcomeText = mScene->addText(applicationName,QFont("Arial", 30));
