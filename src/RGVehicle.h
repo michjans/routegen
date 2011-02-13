@@ -32,10 +32,15 @@
 class RGVehicle : public QGraphicsItem
 {
 public:
-  RGVehicle(const QString &filename="None",int size=0,bool mirror=false,int startAngle=0,int frameDelay=80);
+  RGVehicle(const QString &filename="None",int size=0,bool mirror=false,int startAngle=0, QPointF originPoint=QPointF(-1,-1),int frameDelay=80);
   ~RGVehicle();
   QRectF  boundingRect() const;
   void    paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget);
+
+  enum { Type = UserType + 1 };
+  int type() const { return Type; }
+
+  QPointF getOrigin();
   int     getSize();
   int     getRawSize();
   bool    getMirror();
@@ -46,6 +51,7 @@ public:
   QPixmap getPixmapAtAngle(int degrees,int time=0);*/
   QString getName();
 
+  void    setOrigin(QPointF point);
   void    setSize(int size);
   void    setMirror(bool mirror);
   void    setStartAngle(int selfAngle);

@@ -24,9 +24,10 @@
 
 #include "RGVehicleDialog.h"
 
-RGVehicleDialog::RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList)
+RGVehicleDialog::RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList,const QPen &pen)
   : QDialog(parent),
   mVehicleList(vehicleList),
+  mVehicleOrigin(NULL),
   mPlayTimer(NULL),
   mTimerCounter(0)
 {
@@ -44,23 +45,16 @@ RGVehicleDialog::RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList)
 
   ui.vehiclePreview->setRenderHint(QPainter::Antialiasing);
   ui.vehiclePreview->setRenderHint(QPainter::SmoothPixmapTransform);
+  ui.vehiclePreview->setMinimumHeight(200+2*ui.vehiclePreview->frameWidth());
+  ui.vehiclePreview->setMinimumWidth(200+2*ui.vehiclePreview->frameWidth());
   mScene = new QGraphicsScene(0,0,200,200);
   ui.vehiclePreview->setScene(mScene);
+
+  mScene->addLine(100,100,0,100,pen); //QGraphicsLineItem *line=
+
   ui.vehicleListWidget->setCurrentRow(mVehicleList->getCurrentVehicleId());
 
-  //arrow:
-  QPixmap arrow(100,15);
-  arrow.fill(Qt::transparent);
-  QPainter painter(&arrow);
-  QPen pen(Qt::DashLine);
-  pen.setColor(Qt::red);
-  painter.setPen(pen);
-  painter.drawLine(0, 7, 99, 7);
-  pen.setStyle(Qt::SolidLine);
-  painter.setPen(pen);
-  painter.drawLine(99,7,95,3);
-  painter.drawLine(99,7,95,11);
-  ui.arrowPix->setPixmap(arrow);
+
 
 }
 
@@ -69,21 +63,17 @@ RGVehicleDialog::~RGVehicleDialog()
   //qDebug() << "RGVehicleDialog::~RGVehicleDialog";
 }
 
-void RGVehicleDialog::setPen(const QPen &pen)
-{
-  mPen=pen;
-  updateVehiclePreview();
-}
-
 void RGVehicleDialog::accept()
 {
   mScene->removeItem(mVehicleList->getCurrentVehicle());
+  if(mVehicleOrigin) delete mVehicleOrigin;
   QDialog::accept();
 }
 
 void RGVehicleDialog::reject()
 {
   mScene->removeItem(mVehicleList->getCurrentVehicle());
+  if(mVehicleOrigin) delete mVehicleOrigin;
   QDialog::reject();
 }
 
@@ -92,28 +82,28 @@ void RGVehicleDialog::on_vehicleListWidget_currentRowChanged(int currentRow)
   if(mPlayTimer->isActive())
     mPlayTimer->stop();
   mTimerCounter=0;
-  mScene->removeItem(mVehicleList->getCurrentVehicle());
+  if(mVehicleOrigin) delete mVehicleOrigin;
+  if(mScene==mVehicleList->getCurrentVehicle()->scene())
+    mScene->removeItem(mVehicleList->getCurrentVehicle());
   mVehicleList->getCurrentVehicle()->setVisible(false);
 
   //set new Vehicle
   mVehicleList->setCurrentVehicleId(currentRow);
   RGVehicle *vehicle=mVehicleList->getCurrentVehicle();
   ui.sizeSB->setValue(vehicle->getSize());
-  ui.angleSB->setValue(vehicle->getStartAngle());
+  ui.angleSlider->setValue(vehicle->getStartAngle());
   ui.mirrorCB->setChecked(vehicle->getMirror());
 
   mScene->addItem(vehicle);
+
+  //add Vehicle Origin Point
+  mVehicleOrigin = new RGVehicleOriginPt(vehicle);
+
   //center vehicle
   vehicle->setRotation(0);
-  QPointF vehCenterOwn=vehicle->boundingRect().center();
-  qDebug()<<"vehcenterown "<<vehCenterOwn;
-  QPointF vehCenterScene=vehicle->mapToScene(vehCenterOwn);
-  qDebug()<<"vehcenterscene "<<vehCenterScene;
-  QLineF line=QLineF(vehCenterScene,mScene->sceneRect().center());
-  vehicle->moveBy(line.dx(),line.dy());
-  //mVehicleList->getVehicle(mCurrentVehicleId)->setPos(-vehCenterScene);
-  qDebug()<<"mscenerect.center "<<mScene->sceneRect().center();
+  vehicle->setPos(100,100);
   vehicle->setVisible(true);
+
   //updateVehiclePreview();
   /*if (mVehicleList->getVehicle(mCurrentVehicleId)->getDelay()>0){
     mPlayTimer->setInterval(mVehicleList->getVehicle(mCurrentVehicleId)->getDelay());
@@ -127,7 +117,7 @@ void RGVehicleDialog::on_sizeSB_valueChanged(int size)
   updateVehiclePreview();
 }
 
-void RGVehicleDialog::on_angleSB_valueChanged(int angle)
+void RGVehicleDialog::on_angleSlider_valueChanged(int angle)
 {
   mVehicleList->getCurrentVehicle()->setStartAngle(angle);
   updateVehiclePreview();
@@ -137,13 +127,6 @@ void RGVehicleDialog::on_resetSizePB_clicked(bool)
 {
   mVehicleList->getCurrentVehicle()->setSize(0);
   ui.sizeSB->setValue(mVehicleList->getCurrentVehicle()->getSize());
-  updateVehiclePreview();
-}
-
-void RGVehicleDialog::on_resetAnglePB_clicked(bool)
-{
-  mVehicleList->getCurrentVehicle()->setStartAngle(0);
-  ui.angleSB->setValue(mVehicleList->getCurrentVehicle()->getStartAngle());
   updateVehiclePreview();
 }
 

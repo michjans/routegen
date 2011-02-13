@@ -265,6 +265,29 @@ void RGSettings::setVehicleMirrored(const QString &name, bool mirror)
   settings.endGroup();
 }
 
+QPointF RGSettings::getVehicleOrigin(const QString &name)
+{
+  QSettings settings;
+  settings.beginGroup("vehicleOriginX");
+  float pointx= settings.value(name, -1).toFloat();
+  settings.endGroup();
+  settings.beginGroup("vehicleOriginY");
+  float pointy= settings.value(name, -1).toFloat();
+  settings.endGroup();
+  return QPointF(pointx,pointy);
+}
+
+void RGSettings::setVehicleOrigin(const QString &name, QPointF point)
+{
+  QSettings settings;
+  settings.beginGroup("vehicleOriginX");
+  settings.setValue(name, point.x());
+  settings.endGroup();
+  settings.beginGroup("vehicleOriginY");
+  settings.setValue(name, point.y());
+  settings.endGroup();
+}
+
 void RGSettings::setTotalTimeMode(bool val)
 {
   QSettings settings;

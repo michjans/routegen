@@ -24,7 +24,7 @@
 #include <QImageReader>
 #include <QPainter>
 
-RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle,int frameDelay)
+RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle, QPointF originPoint,int frameDelay)
   :QGraphicsItem(),
   mFileName(fileName),
   mMirror(0),
@@ -32,7 +32,7 @@ RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle
   mSize(size),
   mRawSize(0),
   mFrameDelay(frameDelay),
-  mOriginPoint(QPointF(0,0)),
+  mOriginPoint(originPoint),
   mXmirror(false)
 {
   qDebug() << "RGVehicle::RGVehicle( " << fileName << ")";
@@ -70,7 +70,8 @@ RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle
     mRawImages.push_back(im);
     mFrameDelay = 0; //Means, no animation
   }
-  mOriginPoint=QPointF(mRawSize/2,mRawSize/2);
+  if(mOriginPoint.x()==-1 && mOriginPoint.y()==-1)
+    mOriginPoint=QPointF(mRawSize/2,mRawSize/2);
   this->setSize(size);
   this->setStartAngle(startAngle);
   this->setMirror(mirror);
@@ -91,9 +92,21 @@ void RGVehicle::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
   //painter->setBrush(Qt::black);
   if(mRawImages.size()>=1){
       painter->drawPixmap(0-mOriginPoint.x(),0-mOriginPoint.y(),QPixmap::fromImage(mRawImages.at(0)));//getPixmap(0));
-      painter->setBrush(QBrush(Qt::black));
-      painter->drawEllipse(QPointF(0,0),5,5);
+      //painter->setBrush(QBrush(Qt::black));
+      //painter->drawEllipse(QPointF(0,0),5,5);
     }
+}
+
+QPointF RGVehicle::getOrigin()
+{
+  return mOriginPoint;
+}
+
+void RGVehicle::setOrigin(QPointF point)
+{
+  this->prepareGeometryChange();
+  mOriginPoint=point;
+  update();
 }
 
 int RGVehicle::getSize()

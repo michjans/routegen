@@ -27,6 +27,7 @@
 #include <QPen>
 #include "RGVehicle.h"
 #include "RGVehicleList.h"
+#include "RGVehicleOriginPt.h"
 #include <QGraphicsScene>
 
 class RGVehicleDialog : public QDialog
@@ -37,9 +38,8 @@ public:
   /**
    * Creates a new RGVehicleDialog object.
    */
-  RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList);
+  RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList,const QPen &pen);
   ~RGVehicleDialog();
-  void setPen(const QPen &pen);
 
 public slots:
   void accept();
@@ -48,9 +48,8 @@ public slots:
 private  slots:
   void on_vehicleListWidget_currentRowChanged(int);
   void on_sizeSB_valueChanged(int);
-  void on_angleSB_valueChanged(int);
+  void on_angleSlider_valueChanged(int);
   void on_resetSizePB_clicked(bool);
-  void on_resetAnglePB_clicked(bool);
   void on_mirrorCB_toggled(bool);
   void playTimerEvent();
 
@@ -59,9 +58,9 @@ private:
 
   Ui_vehicleDialog ui;
   RGVehicleList *mVehicleList;
+  RGVehicleOriginPt *mVehicleOrigin;
   QTimer *mPlayTimer;
   int mTimerCounter;
-  QPen mPen;
   QGraphicsScene *mScene;
 };
 

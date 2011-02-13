@@ -46,7 +46,9 @@ RGVehicleList::RGVehicleList()
   int i=1;
   for (QFileInfoList::iterator it = vehicles.begin(); it != vehicles.end(); it++){
     vehicle= new RGVehicle(it->absoluteFilePath(),RGSettings::getVehicleSize(it->baseName()),
-                           RGSettings::getVehicleMirrored(it->baseName()),RGSettings::getVehicleAngle(it->baseName()));
+                           RGSettings::getVehicleMirrored(it->baseName()),
+                           RGSettings::getVehicleAngle(it->baseName()),
+                           RGSettings::getVehicleOrigin(it->baseName()));
     if (vehicle->getRawSize()==0){
       delete vehicle;
       continue;
@@ -101,6 +103,7 @@ void RGVehicleList::saveVehiclesSettings()
     RGSettings::setVehicleAngle(mMap.value(i)->getName(),mMap.value(i)->getStartAngle());
     RGSettings::setVehicleSize(mMap.value(i)->getName(),mMap.value(i)->getSize());
     RGSettings::setVehicleMirrored(mMap.value(i)->getName(),mMap.value(i)->getMirror());
+    RGSettings::setVehicleOrigin(mMap.value(i)->getName(),mMap.value(i)->getOrigin());
   }
 }
 
@@ -110,5 +113,6 @@ void RGVehicleList::loadVehiclesSettings()
     mMap.value(i)->setStartAngle(RGSettings::getVehicleAngle(mMap.value(i)->getName()));
     mMap.value(i)->setSize(RGSettings::getVehicleSize(mMap.value(i)->getName()));
     mMap.value(i)->setMirror(RGSettings::getVehicleMirrored(mMap.value(i)->getName()));
+    mMap.value(i)->setOrigin(RGSettings::getVehicleOrigin(mMap.value(i)->getName()));
   }
 }

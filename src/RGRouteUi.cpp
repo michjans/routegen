@@ -83,8 +83,7 @@ void RGRouteUi::on_vehicleSettingsPB_clicked(bool)
 
   int lastVehicleId=mVehicleList->getCurrentVehicleId();
 
-  RGVehicleDialog vehicleDialog(this,mVehicleList);
-  vehicleDialog.setPen(pen);
+  RGVehicleDialog vehicleDialog(this,mVehicleList,pen);
   if (vehicleDialog.exec() == QDialog::Accepted){
     ui->vehicleCB->setCurrentIndex(mVehicleList->getCurrentVehicleId());
     mVehicleList->saveVehiclesSettings();

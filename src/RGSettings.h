@@ -22,6 +22,7 @@
 
 #include <QColor>
 #include <QString>
+#include <QPointF>
 
 class RGSettings
 {
@@ -70,6 +71,8 @@ public:
   static void setVehicleSize(const QString &name, int size);
   static bool getVehicleMirrored(const QString &name);
   static void setVehicleMirrored(const QString &name, bool mirror);
+  static QPointF getVehicleOrigin(const QString &name);
+  static void setVehicleOrigin(const QString &name, QPointF point);
   
   static void setTotalTimeMode(bool val);
   static bool getTotalTimeMode();
