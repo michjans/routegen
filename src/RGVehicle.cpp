@@ -33,7 +33,7 @@ RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle
   mRawSize(0),
   mFrameDelay(frameDelay),
   mOriginPoint(originPoint),
-  mXmirror(false)
+  mRotMirror(false)
 {
   qDebug() << "RGVehicle::RGVehicle( " << fileName << ")";
   QImageReader qir(fileName);
@@ -157,14 +157,24 @@ void RGVehicle::setStartAngle(int startAngle)
 void RGVehicle::setRotation(qreal angle)
 {
   qDebug()<<"angle"<<angle;
-  if(angle<270 && angle>90 && mMirror==false){
-    mMirror=true;
-    this->scale(1,-1);
+  while (angle < 0)
+    angle += 360;
+  while (angle > 360)
+    angle -= 360;
+
+  if(angle<270 && angle>90){
+    if(mRotMirror==false){
+      mRotMirror=true;
+      this->scale(-1,1);
+    }
+    //angle=0;
+    angle=180-angle;
   }
-  if((angle>270 || angle<90) && mMirror==true){
-    mMirror=false;
-    this->scale(1,-1);
+  else if(mRotMirror==true){
+    mRotMirror=false;
+    this->scale(-1,1);
   }
+  if(mMirror) angle=-angle;
   QGraphicsItem::setRotation(angle+mStartAngle);
 }
 

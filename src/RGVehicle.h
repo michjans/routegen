@@ -72,7 +72,7 @@ private:
   int                 mFrameDelay;
   std::vector<QPixmap> mRawPm;
   QPointF             mOriginPoint;
-  bool                mXmirror;
+  bool                mRotMirror;
 };
 
 #endif // RGVEHICLE_H
