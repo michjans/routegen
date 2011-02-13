@@ -38,7 +38,7 @@ RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle
   qDebug() << "RGVehicle::RGVehicle( " << fileName << ")";
   QImageReader qir(fileName);
   if (!qir.canRead()) {
-    mRawImages.push_back(QImage());
+    mRawPm.push_back(QPixmap());
   }
 
   if (qir.supportsAnimation()) {
@@ -56,7 +56,7 @@ RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle
         mRawSize=im.height();
         if(mRawSize<im.width())
           mRawSize=im.width();
-        mRawImages.push_back(im);
+        mRawPm.push_back(QPixmap::fromImage(im));
       }
     }
     while (!im.isNull());
@@ -67,7 +67,7 @@ RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle
     mRawSize=im.height();
     if(mRawSize<im.width())
       mRawSize=im.width();
-    mRawImages.push_back(im);
+    mRawPm.push_back(QPixmap::fromImage(im));
     mFrameDelay = 0; //Means, no animation
   }
   if(mOriginPoint.x()==-1 && mOriginPoint.y()==-1)
@@ -89,12 +89,10 @@ QRectF RGVehicle::boundingRect() const
 
 void RGVehicle::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-  //painter->setBrush(Qt::black);
-  if(mRawImages.size()>=1){
-      painter->drawPixmap(0-mOriginPoint.x(),0-mOriginPoint.y(),QPixmap::fromImage(mRawImages.at(0)));//getPixmap(0));
+  painter->drawPixmap(0-mOriginPoint.x(),0-mOriginPoint.y(),mRawPm.at(0));//getPixmap(0));
       //painter->setBrush(QBrush(Qt::black));
       //painter->drawEllipse(QPointF(0,0),5,5);
-    }
+
 }
 
 QPointF RGVehicle::getOrigin()
@@ -159,12 +157,12 @@ void RGVehicle::setStartAngle(int startAngle)
 void RGVehicle::setRotation(qreal angle)
 {
   qDebug()<<"angle"<<angle;
-  if(angle<270 && angle>90 && mXmirror==false){
-    mXmirror=true;
+  if(angle<270 && angle>90 && mMirror==false){
+    mMirror=true;
     this->scale(1,-1);
   }
-  if((angle>270 || angle<90) && mXmirror==true){
-    mXmirror=false;
+  if((angle>270 || angle<90) && mMirror==true){
+    mMirror=false;
     this->scale(1,-1);
   }
   QGraphicsItem::setRotation(angle+mStartAngle);

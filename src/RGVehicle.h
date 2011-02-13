@@ -70,8 +70,7 @@ private:
   int                 mSize;
   int                 mRawSize;
   int                 mFrameDelay;
-  std::vector<QImage> mImages;
-  std::vector<QImage> mRawImages;
+  std::vector<QPixmap> mRawPm;
   QPointF             mOriginPoint;
   bool                mXmirror;
 };
