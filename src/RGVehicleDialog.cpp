@@ -33,7 +33,7 @@ RGVehicleDialog::RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList,cons
 {
   ui.setupUi(this);
   for(int i=0;i<vehicleList->count();i++){
-    QListWidgetItem *item = new QListWidgetItem(mVehicleList->getVehicle(i)->getName()); //QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(40)),
+    QListWidgetItem *item = new QListWidgetItem(QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(40)),mVehicleList->getVehicle(i)->getName()); //QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(40)),
     ui.vehicleListWidget->addItem(item);
   }
 
@@ -104,7 +104,6 @@ void RGVehicleDialog::on_vehicleListWidget_currentRowChanged(int currentRow)
   vehicle->setPos(100,100);
   vehicle->setVisible(true);
 
-  //updateVehiclePreview();
   /*if (mVehicleList->getVehicle(mCurrentVehicleId)->getDelay()>0){
     mPlayTimer->setInterval(mVehicleList->getVehicle(mCurrentVehicleId)->getDelay());
     mPlayTimer->start();
@@ -114,47 +113,27 @@ void RGVehicleDialog::on_vehicleListWidget_currentRowChanged(int currentRow)
 void RGVehicleDialog::on_sizeSB_valueChanged(int size)
 {
   mVehicleList->getCurrentVehicle()->setSize(size);
-  updateVehiclePreview();
 }
 
 void RGVehicleDialog::on_angleSlider_valueChanged(int angle)
 {
   mVehicleList->getCurrentVehicle()->setStartAngle(angle);
-  updateVehiclePreview();
+  ui.vehicleListWidget->currentItem()->setIcon(QIcon(mVehicleList->getCurrentVehicle()->getPixmapAtSize(40)));
 }
 
 void RGVehicleDialog::on_resetSizePB_clicked(bool)
 {
   mVehicleList->getCurrentVehicle()->setSize(0);
   ui.sizeSB->setValue(mVehicleList->getCurrentVehicle()->getSize());
-  updateVehiclePreview();
 }
 
 void RGVehicleDialog::on_mirrorCB_toggled(bool state)
 {
   mVehicleList->getCurrentVehicle()->setMirror(state);
-  updateVehiclePreview();
+  ui.vehicleListWidget->currentItem()->setIcon(QIcon(mVehicleList->getCurrentVehicle()->getPixmapAtSize(40)));
 }
 
 void RGVehicleDialog::playTimerEvent()
 {
-  updateVehiclePreview();
   mTimerCounter++;
-}
-
-void RGVehicleDialog::updateVehiclePreview()
-{
-  /*QPixmap pm(200,200);
-  pm.fill(Qt::transparent);
-  QPainter painter(&pm);
-  painter.setPen(mPen);
-  QPixmap pmVehicle=mVehicleList->getVehicle(mCurrentVehicleId)->getPixmap(mTimerCounter*mPlayTimer->interval());
-  //Draw vehicle in the center
-  int px = pm.size().width()/2 - pmVehicle.size().width() / 2;
-  int py = pm.size().height()/2 - pmVehicle.size().height() / 2;
-  painter.drawLine(pm.size().width()/2,pm.size().height()/2,0,pm.size().height()/2);
-  painter.drawPixmap(px,py,pmVehicle);
-  ui.vehiclePreviewLabel->setPixmap(pm);
-  ui.vehicleListWidget->currentItem()->setIcon(QIcon(mVehicleList->getVehicle(mCurrentVehicleId)->getPixmapAtSize(40)));
-  */
 }

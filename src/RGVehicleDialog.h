@@ -54,7 +54,6 @@ private  slots:
   void playTimerEvent();
 
 private:
-  void updateVehiclePreview();
 
   Ui_vehicleDialog ui;
   RGVehicleList *mVehicleList;

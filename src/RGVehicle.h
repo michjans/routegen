@@ -46,9 +46,8 @@ public:
   bool    getMirror();
   int     getStartAngle();
   int     getDelay();
-  /*QPixmap getPixmap(int time=0);
+  //QPixmap getPixmap(int time=0);
   QPixmap getPixmapAtSize(int);
-  QPixmap getPixmapAtAngle(int degrees,int time=0);*/
   QString getName();
 
   void    setOrigin(QPointF point);
@@ -59,10 +58,6 @@ public:
 
 
 private:
-  /*QImage  rotateImage(QImage &image, int degrees);
-  QImage  scaleImage(QImage &image, int size);
-  QImage  mirrorImage(QImage &image);
-  void    createImages(int size,int angle,bool mirror);//create mImages from mRawImages*/
 
   QString             mFileName;
   bool                mMirror;

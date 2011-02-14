@@ -59,7 +59,7 @@ void RGRouteUi::setVehicleList(RGVehicleList *vehicleList)
   mVehicleList = vehicleList;
   ui->vehicleCB->blockSignals(true);//block to stop calling CurrentIndexChanged while vehicle are added
   for (int i=0;i<mVehicleList->count();++i){
-    ui->vehicleCB->addItem(mVehicleList->getVehicle(i)->getName());//QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(16)),
+    ui->vehicleCB->addItem(QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(16)),mVehicleList->getVehicle(i)->getName());//QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(16)),
   }
   ui->vehicleCB->blockSignals(false);
   ui->vehicleCB->setCurrentIndex(mVehicleList->getCurrentVehicleId());
@@ -96,9 +96,9 @@ void RGRouteUi::on_vehicleSettingsPB_clicked(bool)
 
   emit vehicleChanged(mVehicleList->getCurrentVehicleId());
   //update icons of the comboBox
-  /*for(int i=0;i<mVehicleList->count();i++){
+  for(int i=0;i<mVehicleList->count();i++){
     ui->vehicleCB->setItemIcon(i,QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(16)));
-  }*/
+  }
 }
 
 void RGRouteUi::on_penSizeSB_valueChanged(int size)

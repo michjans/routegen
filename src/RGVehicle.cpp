@@ -156,7 +156,7 @@ void RGVehicle::setStartAngle(int startAngle)
 
 void RGVehicle::setRotation(qreal angle)
 {
-  qDebug()<<"angle"<<angle;
+  //qDebug()<<"angle"<<angle;
   while (angle < 0)
     angle += 360;
   while (angle > 360)
@@ -167,7 +167,6 @@ void RGVehicle::setRotation(qreal angle)
       mRotMirror=true;
       this->scale(-1,1);
     }
-    //angle=0;
     angle=180-angle;
   }
   else if(mRotMirror==true){
@@ -187,86 +186,19 @@ int RGVehicle::getDelay()
 {
   return getPixmapAtAngle(0,time);
 
-}
+}*/
 
 QPixmap RGVehicle::getPixmapAtSize(int size)
 {
-  QPixmap pm = QPixmap(40,40);
-  pm.fill(Qt::transparent);
-  if (mImages.size() > 0){
-    int lastSize=mSize;
-    createImages(size,mStartAngle,mMirror);
-    pm = QPixmap::fromImage(mImages[0]);
-    createImages(lastSize,mStartAngle,mMirror);
-  }
-  return pm;
+  QTransform transform;
+  if(mMirror) transform.scale(-1,1);
+  transform.rotate(mStartAngle);
+  QPixmap pm=mRawPm.at(0).transformed(transform,Qt::SmoothTransformation);
+  return pm.scaledToHeight(size);
 }
 
-QPixmap RGVehicle::getPixmapAtAngle(int degrees, int time)
-{
-  if (mImages.size() == 0)
-    return QPixmap();
-  int angle = (int) degrees%360;
-  int numImage=0;
-  if (time!=0 && mFrameDelay!=0)
-    numImage=time/mFrameDelay%mImages.size();
-  QImage im = QImage(mImages[numImage]);
-  if (angle>90 && angle <270){
-    im=mirrorImage(im);
-    angle +=180;
-  }
-  return QPixmap::fromImage(rotateImage(im,angle));
-}*/
 
 QString RGVehicle::getName()
 {
   return QFileInfo(mFileName).baseName();
 }
-
-/*QImage RGVehicle::rotateImage(QImage &image, int degrees)
-{
-  QMatrix matrix;
-  matrix.rotate((-1)*(qreal) degrees);
-  return image.transformed(matrix, Qt::SmoothTransformation);
-}
-
-QImage RGVehicle::scaleImage(QImage &image, int size)
-{
-  mSize=size;
-  if(image.width() > image.height()){
-    if (size != image.width())
-      return image.scaledToWidth(size,Qt::SmoothTransformation);
-  }
-  else {
-    if (size != image.height())
-      return image.scaledToHeight(size,Qt::SmoothTransformation);
-  }
-  return QImage();
-}
-
-QImage RGVehicle::mirrorImage(QImage &image)
-{
-  return image.mirrored(true, false);
-}
-
-void RGVehicle::createImages(int size, int angle, bool mirror)
-{
-  mImages.clear();
-  if (mRawSize==0)
-    return;
-  for (int i=0;i<(int)mRawImages.size();++i){
-    QImage im;
-    im=mRawImages.at(i);
-    if (size!=mRawSize)
-      im=scaleImage(im, size);
-    if (angle!=0)
-      im=rotateImage(im, angle);
-    if (mirror==true)
-      im=mirrorImage(im);
-    mImages.push_back(im);
-    mMirror=mirror;
-    mStartAngle=angle;
-    mSize=size;
-  }
-}
-*/
