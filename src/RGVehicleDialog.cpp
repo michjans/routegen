@@ -104,10 +104,10 @@ void RGVehicleDialog::on_vehicleListWidget_currentRowChanged(int currentRow)
   vehicle->setPos(100,100);
   vehicle->setVisible(true);
 
-  /*if (mVehicleList->getVehicle(mCurrentVehicleId)->getDelay()>0){
-    mPlayTimer->setInterval(mVehicleList->getVehicle(mCurrentVehicleId)->getDelay());
+  if (mVehicleList->getCurrentVehicle()->getDelay()>0){
+    mPlayTimer->setInterval(mVehicleList->getCurrentVehicle()->getDelay());
     mPlayTimer->start();
-  }*/
+  }
 }
 
 void RGVehicleDialog::on_sizeSB_valueChanged(int size)
@@ -136,4 +136,5 @@ void RGVehicleDialog::on_mirrorCB_toggled(bool state)
 void RGVehicleDialog::playTimerEvent()
 {
   mTimerCounter++;
+  mVehicleList->getCurrentVehicle()->setTime(mTimerCounter*mPlayTimer->interval());
 }

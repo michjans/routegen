@@ -46,7 +46,6 @@ public:
   bool    getMirror();
   int     getStartAngle();
   int     getDelay();
-  //QPixmap getPixmap(int time=0);
   QPixmap getPixmapAtSize(int);
   QString getName();
 
@@ -55,6 +54,7 @@ public:
   void    setMirror(bool mirror);
   void    setStartAngle(int selfAngle);
   void    setRotation(qreal angle);
+  void    setTime(int time);
 
 
 private:
@@ -65,6 +65,7 @@ private:
   int                 mSize;
   int                 mRawSize;
   int                 mFrameDelay;
+  int                 mCurrentPm;
   std::vector<QPixmap> mRawPm;
   QPointF             mOriginPoint;
   bool                mRotMirror;

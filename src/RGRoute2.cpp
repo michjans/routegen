@@ -128,8 +128,9 @@ void RGRoute2::setCurrentFrame(int frame)
     //mVehicle->setVisible(true);
  qDebug()<<"endPos "<<mPath->getEndPos();
  //mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId())->setVisible();
-  mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId())->setPos(mPath->getEndPos());
-  mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId())->setRotation(mPath->getAngle());
+  mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
+  mVehicleList->getCurrentVehicle()->setRotation(mPath->getAngle());
+  mVehicleList->getCurrentVehicle()->setTime(time);
 }
 
 void RGRoute2::setIconlessBeginEndFrames(bool val)

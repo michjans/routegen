@@ -27,11 +27,12 @@
 RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle, QPointF originPoint,int frameDelay)
   :QGraphicsItem(),
   mFileName(fileName),
-  mMirror(0),
+  mMirror(false),
   mStartAngle(startAngle),
   mSize(size),
   mRawSize(0),
   mFrameDelay(frameDelay),
+  mCurrentPm(0),
   mOriginPoint(originPoint),
   mRotMirror(false)
 {
@@ -89,10 +90,7 @@ QRectF RGVehicle::boundingRect() const
 
 void RGVehicle::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-  painter->drawPixmap(0-mOriginPoint.x(),0-mOriginPoint.y(),mRawPm.at(0));//getPixmap(0));
-      //painter->setBrush(QBrush(Qt::black));
-      //painter->drawEllipse(QPointF(0,0),5,5);
-
+  painter->drawPixmap(0-mOriginPoint.x(),0-mOriginPoint.y(),mRawPm.at(mCurrentPm));
 }
 
 QPointF RGVehicle::getOrigin()
@@ -136,10 +134,8 @@ bool RGVehicle::getMirror()
 
 void RGVehicle::setMirror(bool mirror)
 {
-  //qDebug()<<"pre mirrorrect :"<<this->mapToScene(this->boundingRect());
   if(mMirror!=mirror)
     this->scale(-1,1);
-  //qDebug()<<"post mirrorrect :"<<this->mapToScene(this->boundingRect());
   mMirror=mirror;
 }
 
@@ -182,11 +178,13 @@ int RGVehicle::getDelay()
   return mFrameDelay;
 }
 
-/*QPixmap RGVehicle::getPixmap(int time)
+void RGVehicle::setTime(int time)
 {
-  return getPixmapAtAngle(0,time);
-
-}*/
+  if (mFrameDelay!=0)
+    mCurrentPm=time/mFrameDelay%mRawPm.size();
+  qDebug()<<"currentpm"<<mCurrentPm;
+  update();
+}
 
 QPixmap RGVehicle::getPixmapAtSize(int size)
 {
