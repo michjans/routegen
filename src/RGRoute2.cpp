@@ -5,7 +5,8 @@
 RGRoute2::RGRoute2(QGraphicsItem *parent) :
     QGraphicsItem(parent),
     mBoundingRect(QRectF()),
-    mIconlessBeginEndFrames(false)
+    mIconlessBeginEndFrames(false),
+    mShowVehicle(false)
 {
   mPath=new RGPath(this);
   mEditPath=new RGEditPath(this);
@@ -18,7 +19,7 @@ RGRoute2::RGRoute2(QGraphicsItem *parent) :
   QObject::connect(mRouteUi,SIGNAL(smoothPathChecked(bool)),this,SLOT(on_smoothPathChecked(bool)));
   QObject::connect(mRouteUi,SIGNAL(totalTimeChecked(bool)),this,SLOT(on_totalTimeChecked(bool)));
   QObject::connect(mRouteUi,SIGNAL(routeTimeChanged(int)),this,SLOT(on_routeTimeChanged(int)));
-  QObject::connect(mRouteUi,SIGNAL(vehicleChanged(int)),this,SLOT(on_vehicleChanged(int)));
+  QObject::connect(mRouteUi,SIGNAL(vehicleChanged()),this,SLOT(on_vehicleChanged()));
 
   //create and set up vehicleList
   mVehicleList = new RGVehicleList();
@@ -83,18 +84,18 @@ void RGRoute2::on_routeTimeChanged(int time)
   mPath->setTotalTime(time);
 }
 
-void RGRoute2::on_vehicleChanged(int index)
+void RGRoute2::on_vehicleChanged()
 {
-  qDebug()<<"on_vehicleChanged";
+  qDebug()<<"on_vehicleChanged, countFrames:"<<mPath->getEndPos();
   mVehicleList->getCurrentVehicle()->setParentItem(this);
-  mVehicleList->getCurrentVehicle()->setVisible(true);
-  //mVehicle=mVehicleList->getVehicle(index);
-  //mRGMapWidget->setVehicle(*mVehicleList->getVehicle(index));
+  mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
+  mVehicleList->getCurrentVehicle()->setVisible(mShowVehicle);
 }
 
 void RGRoute2::on_pathChanged(QList<QPoint> pointlist)
 {
   mPath->newPointList(pointlist);
+
   qDebug()<<"pointlist size"<<pointlist.size();
   if(pointlist.size()==2)
     emit canGenerate(true);
@@ -105,7 +106,9 @@ void RGRoute2::on_pathChanged(QList<QPoint> pointlist)
 void RGRoute2::setEditMode(bool checked)
 {
   mEditPath->setVisible(checked);
-  mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId())->setVisible(!checked);
+  mShowVehicle=!checked;
+  mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
+  mVehicleList->getCurrentVehicle()->setVisible(mShowVehicle);
   mPath->setCurrentFrame(-1);
 }
 

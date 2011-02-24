@@ -94,7 +94,7 @@ void RGRouteUi::on_vehicleSettingsPB_clicked(bool)
     mVehicleList->setCurrentVehicleId(lastVehicleId);
   }
 
-  emit vehicleChanged(mVehicleList->getCurrentVehicleId());
+  emit vehicleChanged();
   //update icons of the comboBox
   for(int i=0;i<mVehicleList->count();i++){
     ui->vehicleCB->setItemIcon(i,QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(16)));
@@ -137,7 +137,7 @@ void RGRouteUi::on_routeTimeSB_valueChanged(int time)
 void RGRouteUi::on_vehicleCB_currentIndexChanged(int index)
 {
   mVehicleList->setCurrentVehicleId(index);
-  emit vehicleChanged(index);
+  emit vehicleChanged();
 }
 
 void RGRouteUi::on_routeColorPB_clicked(bool)

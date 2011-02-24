@@ -31,7 +31,7 @@ private slots:
     void on_totalTimeChecked(bool);
     void on_smoothPathChecked(bool);
     void on_routeTimeChanged(int);
-    void on_vehicleChanged(int);
+    void on_vehicleChanged();
     void on_pathChanged(QList<QPoint>);
 
 private:
@@ -42,6 +42,7 @@ private:
     RGPath  *mPath;
     RGEditPath * mEditPath;
     bool mIconlessBeginEndFrames;
+    bool mShowVehicle;
 };
 
 #endif // RGROUTE2_H

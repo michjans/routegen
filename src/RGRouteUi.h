@@ -33,7 +33,7 @@ signals:
   void totalTimeChecked(bool);
   void smoothPathChecked(bool);
   void routeTimeChanged(int);
-  void vehicleChanged(int);
+  void vehicleChanged();
 
 private:
   QIcon createIconForStyle(Qt::PenStyle);
