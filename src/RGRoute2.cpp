@@ -3,7 +3,7 @@
 #include <QDebug>
 
 RGRoute2::RGRoute2(QGraphicsItem *parent) :
-    QGraphicsItem(parent),
+    QGraphicsObject(parent),
     mBoundingRect(QRectF()),
     mIconlessBeginEndFrames(false),
     mShowVehicle(false)

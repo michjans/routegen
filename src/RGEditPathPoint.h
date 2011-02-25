@@ -1,11 +1,11 @@
 #ifndef RGEDITPATHPOINT_H
 #define RGEDITPATHPOINT_H
 
-#include <QGraphicsItem>
+#include <QGraphicsObject>
 #include <QPoint>
 #include <QtGui>
 
-class RGEditPathPoint : public QObject,public QGraphicsItem
+class RGEditPathPoint : public QGraphicsObject
 {
   Q_OBJECT
 public:

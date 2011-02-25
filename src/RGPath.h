@@ -1,11 +1,11 @@
 #ifndef RGPATH_H
 #define RGPATH_H
 
-#include <QGraphicsItem>
+#include <QGraphicsObject>
 #include <QPen>
 #include <QtGui>
 
-class RGPath : public QObject, public QGraphicsItem
+class RGPath : public QGraphicsObject
 {
     Q_OBJECT
 public:

@@ -4,7 +4,7 @@
 const float Pi = 3.14159265f;
 
 RGPath::RGPath(QGraphicsItem *parent) :
-    QGraphicsItem(parent),
+    QGraphicsObject(parent),
     mRawPath(QList<QPoint>()),
     mTime(0),
     mPath(QPainterPath()),

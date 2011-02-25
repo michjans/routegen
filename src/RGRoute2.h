@@ -1,13 +1,13 @@
 #ifndef RGROUTE2_H
 #define RGROUTE2_H
 
-#include <QGraphicsItem>
+#include <QGraphicsObject>
 #include "RGVehicleList.h"
 #include "RGRouteUi.h"
 #include "RGPath.h"
 #include "RGEditPath.h"
 
-class RGRoute2 : public QObject, public QGraphicsItem
+class RGRoute2 : public QGraphicsObject
 {
     Q_OBJECT
 public:

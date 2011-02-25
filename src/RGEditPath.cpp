@@ -1,7 +1,7 @@
 #include "RGEditPath.h"
 
 RGEditPath::RGEditPath(QGraphicsItem *parent) :
-    QGraphicsItem(parent),
+    QGraphicsObject(parent),
     mBoundingRect(QRectF())
 {
   setPos(0,0);

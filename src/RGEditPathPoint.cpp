@@ -1,7 +1,7 @@
 #include "RGEditPathPoint.h"
 
 RGEditPathPoint::RGEditPathPoint(QGraphicsItem *parent,QPoint point) :
-    QGraphicsItem(parent)
+    QGraphicsObject(parent)
 {
   setCursor(Qt::SizeAllCursor);
   //setAcceptsHoverEvents(true);
