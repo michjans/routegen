@@ -71,6 +71,7 @@ void RGRoute2::on_totalTimeChecked(bool checked)
     mPath->setPlayMode(1);
   else
     mPath->setPlayMode(0);
+  //TODO update vehicle
 }
 void RGRoute2::on_smoothPathChecked(bool checked)
 {
@@ -89,6 +90,7 @@ void RGRoute2::on_vehicleChanged()
   qDebug()<<"on_vehicleChanged, countFrames:"<<mPath->getEndPos();
   mVehicleList->getCurrentVehicle()->setParentItem(this);
   mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
+  mVehicleList->getCurrentVehicle()->setRotation(mPath->getAngle());
   mVehicleList->getCurrentVehicle()->setVisible(mShowVehicle);
 }
 
@@ -105,11 +107,13 @@ void RGRoute2::on_pathChanged(QList<QPoint> pointlist)
 
 void RGRoute2::setEditMode(bool checked)
 {
+  mPath->setCurrentFrame(mPath->countFrames());
   mEditPath->setVisible(checked);
   mShowVehicle=!checked;
   mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
+  mVehicleList->getCurrentVehicle()->setRotation(mPath->getAngle());
+  if(this->countFrames()<2) mShowVehicle=false;
   mVehicleList->getCurrentVehicle()->setVisible(mShowVehicle);
-  mPath->setCurrentFrame(-1);
 }
 
 void RGRoute2::clearPath()

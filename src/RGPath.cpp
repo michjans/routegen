@@ -92,7 +92,7 @@ int RGPath::countFrames()
   //stepbystep
   if (mPlayMode==0) return mPath.elementCount();
   //Interpolation TotalTime set
-  if (mPlayMode==1) return mFPS * mTotalTime+1;
+  if (mPlayMode==1 && mPath.elementCount()>1) return mFPS * mTotalTime+1;
   return 0;
 }
 
@@ -113,13 +113,16 @@ float RGPath::getAngle()
   qreal percent=0;
   if (mPlayMode==0){
     qreal length=0;
-    for(int i=1;i<=mCurrentFrame;i++){
+    //TODO angle for step 0 !
+    for(int i=1;i<mCurrentFrame;i++){
       length+= QLineF(mPath.elementAt(i).x,mPath.elementAt(i).y,mPath.elementAt(i-1).x,mPath.elementAt(i-1).y).length();
     }
     percent = (double) length / ((double) mPath.length());//mPath.length should never be NULL
   }
   if (mPlayMode==1)
     percent = (double) (mCurrentFrame*(1.0 / (double) mFPS)) / ((double) mTotalTime);//mTotalTime should never be null;
+  if(percent>1)
+    percent=1;
   qreal angle=mPath.angleAtPercent(percent);
   qDebug()<<"pre angle"<<angle<<"angle path return"<<(360-angle);
   return (360-angle);
