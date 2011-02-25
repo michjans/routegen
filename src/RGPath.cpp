@@ -110,47 +110,19 @@ QPointF RGPath::getEndPos()
 
 float RGPath::getAngle()
 {
-  if (mPlayMode==0) return getAngleAtStep(mCurrentFrame);
-  if (mPlayMode==1) return getAngleAtTime(mCurrentFrame*(1.0 / (double) mFPS) * 1000);
-  return 0;
-}
-
-float RGPath::getAngleAtTime(int time)
-{
-  qreal percent = (double) time / ((double) mTotalTime*1000);//mTotalTime should never be null
-  if (percent>1) percent=1;
+  qreal percent=0;
+  if (mPlayMode==0){
+    qreal length=0;
+    for(int i=1;i<=mCurrentFrame;i++){
+      length+= QLineF(mPath.elementAt(i).x,mPath.elementAt(i).y,mPath.elementAt(i-1).x,mPath.elementAt(i-1).y).length();
+    }
+    percent = (double) length / ((double) mPath.length());//mPath.length should never be NULL
+  }
+  if (mPlayMode==1)
+    percent = (double) (mCurrentFrame*(1.0 / (double) mFPS)) / ((double) mTotalTime);//mTotalTime should never be null;
   qreal angle=mPath.angleAtPercent(percent);
   qDebug()<<"pre angle"<<angle<<"angle path return"<<(360-angle);
   return (360-angle);
-}
-
-float RGPath::getAngleAtStep(int step)
-{
-  //return angle of the previous segment
-  int realstep=step;
-  if (step>=mPath.elementCount())
-    realstep=mPath.elementCount()-1;
-  if(step==0)//return angle of the first element
-    realstep=1;
-  float dx,dy;
-  dy=mPath.elementAt(realstep).y- mPath.elementAt(realstep-1).y;
-  dx=mPath.elementAt(realstep).x- mPath.elementAt(realstep-1).x;
-  if(dx==0 && dy>0)
-    return (float) 270;
-  if(dx==0 && dy<0)
-    return (float) 90;
-  float angle = ((atanf(dy /dx) / Pi) * 180.0);
-  if(dx>0 && dy>=0)
-    angle=-1*angle;
-  else if (dx<0 && dy>=0)
-    angle=180-angle;
-  else if (dx<0 && dy<=0)
-    angle=180-angle;
-  else if (dx>0 && dy<=0)
-    angle=-1*angle;
-  else
-    angle = 0;
-  return angle;
 }
 
 void RGPath::newPointList(QList<QPoint> pointList)
