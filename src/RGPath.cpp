@@ -98,7 +98,11 @@ int RGPath::countFrames()
 
 int RGPath::setCurrentFrame(int frame)
 {
-  mCurrentFrame=frame;
+  //check that frame is in the total range
+  if(frame>=0 && frame<this->countFrames())
+    mCurrentFrame=frame;
+  else
+    mCurrentFrame=this->countFrames()-1;
   update();
   return mCurrentFrame*(1.0 / (double) mFPS) * 1000;
 }
@@ -204,6 +208,7 @@ void RGPath::createPath()
       mPath.lineTo(mRawPath.at(i));
     }
   }
+  mCurrentFrame=-1;
   update();
 }
 

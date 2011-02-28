@@ -34,7 +34,6 @@ private:
   QGraphicsTextItem *mWelcomeText;
   QPixmap mImage;
   RGRoute2 *mRoute;
-  int mEndFrame;
   QTimer        *mPlayTimer;
   int           mTimerCounter;
 

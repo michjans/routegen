@@ -9,7 +9,6 @@ extern const QString applicationName;
 
 RGViewWidget::RGViewWidget(QWidget *parent) :
     QGraphicsView(parent),
-    mEndFrame(1),
     mPlayTimer(NULL),
     mTimerCounter(0)
 {
@@ -42,7 +41,6 @@ void RGViewWidget::addRoute(RGRoute2 *item)
 
 void RGViewWidget::play()
 {
-  mEndFrame=mRoute->countFrames();
   mTimerCounter = 0;
   int time=(1.0 / 25) * 1000;
   mPlayTimer->start((1.0 / (double) RGSettings::getFps()) * 1000);
@@ -126,7 +124,7 @@ void RGViewWidget::loadImage(const QPixmap &pm)
 
 void RGViewWidget::playTimerEvent()
 {
-  if (mTimerCounter < mEndFrame-1){
+  if (mTimerCounter < mRoute->countFrames()-1){
     ++mTimerCounter;
   }
   else

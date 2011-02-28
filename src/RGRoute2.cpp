@@ -77,6 +77,8 @@ void RGRoute2::on_smoothPathChecked(bool checked)
 {
   qDebug()<<"on_smoothPathChecked";
   mPath->setSmoothPath(checked);
+  mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
+  mVehicleList->getCurrentVehicle()->setRotation(mPath->getAngle());
 }
 
 void RGRoute2::on_routeTimeChanged(int time)
