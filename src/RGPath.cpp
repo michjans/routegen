@@ -22,7 +22,8 @@ RGPath::RGPath(QGraphicsItem *parent) :
 
 QRectF RGPath::boundingRect() const
 {
-    return mPath.boundingRect();
+    qreal penW=mPen.width()/2;
+    return mPath.boundingRect().adjusted(-penW,-penW,penW,penW);
  }
 
 void RGPath::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
@@ -186,6 +187,7 @@ void RGPath::setFPS(int FPS)
 
 void RGPath::setPen(const QPen & pen)
 {
+  this->prepareGeometryChange();
   mPen=pen;
   update();
 }
