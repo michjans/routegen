@@ -210,8 +210,6 @@ void RGPath::createPath()
       mPath.lineTo(mRawPath.at(i));
     }
   }
-  mCurrentFrame=-1;
-  update();
 }
 
 void RGPath::createSmoothPath()
