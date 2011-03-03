@@ -21,7 +21,7 @@ HEADERS += RGMainWindow.h RGVehicleDialog.h RGSettings.h RGSettingsDialog.h RGGo
     RGEncFFmpeg.h \
     RGEncBmp2avi.h \
     RGRouteUi.h \
-    RGRoute2.h \
+    RGRoute.h \
     RGPath.h \
     RGViewWidget.h \
     RGEditPathPoint.h \
@@ -39,7 +39,7 @@ SOURCES += main.cpp RGMainWindow.cpp RGVehicleDialog.cpp RGSettings.cpp RGSettin
     RGEncFFmpeg.cpp \
     RGEncBmp2avi.cpp \
     RGRouteUi.cpp \
-    RGRoute2.cpp \
+    RGRoute.cpp \
     RGPath.cpp \
     RGViewWidget.cpp \
     RGEditPathPoint.cpp \

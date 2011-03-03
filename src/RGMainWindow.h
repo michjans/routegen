@@ -32,10 +32,8 @@ class QCheckBox;
 class QSpinBox;
 class QPushButton;
 class QLabel;
-//class RGMapWidget;
-//class RGVehicleList;
 class RGEncVideo;
-class RGRoute2;
+class RGRoute;
 class RGViewWidget;
 
 class RGMainWindow : public QMainWindow
@@ -61,29 +59,16 @@ private slots:
   void on_action_About_triggered(bool );
   void on_action_Quit_triggered(bool );
   
-  /*void on_routeColorPB_clicked(bool);
-  void on_penSizeSB_valueChanged(int);
-  void on_lineStyleCB_activated(int);
-  void on_interpolationCB_toggled(bool);
-  void on_smoothPathCB_toggled(bool);
-  void on_routeTimeSB_valueChanged(int);
-  void on_vehicleCB_activated(int);
-  void on_vehicleSettingsPB_clicked(bool);*/
-
 
   void blockUserInteraction(bool);
   void enableGenerateActions(bool);
   void movieGenerationFinished();
 
 private:
-  //void  setPen();
-  //QIcon createIconForStyle(Qt::PenStyle);
 
-  //RGMapWidget *mRGMapWidget;
   RGViewWidget *mView;
-  //RGVehicleList     *mVehicleList;
   RGEncVideo        *mVideoEncoder;
-  RGRoute2          *mRoute;
+  RGRoute          *mRoute;
 
   QAction *actionOpen_image;
   QAction *action_Quit;
@@ -96,15 +81,7 @@ private:
   QAction *actionGenerate_map;
   QAction *actionPlayback;
   QAction *actionStop;
-  /*QPushButton *mRouteColorPB;
-  QComboBox *mLineStyleCB;
-  QSpinBox *mPenSizeSB;
-  QComboBox *mVehicleCB;
-  QPushButton *mVehicleSettingsPB;
-  QCheckBox *mInterpolationCB;
-  QCheckBox *mSmoothPathCB;
-  QSpinBox  *mRouteTimeSB;
-  QProcess    *mVideoEncProcess;*/
+
   QStringList  mGeneratedBMPs;
 
 };

@@ -5,7 +5,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
 #include <QTimer>
-#include "RGRoute2.h"
+#include "RGRoute.h"
 
 class RGViewWidget : public QGraphicsView
 {
@@ -13,7 +13,7 @@ class RGViewWidget : public QGraphicsView
 public:
   explicit RGViewWidget(QWidget *parent = 0);
   QSize   sizeHint () const;
-  void addRoute(RGRoute2*);
+  void addRoute(RGRoute*);
   bool generateMovie(const QString &dirName, const QString &filePrefix, QStringList &generatedBMPs);
 
 
@@ -33,7 +33,7 @@ private:
   QGraphicsScene *mScene;
   QGraphicsTextItem *mWelcomeText;
   QPixmap mImage;
-  RGRoute2 *mRoute;
+  RGRoute *mRoute;
   QTimer        *mPlayTimer;
   int           mTimerCounter;
 

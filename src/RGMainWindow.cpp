@@ -21,7 +21,6 @@
 #include <QtGui>
 
 #include "RGMainWindow.h"
-//#include "RGMapWidget.h"
 #include "RGSettings.h"
 #include "RGSettingsDialog.h"
 #include "RGGoogleMap.h"
@@ -30,7 +29,7 @@
 #include "RGEncVideo.h"
 #include "RGEncFFmpeg.h"
 #include "RGEncBmp2avi.h"
-#include "RGRoute2.h"
+#include "RGRoute.h"
 #include "RGViewWidget.h"
 
 #include "ui_routegen.h"
@@ -66,22 +65,10 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionGenerate_map = ui.actionGenerate_map;
   actionPlayback = ui.actionPlayback;
   actionStop = ui.actionStop;
-  /*mPenSizeSB = ui.penSizeSB;
-  mRouteColorPB = ui.routeColorPB;
-  mLineStyleCB = ui.lineStyleCB;
-  mVehicleCB = ui.vehicleCB;
-  mVehicleSettingsPB = ui.vehicleSettingsPB;
-  mInterpolationCB = ui.interpolationCB;
-  mSmoothPathCB = ui.smoothPathCB;
-  mRouteTimeSB = ui.routeTimeSB;*/
 
   action_Undo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
   //action_Redo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
 
-  //Qt designer by default creates a widget in the QScrollArea, but we want our own widget inside it
-  //delete ui.scrollAreaWidgetContents;
-  //mRGMapWidget = new RGMapWidget();
-  //ui.scrollArea->setWidget(mRGMapWidget);
   mView = new RGViewWidget();
   ui.centralwidget->layout()->addWidget(mView);
 
@@ -93,57 +80,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionDraw_mode->setEnabled(false);
   actionNew_route->setEnabled(false);
   action_Undo->setEnabled(false);
-  /*
 
-  //action_Redo->setEnabled(false);
-  mVehicleSettingsPB->setEnabled(true);
-
-  QObject::connect(mRGMapWidget, SIGNAL(busy(bool)),
-                   this, SLOT(blockUserInteraction(bool)));
-
-  QObject::connect(mRGMapWidget, SIGNAL(canGenerate(bool)),
-                   this, SLOT(enableGenerateActions(bool)));
-
-  QObject::connect(mRGMapWidget, SIGNAL(drawModeChanged(bool)),
-                   this, SLOT(handleDrawModeChanged(bool)));
-
-  Qt::PenStyle penStyle = (Qt::PenStyle) RGSettings::getPenStyle();
-
-  //Create style icons for route style combobox
-  mLineStyleCB->setIconSize(QSize(40, 10));
-  mLineStyleCB->addItem(createIconForStyle(Qt::SolidLine),      QString(), QVariant((unsigned) Qt::SolidLine));
-  mLineStyleCB->addItem(createIconForStyle(Qt::DashLine),       QString(), QVariant((unsigned) Qt::DashLine));
-  mLineStyleCB->addItem(createIconForStyle(Qt::DotLine),        QString(), QVariant((unsigned) Qt::DotLine));
-  mLineStyleCB->addItem(createIconForStyle(Qt::DashDotLine),    QString(), QVariant((unsigned) Qt::DashDotLine));
-  mLineStyleCB->addItem(createIconForStyle(Qt::DashDotDotLine), QString(), QVariant((unsigned) Qt::DashDotDotLine));
-  mLineStyleCB->addItem(createIconForStyle(Qt::NoPen),          QString(), QVariant((unsigned) Qt::NoPen));
-
-  //Enum mapping starts counting at 1 (see Qt::PenStyle definition)
-  mLineStyleCB->setCurrentIndex(penStyle - 1);
-
-  mRouteColorPB->setAutoFillBackground(true);
-  mRouteColorPB->setFlat(true);
-  //Restore some initial settings
-  QColor penCol = RGSettings::getPenColor();
-  QPalette pal = mRouteColorPB->palette();
-  pal.setColor(QPalette::Button, penCol);
-  mRouteColorPB->setPalette(pal);
-
-  int penSize = RGSettings::getPenSize();
-  mPenSizeSB->setValue(penSize);
-  setPen();
-
-  mInterpolationCB->setChecked(RGSettings::getTotalTimeMode());
-  mSmoothPathCB->setChecked(RGSettings::getSmoothPathMode());
-  mRouteTimeSB->setValue(RGSettings::getRoutePlayTime());
-
-  mVehicleList = new RGVehicleList();
-  for (int i=0;i<mVehicleList->count();++i){
-    mVehicleCB->addItem(QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(16)),mVehicleList->getVehicle(i)->getName());
-  }
-  mVehicleCB->setCurrentIndex(mVehicleList->getCurrentVehicleId());
-  mRGMapWidget->setVehicle(*mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId()));
-  */
   //Video Encoder:
   #ifdef Q_WS_WIN
     mVideoEncoder = new RGEncBmp2avi();
@@ -153,7 +90,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   if(mVideoEncoder->exists())
     qDebug()<<"encoder found !";
 
-  mRoute= new RGRoute2();
+  mRoute= new RGRoute();
   ui.routeProperties->insertWidget(0,mRoute->widgetSettings());
   mRoute->setZValue(1);
   mRoute->setSmoothCoef(RGSettings::getSmoothLength());
@@ -223,7 +160,6 @@ void RGMainWindow::on_actionPreferences_triggered(bool)
     mVideoEncoder->saveInSettings();
     mRoute->setSmoothCoef(rgsettings.getSmoothCoef());
     mRoute->setIconlessBeginEndFrames(rgsettings.getIconlessBeginEndFrames());
-    //mRGMapWidget->updateRouteParametersFromSettings();
   }
   else
     mVideoEncoder->updateFromSettings();
@@ -259,14 +195,11 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 
 void RGMainWindow::on_actionDraw_mode_triggered(bool checked)
 {
-  //if (checked) mRGMapWidget->startDrawMode();
-  //else         mRGMapWidget->endDrawMode();
   mRoute->setEditMode(checked);
 }
 
 void RGMainWindow::on_actionNew_route_triggered(bool)
 {
-  //mRGMapWidget->startNewRoute();
   if(!actionDraw_mode->isChecked())
     actionDraw_mode->trigger();
   mRoute->clearPath();
@@ -372,7 +305,6 @@ void RGMainWindow::on_action_Quit_triggered(bool checked)
 
 void RGMainWindow::blockUserInteraction(bool busy)
 {
-  //mRGMapWidget->setBusy(busy);
 
   actionOpen_image->setEnabled(!busy);
   action_Quit->setEnabled(!busy);
@@ -410,25 +342,3 @@ void RGMainWindow::movieGenerationFinished()
   blockUserInteraction(false);
   mVideoEncoder->disconnect();
 }
-
-/*QIcon RGMainWindow::createIconForStyle(Qt::PenStyle style)
-{
-  QPixmap pm(40, 10);
-  pm.fill();
-  QPainter painter(&pm);
-  QBrush brush(RGSettings::getPenColor(), Qt::SolidPattern);
-  QPen pen(brush, 2, style, Qt::FlatCap, Qt::RoundJoin);
-  painter.setPen (pen);
-  painter.drawLine(0, 5, 39, 5);
-  return QIcon(pm);
-}
-
-void RGMainWindow::setPen()
-{
-  QPalette pal = mRouteColorPB->palette();
-  QColor color = pal.color(QPalette::Button);
-  int size = mPenSizeSB->value();
-  QVariant data = mLineStyleCB->itemData(mLineStyleCB->currentIndex());
-  Qt::PenStyle style = (Qt::PenStyle) data.toInt();
-  mRGMapWidget->setPen(color,size,style);
-}*/

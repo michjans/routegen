@@ -33,7 +33,7 @@ QSize RGViewWidget::sizeHint () const
   return QSize(mScene->width(),mScene->height());
 }
 
-void RGViewWidget::addRoute(RGRoute2 *item)
+void RGViewWidget::addRoute(RGRoute *item)
 {
   mRoute=item;
   mScene->addItem(mRoute);
