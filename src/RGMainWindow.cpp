@@ -267,7 +267,8 @@ void RGMainWindow::on_actionDraw_mode_triggered(bool checked)
 void RGMainWindow::on_actionNew_route_triggered(bool)
 {
   //mRGMapWidget->startNewRoute();
-  actionDraw_mode->trigger();
+  if(!actionDraw_mode->isChecked())
+    actionDraw_mode->trigger();
   mRoute->clearPath();
   enableGenerateActions(false);
 }

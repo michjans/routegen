@@ -142,9 +142,8 @@ void RGPath::newPointList(QList<QPoint> pointList)
   mRawPath=pointList;
   createPath();
   mCurrentFrame=this->countFrames();
-  mEndPos=QPoint(mRawPath.at(0));
-  if (pointList.size()<2)
-    mEndPos=QPoint(-200,-200);
+  if(pointList.size()>2)
+    mEndPos=QPoint(mRawPath.at(0));
 }
 
 void RGPath::setDrawTime(int time)

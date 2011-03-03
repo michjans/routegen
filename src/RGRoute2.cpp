@@ -121,6 +121,7 @@ void RGRoute2::setEditMode(bool checked)
 void RGRoute2::clearPath()
 {
   mEditPath->clear();
+  mVehicleList->getCurrentVehicle()->setVisible(false);
 }
 
 int RGRoute2::countFrames()
