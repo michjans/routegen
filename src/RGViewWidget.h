@@ -18,6 +18,7 @@ public:
 
 
 
+
 signals:
   void playbackStopped(bool);
 
@@ -32,7 +33,6 @@ private slots:
 private:
   QGraphicsScene *mScene;
   QGraphicsTextItem *mWelcomeText;
-  QPixmap mImage;
   RGRoute *mRoute;
   QTimer        *mPlayTimer;
   int           mTimerCounter;

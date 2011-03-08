@@ -110,16 +110,15 @@ void RGViewWidget::loadImage(const QPixmap &pm)
     delete mWelcomeText;
     mWelcomeText=NULL;
   }
-  //mImage = pm;
-  //QGraphicsPixmapItem *image;
-  //image = mScene->addPixmap(mImage);
+  //mBackgroundSize=pm.size();
   mScene->setBackgroundBrush(pm);
   mScene->setSceneRect(0,0,pm.width(),pm.height());
-  this->setSceneRect(0,0,pm.width(),pm.height());
-  mRoute->sceneRectChanged(QRectF(0,0,pm.width(),pm.height()));
-  this->setMaximumSize(pm.size());
-  //update();
+  mRoute->sceneRectChanged(mScene->sceneRect());
+  this->setFrameShape(QFrame::NoFrame);
+  viewport()->setMaximumSize(pm.size());
+  this->setAlignment((Qt::AlignLeft | Qt::AlignTop));
   updateGeometry();
+
 }
 
 void RGViewWidget::playTimerEvent()
@@ -137,3 +136,5 @@ void RGViewWidget::playTimerEvent()
   }
   mRoute->setCurrentFrame(mTimerCounter);
 }
+
+
