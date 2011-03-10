@@ -129,8 +129,7 @@ void RGViewWidget::playTimerEvent()
   else
   {
     //Finished
-    mPlayTimer->stop();
-    //emit busy(false);
+    this->stop();
     qDebug()<<"Last update of mTimerCounter"<<mTimerCounter ;
     emit playbackStopped(true);
   }

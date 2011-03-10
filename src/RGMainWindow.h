@@ -59,10 +59,12 @@ private slots:
   void on_action_About_triggered(bool );
   void on_action_Quit_triggered(bool );
   
-
   void blockUserInteraction(bool);
   void enableGenerateActions(bool);
   void movieGenerationFinished();
+
+signals:
+  void playback(bool);
 
 private:
 

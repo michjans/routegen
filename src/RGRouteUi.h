@@ -27,6 +27,7 @@ private slots:
   void on_routeTimeSB_valueChanged(int time);
   void on_vehicleCB_currentIndexChanged(int index);
   void on_routeColorPB_clicked(bool);
+  void on_playback(bool);
 
 signals:
   void penChanged(const QPen &);

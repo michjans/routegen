@@ -165,6 +165,13 @@ void RGRouteUi::on_routeColorPB_clicked(bool)
   setPen();
 }
 
+void RGRouteUi::on_playback(bool playback)
+{
+  ui->vehicleSettingsPB->setDisabled(playback);
+  ui->routeTimeSB->setDisabled(playback);
+  ui->totalTimeCB->setDisabled(playback);
+}
+
 QIcon RGRouteUi::createIconForStyle(Qt::PenStyle style)
 {
   QPixmap pm(40, 10);

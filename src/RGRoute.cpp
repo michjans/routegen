@@ -11,7 +11,6 @@ RGRoute::RGRoute(QGraphicsItem *parent) :
   mPath=new RGPath(this);
   mEditPath=new RGEditPath(this);
   mEditPath->setVisible(false);
-  //QObject::connect(mEditPath,SIGNAL(newPointList(QList<QPoint>)),mPath,SLOT(newPointList(QList<QPoint>)));
   QObject::connect(mEditPath,SIGNAL(newPointList(QList<QPoint>)),this,SLOT(on_pathChanged(QList<QPoint>)));
 
   mRouteUi = new RGRouteUi();
@@ -20,6 +19,7 @@ RGRoute::RGRoute(QGraphicsItem *parent) :
   QObject::connect(mRouteUi,SIGNAL(totalTimeChecked(bool)),this,SLOT(on_totalTimeChecked(bool)));
   QObject::connect(mRouteUi,SIGNAL(routeTimeChanged(int)),this,SLOT(on_routeTimeChanged(int)));
   QObject::connect(mRouteUi,SIGNAL(vehicleChanged()),this,SLOT(on_vehicleChanged()));
+  QObject::connect(this,SIGNAL(playback(bool)),mRouteUi,SLOT(on_playback(bool)));
 
   //create and set up vehicleList
   mVehicleList = new RGVehicleList();

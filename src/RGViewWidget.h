@@ -16,9 +16,6 @@ public:
   void addRoute(RGRoute*);
   bool generateMovie(const QString &dirName, const QString &filePrefix, QStringList &generatedBMPs);
 
-
-
-
 signals:
   void playbackStopped(bool);
 

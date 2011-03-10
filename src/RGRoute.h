@@ -25,6 +25,7 @@ public:
 
 signals:
     void canGenerate(bool);
+    void playback(bool);
 
 private slots:
     void on_penChanged(const QPen & pen);
@@ -34,7 +35,7 @@ private slots:
     void on_vehicleChanged();
     void on_pathChanged(QList<QPoint>);
 
-private:
+protected:
     QRectF mBoundingRect;
     RGRouteUi *mRouteUi;
     RGVehicleList *mVehicleList;
