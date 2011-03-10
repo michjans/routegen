@@ -175,7 +175,7 @@ void RGRouteUi::on_playback(bool playback)
 QIcon RGRouteUi::createIconForStyle(Qt::PenStyle style)
 {
   QPixmap pm(40, 10);
-  pm.fill();
+  pm.fill(Qt::transparent);
   QPainter painter(&pm);
   QBrush brush(RGSettings::getPenColor(), Qt::SolidPattern);
   QPen pen(brush, 2, style, Qt::FlatCap, Qt::RoundJoin);
