@@ -45,6 +45,7 @@ private:
   QList<QPoint>     mRawPath;
   int               mTime;
   QPainterPath      mPath; //Processed final path
+  QPainterPath      mPaintPath; //path that will be paint
   int               mTotalTime; //total time for interpolation
   int               mPlayMode; //set the mode for the video generation(0=stepbystep,1=TotalTimeSet,2=speedSet)
   int               mFPS;

@@ -8,6 +8,7 @@ RGPath::RGPath(QGraphicsItem *parent) :
     mRawPath(QList<QPoint>()),
     mTime(0),
     mPath(QPainterPath()),
+    mPaintPath(QPainterPath()),
     mTotalTime(0),
     mPlayMode(0),
     mFPS(25),
@@ -29,27 +30,15 @@ QRectF RGPath::boundingRect() const
 void RGPath::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
   painter->setPen(mPen);
-  //painter->drawPath(mPath);
+  painter->drawPath(mPaintPath);
   qDebug()<<"paint path at Current Frame "<<mCurrentFrame;
-  if (mCurrentFrame<0){
-    painter->drawPath(mPath);
-    mEndPos=mPath.pointAtPercent(1);
-    return;
-  }
-  QPainterPath tmpPath;
-  int time=mCurrentFrame*(1.0 / (double) mFPS) * 1000;
-  if (mPlayMode==0) tmpPath=getPathAtStep(mCurrentFrame);
-  if (mPlayMode==1) tmpPath= getPathAtTime(time);
-  painter->drawPath(tmpPath);
-  mEndPos=tmpPath.pointAtPercent(1);
 }
 
 QPainterPath RGPath::getPathAtStep(int step) //return Path at step (begin at 0)
 {
-  if (mPath.elementCount()==0)
-    return QPainterPath();
   if (step>=mPath.elementCount())
     return mPath;
+
   QPainterPath tmpPath;
   tmpPath.moveTo(mPath.elementAt(0).x,mPath.elementAt(0).y);
   for (int i=1;i<=step;++i){
@@ -102,9 +91,21 @@ int RGPath::setCurrentFrame(int frame)
   //check that frame is in the total range
   if(frame>=0 && frame<this->countFrames())
     mCurrentFrame=frame;
-  else
+  else if(this->countFrames()>0)
     mCurrentFrame=this->countFrames()-1;
+  else
+    mCurrentFrame=0;
+
+  //create new mPaintPath
+  mPaintPath=QPainterPath();
+  int time=mCurrentFrame*(1.0 / (double) mFPS) * 1000;
+  if (mPlayMode==0) mPaintPath=getPathAtStep(mCurrentFrame);
+  if (mPlayMode==1) mPaintPath= getPathAtTime(time);
+  if(mPaintPath.elementCount()>=1)
+    mEndPos=QPointF(mPaintPath.elementAt(mPaintPath.elementCount()-1).x,mPaintPath.elementAt(mPaintPath.elementCount()-1).y);
+
   update();
+  //return time:
   return mCurrentFrame*(1.0 / (double) mFPS) * 1000;
 }
 
@@ -115,20 +116,23 @@ QPointF RGPath::getEndPos()
 
 float RGPath::getAngle()
 {
-  qreal percent=0;
+  qreal angle=0;
   if (mPlayMode==0){
-    qreal length=0;
-    //TODO angle for step 0 !
-    for(int i=1;i<mCurrentFrame;i++){
-      length+= QLineF(mPath.elementAt(i).x,mPath.elementAt(i).y,mPath.elementAt(i-1).x,mPath.elementAt(i-1).y).length();
-    }
-    percent = (double) length / ((double) mPath.length());//mPath.length should never be NULL
+    if(mPath.elementCount()<=1)
+      return 0;
+    int step=mCurrentFrame;
+    //for the first frame :
+    if(step==0)
+      angle=QLineF(mPath.elementAt(0).x,mPath.elementAt(0).y,mPath.elementAt(1).x,mPath.elementAt(1).y).angle();
+    else
+      angle=QLineF(mPath.elementAt(step-1).x,mPath.elementAt(step-1).y,mPath.elementAt(step).x,mPath.elementAt(step).y).angle();
   }
-  if (mPlayMode==1)
-    percent = (double) (mCurrentFrame*(1.0 / (double) mFPS)) / ((double) mTotalTime);//mTotalTime should never be null;
-  if(percent>1)
-    percent=1;
-  qreal angle=mPath.angleAtPercent(percent);
+  if (mPlayMode==1){
+    qreal percent = (double) (mCurrentFrame*(1.0 / (double) mFPS)) / ((double) mTotalTime);//mTotalTime should never be null;
+    if(percent>1)
+      percent=1;
+    angle=mPath.angleAtPercent(percent);
+  }
   return (360-angle);
 }
 
@@ -138,9 +142,7 @@ void RGPath::newPointList(QList<QPoint> pointList)
     return;
   mRawPath=pointList;
   createPath();
-  mCurrentFrame=this->countFrames();
-  if(pointList.size()>2)
-    mEndPos=QPoint(mRawPath.at(0));
+  this->setCurrentFrame(this->countFrames());
 }
 
 void RGPath::setDrawTime(int time)
@@ -160,11 +162,10 @@ void RGPath::setSmoothCoef(int dSmooth)
   createPath();
 }
 
-void RGPath::setTotalTime(int time)//set mTotaltime in ms
+void RGPath::setTotalTime(int time)//set mTotaltime in ms !!it must never be mull
 {
   if (time!=0)
     mTotalTime=time;
-  //what to do if time=0 ?
 }
 
 void RGPath::setPlayMode(int mode)
@@ -193,7 +194,7 @@ void RGPath::createPath()
   prepareGeometryChange();
   //create path from data :
   mPath = QPainterPath();
-  if (mRawPath.count()<=1){
+  if (mRawPath.count()<=0){
     update();
     return;
   }
