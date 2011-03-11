@@ -112,6 +112,7 @@ void RGViewWidget::loadImage(const QPixmap &pm)
   }
   //mBackgroundSize=pm.size();
   mScene->setBackgroundBrush(pm);
+  this->setCacheMode(QGraphicsView::CacheBackground);
   mScene->setSceneRect(0,0,pm.width(),pm.height());
   mRoute->sceneRectChanged(mScene->sceneRect());
   this->setFrameShape(QFrame::NoFrame);
