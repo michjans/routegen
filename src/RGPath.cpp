@@ -129,14 +129,11 @@ float RGPath::getAngle()
   if(percent>1)
     percent=1;
   qreal angle=mPath.angleAtPercent(percent);
-  qDebug()<<"pre angle"<<angle<<"angle path return"<<(360-angle);
   return (360-angle);
 }
 
 void RGPath::newPointList(QList<QPoint> pointList)
 {
-  qDebug()<<"signal newPointList received";
-
   if(pointList.size()<0)
     return;
   mRawPath=pointList;
@@ -307,7 +304,6 @@ QPainterPath RGPath::pathLineQuad(QPoint start,QPoint coef, QPoint end)
     linearPath.lineTo(curvePath.pointAtPercent(i*1.0/nbPoints));
   }
   linearPath.lineTo(end);
-  //qDebug()<<"d of quad:"<<curvePath.length();
   return linearPath;
 }
 
@@ -320,6 +316,5 @@ QPainterPath RGPath::pathLineCubic(QPoint start,QPoint coef1,QPoint coef2, QPoin
     linearPath.lineTo(curvePath.pointAtPercent(i*1.0/nbPoints));
   }
   linearPath.lineTo(end);
-  //qDebug()<<"d of quad:"<<curvePath.length();
   return linearPath;
 }

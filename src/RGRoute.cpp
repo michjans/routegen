@@ -60,13 +60,11 @@ void RGRoute::sceneRectChanged(const QRectF & rect)
 
 void RGRoute::on_penChanged(const QPen & pen)
 {
-  qDebug()<<"on_penChanged";
   mPath->setPen(pen);
 }
 
 void RGRoute::on_totalTimeChecked(bool checked)
 {
-  qDebug()<<"on_setTotalTimeChecked";
   if (checked)
     mPath->setPlayMode(1);
   else
@@ -75,7 +73,6 @@ void RGRoute::on_totalTimeChecked(bool checked)
 }
 void RGRoute::on_smoothPathChecked(bool checked)
 {
-  qDebug()<<"on_smoothPathChecked";
   mPath->setSmoothPath(checked);
   mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
   mVehicleList->getCurrentVehicle()->setRotation(mPath->getAngle());
@@ -83,13 +80,11 @@ void RGRoute::on_smoothPathChecked(bool checked)
 
 void RGRoute::on_routeTimeChanged(int time)
 {
-  qDebug()<<"on_routeTimeChanged";
   mPath->setTotalTime(time);
 }
 
 void RGRoute::on_vehicleChanged()
 {
-  qDebug()<<"on_vehicleChanged, countFrames:"<<mPath->getEndPos();
   mVehicleList->getCurrentVehicle()->setParentItem(this);
   mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
   mVehicleList->getCurrentVehicle()->setRotation(mPath->getAngle());
@@ -100,7 +95,6 @@ void RGRoute::on_pathChanged(QList<QPoint> pointlist)
 {
   mPath->newPointList(pointlist);
 
-  qDebug()<<"pointlist size"<<pointlist.size();
   if(pointlist.size()==2)
     emit canGenerate(true);
   if(pointlist.size()<2)
@@ -132,12 +126,6 @@ int RGRoute::countFrames()
 void RGRoute::setCurrentFrame(int frame)
 {
   int time=mPath->setCurrentFrame(frame);
-  //if(mIconlessBeginEndFrames==true && (frame==0 || frame==mPath->countFrames()))
-    //mVehicle->setVisible(false);
-  //else
-    //mVehicle->setVisible(true);
- qDebug()<<"endPos "<<mPath->getEndPos();
- //mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId())->setVisible();
   mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
   mVehicleList->getCurrentVehicle()->setRotation(mPath->getAngle());
   mVehicleList->getCurrentVehicle()->setTime(time);

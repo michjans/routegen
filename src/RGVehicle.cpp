@@ -117,7 +117,6 @@ void RGVehicle::setSize(int size)
   mSize=size;
   if(mRawSize!=0){
     qreal scale = (double) size/mRawSize;
-    qDebug()<<"scale :"<< scale;
     this->setScale(scale);
   }
 }
@@ -182,7 +181,6 @@ void RGVehicle::setTime(int time)
 {
   if (mFrameDelay!=0)
     mCurrentPm=time/mFrameDelay%mRawPm.size();
-  qDebug()<<"currentpm"<<mCurrentPm;
   update();
 }
 
