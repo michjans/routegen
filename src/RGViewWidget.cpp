@@ -56,19 +56,8 @@ void RGViewWidget::stop()
 
 bool RGViewWidget::generateMovie(const QString &dirName, const QString &filePrefix, QStringList &generatedBMPs)
 {
-  //Disable draw mode automatically
-  //if (mInDrawMode)
-  //  endDrawMode();
-
   generatedBMPs.clear();
-  //Only usefull when route has more than MIN_PATH_LENGTH points
-  /*f (mRgr->userPointCount() < MIN_PATH_LENGTH) {
-    QMessageBox::warning (this, "Route too short", "Sorry, this route is too short to generate a valid route.");
-    return false;
-  }*/
-
   bool generationOK = true;
-  //emit busy(true);
 
   QProgressDialog progress("Generating files...", "Abort", 0, mRoute->countFrames(), this);
   progress.setWindowModality(Qt::WindowModal);
@@ -98,8 +87,6 @@ bool RGViewWidget::generateMovie(const QString &dirName, const QString &filePref
     if (progress.wasCanceled()) break;
   }
   generationOK = (mTimerCounter == mRoute->countFrames());
-
-  //emit busy(false);
 
   return generationOK;
 }

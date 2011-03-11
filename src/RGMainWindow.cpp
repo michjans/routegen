@@ -235,7 +235,7 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
   //Calculate MB the full movie (all uncompressed BMP's + AVI) will take
   //(This is a rough proximation, but the calculated number is always higher,
   // so we're safe)
-  int sizeEstimate = 4555;//int ((mRGMapWidget->getNoFrames() * mRGMapWidget->getMapSize()) / 1048576.0) * 2;
+  int sizeEstimate = int (mRoute->countFrames() * mRoute->scene()->sceneRect().width()* mRoute->scene()->sceneRect().height() *24/8/1024.0/1000.0* 2);
   QString dirInfoText = QString("Select an empty directory on a drive with at least ") + 
                         QString::number(sizeEstimate) +
                         QString(" MB of free diskspace, where the map should be generated.");
