@@ -42,7 +42,7 @@ void RGViewWidget::addRoute(RGRoute *item)
 void RGViewWidget::play()
 {
   mTimerCounter = 0;
-  int time=(1.0 / 25) * 1000;
+  mRoute->setCurrentFrame(mTimerCounter);
   mPlayTimer->start((1.0 / (double) RGSettings::getFps()) * 1000);
 }
 
@@ -124,17 +124,17 @@ void RGViewWidget::loadImage(const QPixmap &pm)
 
 void RGViewWidget::playTimerEvent()
 {
-  if (mTimerCounter < mRoute->countFrames()-1){
-    ++mTimerCounter;
+  ++mTimerCounter;
+  if (mTimerCounter < mRoute->countFrames()){
+    mRoute->setCurrentFrame(mTimerCounter);
   }
   else
   {
     //Finished
     this->stop();
-    qDebug()<<"Last update of mTimerCounter"<<mTimerCounter ;
     emit playbackStopped(true);
   }
-  mRoute->setCurrentFrame(mTimerCounter);
+
 }
 
 
