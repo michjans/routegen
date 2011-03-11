@@ -129,9 +129,14 @@ void RGRoute::setCurrentFrame(int frame)
   mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
   mVehicleList->getCurrentVehicle()->setRotation(mPath->getAngle());
   mVehicleList->getCurrentVehicle()->setTime(time);
+  if(mIconlessBeginEndFrames && (frame==0 || frame==countFrames()-1))
+    mVehicleList->getCurrentVehicle()->setVisible(false);
+  else
+    mVehicleList->getCurrentVehicle()->setVisible(true);
 }
 
 void RGRoute::setIconlessBeginEndFrames(bool val)
 {
   mIconlessBeginEndFrames=val;
+  qDebug()<<"seticonless"<<val;
 }

@@ -94,6 +94,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   ui.routeProperties->insertWidget(0,mRoute->widgetSettings());
   mRoute->setZValue(1);
   mRoute->setSmoothCoef(RGSettings::getSmoothLength());
+  mRoute->setIconlessBeginEndFrames(RGSettings::getIconLessBeginEndFrames());
   mView->addRoute(mRoute);
   QObject::connect(mRoute, SIGNAL(canGenerate(bool)),
                    this, SLOT(enableGenerateActions(bool)));
