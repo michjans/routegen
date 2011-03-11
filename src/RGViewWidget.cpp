@@ -51,7 +51,7 @@ void RGViewWidget::stop()
   if (mPlayTimer == NULL || !mPlayTimer->isActive()) return;
   //Finished
   mPlayTimer->stop();
-  //emit busy(false);
+  emit playbackStopped(true);
 }
 
 bool RGViewWidget::generateMovie(const QString &dirName, const QString &filePrefix, QStringList &generatedBMPs)
@@ -132,7 +132,6 @@ void RGViewWidget::playTimerEvent()
   {
     //Finished
     this->stop();
-    emit playbackStopped(true);
   }
 
 }
