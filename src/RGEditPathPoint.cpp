@@ -31,8 +31,20 @@ void RGEditPathPoint::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 
 void RGEditPathPoint::mouseMoveEvent ( QGraphicsSceneMouseEvent * event )
 {
-  qDebug()<<"mouseMove"<<QString::number(mapToParent(event->pos()).x()) + "," + QString::number(mapToParent(event->pos()).y());
-  setPos(mapToParent(event->pos()));
+  qDebug()<<"mouseMove"<<mapToParent(event->pos())<<"sceneRect"<<this->scene()->sceneRect();
+  qDebug()<<scene()->sceneRect().left()<<scene()->sceneRect().top()<<scene()->sceneRect().right()<<scene()->sceneRect().bottom();
+  QPointF newpos=QPointF(mapToParent(event->pos()));
+  if(!this->scene()->sceneRect().contains(newpos)){
+    if(newpos.x() < scene()->sceneRect().left())
+      newpos.setX(scene()->sceneRect().left());
+    if(newpos.y() < scene()->sceneRect().top())
+      newpos.setY(scene()->sceneRect().top());
+    if(newpos.x() > scene()->sceneRect().right())
+      newpos.setX(scene()->sceneRect().right());
+    if(newpos.y() > scene()->sceneRect().bottom())
+      newpos.setY(scene()->sceneRect().bottom());
+  }
+  setPos(newpos);
   emit editMovedPoint();
 }
 
