@@ -252,7 +252,10 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
         QMessageBox::question (this, "Directory not empty", "Directory not empty, continue anyway?",
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes){
       RGSettings::setLastGenDir(dir);
+      //generate images :
+      mRoute->setEditMode(false);
       generateBMPOK = mView->generateMovie(dir, QString("map"), mGeneratedBMPs);
+      mRoute->setEditMode(actionDraw_mode->isChecked());
     }
 
     if (generateBMPOK) {
