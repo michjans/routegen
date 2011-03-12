@@ -18,6 +18,9 @@ public:
   void setVehicleList(RGVehicleList *vehicleList);
   void init();
 
+public slots:
+  void on_playbackChanged(bool);
+
 private slots:
   void on_vehicleSettingsPB_clicked(bool);
   void on_penSizeSB_valueChanged(int size);
@@ -27,7 +30,6 @@ private slots:
   void on_routeTimeSB_valueChanged(int time);
   void on_vehicleCB_currentIndexChanged(int index);
   void on_routeColorPB_clicked(bool);
-  void on_playback(bool);
 
 signals:
   void penChanged(const QPen &);

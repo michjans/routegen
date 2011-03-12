@@ -98,8 +98,6 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mView->addRoute(mRoute);
   QObject::connect(mRoute, SIGNAL(canGenerate(bool)),
                    this, SLOT(enableGenerateActions(bool)));
-  QObject::connect(this, SIGNAL(playback(bool)),
-                   mRoute, SIGNAL(playback(bool)));
   QObject::connect(mView, SIGNAL(playbackStopped(bool)),
                    this, SLOT(enableGenerateActions(bool)));
 }
@@ -216,7 +214,6 @@ void RGMainWindow::on_actionPlayback_triggered(bool checked)
   actionDraw_mode->setChecked(false);
   mView->play();
   actionStop->setEnabled(true);
-  emit playback(true);
 }
 
 void RGMainWindow::on_actionStop_triggered(bool checked)
@@ -331,9 +328,6 @@ void RGMainWindow::enableGenerateActions(bool val)
   actionPlayback->setEnabled(val);
   action_Undo->setEnabled(val);
   actionStop->setEnabled(false);
-  //if generate possible, playback stopped
-  if(val==true)
-    emit playback(false);
   //TODO: Redo not implemented yet, so keep disabled for now
 }
 

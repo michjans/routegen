@@ -25,7 +25,9 @@ public:
 
 signals:
     void canGenerate(bool);
-    void playback(bool);
+
+public slots:
+    void on_playbackChanged(bool);
 
 private slots:
     void on_penChanged(const QPen & pen);
@@ -35,6 +37,9 @@ private slots:
     void on_vehicleChanged();
     void on_pathChanged(QList<QPoint>);
 
+private:
+    void updateVehicle();
+
 protected:
     QRectF mBoundingRect;
     RGRouteUi *mRouteUi;
@@ -42,7 +47,8 @@ protected:
     RGPath  *mPath;
     RGEditPath * mEditPath;
     bool mIconlessBeginEndFrames;
-    bool mShowVehicle;
+    bool mPlayback;
+    bool mEditMode;
 };
 
 #endif // RGROUTE_H

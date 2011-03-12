@@ -6,7 +6,8 @@ RGRoute::RGRoute(QGraphicsItem *parent) :
     QGraphicsObject(parent),
     mBoundingRect(QRectF()),
     mIconlessBeginEndFrames(false),
-    mShowVehicle(false)
+    mPlayback(false),
+    mEditMode(false)
 {
   mPath=new RGPath(this);
   mEditPath=new RGEditPath(this);
@@ -19,7 +20,6 @@ RGRoute::RGRoute(QGraphicsItem *parent) :
   QObject::connect(mRouteUi,SIGNAL(totalTimeChecked(bool)),this,SLOT(on_totalTimeChecked(bool)));
   QObject::connect(mRouteUi,SIGNAL(routeTimeChanged(int)),this,SLOT(on_routeTimeChanged(int)));
   QObject::connect(mRouteUi,SIGNAL(vehicleChanged()),this,SLOT(on_vehicleChanged()));
-  QObject::connect(this,SIGNAL(playback(bool)),mRouteUi,SLOT(on_playback(bool)));
 
   //create and set up vehicleList
   mVehicleList = new RGVehicleList();
@@ -36,8 +36,7 @@ QRectF RGRoute::boundingRect() const
 
 void RGRoute::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-  //painter->setBrush(Qt::black);
-  //painter->drawRect(-10,-10,20,20);
+  Q_UNUSED(painter);
 }
 
 QWidget *RGRoute::widgetSettings()
@@ -48,6 +47,7 @@ QWidget *RGRoute::widgetSettings()
 void RGRoute::setSmoothCoef(int dsmooth)
 {
   mPath->setSmoothCoef(dsmooth);
+  setCurrentFrame(mPath->countFrames()-1);
 }
 
 
@@ -56,6 +56,12 @@ void RGRoute::sceneRectChanged(const QRectF & rect)
   prepareGeometryChange();
   mBoundingRect=rect;
   mEditPath->sceneRectChanged(rect);
+}
+
+void RGRoute::on_playbackChanged(bool play)
+{
+  mPlayback=play;
+  mRouteUi->on_playbackChanged(mPlayback);
 }
 
 void RGRoute::on_penChanged(const QPen & pen)
@@ -69,13 +75,16 @@ void RGRoute::on_totalTimeChecked(bool checked)
     mPath->setPlayMode(1);
   else
     mPath->setPlayMode(0);
-  //TODO update vehicle
 }
+
 void RGRoute::on_smoothPathChecked(bool checked)
 {
   mPath->setSmoothPath(checked);
-  mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
-  mVehicleList->getCurrentVehicle()->setRotation(mPath->getAngle());
+  //if playback is on, update to the current frame else to the last :
+  if(mPlayback)
+    setCurrentFrame(mPath->getCurrentFrame());
+  else
+    setCurrentFrame(mPath->countFrames()-1);
 }
 
 void RGRoute::on_routeTimeChanged(int time)
@@ -86,9 +95,7 @@ void RGRoute::on_routeTimeChanged(int time)
 void RGRoute::on_vehicleChanged()
 {
   mVehicleList->getCurrentVehicle()->setParentItem(this);
-  mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
-  mVehicleList->getCurrentVehicle()->setRotation(mPath->getAngle());
-  mVehicleList->getCurrentVehicle()->setVisible(mShowVehicle);
+  updateVehicle();
 }
 
 void RGRoute::on_pathChanged(QList<QPoint> pointlist)
@@ -103,19 +110,15 @@ void RGRoute::on_pathChanged(QList<QPoint> pointlist)
 
 void RGRoute::setEditMode(bool checked)
 {
-  mPath->setCurrentFrame(mPath->countFrames());
+  mEditMode=checked;
   mEditPath->setVisible(checked);
-  mShowVehicle=!checked;
-  mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
-  mVehicleList->getCurrentVehicle()->setRotation(mPath->getAngle());
-  if(this->countFrames()<2) mShowVehicle=false;
-  mVehicleList->getCurrentVehicle()->setVisible(mShowVehicle);
+  setCurrentFrame(mPath->countFrames()-1);
 }
 
 void RGRoute::clearPath()
 {
   mEditPath->clear();
-  mVehicleList->getCurrentVehicle()->setVisible(false);
+  updateVehicle();
 }
 
 int RGRoute::countFrames()
@@ -125,18 +128,32 @@ int RGRoute::countFrames()
 
 void RGRoute::setCurrentFrame(int frame)
 {
-  int time=mPath->setCurrentFrame(frame);
-  mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
-  mVehicleList->getCurrentVehicle()->setRotation(mPath->getAngle());
-  mVehicleList->getCurrentVehicle()->setTime(time);
-  if(mIconlessBeginEndFrames && (frame==0 || frame==countFrames()-1))
-    mVehicleList->getCurrentVehicle()->setVisible(false);
-  else
-    mVehicleList->getCurrentVehicle()->setVisible(true);
+  mPath->setCurrentFrame(frame);
+  updateVehicle();
 }
 
 void RGRoute::setIconlessBeginEndFrames(bool val)
 {
   mIconlessBeginEndFrames=val;
-  qDebug()<<"seticonless"<<val;
+  updateVehicle();
+}
+
+void RGRoute::updateVehicle()
+{
+  if(mEditMode){
+    mVehicleList->getCurrentVehicle()->setVisible(false);
+    return;
+  }
+  int frame=mPath->getCurrentFrame();
+  if(frame<2){
+    mVehicleList->getCurrentVehicle()->setVisible(false);
+    return;
+  }
+  mVehicleList->getCurrentVehicle()->setTime(mPath->getCurrentTime());
+  mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
+  mVehicleList->getCurrentVehicle()->setRotation(mPath->getAngle());
+  if(mIconlessBeginEndFrames && (frame==0 || frame==countFrames()-1))
+    mVehicleList->getCurrentVehicle()->setVisible(false);
+  else
+    mVehicleList->getCurrentVehicle()->setVisible(true);
 }

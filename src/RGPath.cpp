@@ -86,7 +86,7 @@ int RGPath::countFrames()
   return 0;
 }
 
-int RGPath::setCurrentFrame(int frame)
+void RGPath::setCurrentFrame(int frame)
 {
   //check that frame is in the total range
   if(frame>=0 && frame<this->countFrames())
@@ -105,7 +105,15 @@ int RGPath::setCurrentFrame(int frame)
     mEndPos=QPointF(mPaintPath.elementAt(mPaintPath.elementCount()-1).x,mPaintPath.elementAt(mPaintPath.elementCount()-1).y);
 
   update();
-  //return time:
+}
+
+int RGPath::getCurrentFrame()
+{
+  return mCurrentFrame;
+}
+
+int RGPath::getCurrentTime()
+{
   return mCurrentFrame*(1.0 / (double) mFPS) * 1000;
 }
 
@@ -162,7 +170,7 @@ void RGPath::setSmoothCoef(int dSmooth)
   createPath();
 }
 
-void RGPath::setTotalTime(int time)//set mTotaltime in ms !!it must never be mull
+void RGPath::setTotalTime(int time)//set mTotaltime in ms !!it must never be null
 {
   if (time!=0)
     mTotalTime=time;

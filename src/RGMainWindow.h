@@ -63,9 +63,6 @@ private slots:
   void enableGenerateActions(bool);
   void movieGenerationFinished();
 
-signals:
-  void playback(bool);
-
 private:
 
   RGViewWidget *mView;

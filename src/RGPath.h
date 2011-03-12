@@ -13,7 +13,9 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget);
     int countFrames();
-    int setCurrentFrame(int);
+    void setCurrentFrame(int);
+    int getCurrentFrame();
+    int getCurrentTime();
     QPointF getEndPos();
     float getAngle();
 
