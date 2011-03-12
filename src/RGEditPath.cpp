@@ -10,23 +10,18 @@ RGEditPath::RGEditPath(QGraphicsItem *parent) :
 
 QRectF RGEditPath::boundingRect() const
 {
-  /*if(this->scene()!=0)
-    return this->scene()->sceneRect();
-  else return QRectF();*/
-  //qDebug()<<"mEditPath boundingRect :"<<mBoundingRect;
   return mBoundingRect;
  }
 
 void RGEditPath::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-  //painter->setBrush(Qt::black);
-  //painter->drawRect(-10,-10,20,20);
+  Q_UNUSED(painter);
 }
 
-void RGEditPath::sceneRectChanged(const QRectF & rect)
+void RGEditPath::on_sceneRectChanged()
 {
   prepareGeometryChange();
-  mBoundingRect=rect;
+  mBoundingRect=this->scene()->sceneRect();
 }
 
 void RGEditPath::mousePressEvent ( QGraphicsSceneMouseEvent * event )

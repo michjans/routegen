@@ -21,10 +21,10 @@ public:
     int countFrames();
     void setCurrentFrame(int);
     void setIconlessBeginEndFrames(bool);
-    void sceneRectChanged(const QRectF & rect);
 
 signals:
     void canGenerate(bool);
+    void sceneRectChanged();
 
 public slots:
     void on_playbackChanged(bool);
@@ -41,7 +41,6 @@ private:
     void updateVehicle();
 
 protected:
-    QRectF mBoundingRect;
     RGRouteUi *mRouteUi;
     RGVehicleList *mVehicleList;
     RGPath  *mPath;

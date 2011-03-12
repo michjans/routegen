@@ -18,6 +18,7 @@ public:
 
 signals:
   void playbackStopped(bool);
+  void sceneRectChanged();
 
 public slots:
   void loadImage(const QPixmap &pm);

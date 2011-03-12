@@ -37,6 +37,7 @@ void RGViewWidget::addRoute(RGRoute *item)
 {
   mRoute=item;
   mScene->addItem(mRoute);
+  QObject::connect(this,SIGNAL(sceneRectChanged()),mRoute,SIGNAL(sceneRectChanged()));
 }
 
 void RGViewWidget::play()
@@ -99,11 +100,10 @@ void RGViewWidget::loadImage(const QPixmap &pm)
     delete mWelcomeText;
     mWelcomeText=NULL;
   }
-  //mBackgroundSize=pm.size();
   mScene->setBackgroundBrush(pm);
   this->setCacheMode(QGraphicsView::CacheBackground);
   mScene->setSceneRect(0,0,pm.width(),pm.height());
-  mRoute->sceneRectChanged(mScene->sceneRect());
+  emit sceneRectChanged();
   this->setFrameShape(QFrame::NoFrame);
   viewport()->setMaximumSize(pm.size());
   this->setAlignment((Qt::AlignLeft | Qt::AlignTop));

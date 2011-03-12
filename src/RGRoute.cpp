@@ -4,7 +4,6 @@
 
 RGRoute::RGRoute(QGraphicsItem *parent) :
     QGraphicsObject(parent),
-    mBoundingRect(QRectF()),
     mIconlessBeginEndFrames(false),
     mPlayback(false),
     mEditMode(false)
@@ -13,6 +12,7 @@ RGRoute::RGRoute(QGraphicsItem *parent) :
   mEditPath=new RGEditPath(this);
   mEditPath->setVisible(false);
   QObject::connect(mEditPath,SIGNAL(newPointList(QList<QPoint>)),this,SLOT(on_pathChanged(QList<QPoint>)));
+  QObject::connect(this,SIGNAL(sceneRectChanged()),mEditPath,SLOT(on_sceneRectChanged()));
 
   mRouteUi = new RGRouteUi();
   QObject::connect(mRouteUi,SIGNAL(penChanged(const QPen &)),this,SLOT(on_penChanged(const QPen &)));
@@ -31,7 +31,7 @@ RGRoute::RGRoute(QGraphicsItem *parent) :
 
 QRectF RGRoute::boundingRect() const
 {
-     return mBoundingRect;
+     return QRectF();//mBoundingRect;
  }
 
 void RGRoute::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
@@ -48,14 +48,6 @@ void RGRoute::setSmoothCoef(int dsmooth)
 {
   mPath->setSmoothCoef(dsmooth);
   setCurrentFrame(mPath->countFrames()-1);
-}
-
-
-void RGRoute::sceneRectChanged(const QRectF & rect)
-{
-  prepareGeometryChange();
-  mBoundingRect=rect;
-  mEditPath->sceneRectChanged(rect);
 }
 
 void RGRoute::on_playbackChanged(bool play)
