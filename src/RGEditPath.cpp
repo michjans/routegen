@@ -2,7 +2,8 @@
 
 RGEditPath::RGEditPath(QGraphicsItem *parent) :
     QGraphicsObject(parent),
-    mBoundingRect(QRectF())
+    mBoundingRect(QRectF()),
+    mousePressed(false)
 {
   setPos(0,0);
   setCursor(Qt::CrossCursor);
@@ -26,12 +27,25 @@ void RGEditPath::on_sceneRectChanged()
 
 void RGEditPath::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 {
-  RGEditPathPoint *testpoint=new RGEditPathPoint(this,event->pos().toPoint());
-  mEditPathPointList.append(testpoint);
-  QObject::connect(testpoint,SIGNAL(editMovedPoint()),this,SLOT(editPathPointMoved()));
-  QObject::connect(testpoint,SIGNAL(editAddPoint(RGEditPathPoint *)),this,SLOT(editPathPointAdd(RGEditPathPoint *)));
-  QObject::connect(testpoint,SIGNAL(editDelPoint(RGEditPathPoint *)),this,SLOT(editPathPointDel(RGEditPathPoint *)));
-  updatePointList();
+  if(event->button()==Qt::LeftButton){
+    mousePressed=true;
+    addPoint(event->pos().toPoint());
+  }
+}
+
+void RGEditPath::mouseMoveEvent ( QGraphicsSceneMouseEvent * event )
+{
+  //check if the left button have been pressed (event->button() does not work)
+  if(mousePressed==true)
+    addPoint(event->pos().toPoint());
+}
+
+void RGEditPath::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event )
+{
+  if(event->button()==Qt::LeftButton){
+    mousePressed=false;
+    updatePointList();
+  }
 }
 
 void RGEditPath::clear()
@@ -77,4 +91,13 @@ void RGEditPath::updatePointList()
     pointList.append(mEditPathPointList.at(i)->pos().toPoint());
   }
   emit newPointList(pointList);
+}
+
+void RGEditPath::addPoint(QPoint point)
+{
+  RGEditPathPoint *testpoint=new RGEditPathPoint(this,point);
+  mEditPathPointList.append(testpoint);
+  QObject::connect(testpoint,SIGNAL(editMovedPoint()),this,SLOT(editPathPointMoved()));
+  QObject::connect(testpoint,SIGNAL(editAddPoint(RGEditPathPoint *)),this,SLOT(editPathPointAdd(RGEditPathPoint *)));
+  QObject::connect(testpoint,SIGNAL(editDelPoint(RGEditPathPoint *)),this,SLOT(editPathPointDel(RGEditPathPoint *)));
 }

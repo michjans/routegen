@@ -15,7 +15,10 @@ public:
 
 
 protected:
-    void mousePressEvent ( QGraphicsSceneMouseEvent * event ) ;
+    void mousePressEvent ( QGraphicsSceneMouseEvent * event );
+    void mouseMoveEvent ( QGraphicsSceneMouseEvent * event );
+    void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
+
 signals:
     void newPointList(QList<QPoint>);
 
@@ -25,11 +28,14 @@ public slots:
     void editPathPointAdd(RGEditPathPoint *);
     void editPathPointDel(RGEditPathPoint *);
     void on_sceneRectChanged();
+
 private :
     void updatePointList();
+    void addPoint(QPoint);
 private:
     QRectF mBoundingRect;
     QList<RGEditPathPoint*> mEditPathPointList;
+    bool mousePressed;
 
 };
 

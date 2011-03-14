@@ -94,7 +94,7 @@ void RGRoute::on_pathChanged(QList<QPoint> pointlist)
 {
   mPath->newPointList(pointlist);
 
-  if(pointlist.size()==2)
+  if(pointlist.size()>=2)
     emit canGenerate(true);
   if(pointlist.size()<2)
     emit canGenerate(false);
