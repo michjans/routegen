@@ -20,7 +20,7 @@ protected:
     void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
 
 signals:
-    void newPointList(QList<QPoint>);
+    void newPointList(QList<QPoint>,bool);
 
 public slots:
     void clear();
@@ -30,7 +30,7 @@ public slots:
     void on_sceneRectChanged();
 
 private :
-    void updatePointList();
+    void updatePointList(bool canUndo=true);
     void addPoint(QPoint);
 private:
     QRectF mBoundingRect;

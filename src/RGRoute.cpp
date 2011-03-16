@@ -11,7 +11,7 @@ RGRoute::RGRoute(QGraphicsItem *parent) :
   mPath=new RGPath(this);
   mEditPath=new RGEditPath(this);
   mEditPath->setVisible(false);
-  QObject::connect(mEditPath,SIGNAL(newPointList(QList<QPoint>)),this,SLOT(on_pathChanged(QList<QPoint>)));
+  QObject::connect(mEditPath,SIGNAL(newPointList(QList<QPoint>,bool)),this,SLOT(on_pathChanged(QList<QPoint>,bool)));
   QObject::connect(this,SIGNAL(sceneRectChanged()),mEditPath,SLOT(on_sceneRectChanged()));
 
   mRouteUi = new RGRouteUi();
@@ -90,7 +90,7 @@ void RGRoute::on_vehicleChanged()
   updateVehicle();
 }
 
-void RGRoute::on_pathChanged(QList<QPoint> pointlist)
+void RGRoute::on_pathChanged(QList<QPoint> pointlist,bool canUndo)
 {
   mPath->newPointList(pointlist);
 

@@ -35,7 +35,7 @@ private slots:
     void on_smoothPathChecked(bool);
     void on_routeTimeChanged(int);
     void on_vehicleChanged();
-    void on_pathChanged(QList<QPoint>);
+    void on_pathChanged(QList<QPoint>,bool);
 
 private:
     void updateVehicle();

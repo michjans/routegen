@@ -30,14 +30,17 @@ void RGEditPath::mousePressEvent ( QGraphicsSceneMouseEvent * event )
   if(event->button()==Qt::LeftButton){
     mousePressed=true;
     addPoint(event->pos().toPoint());
+    updatePointList(false); //is not undoable
   }
 }
 
 void RGEditPath::mouseMoveEvent ( QGraphicsSceneMouseEvent * event )
 {
   //check if the left button have been pressed (event->button() does not work)
-  if(mousePressed==true)
-    addPoint(event->pos().toPoint());
+  if(mousePressed==false)
+    return;
+  addPoint(event->pos().toPoint());
+  updatePointList(false); //is not undoable
 }
 
 void RGEditPath::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event )
@@ -84,13 +87,13 @@ void RGEditPath::editPathPointDel(RGEditPathPoint * point)
   updatePointList();
 }
 
-void RGEditPath::updatePointList()
+void RGEditPath::updatePointList(bool canUndo)
 {
   QList<QPoint> pointList;
   for(int i=0;i<mEditPathPointList.size();++i){
     pointList.append(mEditPathPointList.at(i)->pos().toPoint());
   }
-  emit newPointList(pointList);
+  emit newPointList(pointList,canUndo);
 }
 
 void RGEditPath::addPoint(QPoint point)
