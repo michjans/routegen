@@ -1,13 +1,13 @@
 #ifndef RGROUTE_H
 #define RGROUTE_H
 
-#include <QGraphicsObject>
+#include "RGGraphicsObjectUndo.h"
 #include "RGVehicleList.h"
 #include "RGRouteUi.h"
 #include "RGPath.h"
 #include "RGEditPath.h"
 
-class RGRoute : public QGraphicsObject
+class RGRoute : public RGGraphicsObjectUndo
 {
     Q_OBJECT
 public:
@@ -17,17 +17,20 @@ public:
     QWidget *widgetSettings();
     void setSmoothCoef(int);
     void setEditMode(bool);
-    void clearPath();
     int countFrames();
     void setCurrentFrame(int);
     void setIconlessBeginEndFrames(bool);
+    void setNewPoints(QList<QPoint>);
+    virtual void undo(QVariant=0);
 
 signals:
     void canGenerate(bool);
     void sceneRectChanged();
+    void newUndoable(RGGraphicsObjectUndo *,QVariant);
 
 public slots:
     void on_playbackChanged(bool);
+    void clearPath();
 
 private slots:
     void on_penChanged(const QPen & pen);

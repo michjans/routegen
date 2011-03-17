@@ -3,7 +3,7 @@
 #include <QDebug>
 
 RGRoute::RGRoute(QGraphicsItem *parent) :
-    QGraphicsObject(parent),
+    RGGraphicsObjectUndo(parent),
     mIconlessBeginEndFrames(false),
     mPlayback(false),
     mEditMode(false)
@@ -13,6 +13,7 @@ RGRoute::RGRoute(QGraphicsItem *parent) :
   mEditPath->setVisible(false);
   QObject::connect(mEditPath,SIGNAL(newPointList(QList<QPoint>,bool)),this,SLOT(on_pathChanged(QList<QPoint>,bool)));
   QObject::connect(this,SIGNAL(sceneRectChanged()),mEditPath,SLOT(on_sceneRectChanged()));
+  QObject::connect(this,SIGNAL(sceneRectChanged()),this,SLOT(clearPath()));
 
   mRouteUi = new RGRouteUi();
   QObject::connect(mRouteUi,SIGNAL(penChanged(const QPen &)),this,SLOT(on_penChanged(const QPen &)));
@@ -98,6 +99,32 @@ void RGRoute::on_pathChanged(QList<QPoint> pointlist,bool canUndo)
     emit canGenerate(true);
   if(pointlist.size()<2)
     emit canGenerate(false);
+
+  //send Undo data
+  if(canUndo){
+    QList<QVariant> vlist;
+    for(int i=0;i<pointlist.size();i++){
+      vlist.append(QVariant(pointlist.at(i)));
+    }
+    QVariant data(vlist);
+    emit newUndoable(this,data);
+  }
+}
+
+void RGRoute::setNewPoints(QList<QPoint> pointlist)
+{
+  mEditPath->setNewPoints(pointlist);
+  qDebug()<<pointlist;
+}
+
+void RGRoute::undo(QVariant data)
+{
+  QList<QVariant> vlist=data.toList();
+  QList<QPoint> pointlist;
+  for(int i=0;i<vlist.size();i++){
+    pointlist.append(vlist.at(i).toPoint());
+  }
+  setNewPoints(pointlist);
 }
 
 void RGRoute::setEditMode(bool checked)

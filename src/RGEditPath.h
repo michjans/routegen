@@ -23,7 +23,8 @@ signals:
     void newPointList(QList<QPoint>,bool);
 
 public slots:
-    void clear();
+    void clear(bool canUndo=true);
+    void setNewPoints(QList<QPoint>);
     void editPathPointMoved();
     void editPathPointAdd(RGEditPathPoint *);
     void editPathPointDel(RGEditPathPoint *);

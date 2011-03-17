@@ -51,13 +51,22 @@ void RGEditPath::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event )
   }
 }
 
-void RGEditPath::clear()
+void RGEditPath::clear(bool canUndo)
 {
   for(int i=0;i<mEditPathPointList.size();++i){
     delete mEditPathPointList.at(i);
   }
   mEditPathPointList.clear();
-  updatePointList();
+  updatePointList(canUndo);
+}
+
+void RGEditPath::setNewPoints(QList<QPoint> pointlist)
+{
+  clear(false);
+  for(int i=0;i<pointlist.size();i++){
+    addPoint(pointlist.at(i));
+  }
+  updatePointList(false); //is not undoable
 }
 
 void RGEditPath::editPathPointMoved()

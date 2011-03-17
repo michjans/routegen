@@ -35,6 +35,7 @@ class QLabel;
 class RGEncVideo;
 class RGRoute;
 class RGViewWidget;
+class RGUndoRedo;
 
 class RGMainWindow : public QMainWindow
 {
@@ -68,6 +69,7 @@ private:
   RGViewWidget *mView;
   RGEncVideo        *mVideoEncoder;
   RGRoute          *mRoute;
+  RGUndoRedo  *mUndoRedo;
 
   QAction *actionOpen_image;
   QAction *action_Quit;

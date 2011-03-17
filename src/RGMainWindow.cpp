@@ -31,6 +31,7 @@
 #include "RGEncBmp2avi.h"
 #include "RGRoute.h"
 #include "RGViewWidget.h"
+#include "RGUndoRedo.h"
 
 #include "ui_routegen.h"
 
@@ -100,6 +101,16 @@ RGMainWindow::RGMainWindow(QWidget *parent)
                    this, SLOT(enableGenerateActions(bool)));
   QObject::connect(mView, SIGNAL(playbackStopped(bool)),
                    this, SLOT(enableGenerateActions(bool)));
+
+  //Undo/Redo:
+  mUndoRedo = new RGUndoRedo();
+  QObject::connect(mRoute, SIGNAL(newUndoable(RGGraphicsObjectUndo *,QVariant)),
+                   mUndoRedo, SLOT(addUndo(RGGraphicsObjectUndo *,QVariant)));
+  QObject::connect(mUndoRedo, SIGNAL(undoPossible(bool)),
+                   action_Undo, SLOT(setEnabled(bool)));
+  QObject::connect(action_Undo, SIGNAL(triggered()),
+                   mUndoRedo, SLOT(undo()));
+
 }
 
 void RGMainWindow::on_actionOpen_image_triggered(bool checked)
@@ -146,6 +157,7 @@ void RGMainWindow::on_actionSave_image_triggered(bool checked)
 void RGMainWindow::on_action_Undo_triggered(bool)
 {
   //mRGMapWidget->undo();
+  qDebug()<<"actionundotriggered";
 }
 
 void RGMainWindow::on_action_Redo_triggered(bool)
@@ -326,7 +338,7 @@ void RGMainWindow::enableGenerateActions(bool val)
 {
   actionGenerate_map->setEnabled(val);
   actionPlayback->setEnabled(val);
-  action_Undo->setEnabled(val);
+  //action_Undo->setEnabled(val);
   actionStop->setEnabled(false);
   //TODO: Redo not implemented yet, so keep disabled for now
 }
