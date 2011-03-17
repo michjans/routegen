@@ -94,6 +94,7 @@ void RGRoute::on_vehicleChanged()
 void RGRoute::on_pathChanged(QList<QPoint> pointlist,bool canUndo)
 {
   mPath->newPointList(pointlist);
+  updateVehicle();
 
   if(pointlist.size()>=2)
     emit canGenerate(true);
@@ -114,7 +115,6 @@ void RGRoute::on_pathChanged(QList<QPoint> pointlist,bool canUndo)
 void RGRoute::setNewPoints(QList<QPoint> pointlist)
 {
   mEditPath->setNewPoints(pointlist);
-  qDebug()<<pointlist;
 }
 
 void RGRoute::undo(QVariant data)

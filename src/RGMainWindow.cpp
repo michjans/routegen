@@ -70,10 +70,6 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   action_Undo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
   //action_Redo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
 
-  mView = new RGViewWidget();
-  ui.centralwidget->layout()->addWidget(mView);
-
-
   actionStop->setEnabled(false);
   actionGenerate_map->setEnabled(false);
   actionPlayback->setEnabled(false);
@@ -91,6 +87,15 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   if(mVideoEncoder->exists())
     qDebug()<<"encoder found !";
 
+  //ViewWidget :
+  mView = new RGViewWidget();
+  ui.centralwidget->layout()->addWidget(mView);
+  QObject::connect(actionStop, SIGNAL(triggered()),
+                   mView, SLOT(stop()));
+  QObject::connect(mView, SIGNAL(playbackStopped(bool)),
+                   this, SLOT(enableGenerateActions(bool)));
+
+  //Route :
   mRoute= new RGRoute();
   ui.routeProperties->insertWidget(0,mRoute->widgetSettings());
   mRoute->setZValue(1);
@@ -98,8 +103,6 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mRoute->setIconlessBeginEndFrames(RGSettings::getIconLessBeginEndFrames());
   mView->addRoute(mRoute);
   QObject::connect(mRoute, SIGNAL(canGenerate(bool)),
-                   this, SLOT(enableGenerateActions(bool)));
-  QObject::connect(mView, SIGNAL(playbackStopped(bool)),
                    this, SLOT(enableGenerateActions(bool)));
 
   //Undo/Redo:
@@ -152,17 +155,6 @@ void RGMainWindow::on_actionSave_image_triggered(bool checked)
     if (!result) QMessageBox::critical (this, "Oops", "Problems saving file");
     RGSettings::setLastSaveDir(fileName);
   }
-}
-
-void RGMainWindow::on_action_Undo_triggered(bool)
-{
-  //mRGMapWidget->undo();
-  qDebug()<<"actionundotriggered";
-}
-
-void RGMainWindow::on_action_Redo_triggered(bool)
-{
-  //mRGMapWidget->redo();
 }
 
 void RGMainWindow::on_actionPreferences_triggered(bool)
@@ -226,13 +218,13 @@ void RGMainWindow::on_actionPlayback_triggered(bool checked)
   actionDraw_mode->setChecked(false);
   mView->play();
   actionStop->setEnabled(true);
+  action_Undo->setEnabled(false);
 }
 
 void RGMainWindow::on_actionStop_triggered(bool checked)
 {
   Q_UNUSED(checked);
   mView->stop();
-  actionStop->setEnabled(false);
 }
 
 void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
@@ -338,8 +330,8 @@ void RGMainWindow::enableGenerateActions(bool val)
 {
   actionGenerate_map->setEnabled(val);
   actionPlayback->setEnabled(val);
-  //action_Undo->setEnabled(val);
   actionStop->setEnabled(false);
+  mUndoRedo->sendActionSignals();
   //TODO: Redo not implemented yet, so keep disabled for now
 }
 

@@ -47,8 +47,6 @@ public:
 private slots:
   void on_actionOpen_image_triggered(bool );
   void on_actionSave_image_triggered(bool );
-  void on_action_Undo_triggered(bool );
-  void on_action_Redo_triggered(bool );
   void on_actionPreferences_triggered(bool );
   void on_actionImport_Google_Map_triggered(bool );
   void on_actionDraw_mode_triggered(bool );
