@@ -117,7 +117,7 @@ void RGRoute::setNewPoints(QList<QPoint> pointlist)
   mEditPath->setNewPoints(pointlist);
 }
 
-void RGRoute::undo(QVariant data)
+void RGRoute::undoredo(QVariant data)
 {
   QList<QVariant> vlist=data.toList();
   QList<QPoint> pointlist;

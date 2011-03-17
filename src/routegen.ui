@@ -80,6 +80,7 @@
      <string>&amp;Edit</string>
     </property>
     <addaction name="action_Undo"/>
+    <addaction name="action_Redo"/>
     <addaction name="separator"/>
     <addaction name="actionPreferences"/>
    </widget>
@@ -223,6 +224,10 @@
    </property>
   </action>
   <action name="action_Redo">
+   <property name="icon">
+    <iconset resource="routegen.qrc">
+     <normaloff>:/icons/icons/redo.png</normaloff>:/icons/icons/redo.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Redo</string>
    </property>

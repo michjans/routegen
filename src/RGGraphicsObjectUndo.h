@@ -13,7 +13,7 @@ public:
 signals:
 
 public slots:
-  virtual void undo(QVariant=0);
+  virtual void undoredo(QVariant=0);
 
 };
 

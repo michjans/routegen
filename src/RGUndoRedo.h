@@ -22,6 +22,7 @@ public slots:
   void redo();
 
 private:
+  void undoredo();
 
   QList< QMap< RGGraphicsObjectUndo *,QVariant> >  mUndoList;
   QList< QMap< RGGraphicsObjectUndo *,QVariant> >  mRedoList;

@@ -5,7 +5,7 @@ RGGraphicsObjectUndo::RGGraphicsObjectUndo(QGraphicsItem *parent) :
 {
 }
 
-void RGGraphicsObjectUndo::undo(QVariant)
+void RGGraphicsObjectUndo::undoredo(QVariant)
 {
 
 }

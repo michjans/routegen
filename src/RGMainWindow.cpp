@@ -62,13 +62,13 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionDraw_mode = ui.actionDraw_mode;
   actionNew_route = ui.actionNew_route;
   action_Undo = ui.action_Undo;
-  //action_Redo = ui.action_Redo;
+  action_Redo = ui.action_Redo;
   actionGenerate_map = ui.actionGenerate_map;
   actionPlayback = ui.actionPlayback;
   actionStop = ui.actionStop;
 
   action_Undo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
-  //action_Redo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
+  action_Redo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
 
   actionStop->setEnabled(false);
   actionGenerate_map->setEnabled(false);
@@ -77,6 +77,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionDraw_mode->setEnabled(false);
   actionNew_route->setEnabled(false);
   action_Undo->setEnabled(false);
+  action_Redo->setEnabled(false);
 
   //Video Encoder:
   #ifdef Q_WS_WIN
@@ -113,6 +114,10 @@ RGMainWindow::RGMainWindow(QWidget *parent)
                    action_Undo, SLOT(setEnabled(bool)));
   QObject::connect(action_Undo, SIGNAL(triggered()),
                    mUndoRedo, SLOT(undo()));
+  QObject::connect(mUndoRedo, SIGNAL(redoPossible(bool)),
+                   action_Redo, SLOT(setEnabled(bool)));
+  QObject::connect(action_Redo, SIGNAL(triggered()),
+                   mUndoRedo, SLOT(redo()));
 
 }
 

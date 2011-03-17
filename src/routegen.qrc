@@ -14,5 +14,6 @@
         <file>icons/reset.png</file>
         <file>icons/undo.png</file>
         <file>icons/settings.png</file>
+        <file>icons/redo.png</file>
     </qresource>
 </RCC>

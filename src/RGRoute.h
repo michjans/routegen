@@ -21,7 +21,7 @@ public:
     void setCurrentFrame(int);
     void setIconlessBeginEndFrames(bool);
     void setNewPoints(QList<QPoint>);
-    virtual void undo(QVariant=0);
+    virtual void undoredo(QVariant=0);
 
 signals:
     void canGenerate(bool);
