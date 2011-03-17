@@ -14,19 +14,22 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget);
 
 signals:
-    void editMovedPoint();
+    void editMovedPoint(bool);
     void editAddPoint(RGEditPathPoint *);
     void editDelPoint(RGEditPathPoint *);
+
 public slots:
 
 protected:
     void mousePressEvent ( QGraphicsSceneMouseEvent * event ) ;
     void mouseMoveEvent ( QGraphicsSceneMouseEvent * event );
     /*void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
-    //void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent * event );*/
+    //void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );*/
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent * event );
     void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event );
+
 private:
+    bool mMouseMove;
 
 };
 

@@ -25,7 +25,7 @@ signals:
 public slots:
     void clear(bool canUndo=true);
     void setNewPoints(QList<QPoint>);
-    void editPathPointMoved();
+    void editPathPointMoved(bool canUndo=true);
     void editPathPointAdd(RGEditPathPoint *);
     void editPathPointDel(RGEditPathPoint *);
     void on_sceneRectChanged();

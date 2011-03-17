@@ -1,7 +1,8 @@
 #include "RGEditPathPoint.h"
 
 RGEditPathPoint::RGEditPathPoint(QGraphicsItem *parent,QPoint point) :
-    QGraphicsObject(parent)
+    QGraphicsObject(parent),
+    mMouseMove(false)
 {
   setCursor(Qt::SizeAllCursor);
   //setAcceptsHoverEvents(true);
@@ -45,7 +46,14 @@ void RGEditPathPoint::mouseMoveEvent ( QGraphicsSceneMouseEvent * event )
       newpos.setY(scene()->sceneRect().bottom());
   }
   setPos(newpos);
-  emit editMovedPoint();
+  mMouseMove=true;
+  emit editMovedPoint(false);
+}
+
+void RGEditPathPoint::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event )
+{
+  if (mMouseMove==true)
+    emit editMovedPoint(true);
 }
 
 void RGEditPathPoint::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
