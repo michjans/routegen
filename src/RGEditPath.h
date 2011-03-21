@@ -18,6 +18,9 @@ protected:
     void mousePressEvent ( QGraphicsSceneMouseEvent * event );
     void mouseMoveEvent ( QGraphicsSceneMouseEvent * event );
     void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
+    void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
+    void keyPressEvent ( QKeyEvent * event );
+    void keyReleaseEvent ( QKeyEvent * event );
 
 signals:
     void newPointList(QList<QPoint>,bool);
@@ -36,7 +39,8 @@ private :
 private:
     QRectF mBoundingRect;
     QList<RGEditPathPoint*> mEditPathPointList;
-    bool mousePressed;
+    bool mMousePressed;
+    bool mFreeDraw;
 
 };
 

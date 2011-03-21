@@ -206,6 +206,10 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 void RGMainWindow::on_actionDraw_mode_triggered(bool checked)
 {
   mRoute->setEditMode(checked);
+  if(checked)
+    this->statusBar()->showMessage("hold SHIFT to record free drawing.");
+  else
+    this->statusBar()->clearMessage();
 }
 
 void RGMainWindow::on_actionNew_route_triggered(bool)

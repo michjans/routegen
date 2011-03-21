@@ -3,10 +3,12 @@
 RGEditPath::RGEditPath(QGraphicsItem *parent) :
     QGraphicsObject(parent),
     mBoundingRect(QRectF()),
-    mousePressed(false)
+    mMousePressed(false),
+    mFreeDraw(false)
 {
   setPos(0,0);
   setCursor(Qt::CrossCursor);
+  setAcceptsHoverEvents(true);
 }
 
 QRectF RGEditPath::boundingRect() const
@@ -28,7 +30,8 @@ void RGEditPath::on_sceneRectChanged()
 void RGEditPath::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 {
   if(event->button()==Qt::LeftButton){
-    mousePressed=true;
+    mMousePressed=true;
+
     addPoint(event->pos().toPoint());
     updatePointList(false); //is not undoable
   }
@@ -36,18 +39,42 @@ void RGEditPath::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 
 void RGEditPath::mouseMoveEvent ( QGraphicsSceneMouseEvent * event )
 {
+  //free draw
   //check if the left button have been pressed (event->button() does not work)
-  if(mousePressed==false)
-    return;
-  addPoint(event->pos().toPoint());
-  updatePointList(false); //is not undoable
+  if(mMousePressed && mFreeDraw){
+    addPoint(event->pos().toPoint());
+    updatePointList(false); //is not undoable
+  }
 }
 
 void RGEditPath::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event )
 {
   if(event->button()==Qt::LeftButton){
-    mousePressed=false;
+    mMousePressed=false;
     updatePointList();
+  }
+}
+
+void RGEditPath::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
+{
+ qDebug()<<"hoverEnter";
+ //gives viewWidget the focus to be able to intercept key
+ this->scene()->views().at(0)->setFocus(Qt::OtherFocusReason);
+}
+
+void RGEditPath::keyPressEvent ( QKeyEvent * event )
+{
+  if(event->key()==Qt::Key_Shift){
+    qDebug("shift pressed");
+    mFreeDraw=true;
+  }
+}
+
+void RGEditPath::keyReleaseEvent ( QKeyEvent * event )
+{
+  if(event->key()==Qt::Key_Shift){
+    qDebug("shift released");
+    mFreeDraw=false;
   }
 }
 

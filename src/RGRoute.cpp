@@ -132,6 +132,8 @@ void RGRoute::setEditMode(bool checked)
   mEditMode=checked;
   mEditPath->setVisible(checked);
   setCurrentFrame(mPath->countFrames()-1);
+  //gives Edit path the keyboard grab :
+  mEditPath->grabKeyboard();
 }
 
 void RGRoute::clearPath()
