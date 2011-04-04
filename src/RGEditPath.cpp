@@ -128,16 +128,7 @@ void RGEditPath::editPathPointAdd(RGEditPathPoint * point)
   mEditPathPointList.insert(pointId,testpoint);
   QObject::connect(testpoint,SIGNAL(editMovedPoint(bool)),this,SLOT(editPathPointMoved(bool)));
   QObject::connect(testpoint,SIGNAL(editAddPoint(RGEditPathPoint *)),this,SLOT(editPathPointAdd(RGEditPathPoint *)));
-  QObject::connect(testpoint,SIGNAL(editDelPoint(RGEditPathPoint *)),this,SLOT(editPathPointDel(RGEditPathPoint *)));
 
-  updatePointList();
-}
-
-void RGEditPath::editPathPointDel(RGEditPathPoint * point)
-{
-  //remove editPoint:
-  mEditPathPointList.removeAll(point);
-  delete point;
   updatePointList();
 }
 
@@ -156,7 +147,6 @@ void RGEditPath::addPoint(QPoint point)
   mEditPathPointList.append(testpoint);
   QObject::connect(testpoint,SIGNAL(editMovedPoint(bool)),this,SLOT(editPathPointMoved(bool)));
   QObject::connect(testpoint,SIGNAL(editAddPoint(RGEditPathPoint *)),this,SLOT(editPathPointAdd(RGEditPathPoint *)));
-  QObject::connect(testpoint,SIGNAL(editDelPoint(RGEditPathPoint *)),this,SLOT(editPathPointDel(RGEditPathPoint *)));
 }
 
 void RGEditPath::deleteSelectedPoints()
@@ -165,6 +155,9 @@ void RGEditPath::deleteSelectedPoints()
     RGEditPathPoint *point = qgraphicsitem_cast<RGEditPathPoint *>(item);
     if (!point)
       continue;
-    editPathPointDel(point);
+    //remove editPoint:
+    mEditPathPointList.removeAll(point);
+    delete point;
+    updatePointList();
   }
 }

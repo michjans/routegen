@@ -30,7 +30,6 @@ public slots:
     void setNewPoints(QList<QPoint>);
     void editPathPointMoved(bool canUndo=true);
     void editPathPointAdd(RGEditPathPoint *);
-    void editPathPointDel(RGEditPathPoint *);
     void on_sceneRectChanged();
 
 private :

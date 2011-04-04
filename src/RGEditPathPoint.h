@@ -16,14 +16,11 @@ public:
 signals:
     void editMovedPoint(bool);
     void editAddPoint(RGEditPathPoint *);
-    void editDelPoint(RGEditPathPoint *);
 
 public slots:
 
 protected:
     void mouseMoveEvent ( QGraphicsSceneMouseEvent * event );
-    /*void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
-    //void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );*/
     void mouseReleaseEvent(QGraphicsSceneMouseEvent * event );
     void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event );
 

@@ -61,15 +61,3 @@ void RGEditPathPoint::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
   qDebug()<<"DbleClick on edit point";
   emit editAddPoint(this);
 }
-
-/*void RGEditPathPoint::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
-{
- qDebug()<<"hoverEnter";
- setCursor(Qt::ForbiddenCursor);
-}
-
-void RGEditPathPoint::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event )
-{
-  qDebug()<<"hoverLeave";
-  setCursor(Qt::SizeAllCursor);
-}*/
