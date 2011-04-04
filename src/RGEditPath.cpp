@@ -4,11 +4,13 @@ RGEditPath::RGEditPath(QGraphicsItem *parent) :
     QGraphicsObject(parent),
     mBoundingRect(QRectF()),
     mMousePressed(false),
-    mFreeDraw(false)
+    mFreeDraw(false),
+    mSelect(false)
 {
   setPos(0,0);
   setCursor(Qt::CrossCursor);
   setAcceptsHoverEvents(true);
+  setFlag(QGraphicsItem::ItemHasNoContents);
 }
 
 QRectF RGEditPath::boundingRect() const
@@ -29,12 +31,14 @@ void RGEditPath::on_sceneRectChanged()
 
 void RGEditPath::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 {
-  if(event->button()==Qt::LeftButton){
+  if(event->button()==Qt::LeftButton && !mSelect){
     mMousePressed=true;
-
     addPoint(event->pos().toPoint());
     updatePointList(false); //is not undoable
   }
+  //let the view manage the click for a rubberdrag
+  if(event->button()==Qt::LeftButton && mSelect)
+    QGraphicsItem::mousePressEvent(event);
 }
 
 void RGEditPath::mouseMoveEvent ( QGraphicsSceneMouseEvent * event )
@@ -68,6 +72,15 @@ void RGEditPath::keyPressEvent ( QKeyEvent * event )
     qDebug("shift pressed");
     mFreeDraw=true;
   }
+  if(event->key()==Qt::Key_Control){
+    qDebug("ctrl pressed");
+    setCursor(Qt::ArrowCursor);
+    mSelect=true;
+  }
+  if(event->key()==Qt::Key_Delete || event->key()==Qt::Key_Backspace){
+    qDebug("dlt pressed");
+    deleteSelectedPoints();
+  }
 }
 
 void RGEditPath::keyReleaseEvent ( QKeyEvent * event )
@@ -75,6 +88,11 @@ void RGEditPath::keyReleaseEvent ( QKeyEvent * event )
   if(event->key()==Qt::Key_Shift){
     qDebug("shift released");
     mFreeDraw=false;
+  }
+  if(event->key()==Qt::Key_Control){
+    qDebug("ctrl released");
+    setCursor(Qt::CrossCursor);
+    mSelect=false;
   }
 }
 
@@ -139,4 +157,14 @@ void RGEditPath::addPoint(QPoint point)
   QObject::connect(testpoint,SIGNAL(editMovedPoint(bool)),this,SLOT(editPathPointMoved(bool)));
   QObject::connect(testpoint,SIGNAL(editAddPoint(RGEditPathPoint *)),this,SLOT(editPathPointAdd(RGEditPathPoint *)));
   QObject::connect(testpoint,SIGNAL(editDelPoint(RGEditPathPoint *)),this,SLOT(editPathPointDel(RGEditPathPoint *)));
+}
+
+void RGEditPath::deleteSelectedPoints()
+{
+  foreach (QGraphicsItem *item, scene()->selectedItems()) {
+    RGEditPathPoint *point = qgraphicsitem_cast<RGEditPathPoint *>(item);
+    if (!point)
+      continue;
+    editPathPointDel(point);
+  }
 }

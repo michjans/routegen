@@ -21,7 +21,6 @@ signals:
 public slots:
 
 protected:
-    void mousePressEvent ( QGraphicsSceneMouseEvent * event ) ;
     void mouseMoveEvent ( QGraphicsSceneMouseEvent * event );
     /*void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
     //void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );*/

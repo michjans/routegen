@@ -36,11 +36,13 @@ public slots:
 private :
     void updatePointList(bool canUndo=true);
     void addPoint(QPoint);
+    void deleteSelectedPoints();
 private:
     QRectF mBoundingRect;
     QList<RGEditPathPoint*> mEditPathPointList;
     bool mMousePressed;
     bool mFreeDraw;
+    bool mSelect;
 
 };
 
