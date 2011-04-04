@@ -109,6 +109,8 @@
    <addaction name="separator"/>
    <addaction name="actionDraw_mode"/>
    <addaction name="actionNew_route"/>
+   <addaction name="action_Undo"/>
+   <addaction name="action_Redo"/>
    <addaction name="separator"/>
    <addaction name="actionPlayback"/>
    <addaction name="actionStop"/>
