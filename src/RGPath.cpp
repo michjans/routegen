@@ -290,7 +290,7 @@ void RGPath::createSmoothPath()
       }
     }
   }
-  if(dAB>=mDSmooth)
+  if(dAB>=2*mDSmooth)
     newPath.lineTo(B);
   else
     newPath.connectPath(pathLineCubic(p1,(c1-p1)/4+p1,(A-B)/4+B,B));
