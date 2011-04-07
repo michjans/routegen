@@ -82,7 +82,7 @@ void RGEncBmp2avi::generateMovie(const QString &dirName, const QString &filePref
 {
   Q_UNUSED(filePrefix);
   QStringList arguments;
-  arguments << "-f" << QString("%1").arg(mFps) << "-k" << QString("%1").arg(mKeyFrameRate) << "-o" << QString(mOutName).append(".avi") << "-c" << mCompress;
+  arguments << "-f" << QString("%1").arg(mFps) << "-k" << QString("%1").arg(mKeyFrameRate) << "-o" << QString(mOutName) << "-c" << mCompress;
 
   this->createEncodingProcess(dirName,mExecName,arguments);
 }
