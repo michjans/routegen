@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2008-2011  Michiel Jansen
+    Copyright (C) 2009-2011  Michiel Jansen
     Copyright (C) 2010-2011  Fabien Valthier
 
   This file is part of Route Generator.
@@ -26,10 +26,10 @@
 
 RGVehicleDialog::RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList,const QPen &pen)
   : QDialog(parent),
-  mVehicleList(vehicleList),
-  mVehicleOrigin(NULL),
-  mPlayTimer(NULL),
-  mTimerCounter(0)
+    mVehicleList(vehicleList),
+    mVehicleOrigin(NULL),
+    mPlayTimer(NULL),
+    mTimerCounter(0)
 {
   ui.setupUi(this);
   for(int i=0;i<vehicleList->count();i++){

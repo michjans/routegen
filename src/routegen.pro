@@ -15,7 +15,6 @@ QT += webkit
 # Input
 HEADERS += RGMainWindow.h RGVehicleDialog.h RGSettings.h RGSettingsDialog.h RGGoogleMap.h \
     RGVehicle.h \
-    RGSmoothRoute.h \
     RGVehicleList.h \
     RGEncVideo.h \
     RGEncFFmpeg.h \
@@ -35,7 +34,6 @@ FORMS += routegen.ui settings.ui googlemap.ui \
     routeui.ui
 SOURCES += main.cpp RGMainWindow.cpp RGVehicleDialog.cpp RGSettings.cpp RGSettingsDialog.cpp RGGoogleMap.cpp \
     RGVehicle.cpp \
-    RGSmoothRoute.cpp \
     RGVehicleList.cpp \
     RGEncVideo.cpp \
     RGEncFFmpeg.cpp \

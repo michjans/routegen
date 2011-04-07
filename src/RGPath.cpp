@@ -1,31 +1,51 @@
+/*
+    Copyright (C) 2009-2011  Michiel Jansen
+    Copyright (C) 2010-2011  Fabien Valthier
+
+  This file is part of Route Generator.
+
+    Route Generator is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "RGPath.h"
 #include <math.h>
 
 const float Pi = 3.14159265f;
 
 RGPath::RGPath(QGraphicsItem *parent) :
-    QGraphicsObject(parent),
-    mRawPath(QList<QPoint>()),
-    mTime(0),
-    mPath(QPainterPath()),
-    mPaintPath(QPainterPath()),
-    mTotalTime(0),
-    mPlayMode(0),
-    mFPS(25),
-    mDSmooth(10),
-    mSmoothPath(false),
-    mPen(QPen()),
-    mCurrentFrame(0),
-    mEndPos(QPoint())
+  QGraphicsObject(parent),
+  mRawPath(QList<QPoint>()),
+  mTime(0),
+  mPath(QPainterPath()),
+  mPaintPath(QPainterPath()),
+  mTotalTime(0),
+  mPlayMode(0),
+  mFPS(25),
+  mDSmooth(10),
+  mSmoothPath(false),
+  mPen(QPen()),
+  mCurrentFrame(0),
+  mEndPos(QPoint())
 {
 
 }
 
 QRectF RGPath::boundingRect() const
 {
-    qreal penW=mPen.width()/2;
-    return mPath.boundingRect().adjusted(-penW,-penW,penW,penW);
- }
+  qreal penW=mPen.width()/2;
+  return mPath.boundingRect().adjusted(-penW,-penW,penW,penW);
+}
 
 void RGPath::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {

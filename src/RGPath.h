@@ -1,3 +1,23 @@
+/*
+    Copyright (C) 2009-2011  Michiel Jansen
+    Copyright (C) 2010-2011  Fabien Valthier
+
+  This file is part of Route Generator.
+
+    Route Generator is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #ifndef RGPATH_H
 #define RGPATH_H
 
@@ -7,35 +27,35 @@
 
 class RGPath : public QGraphicsObject
 {
-    Q_OBJECT
+  Q_OBJECT
 public:
-    RGPath(QGraphicsItem *parent = 0);
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget);
-    int countFrames();
-    void setCurrentFrame(int);
-    int getCurrentFrame();
-    int getCurrentTime();
-    QPointF getEndPos();
-    float getAngle();
+  RGPath(QGraphicsItem *parent = 0);
+  QRectF boundingRect() const;
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget);
+  int countFrames();
+  void setCurrentFrame(int);
+  int getCurrentFrame();
+  int getCurrentTime();
+  QPointF getEndPos();
+  float getAngle();
 
 signals:
 
 public slots:
-    void newPointList(QList<QPoint>);
-    void setDrawTime(int);
-    void setSmoothPath(bool);
-    void setSmoothCoef(int);
-    void setTotalTime(int time);
-    void setPlayMode(int playMode);
-    void setFPS(int FPS);
-    void setPen(const QPen & pen);
+  void newPointList(QList<QPoint>);
+  void setDrawTime(int);
+  void setSmoothPath(bool);
+  void setSmoothCoef(int);
+  void setTotalTime(int time);
+  void setPlayMode(int playMode);
+  void setFPS(int FPS);
+  void setPen(const QPen & pen);
 
 
 private:
-    QPainterPath getPathAtStep(int step);
-    QPainterPath getPathAtTime(int time);
-    void createPath();
+  QPainterPath getPathAtStep(int step);
+  QPainterPath getPathAtTime(int time);
+  void createPath();
   void createSmoothPath();
   QPainterPath pathLineQuad(QPoint start,QPoint coef, QPoint end);
   QPainterPath pathLineCubic(QPoint start,QPoint coef1,QPoint coef2, QPoint end);

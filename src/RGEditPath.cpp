@@ -1,11 +1,31 @@
+/*
+    Copyright (C) 2009-2011  Michiel Jansen
+    Copyright (C) 2010-2011  Fabien Valthier
+
+  This file is part of Route Generator.
+
+    Route Generator is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "RGEditPath.h"
 
 RGEditPath::RGEditPath(QGraphicsItem *parent) :
-    QGraphicsObject(parent),
-    mBoundingRect(QRectF()),
-    mMousePressed(false),
-    mFreeDraw(false),
-    mSelect(false)
+  QGraphicsObject(parent),
+  mBoundingRect(QRectF()),
+  mMousePressed(false),
+  mFreeDraw(false),
+  mSelect(false)
 {
   setPos(0,0);
   setCursor(Qt::CrossCursor);
@@ -16,7 +36,7 @@ RGEditPath::RGEditPath(QGraphicsItem *parent) :
 QRectF RGEditPath::boundingRect() const
 {
   return mBoundingRect;
- }
+}
 
 void RGEditPath::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
@@ -61,9 +81,9 @@ void RGEditPath::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event )
 
 void RGEditPath::hoverEnterEvent ( QGraphicsSceneHoverEvent * event )
 {
- qDebug()<<"hoverEnter";
- //gives viewWidget the focus to be able to intercept key
- this->scene()->views().at(0)->setFocus(Qt::OtherFocusReason);
+  qDebug()<<"hoverEnter";
+  //gives viewWidget the focus to be able to intercept key
+  this->scene()->views().at(0)->setFocus(Qt::OtherFocusReason);
 }
 
 void RGEditPath::keyPressEvent ( QKeyEvent * event )

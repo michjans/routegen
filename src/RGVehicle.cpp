@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2008-2011  Michiel Jansen
+    Copyright (C) 2009-2011  Michiel Jansen
     Copyright (C) 2010-2011  Fabien Valthier
 
   This file is part of Route Generator.
@@ -26,15 +26,15 @@
 
 RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle, QPointF originPoint,int frameDelay)
   :QGraphicsItem(),
-  mFileName(fileName),
-  mMirror(false),
-  mStartAngle(startAngle),
-  mSize(size),
-  mRawSize(0),
-  mFrameDelay(frameDelay),
-  mCurrentPm(0),
-  mOriginPoint(originPoint),
-  mRotMirror(false)
+    mFileName(fileName),
+    mMirror(false),
+    mStartAngle(startAngle),
+    mSize(size),
+    mRawSize(0),
+    mFrameDelay(frameDelay),
+    mCurrentPm(0),
+    mOriginPoint(originPoint),
+    mRotMirror(false)
 {
   qDebug() << "RGVehicle::RGVehicle( " << fileName << ")";
   QImageReader qir(fileName);
@@ -85,8 +85,8 @@ RGVehicle::~RGVehicle()
 
 QRectF RGVehicle::boundingRect() const
 {
-     return QRectF(0-mOriginPoint.x(),0-mOriginPoint.y(),mRawSize,mRawSize);
- }
+  return QRectF(0-mOriginPoint.x(),0-mOriginPoint.y(),mRawSize,mRawSize);
+}
 
 void RGVehicle::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {

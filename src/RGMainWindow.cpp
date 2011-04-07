@@ -1,5 +1,6 @@
 /*
-    Copyright (C) 2008-2011  Michiel Jansen
+    Copyright (C) 2009-2011  Michiel Jansen
+    Copyright (C) 2010-2011  Fabien Valthier
 
   This file is part of Route Generator.
 
@@ -43,12 +44,12 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 {
   //Set currentPath
   QDir::setCurrent(QCoreApplication::applicationDirPath());
-  #ifdef Q_WS_X11
+#ifdef Q_WS_X11
   QDir vehicleDir = QDir::currentPath() + "/vehicles";
   if(!vehicleDir.exists()){
     QDir::setCurrent(QDir::cleanPath(QCoreApplication::applicationDirPath()+"/../share/routegen"));
   }
-  #endif
+#endif
 
   setWindowIcon (QIcon(":/icons/icons/mapgen.png"));
   Ui::MainWindow ui;
@@ -80,11 +81,11 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   action_Redo->setEnabled(false);
 
   //Video Encoder:
-  #ifdef Q_WS_WIN
-    mVideoEncoder = new RGEncBmp2avi();
-  #else
-    mVideoEncoder = new RGEncFFmpeg();
-  #endif
+#ifdef Q_WS_WIN
+  mVideoEncoder = new RGEncBmp2avi();
+#else
+  mVideoEncoder = new RGEncFFmpeg();
+#endif
   if(mVideoEncoder->exists())
     qDebug()<<"encoder found !";
 
@@ -247,8 +248,8 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
   // so we're safe)
   int sizeEstimate = int (mRoute->countFrames() * mRoute->scene()->sceneRect().width()* mRoute->scene()->sceneRect().height() *24/8/1024.0/1000.0* 2);
   QString dirInfoText = QString("Select an empty directory on a drive with at least ") + 
-                        QString::number(sizeEstimate) +
-                        QString(" MB of free diskspace, where the map should be generated.");
+      QString::number(sizeEstimate) +
+      QString(" MB of free diskspace, where the map should be generated.");
   QString dir = QFileDialog::getExistingDirectory(this,
                                                   dirInfoText,
                                                   lastGenDir,
@@ -294,22 +295,22 @@ void RGMainWindow::on_action_About_triggered(bool checked)
 {
   Q_UNUSED(checked);
   QString txt = QString(
-      "<html>"
-      "<center>"
-      "<p><b>") + applicationName + QString(" Copyright (C) 2008-2011  Michiel Jansen </b></p>"
-                                            "<p>This program comes with ABSOLUTELY NO WARRANTY</p>"
-                                            "This is free software, and you are welcome to redistribute it "
-                                            "under certain conditions; see LICENSE file for details.</p>"
-                                            "<p>This program was developed using the GPL version of Qt 4.7.0<br>"
-                                            "(Copyright (C) 2008-2011 Nokia Corporation.),<br>"
-                                            "Qt can be <a href=\"http://qt.nokia.com/downloads\"> downloaded </a>"
-                                            "from the <a href=\"http://qt.nokia.com\">Nokia Qt</a> website. </p>"
-                                            "<p>The conversion from BMP to AVI is provided by:<br>"
-                                            "<i>bmp2avi Copyright (C)) Paul Roberts 1996 - 1998</i></p>"
-                                            "<p>For more information or questions about Route Generator you can "
-                                            "<a href=\"mailto:info@routegenerator.net\">contact</a> me by e-mail.</p>"
-                                            "</center>"
-                                            "</html>");
+        "<html>"
+        "<center>"
+        "<p><b>") + applicationName + QString(" Copyright (C) 2008-2011  Michiel Jansen </b></p>"
+                                              "<p>This program comes with ABSOLUTELY NO WARRANTY</p>"
+                                              "This is free software, and you are welcome to redistribute it "
+                                              "under certain conditions; see LICENSE file for details.</p>"
+                                              "<p>This program was developed using the GPL version of Qt 4.7.0<br>"
+                                              "(Copyright (C) 2008-2011 Nokia Corporation.),<br>"
+                                              "Qt can be <a href=\"http://qt.nokia.com/downloads\"> downloaded </a>"
+                                              "from the <a href=\"http://qt.nokia.com\">Nokia Qt</a> website. </p>"
+                                              "<p>The conversion from BMP to AVI is provided by:<br>"
+                                              "<i>bmp2avi Copyright (C)) Paul Roberts 1996 - 1998</i></p>"
+                                              "<p>For more information or questions about Route Generator you can "
+                                              "<a href=\"mailto:info@routegenerator.net\">contact</a> me by e-mail.</p>"
+                                              "</center>"
+                                              "</html>");
   QMessageBox::about (this, "About Route Generator", txt );
 }
 

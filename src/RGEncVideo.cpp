@@ -23,13 +23,13 @@
 #include <RGSettings.h>
 
 RGEncVideo::RGEncVideo(QWidget *parent) :
-    QWidget(parent),
-    mExists(false),
-    mFps(0),
-    mOutName(QString()),
-    mKeyFrameRate(0),
-    mCompress(QString()),
-    mCompressDefault(QString())
+  QWidget(parent),
+  mExists(false),
+  mFps(0),
+  mOutName(QString()),
+  mKeyFrameRate(0),
+  mCompress(QString()),
+  mCompressDefault(QString())
 {
   mUi.setupUi(this);
   // hide all specific part of the Ui
@@ -87,14 +87,14 @@ void RGEncVideo::createEncodingProcess(const QString &dirName,const QString &vid
 {
   if (!mExists){
     QString txt = QString(
-        "<html>"
-        "<p>"
-        "Your route has been generated in the selected directory. "
-        "Each frame is generated as a *.bmp file in that directory. "
-        "</p>"
-        "<p><b>NOTE: Since no video encoder is available, no avi file is generated!</b></p>"
-        "</html>"
-        );
+          "<html>"
+          "<p>"
+          "Your route has been generated in the selected directory. "
+          "Each frame is generated as a *.bmp file in that directory. "
+          "</p>"
+          "<p><b>NOTE: Since no video encoder is available, no avi file is generated!</b></p>"
+          "</html>"
+          );
 
     QMessageBox::information (NULL, "Map Generation Finished", txt );
     emit movieGenerationFinished();
@@ -136,16 +136,16 @@ void RGEncVideo::encodingProcessFinished(int exitCode, QProcess::ExitStatus exit
   if (exitStatus == QProcess::NormalExit && exitCode == 0 && !output.contains("Error")) {
 
     QString txt = QString(
-        "<html>"
-        "<center>"
-        "<p>"
-        "Your route has been generated in the selected directory. "
-        "Each frame is generated as a *.bmp file in that directory. "
-        "The name of the generated movie is <b>") + mOutName + QString(".avi</b>."
-                                                                      "</p>"
-                                                                      "</center>"
-                                                                      "</html>"
-                                                                      );
+          "<html>"
+          "<center>"
+          "<p>"
+          "Your route has been generated in the selected directory. "
+          "Each frame is generated as a *.bmp file in that directory. "
+          "The name of the generated movie is <b>") + mOutName + QString(".avi</b>."
+                                                                         "</p>"
+                                                                         "</center>"
+                                                                         "</html>"
+                                                                         );
     QMessageBox::information (NULL, "Map Generation Finished", txt );
 
   } else {

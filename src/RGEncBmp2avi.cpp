@@ -23,8 +23,8 @@
 #include <RGSettings.h>
 
 RGEncBmp2avi::RGEncBmp2avi(QWidget *parent) :
-    RGEncVideo(parent),
-    mExecName(QString())
+  RGEncVideo(parent),
+  mExecName(QString())
 {
   mCompressDefault=QString("DIB");
   updateFromSettings();
@@ -107,8 +107,8 @@ void RGEncBmp2avi::browseClicked()
   }
   else
     mExists=false;
-    mExecName=QString();
-    mUi.bmp2AviLocLE->setText(mExecName);
+  mExecName=QString();
+  mUi.bmp2AviLocLE->setText(mExecName);
 }
 
 void RGEncBmp2avi::setCodecs()

@@ -33,11 +33,11 @@ RGVehicleList::RGVehicleList()
   QFileInfoList vehicles = vehicleDir.entryInfoList();
 
   //check folder ~/.routegen/vehicles in linux
-  #ifdef Q_WS_X11
-    vehicleDir.mkpath(QDir::homePath() + "/.routegen/vehicles");
-    vehicleDir.setPath( QDir::homePath() + "/.routegen/vehicles");
-    vehicles.append(vehicleDir.entryInfoList());
-  #endif
+#ifdef Q_WS_X11
+  vehicleDir.mkpath(QDir::homePath() + "/.routegen/vehicles");
+  vehicleDir.setPath( QDir::homePath() + "/.routegen/vehicles");
+  vehicles.append(vehicleDir.entryInfoList());
+#endif
 
   RGVehicle *vehicle;
   vehicle= new RGVehicle();

@@ -1,5 +1,6 @@
 /*
-    Copyright (C) 2008-2011  Michiel Jansen
+    Copyright (C) 2009-2011  Michiel Jansen
+    Copyright (C) 2010-2011  Fabien Valthier
 
   This file is part of Route Generator.
 
@@ -65,8 +66,8 @@ private slots:
 private:
 
   RGViewWidget *mView;
-  RGEncVideo        *mVideoEncoder;
-  RGRoute          *mRoute;
+  RGEncVideo *mVideoEncoder;
+  RGRoute *mRoute;
   RGUndoRedo  *mUndoRedo;
 
   QAction *actionOpen_image;
