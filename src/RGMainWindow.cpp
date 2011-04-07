@@ -135,7 +135,6 @@ void RGMainWindow::on_actionOpen_image_triggered(bool checked)
     if (pm.isNull()) QMessageBox::critical (this, "Oops", "Could not load image");
     else{
       //TODO:Duplicated in on_actionImport_Google_Map_triggered
-      //mRGMapWidget->loadImage(pm);
       mView->loadImage(pm);
       actionSave_image->setEnabled(true);
       actionDraw_mode->setEnabled(true);
@@ -196,7 +195,6 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 	  map.save(fileName);
 
     //TODO:Duplicated in on_actionOpen_image_triggered
-    //mRGMapWidget->loadImage(map);
     mView->loadImage(map);
     actionSave_image->setEnabled(true);
     actionDraw_mode->setEnabled(true);
@@ -229,6 +227,7 @@ void RGMainWindow::on_actionPlayback_triggered(bool checked)
   mView->play();
   actionStop->setEnabled(true);
   action_Undo->setEnabled(false);
+  action_Redo->setEnabled(false);
 }
 
 void RGMainWindow::on_actionStop_triggered(bool checked)
@@ -342,7 +341,6 @@ void RGMainWindow::enableGenerateActions(bool val)
   actionPlayback->setEnabled(val);
   actionStop->setEnabled(false);
   mUndoRedo->sendActionSignals();
-  //TODO: Redo not implemented yet, so keep disabled for now
 }
 
 void RGMainWindow::movieGenerationFinished()
