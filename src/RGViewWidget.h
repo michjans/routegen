@@ -34,6 +34,7 @@ public:
   explicit RGViewWidget(QWidget *parent = 0);
   QSize   sizeHint () const;
   void addRoute(RGRoute*);
+  bool saveRenderedImage(const QString &filename);
   bool generateMovie(const QString &dirName, const QString &filePrefix, QStringList &generatedBMPs);
 
 signals:

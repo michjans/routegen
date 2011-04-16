@@ -155,9 +155,7 @@ void RGMainWindow::on_actionSave_image_triggered(bool checked)
                                                   tr("Images (*.bmp *.jpg)"));
 
   if (!fileName.isNull()){
-    QPixmap pm = QPixmap();//mRGMapWidget->getImage();
-    bool result = pm.save (fileName);
-    if (!result) QMessageBox::critical (this, "Oops", "Problems saving file");
+    mView->saveRenderedImage(fileName);
     RGSettings::setLastSaveDir(fileName);
   }
 }

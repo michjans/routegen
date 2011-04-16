@@ -78,6 +78,21 @@ void RGViewWidget::stop()
   emit playbackStopped(true);
 }
 
+
+bool RGViewWidget::saveRenderedImage(const QString &filename)
+{
+  QPixmap pixmap(mScene->width(), mScene->height());
+  QPainter painter(&pixmap);
+  painter.setRenderHint(QPainter::Antialiasing);
+  mScene->render(&painter);
+  bool result = pixmap.save(filename);
+  painter.end();
+  if (!result){
+    QMessageBox::critical (this, "Oops", "Problems saving file " + filename);
+  }
+  return result;
+}
+
 bool RGViewWidget::generateMovie(const QString &dirName, const QString &filePrefix, QStringList &generatedBMPs)
 {
   generatedBMPs.clear();
@@ -93,16 +108,10 @@ bool RGViewWidget::generateMovie(const QString &dirName, const QString &filePref
   for (mTimerCounter=0; mTimerCounter < mRoute->countFrames() && generationOK; mTimerCounter++){
     progress.setValue(mTimerCounter);
     mRoute->setCurrentFrame(mTimerCounter);
-    QPixmap pixmap(mScene->width(), mScene->height());
-    QPainter painter(&pixmap);
-    painter.setRenderHint(QPainter::Antialiasing);
-    mScene->render(&painter);
     QString postFix = QString("%1.bmp").arg(mTimerCounter, FILE_NUMBER_FIELD_WIDTH, 10, QChar('0'));
     fileName = dirName + "/" + filePrefix + postFix;
-    result = pixmap.save (fileName);
-    painter.end();
+    result = saveRenderedImage(fileName);
     if (!result){
-      QMessageBox::critical (this, "Oops", "Problems saving file " + fileName);
       break;
     }
     else{
