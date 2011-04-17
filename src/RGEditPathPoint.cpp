@@ -40,7 +40,7 @@ QRectF RGEditPathPoint::boundingRect() const
 
 void RGEditPathPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-  painter->setBrush(Qt::black);
+  painter->setBrush(Qt::white);
   if(isSelected())
     painter->setBrush(Qt::red);
   painter->drawRect(this->boundingRect());
