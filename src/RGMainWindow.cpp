@@ -202,6 +202,7 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 
 void RGMainWindow::on_actionDraw_mode_triggered(bool checked)
 {
+  mView->stop();
   mRoute->setEditMode(checked);
   if(checked)
     this->statusBar()->showMessage("hold SHIFT to record free drawing, CTRL to select several points. Del key to delete selected points");
