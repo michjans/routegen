@@ -56,9 +56,13 @@
  *          Vehicle orientation and settings improved
  *          Generate iconless begin/end frames checkbox moved to preferences dialog
  *          Google maps importer fix (map scrollable and zoomable)
+ *  v1.6    Route editable (selected points can be moved or deleted)
+ *          Redo buffer
+ *          Codec selection for video encoding under linux 
+ *          Installation command for linux
  */
 
-extern const QString applicationName("Route Generator version 1.5");
+extern const QString applicationName("Route Generator version 1.6");
 
 int main(int argc, char *argv[])
 {

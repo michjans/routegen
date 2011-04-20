@@ -1,4 +1,4 @@
-This is Route Generator version 1.5
+This is Route Generator version 1.6
 
 Route Generator can be used to generate route maps to be used in video editing
 software.
@@ -61,9 +61,13 @@ VERSION HISTORY
       -Vehicle orientation and settings improved
       -Generate iconless begin/end frames checkbox moved to preferences dialog
       -Google maps importer fix (map scrollable and zoomable)
+1.6   -Route editable (selected points can be moved or deleted)
+      -Redo buffer
+      -Codec selection for video encoding under linux 
+      -Installation command for linux
 
 INSTALLATION
-You don't need to install it, you can just unzip everything in a directory of
+On Windows, you don't need to install it, you can just unzip everything in a directory of
 your choice. After that you can execute routegen.exe or create a shortcut to it
 from your desktop.
 
@@ -118,24 +122,27 @@ last stage of the generation process:converting a list of bmp files to an avi
 file.
 
 BUILDING ROUTE GENERATOR FROM THE SOURCE CODE
-Route Generator should be build, using Qt 4.7 or higher. So Qt 4.7 should be
-downloaded and installed. It might also work with older (or newer) versions of
-Qt 4, but I've not tested this. All I know is that you have to use at least
-Qt 4.4, because since Route Generator 1.4, a Google Maps browser is integrated
-that requires Qt WebKit, which was added since Qt 4.4
+Since version 1.6 Route Generator should be built using Qt 4.6 or higher. 
+So Qt 4.6 or higher should be downloaded and installed. 
 After your Qt build environment is setup correctly, all you need to do is:
 -unzip the source code in a new directory
 -open a command shell with the Qt build environment correctly set-up
 -cd to the the directory where you unzipped the source code
  (e.g. cd routegen/src)
 -execute the following commands:
-   qmake routegen.pro
-   (or: qmake -tp vc routegen.pro to generate a MSVC2008 *.vcproj)
-   nmake (on Windows, when using MS Visual C++)
-   OR
-   make/gmake (on Linux)
-   OR
-   whatever build command on other OS's
+   *qmake routegen.pro
+    (or: qmake -tp vc routegen.pro to generate a MSVC2008 *.vcproj)
+   
+   *nmake (on Windows, when using MS Visual C++)
+    OR
+    make/gmake (on Linux)
+    OR
+    whatever build command on other OS's
+
+INSTALLATION UNDER LINUX
+Since version 1.6 Route GENERATOR can be installed after building process, 
+using this command as root:
+   *make install
 
 CONTACT
 If you have any more questions about or problems with using and or building
