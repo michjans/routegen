@@ -180,12 +180,14 @@ void RGRoute::setIconlessBeginEndFrames(bool val)
 
 void RGRoute::updateVehicle()
 {
+  //if in edit mode
   if(mEditMode){
     mVehicleList->getCurrentVehicle()->setVisible(false);
     return;
   }
   int frame=mPath->getCurrentFrame();
-  if(frame<2){
+  //if just one point
+  if(countFrames()<2){
     mVehicleList->getCurrentVehicle()->setVisible(false);
     return;
   }
