@@ -65,7 +65,7 @@ void RGViewWidget::play()
 {
   mTimerCounter = 0;
   mRoute->setCurrentFrame(0);
-  mRoute->on_playbackChanged(true);
+  mRoute->startPlayback(true);
   mPlayTimer->start((1.0 / (double) RGSettings::getFps()) * 1000);
 }
 
@@ -74,7 +74,7 @@ void RGViewWidget::stop()
   if (mPlayTimer == NULL || !mPlayTimer->isActive()) return;
   //Finished
   mPlayTimer->stop();
-  mRoute->on_playbackChanged(false);
+  mRoute->startPlayback(false);
   emit playbackStopped(true);
 }
 

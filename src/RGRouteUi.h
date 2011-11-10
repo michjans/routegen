@@ -39,7 +39,7 @@ public:
   void init();
 
 public slots:
-  void on_playbackChanged(bool);
+  void handlePlaybackStarted(bool);
 
 private slots:
   void on_vehicleSettingsPB_clicked(bool);

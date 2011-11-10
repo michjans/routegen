@@ -22,7 +22,7 @@
      <number>0</number>
     </property>
     <item>
-     <layout class="QHBoxLayout" name="routeProperties">
+     <layout class="QHBoxLayout" name="mainLayout">
       <item>
        <spacer>
         <property name="orientation">

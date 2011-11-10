@@ -99,7 +99,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 
   //Route :
   mRoute= new RGRoute();
-  ui.routeProperties->insertWidget(0,mRoute->widgetSettings());
+  ui.mainLayout->insertWidget(0,mRoute->widgetSettings());
   mRoute->setZValue(1);
   mRoute->setSmoothCoef(RGSettings::getSmoothLength());
   mRoute->setIconlessBeginEndFrames(RGSettings::getIconLessBeginEndFrames());

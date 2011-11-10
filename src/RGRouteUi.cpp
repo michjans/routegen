@@ -185,7 +185,7 @@ void RGRouteUi::on_routeColorPB_clicked(bool)
   setPen();
 }
 
-void RGRouteUi::on_playbackChanged(bool playback)
+void RGRouteUi::handlePlaybackStarted(bool playback)
 {
   ui->vehicleSettingsPB->setDisabled(playback);
   ui->routeTimeSB->setDisabled(playback);

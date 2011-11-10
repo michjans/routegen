@@ -49,16 +49,14 @@ signals:
   void newUndoable(RGGraphicsObjectUndo *,QVariant);
 
 public slots:
-  void on_playbackChanged(bool);
+  void startPlayback(bool);
   void clearPath();
-
-private slots:
-  void on_penChanged(const QPen & pen);
-  void on_totalTimeChecked(bool);
-  void on_smoothPathChecked(bool);
-  void on_routeTimeChanged(int);
-  void on_vehicleChanged();
-  void on_pathChanged(QList<QPoint>,bool);
+  void changePen(const QPen & pen);
+  void activateTotalTime(bool);
+  void activateSmoothPath(bool);
+  void setRouteTime(int);
+  void handleVehicleChange();
+  void changePath(QList<QPoint>,bool);
 
 private:
   void updateVehicle();

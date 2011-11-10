@@ -30,16 +30,16 @@ RGRoute::RGRoute(QGraphicsItem *parent) :
   mPath=new RGPath(this);
   mEditPath=new RGEditPath(this);
   mEditPath->setVisible(false);
-  QObject::connect(mEditPath,SIGNAL(newPointList(QList<QPoint>,bool)),this,SLOT(on_pathChanged(QList<QPoint>,bool)));
+  QObject::connect(mEditPath,SIGNAL(newPointList(QList<QPoint>,bool)),this,SLOT(changePath(QList<QPoint>,bool)));
   QObject::connect(this,SIGNAL(sceneRectChanged()),mEditPath,SLOT(on_sceneRectChanged()));
   QObject::connect(this,SIGNAL(sceneRectChanged()),this,SLOT(clearPath()));
 
   mRouteUi = new RGRouteUi();
-  QObject::connect(mRouteUi,SIGNAL(penChanged(const QPen &)),this,SLOT(on_penChanged(const QPen &)));
+  QObject::connect(mRouteUi,SIGNAL(penChanged(const QPen &)),this,SLOT(changePen(const QPen &)));
   QObject::connect(mRouteUi,SIGNAL(smoothPathChecked(bool)),this,SLOT(on_smoothPathChecked(bool)));
-  QObject::connect(mRouteUi,SIGNAL(totalTimeChecked(bool)),this,SLOT(on_totalTimeChecked(bool)));
-  QObject::connect(mRouteUi,SIGNAL(routeTimeChanged(int)),this,SLOT(on_routeTimeChanged(int)));
-  QObject::connect(mRouteUi,SIGNAL(vehicleChanged()),this,SLOT(on_vehicleChanged()));
+  QObject::connect(mRouteUi,SIGNAL(totalTimeChecked(bool)),this,SLOT(activateTotalTime(bool)));
+  QObject::connect(mRouteUi,SIGNAL(routeTimeChanged(int)),this,SLOT(setRouteTime(int)));
+  QObject::connect(mRouteUi,SIGNAL(vehicleChanged()),this,SLOT(handleVehicleChange()));
 
   //create and set up vehicleList
   mVehicleList = new RGVehicleList();
@@ -70,18 +70,18 @@ void RGRoute::setSmoothCoef(int dsmooth)
   setCurrentFrame(mPath->countFrames()-1);
 }
 
-void RGRoute::on_playbackChanged(bool play)
+void RGRoute::startPlayback(bool play)
 {
   mPlayback=play;
-  mRouteUi->on_playbackChanged(mPlayback);
+  mRouteUi->handlePlaybackStarted(mPlayback);
 }
 
-void RGRoute::on_penChanged(const QPen & pen)
+void RGRoute::changePen(const QPen & pen)
 {
   mPath->setPen(pen);
 }
 
-void RGRoute::on_totalTimeChecked(bool checked)
+void RGRoute::activateTotalTime(bool checked)
 {
   if (checked)
     mPath->setPlayMode(1);
@@ -89,7 +89,7 @@ void RGRoute::on_totalTimeChecked(bool checked)
     mPath->setPlayMode(0);
 }
 
-void RGRoute::on_smoothPathChecked(bool checked)
+void RGRoute::activateSmoothPath(bool checked)
 {
   mPath->setSmoothPath(checked);
   //if playback is on, update to the current frame else to the last :
@@ -99,18 +99,18 @@ void RGRoute::on_smoothPathChecked(bool checked)
     setCurrentFrame(mPath->countFrames()-1);
 }
 
-void RGRoute::on_routeTimeChanged(int time)
+void RGRoute::setRouteTime(int time)
 {
   mPath->setTotalTime(time);
 }
 
-void RGRoute::on_vehicleChanged()
+void RGRoute::handleVehicleChange()
 {
   mVehicleList->getCurrentVehicle()->setParentItem(this);
   updateVehicle();
 }
 
-void RGRoute::on_pathChanged(QList<QPoint> pointlist,bool canUndo)
+void RGRoute::changePath(QList<QPoint> pointlist,bool canUndo)
 {
   mPath->newPointList(pointlist);
   updateVehicle();
