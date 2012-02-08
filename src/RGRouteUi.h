@@ -22,12 +22,15 @@
 #define RGROUTEUI_H
 
 #include <QWidget>
-#include "RGVehicleList.h"
 
 namespace Ui {
 class routeUi;
 }
+class RGVehicleList;
 
+/**
+ * RGRouteUi is the toolbar to control the route (route width, duration, playback, etc.)
+ */
 class RGRouteUi : public QWidget
 {
   Q_OBJECT
@@ -39,7 +42,7 @@ public:
   void init();
 
 public slots:
-  void handlePlaybackStarted(bool);
+  void blockEssentialControls(bool);
 
 private slots:
   void on_vehicleSettingsPB_clicked(bool);

@@ -23,6 +23,8 @@
 
 #include "RGVehicleDialog.h"
 #include "RGSettings.h"
+#include "RGVehicleList.h"
+
 #include <QDebug>
 #include <QPainter>
 #include <QColorDialog>
@@ -185,11 +187,11 @@ void RGRouteUi::on_routeColorPB_clicked(bool)
   setPen();
 }
 
-void RGRouteUi::handlePlaybackStarted(bool playback)
+void RGRouteUi::blockEssentialControls(bool block)
 {
-  ui->vehicleSettingsPB->setDisabled(playback);
-  ui->routeTimeSB->setDisabled(playback);
-  ui->totalTimeCB->setDisabled(playback);
+  ui->vehicleSettingsPB->setDisabled(block);
+  ui->routeTimeSB->setDisabled(block);
+  ui->totalTimeCB->setDisabled(block);
 }
 
 QIcon RGRouteUi::createIconForStyle(Qt::PenStyle style)

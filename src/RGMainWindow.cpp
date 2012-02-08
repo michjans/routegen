@@ -31,6 +31,7 @@
 #include "RGEncFFmpeg.h"
 #include "RGEncBmp2avi.h"
 #include "RGRoute.h"
+#include "RGRouteUi.h"
 #include "RGViewWidget.h"
 #include "RGUndoRedo.h"
 
@@ -99,13 +100,26 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 
   //Route :
   mRoute= new RGRoute();
-  ui.mainLayout->insertWidget(0,mRoute->widgetSettings());
   mRoute->setZValue(1);
   mRoute->setSmoothCoef(RGSettings::getSmoothLength());
   mRoute->setIconlessBeginEndFrames(RGSettings::getIconLessBeginEndFrames());
   mView->addRoute(mRoute);
   QObject::connect(mRoute, SIGNAL(canGenerate(bool)),
                    this, SLOT(enableGenerateActions(bool)));
+
+  //Route UI (Toolbar with route controls):
+  mRouteUi = new RGRouteUi();
+  QObject::connect(mRouteUi,SIGNAL(penChanged(const QPen &)),mRoute,SLOT(changePen(const QPen &)));
+  QObject::connect(mRouteUi,SIGNAL(smoothPathChecked(bool)),mRoute,SLOT(activateSmoothPath(bool)));
+  QObject::connect(mRouteUi,SIGNAL(totalTimeChecked(bool)),mRoute,SLOT(activateTotalTime(bool)));
+  QObject::connect(mRouteUi,SIGNAL(routeTimeChanged(int)),mRoute,SLOT(setRouteTime(int)));
+  QObject::connect(mRouteUi,SIGNAL(vehicleChanged()),mRoute,SLOT(handleVehicleChange()));
+  mRouteUi->setVehicleList(mRoute->getVehicleList());
+
+  //set initial by sending signals
+  mRouteUi->init();
+
+  ui.mainLayout->insertWidget(0,mRouteUi);
 
   //Undo/Redo:
   mUndoRedo = new RGUndoRedo();
@@ -224,6 +238,7 @@ void RGMainWindow::on_actionPlayback_triggered(bool checked)
   mRoute->setEditMode(false);
   actionDraw_mode->setChecked(false);
   mView->play();
+  mRouteUi->blockEssentialControls(true);
   actionStop->setEnabled(true);
   action_Undo->setEnabled(false);
   action_Redo->setEnabled(false);
@@ -299,7 +314,7 @@ void RGMainWindow::on_action_About_triggered(bool checked)
                                               "<p>This program comes with ABSOLUTELY NO WARRANTY</p>"
                                               "This is free software, and you are welcome to redistribute it "
                                               "under certain conditions; see LICENSE file for details.</p>"
-                                              "<p>This program was developed using the GPL version of Qt 4.7.0<br>"
+                                              "<p>This program was developed using the GPL version of Qt 4.7<br>"
                                               "(Copyright (C) 2008-2011 Nokia Corporation.),<br>"
                                               "Qt can be <a href=\"http://qt.nokia.com/downloads\"> downloaded </a>"
                                               "from the <a href=\"http://qt.nokia.com\">Nokia Qt</a> website. </p>"
@@ -330,6 +345,7 @@ void RGMainWindow::blockUserInteraction(bool busy)
   actionGenerate_map->setEnabled(!busy);
   actionPlayback->setEnabled(!busy);
   actionImport_Google_Map->setEnabled(!busy);
+  mRouteUi->blockEssentialControls(busy);
   //Stop is only enabled while playing back
   actionStop->setEnabled(false);
 }
@@ -340,6 +356,13 @@ void RGMainWindow::enableGenerateActions(bool val)
   actionPlayback->setEnabled(val);
   actionStop->setEnabled(false);
   mUndoRedo->sendActionSignals();
+
+  //FIXME:
+  //Route UI contains no "generate actions", so this is a hack to re-enable the controls in the route ui (to modify time, etc.),
+  //when playback is finished (then val is true). In other cases (val == false) the controls should not be affected!
+  //Currently the playback signal (triggering this slot) is emited by the view widget, but should be emitted by RGRoute
+  if (val)
+	mRouteUi->blockEssentialControls(false);
 }
 
 void RGMainWindow::movieGenerationFinished()

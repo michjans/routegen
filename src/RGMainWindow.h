@@ -35,6 +35,7 @@ class QPushButton;
 class QLabel;
 class RGEncVideo;
 class RGRoute;
+class RGRouteUi;
 class RGViewWidget;
 class RGUndoRedo;
 
@@ -68,6 +69,8 @@ private:
   RGViewWidget *mView;
   RGEncVideo *mVideoEncoder;
   RGRoute *mRoute;
+  RGRouteUi *mRouteUi;
+
   RGUndoRedo  *mUndoRedo;
 
   QAction *actionOpen_image;

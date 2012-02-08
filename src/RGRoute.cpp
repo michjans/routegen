@@ -34,19 +34,8 @@ RGRoute::RGRoute(QGraphicsItem *parent) :
   QObject::connect(this,SIGNAL(sceneRectChanged()),mEditPath,SLOT(on_sceneRectChanged()));
   QObject::connect(this,SIGNAL(sceneRectChanged()),this,SLOT(clearPath()));
 
-  mRouteUi = new RGRouteUi();
-  QObject::connect(mRouteUi,SIGNAL(penChanged(const QPen &)),this,SLOT(changePen(const QPen &)));
-  QObject::connect(mRouteUi,SIGNAL(smoothPathChecked(bool)),this,SLOT(on_smoothPathChecked(bool)));
-  QObject::connect(mRouteUi,SIGNAL(totalTimeChecked(bool)),this,SLOT(activateTotalTime(bool)));
-  QObject::connect(mRouteUi,SIGNAL(routeTimeChanged(int)),this,SLOT(setRouteTime(int)));
-  QObject::connect(mRouteUi,SIGNAL(vehicleChanged()),this,SLOT(handleVehicleChange()));
-
   //create and set up vehicleList
   mVehicleList = new RGVehicleList();
-  mRouteUi->setVehicleList(mVehicleList);
-
-  //set initial by sending signals
-  mRouteUi->init();
 }
 
 QRectF RGRoute::boundingRect() const
@@ -59,11 +48,6 @@ void RGRoute::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget
   Q_UNUSED(painter);
 }
 
-QWidget *RGRoute::widgetSettings()
-{
-  return mRouteUi;
-}
-
 void RGRoute::setSmoothCoef(int dsmooth)
 {
   mPath->setSmoothCoef(dsmooth);
@@ -73,7 +57,6 @@ void RGRoute::setSmoothCoef(int dsmooth)
 void RGRoute::startPlayback(bool play)
 {
   mPlayback=play;
-  mRouteUi->handlePlaybackStarted(mPlayback);
 }
 
 void RGRoute::changePen(const QPen & pen)

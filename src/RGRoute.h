@@ -23,7 +23,6 @@
 
 #include "RGGraphicsObjectUndo.h"
 #include "RGVehicleList.h"
-#include "RGRouteUi.h"
 #include "RGPath.h"
 #include "RGEditPath.h"
 
@@ -33,8 +32,8 @@ class RGRoute : public RGGraphicsObjectUndo
 public:
   explicit RGRoute(QGraphicsItem *parent = 0);
   QRectF boundingRect() const;
+  RGVehicleList *getVehicleList() const {return mVehicleList;}
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget);
-  QWidget *widgetSettings();
   void setSmoothCoef(int);
   void setEditMode(bool);
   int countFrames();
@@ -62,7 +61,6 @@ private:
   void updateVehicle();
 
 protected:
-  RGRouteUi *mRouteUi;
   RGVehicleList *mVehicleList;
   RGPath  *mPath;
   RGEditPath * mEditPath;
