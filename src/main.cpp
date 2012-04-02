@@ -60,6 +60,7 @@
  *          Redo buffer
  *          Codec selection for video encoding under linux 
  *          Installation command for linux
+ *          Improvements of edit dialog for vehicle settings
  */
 
 extern const QString applicationName("Route Generator version 1.6");

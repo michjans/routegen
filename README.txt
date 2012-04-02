@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 LICENSE
-Route Generator is developed using the GPL version of Qt 4.7.0
+Route Generator is developed using the GPL version of Qt 4.7.3
 (Copyright (C)) 2008-2010 Nokia Corporation), which can be
 downloaded from: http://qt.nokia.com/downloads
 

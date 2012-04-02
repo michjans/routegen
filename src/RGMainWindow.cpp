@@ -310,7 +310,7 @@ void RGMainWindow::on_action_About_triggered(bool checked)
   QString txt = QString(
         "<html>"
         "<center>"
-        "<p><b>") + applicationName + QString(" Copyright (C) 2008-2011  Michiel Jansen </b></p>"
+        "<p><b>") + applicationName + QString(" Copyright (C) 2008-2012  Michiel Jansen </b></p>"
                                               "<p>This program comes with ABSOLUTELY NO WARRANTY</p>"
                                               "This is free software, and you are welcome to redistribute it "
                                               "under certain conditions; see LICENSE file for details.</p>"
@@ -362,7 +362,7 @@ void RGMainWindow::enableGenerateActions(bool val)
   //when playback is finished (then val is true). In other cases (val == false) the controls should not be affected!
   //Currently the playback signal (triggering this slot) is emited by the view widget, but should be emitted by RGRoute
   if (val)
-	mRouteUi->blockEssentialControls(false);
+	  mRouteUi->blockEssentialControls(false);
 }
 
 void RGMainWindow::movieGenerationFinished()
