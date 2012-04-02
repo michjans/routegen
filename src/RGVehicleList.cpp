@@ -20,6 +20,7 @@
 
 #include <QDir>
 #include <QDebug>
+#include <QDesktopServices>
 
 #include "RGSettings.h"
 #include "RGVehicleList.h"
@@ -31,6 +32,12 @@ RGVehicleList::RGVehicleList()
   filters << "*.bmp" << "*.gif" << "*.png" << "*.jpg" << "*.tif";
   vehicleDir.setNameFilters(filters);
   QFileInfoList vehicles = vehicleDir.entryInfoList();
+
+  //Also look in user's local data directory
+  vehicleDir.setPath(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/vehicles");
+  if (vehicleDir.exists()) {
+    vehicles.append(vehicleDir.entryInfoList());
+  }
 
   //check folder ~/.routegen/vehicles in linux
 #ifdef Q_WS_X11

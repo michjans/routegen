@@ -58,9 +58,16 @@
  *          Google maps importer fix (map scrollable and zoomable)
  *  v1.6    Route editable (selected points can be moved or deleted)
  *          Redo buffer
+ *          Increased maximum of duration of output movie
  *          Codec selection for video encoding under linux 
  *          Installation command for linux
- *          Improvements of edit dialog for vehicle settings (fix vehicle orientation)
+ *          Improvements of edit dialog for vehicle settings
+ *          Vehicle orientation (yes/no) is now a setting
+ *          Deleting files in directory when not empty
+ *          TODO:
+ *            -Dialog for adding custom vehicles (RGVehicleList already scans datadir for vehicles)
+ *            -Fix in javascript (google-maps-template) dragging map doesn't work anymore.
+ *            -Sometimes crash in release version when editing existing route
  */
 
 extern const QString applicationName("Route Generator version 1.6");
