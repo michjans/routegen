@@ -48,6 +48,7 @@ RGVehicleList::RGVehicleList()
     vehicle= new RGVehicle(it->absoluteFilePath(),RGSettings::getVehicleSize(it->baseName()),
                            RGSettings::getVehicleMirrored(it->baseName()),
                            RGSettings::getVehicleAngle(it->baseName()),
+                           RGSettings::getVehicleAcceptsRotation(it->baseName()),
                            RGSettings::getVehicleOrigin(it->baseName()));
     if (vehicle->getRawSize()==0){
       delete vehicle;
@@ -104,6 +105,7 @@ void RGVehicleList::saveVehiclesSettings()
     RGSettings::setVehicleSize(mMap.value(i)->getName(),mMap.value(i)->getSize());
     RGSettings::setVehicleMirrored(mMap.value(i)->getName(),mMap.value(i)->getMirror());
     RGSettings::setVehicleOrigin(mMap.value(i)->getName(),mMap.value(i)->getOrigin());
+    RGSettings::setVehicleAcceptsRotation(mMap.value(i)->getName(),mMap.value(i)->acceptsRotation());
   }
 }
 
@@ -114,5 +116,6 @@ void RGVehicleList::loadVehiclesSettings()
     mMap.value(i)->setSize(RGSettings::getVehicleSize(mMap.value(i)->getName()));
     mMap.value(i)->setMirror(RGSettings::getVehicleMirrored(mMap.value(i)->getName()));
     mMap.value(i)->setOrigin(RGSettings::getVehicleOrigin(mMap.value(i)->getName()));
+    mMap.value(i)->acceptRotation(RGSettings::getVehicleAcceptsRotation(mMap.value(i)->getName()));
   }
 }

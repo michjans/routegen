@@ -24,7 +24,8 @@
 #include <QImageReader>
 #include <QPainter>
 
-RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle, QPointF originPoint,int frameDelay)
+RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle, bool acceptRotation,
+                     QPointF originPoint, int frameDelay)
   :QGraphicsItem(),
     mFileName(fileName),
     mMirror(false),
@@ -34,7 +35,8 @@ RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle
     mFrameDelay(frameDelay),
     mCurrentPm(0),
     mOriginPoint(originPoint),
-    mRotMirror(false)
+    mRotMirror(false),
+    mAcceptRotation(acceptRotation)
 {
   qDebug() << "RGVehicle::RGVehicle( " << fileName << ")";
   QImageReader qir(fileName);
@@ -146,11 +148,17 @@ int RGVehicle::getStartAngle()
 void RGVehicle::setStartAngle(int startAngle)
 {
   mStartAngle=startAngle;
+  //Only now we want to rotate the vehicle as we like
+  bool rememberedAcceptRotation = mAcceptRotation;
+  mAcceptRotation = true;
   this->setRotation(0);//update rotation
+  mAcceptRotation = rememberedAcceptRotation;
 }
 
 void RGVehicle::setRotation(qreal angle)
 {
+  if (!mAcceptRotation)
+    return;
   //qDebug()<<"angle"<<angle;
   while (angle < 0)
     angle += 360;

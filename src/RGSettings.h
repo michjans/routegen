@@ -73,6 +73,8 @@ public:
   static void setVehicleMirrored(const QString &name, bool mirror);
   static QPointF getVehicleOrigin(const QString &name);
   static void setVehicleOrigin(const QString &name, QPointF point);
+  static bool getVehicleAcceptsRotation(const QString &name);
+  static void setVehicleAcceptsRotation(const QString &name, bool rotate);
   
   static void setTotalTimeMode(bool val);
   static bool getTotalTimeMode();

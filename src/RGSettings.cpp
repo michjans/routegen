@@ -288,6 +288,24 @@ void RGSettings::setVehicleOrigin(const QString &name, QPointF point)
   settings.endGroup();
 }
 
+bool RGSettings::getVehicleAcceptsRotation(const QString &name)
+{
+  QSettings settings;
+  settings.beginGroup("vehicleAcceptsRotation");
+  bool accept = settings.value(name, true).toBool();
+  settings.endGroup();
+  return accept;
+}
+
+void RGSettings::setVehicleAcceptsRotation(const QString &name, bool accept)
+{
+  QSettings settings;
+  settings.beginGroup("vehicleAcceptsRotation");
+  settings.setValue(name, accept);
+  settings.endGroup();
+}
+
+
 void RGSettings::setTotalTimeMode(bool val)
 {
   QSettings settings;

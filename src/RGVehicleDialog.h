@@ -51,6 +51,7 @@ private  slots:
   void on_angleSlider_valueChanged(int);
   void on_resetSizePB_clicked(bool);
   void on_mirrorCB_toggled(bool);
+  void on_rotateCB_toggled(bool);
   void playTimerEvent();
 
 private:

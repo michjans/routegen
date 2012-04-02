@@ -93,6 +93,7 @@ void RGVehicleDialog::on_vehicleListWidget_currentRowChanged(int currentRow)
   ui.sizeSB->setValue(vehicle->getSize());
   ui.angleSlider->setValue(vehicle->getStartAngle());
   ui.mirrorCB->setChecked(vehicle->getMirror());
+  ui.rotateCB->setChecked(vehicle->acceptsRotation());
 
   mScene->addItem(vehicle);
 
@@ -130,6 +131,12 @@ void RGVehicleDialog::on_resetSizePB_clicked(bool)
 void RGVehicleDialog::on_mirrorCB_toggled(bool state)
 {
   mVehicleList->getCurrentVehicle()->setMirror(state);
+  ui.vehicleListWidget->currentItem()->setIcon(QIcon(mVehicleList->getCurrentVehicle()->getPixmapAtSize(40)));
+}
+
+void RGVehicleDialog::on_rotateCB_toggled(bool state)
+{
+  mVehicleList->getCurrentVehicle()->acceptRotation(state);
   ui.vehicleListWidget->currentItem()->setIcon(QIcon(mVehicleList->getCurrentVehicle()->getPixmapAtSize(40)));
 }
 

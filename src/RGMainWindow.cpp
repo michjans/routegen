@@ -272,16 +272,38 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
   if (!dir.isNull()){
     //First generate the bmp files into a directory
     QDir qDir(dir);
-    //Directory should be empty (i.e. contain 2 items: current dir and upper dir)
-    if (qDir.count() == 2 ||
-        QMessageBox::question (this, "Directory not empty", "Directory not empty, continue anyway?",
-                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes){
-      RGSettings::setLastGenDir(dir);
-      //generate images :
-      mRoute->setEditMode(false);
-      generateBMPOK = mView->generateMovie(dir, QString("map"), mGeneratedBMPs);
-      mRoute->setEditMode(actionDraw_mode->isChecked());
+    //Directory should be empty
+    QFileInfoList entries = qDir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files);
+    if (entries.count() > 0)
+    {
+       QMessageBox::StandardButton answer = QMessageBox::question (this, "Folder not empty",
+                                "Folder not empty, delete all existing files in this folder first?",
+                                           QMessageBox::Yes | QMessageBox::No |
+                                           QMessageBox::Cancel, QMessageBox::No);
+       if (answer == QMessageBox::Yes)
+       {
+         //Delete all files (or at least try to)
+         for (QFileInfoList::iterator it = entries.begin(); it != entries.end(); ++it)
+         {
+           if (it->isWritable())
+           {
+             qDebug() << "Deleting " + it->absoluteFilePath();
+             QFile::remove(it->absoluteFilePath());
+           }
+         }
+       }
+       else if (answer == QMessageBox::Cancel)
+       {
+         return;
+       }
+       //Continue
     }
+
+    RGSettings::setLastGenDir(dir);
+    //generate images :
+    mRoute->setEditMode(false);
+    generateBMPOK = mView->generateMovie(dir, QString("map"), mGeneratedBMPs);
+    mRoute->setEditMode(actionDraw_mode->isChecked());
 
     if (generateBMPOK) {
       blockUserInteraction(true);
