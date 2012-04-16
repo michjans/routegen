@@ -3,7 +3,7 @@ This is Route Generator version 1.6
 Route Generator can be used to generate route maps to be used in video editing
 software.
 
-Copyright (C) 2008-2011 Michiel Jansen.
+Copyright (C) 2008-2012 Michiel Jansen.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -65,6 +65,10 @@ VERSION HISTORY
       -Redo buffer
       -Codec selection for video encoding under linux 
       -Installation command for linux
+	  -Improvements of edit dialog for vehicle settings
+      -Vehicle orientation (yes/no) is now a setting
+      -Deleting files in directory when not empty (when generating movie)
+      -Adding custom vehicles from vehicle settings dialog
 
 INSTALLATION
 On Windows, you don't need to install it, you can just unzip everything in a directory of

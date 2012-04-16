@@ -55,9 +55,6 @@ RGVehicleDialog::RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList,cons
   mScene->addLine(100,100,0,100,pen); //QGraphicsLineItem *line=
 
   ui.vehicleListWidget->setCurrentRow(mVehicleList->getCurrentVehicleId());
-
-
-
 }
 
 RGVehicleDialog::~RGVehicleDialog()
@@ -99,6 +96,23 @@ void RGVehicleDialog::on_addVehiclePB_clicked(bool)
   }
 }
 
+void RGVehicleDialog::on_removeVehiclePB_clicked(bool)
+{
+  QMessageBox::StandardButton answer = QMessageBox::question (this, "Remove custom vehicle",
+                          "Are you sure you want to remove this custom vehicle?",
+                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+  if (answer == QMessageBox::No)
+    return;
+
+  mVehicleList->removeCustomVehicle(mVehicleList->getCurrentVehicle());
+
+  //Remove currently selected vehicle from list as well
+  //Current row will be changed automatically by delete, and currentRowChanged will occur, but
+  //VehicleOrigin will implicitely be deleted with the item as well, so reset pointer.
+  mVehicleOrigin = NULL;
+  delete ui.vehicleListWidget->currentItem();
+}
+
 void RGVehicleDialog::on_vehicleListWidget_currentRowChanged(int currentRow)
 {
   if(mPlayTimer->isActive())
@@ -126,6 +140,8 @@ void RGVehicleDialog::on_vehicleListWidget_currentRowChanged(int currentRow)
   vehicle->setRotation(0);
   vehicle->setPos(100,100);
   vehicle->setVisible(true);
+
+  ui.removeVehiclePB->setEnabled(vehicle->isCustom());
 
   if (mVehicleList->getCurrentVehicle()->getDelay()>0){
     mPlayTimer->setInterval(mVehicleList->getCurrentVehicle()->getDelay());

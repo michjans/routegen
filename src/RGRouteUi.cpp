@@ -79,11 +79,7 @@ void RGRouteUi::setVehicleList(RGVehicleList *vehicleList)
 {
   //set vehicleList and fill comboBox
   mVehicleList = vehicleList;
-  ui->vehicleCB->blockSignals(true);//block to stop calling CurrentIndexChanged while vehicle are added
-  for (int i=0;i<mVehicleList->count();++i){
-    ui->vehicleCB->addItem(QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(16)),mVehicleList->getVehicle(i)->getName());//QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(16)),
-  }
-  ui->vehicleCB->blockSignals(false);
+  reFillVehicleComboFromVehicleList();
   ui->vehicleCB->setCurrentIndex(mVehicleList->getCurrentVehicleId());
 }
 
@@ -106,20 +102,27 @@ void RGRouteUi::on_vehicleSettingsPB_clicked(bool)
   int lastVehicleId=mVehicleList->getCurrentVehicleId();
 
   RGVehicleDialog vehicleDialog(this,mVehicleList,pen);
-  if (vehicleDialog.exec() == QDialog::Accepted){
+  bool vehicleSettingsChanged = (vehicleDialog.exec() == QDialog::Accepted);
+
+  //A littlebit of a design flaw, but the user could have added/removed a custom vehicle
+  //and clicked cancel afterwards. However, the custom vehicle will already have been added/deleted,
+  //so we always have to check this, indepenent of the user clicked ok/cancel
+  if (mVehicleList->count() != ui->vehicleCB->count() || vehicleSettingsChanged)
+  {
+    //Always refill the combo, either vehicles have been added/removed or
+    //orientations, etc. have been changed. In both cases we want to do an update.
+    reFillVehicleComboFromVehicleList();
     ui->vehicleCB->setCurrentIndex(mVehicleList->getCurrentVehicleId());
-    mVehicleList->saveVehiclesSettings();
-    //mRGMapWidget->setVehicle(*mVehicleList->getVehicle(mVehicleList->getCurrentVehicleId()));
+    if (vehicleSettingsChanged)
+    {
+      //Only do this when user clicked ok
+      mVehicleList->saveVehiclesSettings();
+    }
+    emit vehicleChanged();
   }
   else{
     mVehicleList->loadVehiclesSettings();
     mVehicleList->setCurrentVehicleId(lastVehicleId);
-  }
-
-  emit vehicleChanged();
-  //update icons of the comboBox
-  for(int i=0;i<mVehicleList->count();i++){
-    ui->vehicleCB->setItemIcon(i,QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(16)));
   }
 }
 
@@ -215,4 +218,15 @@ void RGRouteUi::setPen()
   pen.setCapStyle(Qt::FlatCap);
   pen.setJoinStyle(Qt::RoundJoin);
   emit penChanged(pen);
+}
+
+
+void RGRouteUi::reFillVehicleComboFromVehicleList()
+{
+  ui->vehicleCB->blockSignals(true);//block to stop calling CurrentIndexChanged while vehicle are added
+  ui->vehicleCB->clear();
+  for (int i=0;i<mVehicleList->count();++i){
+    ui->vehicleCB->addItem(QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(16)),mVehicleList->getVehicle(i)->getName());//QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(16)),
+  }
+  ui->vehicleCB->blockSignals(false);
 }

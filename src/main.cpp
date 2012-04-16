@@ -64,8 +64,10 @@
  *          Improvements of edit dialog for vehicle settings
  *          Vehicle orientation (yes/no) is now a setting
  *          Deleting files in directory when not empty
- *          TODO:
- *            -Dialog for adding custom vehicles (RGVehicleList already scans datadir for vehicles)
+ *          Adding custom vehicles from vehicle settings dialog
+ *          TODO (bugfixes):
+ *            -When opening vehicle dialog and click cancel, the vehicle dissapears from map
+ *             and another vehicle has to be selected or re-open dialog and click ok
  *            -Fix in javascript (google-maps-template) dragging map doesn't work anymore.
  *            -Sometimes crash in release version when editing existing route
  */

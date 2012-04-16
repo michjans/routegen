@@ -59,7 +59,8 @@ RGVehicleList::RGVehicleList()
   mCurrentVehicleId=0;
   int i=1;
   for (QFileInfoList::iterator it = vehicles.begin(); it != vehicles.end(); it++){
-    if (!addVehicle(*it))
+    //Add vehicle (and mark vehicles that reside in custom vehicle path as custom)
+    if (addVehicle(*it, it->absoluteFilePath().startsWith(vehicleDir.absolutePath())) == NULL)
       continue;
     if(it->baseName()==RGSettings::getLastVehicleName())
       mCurrentVehicleId=i;
@@ -70,6 +71,10 @@ RGVehicleList::RGVehicleList()
 RGVehicleList::~RGVehicleList()
 {
   qDebug()<<"RGVehicleList::~RGVehicleList()";
+  for (int i=1;i<mMap.count();i++){
+    delete mMap.value(i);
+  }
+  mMap.clear();
 }
 
 RGVehicle * RGVehicleList::getVehicle(int idx)
@@ -144,14 +149,14 @@ RGVehicle* RGVehicleList::addCustomVehicle(const QString &fileName, QString &err
     return NULL;
   }
 
-  RGVehicle *vehicle = addVehicle(destFile);
+  RGVehicle *vehicle = addVehicle(destFile, true);
   if (vehicle == NULL)
     errStr = "Error adding vehicle (unexpected file format or error in file?)";
 
   return vehicle;
 }
 
-RGVehicle* RGVehicleList::addVehicle(const QFileInfo &destFile)
+RGVehicle* RGVehicleList::addVehicle(const QFileInfo &destFile, bool custom)
 {
   RGVehicle *vehicle= new RGVehicle(destFile.absoluteFilePath(),RGSettings::getVehicleSize(destFile.baseName()),
                            RGSettings::getVehicleMirrored(destFile.baseName()),
@@ -162,6 +167,27 @@ RGVehicle* RGVehicleList::addVehicle(const QFileInfo &destFile)
     delete vehicle;
     return NULL;
   }
+  vehicle->setIsCustom(custom);
   mMap.insert(count(),vehicle);
   return vehicle;
+}
+
+void RGVehicleList::removeCustomVehicle(RGVehicle *vehicle)
+{
+  int idx;
+  for (idx=1;idx<mMap.count();idx++){
+    if (vehicle == mMap.value(idx))
+    {
+      mMap.erase(mMap.find(idx));
+      break;
+    }
+  }
+  QFile::remove(vehicle->getFileName());
+  delete vehicle;
+
+  if (mCurrentVehicleId == idx)
+  {
+    mCurrentVehicleId--; //Make previous current 
+    RGSettings::setLastVehicleName(mMap.value(mCurrentVehicleId)->getName());
+  }
 }

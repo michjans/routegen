@@ -64,6 +64,7 @@ signals:
 private:
   QIcon createIconForStyle(Qt::PenStyle);
   void setPen();
+  void reFillVehicleComboFromVehicleList();
 
 private:
   Ui::routeUi *ui;

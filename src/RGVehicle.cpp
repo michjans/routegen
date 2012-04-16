@@ -202,7 +202,12 @@ QPixmap RGVehicle::getPixmapAtSize(int size)
 }
 
 
-QString RGVehicle::getName()
+QString RGVehicle::getName() const
 {
   return QFileInfo(mFileName).baseName();
+}
+
+QString RGVehicle::getFileName() const
+{
+  return mFileName;
 }

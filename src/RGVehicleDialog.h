@@ -47,6 +47,7 @@ public slots:
 
 private  slots:
   void on_addVehiclePB_clicked(bool);
+  void on_removeVehiclePB_clicked(bool);
   void on_vehicleListWidget_currentRowChanged(int);
   void on_sizeSB_valueChanged(int);
   void on_angleSlider_valueChanged(int);

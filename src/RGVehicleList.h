@@ -46,9 +46,15 @@ public:
    */
   RGVehicle* addCustomVehicle(const QString &fileName, QString &errStr);
 
+  /**
+   * Removes and also physically deletes the custom vehicle.
+   * The vehicle object will also be deleted!
+   */
+  void       removeCustomVehicle(RGVehicle *vehicle);
+
 
 private:
-  RGVehicle* addVehicle(const QFileInfo &fileName);
+  RGVehicle* addVehicle(const QFileInfo &fileName, bool isCustom);
 
   QMap<int,RGVehicle*>  mMap;
   int mCurrentVehicleId;

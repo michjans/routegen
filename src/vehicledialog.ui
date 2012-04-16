@@ -68,12 +68,25 @@
           </spacer>
          </item>
          <item>
+          <widget class="QPushButton" name="removeVehiclePB">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="toolTip">
+            <string>Remove selected vehicle (only custom vehicles can be removed)</string>
+           </property>
+           <property name="text">
+            <string>Remove vehicle</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="addVehiclePB">
            <property name="toolTip">
             <string>Add your own custom vehicle icon</string>
            </property>
            <property name="text">
-            <string>Add custom vehicle</string>
+            <string>Add vehicle</string>
            </property>
           </widget>
          </item>
@@ -185,7 +198,7 @@
          <item row="3" column="0">
           <widget class="QLabel" name="rotationLabel">
            <property name="text">
-            <string>Orientation:</string>
+            <string>Automatic orientation:</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -195,7 +208,7 @@
          <item row="3" column="1">
           <widget class="QCheckBox" name="rotateCB">
            <property name="toolTip">
-            <string>Vehicle's orientation will change depending on route angle</string>
+            <string>Vehicle's orientation will automatically change depending on route heading</string>
            </property>
            <property name="text">
             <string/>

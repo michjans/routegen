@@ -48,7 +48,12 @@ public:
   int     getStartAngle();
   int     getDelay();
   QPixmap getPixmapAtSize(int);
-  QString getName();
+  QString getName() const;
+  QString getFileName() const;
+  bool    isCustom() const
+  {
+    return mIsCustom;
+  }
 
   void    setOrigin(QPointF point);
   void    setSize(int size);
@@ -56,6 +61,10 @@ public:
   void    setStartAngle(int selfAngle);
   void    setRotation(qreal angle);
   void    setTime(int time);
+  void    setIsCustom(bool isCustom)
+  {
+    mIsCustom = isCustom;
+  }
 
   /**
    * Set if the vehicle should accept rotations 
@@ -85,6 +94,7 @@ private:
   QPointF             mOriginPoint;
   bool                mRotMirror;
   bool                mAcceptRotation;
+  bool                mIsCustom;
 };
 
 #endif // RGVEHICLE_H
