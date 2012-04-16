@@ -19,6 +19,7 @@
 */
 
 #include <QDir>
+#include <QFile>
 #include <QDebug>
 #include <QDesktopServices>
 
@@ -33,12 +34,6 @@ RGVehicleList::RGVehicleList()
   vehicleDir.setNameFilters(filters);
   QFileInfoList vehicles = vehicleDir.entryInfoList();
 
-  //Also look in user's local data directory
-  vehicleDir.setPath(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/vehicles");
-  if (vehicleDir.exists()) {
-    vehicles.append(vehicleDir.entryInfoList());
-  }
-
   //check folder ~/.routegen/vehicles in linux
 #ifdef Q_WS_X11
   vehicleDir.mkpath(QDir::homePath() + "/.routegen/vehicles");
@@ -46,22 +41,26 @@ RGVehicleList::RGVehicleList()
   vehicles.append(vehicleDir.entryInfoList());
 #endif
 
-  RGVehicle *vehicle;
-  vehicle= new RGVehicle();
-  mMap.insert(0,vehicle);
+  //Also look in user's local data directory for custom vehicles
+  //TODO: Should also be working on linux: check! then above linux dependent block can be removed!
+  vehicleDir.setPath(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/vehicles");
+  if (vehicleDir.exists())
+  {
+    vehicles.append(vehicleDir.entryInfoList());
+  }
+  else
+  {
+    //Create folder for custom vehicles
+    vehicleDir.mkpath(vehicleDir.absolutePath());
+  }
+
+  //Always add 'none' vehicle
+  mMap.insert(0,new RGVehicle());
   mCurrentVehicleId=0;
   int i=1;
   for (QFileInfoList::iterator it = vehicles.begin(); it != vehicles.end(); it++){
-    vehicle= new RGVehicle(it->absoluteFilePath(),RGSettings::getVehicleSize(it->baseName()),
-                           RGSettings::getVehicleMirrored(it->baseName()),
-                           RGSettings::getVehicleAngle(it->baseName()),
-                           RGSettings::getVehicleAcceptsRotation(it->baseName()),
-                           RGSettings::getVehicleOrigin(it->baseName()));
-    if (vehicle->getRawSize()==0){
-      delete vehicle;
+    if (!addVehicle(*it))
       continue;
-    }
-    mMap.insert(i,vehicle);
     if(it->baseName()==RGSettings::getLastVehicleName())
       mCurrentVehicleId=i;
     i++;
@@ -125,4 +124,44 @@ void RGVehicleList::loadVehiclesSettings()
     mMap.value(i)->setOrigin(RGSettings::getVehicleOrigin(mMap.value(i)->getName()));
     mMap.value(i)->acceptRotation(RGSettings::getVehicleAcceptsRotation(mMap.value(i)->getName()));
   }
+}
+
+RGVehicle* RGVehicleList::addCustomVehicle(const QString &fileName, QString &errStr)
+{
+  QDir customVehicleDir = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/vehicles";
+  if (!customVehicleDir.exists())
+  {
+    //It should have been created in constructor, so it's an error if this didn't succeed
+    errStr = "Unable to find folder for custom vehicles.";
+    return NULL;
+  }
+
+  QFile orgFile(fileName);
+  QFileInfo destFile(customVehicleDir.absolutePath() + "/" + QFileInfo(orgFile).fileName());
+  if (!orgFile.copy(destFile.absoluteFilePath()))
+  {
+    errStr = "Unable to copy custom vehicle to folder for custom vehicles.";
+    return NULL;
+  }
+
+  RGVehicle *vehicle = addVehicle(destFile);
+  if (vehicle == NULL)
+    errStr = "Error adding vehicle (unexpected file format or error in file?)";
+
+  return vehicle;
+}
+
+RGVehicle* RGVehicleList::addVehicle(const QFileInfo &destFile)
+{
+  RGVehicle *vehicle= new RGVehicle(destFile.absoluteFilePath(),RGSettings::getVehicleSize(destFile.baseName()),
+                           RGSettings::getVehicleMirrored(destFile.baseName()),
+                           RGSettings::getVehicleAngle(destFile.baseName()),
+                           RGSettings::getVehicleAcceptsRotation(destFile.baseName()),
+                           RGSettings::getVehicleOrigin(destFile.baseName()));
+  if (vehicle->getRawSize()==0){
+    delete vehicle;
+    return NULL;
+  }
+  mMap.insert(count(),vehicle);
+  return vehicle;
 }

@@ -21,6 +21,8 @@
 #include <QDebug>
 #include <QIcon>
 #include <QPainter>
+#include <QDesktopServices>
+#include <QFileDialog>
 
 #include "RGVehicleDialog.h"
 
@@ -75,6 +77,26 @@ void RGVehicleDialog::reject()
   mScene->removeItem(mVehicleList->getCurrentVehicle());
   if(mVehicleOrigin) delete mVehicleOrigin;
   QDialog::reject();
+}
+
+void RGVehicleDialog::on_addVehiclePB_clicked(bool)
+{
+  QString fileName = QFileDialog::getOpenFileName(this, tr("Select image/icon file to add as custom vehicle"),
+                                                  QDesktopServices::storageLocation(QDesktopServices::PicturesLocation),
+                                                  tr("Images (*.jpg *.gif *.png)"));
+  if (!fileName.isNull()){
+    QString errStr;
+    RGVehicle *vehicle = mVehicleList->addCustomVehicle(fileName, errStr);
+    if (vehicle != NULL)
+    {
+      QListWidgetItem *item = new QListWidgetItem(QIcon(vehicle->getPixmapAtSize(40)),vehicle->getName());
+      ui.vehicleListWidget->addItem(item);
+    }
+    else
+    {
+      QMessageBox::warning (this, "Unable to add custom vehicle", errStr);
+    }
+  }
 }
 
 void RGVehicleDialog::on_vehicleListWidget_currentRowChanged(int currentRow)

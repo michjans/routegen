@@ -22,6 +22,7 @@
 #define RGVEHICLELIST_H
 
 #include <QMap>
+#include <QFileInfo>
 #include "RGVehicle.h"
 
 class RGVehicleList
@@ -37,8 +38,18 @@ public:
   void saveVehiclesSettings();
   void loadVehiclesSettings();
 
+  /**
+   * Adds a custom vehicle.
+   * @param  fileName the full path to the icon image to be added
+   * @param  errStr if vehicle coudn't be added, contains the error message
+   * @return the added vehicle or NULL if failed
+   */
+  RGVehicle* addCustomVehicle(const QString &fileName, QString &errStr);
+
 
 private:
+  RGVehicle* addVehicle(const QFileInfo &fileName);
+
   QMap<int,RGVehicle*>  mMap;
   int mCurrentVehicleId;
 };
