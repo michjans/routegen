@@ -66,9 +66,6 @@
  *          Deleting files in directory when not empty
  *          Adding custom vehicles from vehicle settings dialog
  *          TODO (bugfixes):
- *            -When opening vehicle dialog and click cancel, the vehicle dissapears from map
- *             and another vehicle has to be selected or re-open dialog and click ok
- *            -Fix in javascript (google-maps-template) dragging map doesn't work anymore.
  *            -Sometimes crash in release version when editing existing route
  */
 

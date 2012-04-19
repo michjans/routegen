@@ -8,23 +8,24 @@
   #map_canvas { height: 100% }
 </style>
 <script type="text/javascript"
-    src="http://maps.google.com/maps/api/js?v=3.1&sensor=false">
+    src="http://maps.google.com/maps/api/js?sensor=false">
 </script>
 
 <script type="text/javascript">
-  function initialize() {
-    var latlng = new google.maps.LatLng(LATLON);
-    var myOptions = {
-      zoom: ZOOM,
-      center: latlng,
-      disableDefaultUI: true,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      draggable:true
-    };
-    var map = new google.maps.Map(document.getElementById("map_canvas"),
-        myOptions);
-  }
+      var map;
+      function initialize() {
+        var myOptions = {
+          zoom: ZOOM,
+          center: new google.maps.LatLng(LATLON),
+          disableDefaultUI: true,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          draggable: true
+        };
+        map = new google.maps.Map(document.getElementById('map_canvas'),
+            myOptions);
+      }
 
+      google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 </head>
 <body onload="initialize()">

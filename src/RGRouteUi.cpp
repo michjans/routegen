@@ -118,12 +118,12 @@ void RGRouteUi::on_vehicleSettingsPB_clicked(bool)
       //Only do this when user clicked ok
       mVehicleList->saveVehiclesSettings();
     }
-    emit vehicleChanged();
   }
   else{
     mVehicleList->loadVehiclesSettings();
     mVehicleList->setCurrentVehicleId(lastVehicleId);
   }
+  emit vehicleChanged();
 }
 
 void RGRouteUi::on_penSizeSB_valueChanged(int size)

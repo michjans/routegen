@@ -22,6 +22,17 @@
 
 #include <QtGui>
 
+/**
+ * Workaround with google api, dragging the map doesn't work,
+ * emulating Chrome, fixes this.
+ */
+class myWebPage : public QWebPage
+{
+    virtual QString userAgentForUrl(const QUrl& ) const {
+        return "Chrome/1.0";
+    }
+};
+
 RGGoogleMap::RGGoogleMap(QWidget *parent)
 	: QDialog(parent)
 {
@@ -40,6 +51,8 @@ RGGoogleMap::RGGoogleMap(QWidget *parent)
 	ui.progressBar->setRange(0, 100);
   ui.spinBoxX->setValue(RGSettings::getGMXResolution());
   ui.spinBoxY->setValue(RGSettings::getGMYResolution());
+
+  ui.webView->setPage(new myWebPage());
 
 	//Init map resolution
 	on_fixButton_clicked(true);
