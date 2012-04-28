@@ -366,7 +366,7 @@ bool RGSettings::getSmoothPathMode(bool defaultVal)
   if (defaultVal)
     return false;
   else
-    return settings.value("SmoothPathMode", false).toBool();
+    return settings.value("SmoothPathMode", true).toBool();
 }
 
 void RGSettings::setSmoothLength(int val)

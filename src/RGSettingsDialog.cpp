@@ -43,7 +43,6 @@ RGSettingsDialog::RGSettingsDialog(QWidget *videoSettings,QWidget *parent)
 
 RGSettingsDialog::~RGSettingsDialog()
 {
-  qDebug()<<"~RGSettingsDialog";
   ui.tabWidget->widget(0)->setParent(NULL);
 }
 

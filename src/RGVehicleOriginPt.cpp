@@ -34,7 +34,7 @@ QRectF RGVehicleOriginPt::boundingRect() const
   return this->parentItem()->boundingRect();
 }
 
-void RGVehicleOriginPt::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget)
+void RGVehicleOriginPt::paint(QPainter *, const QStyleOptionGraphicsItem *,QWidget *)
 {
 
 }
@@ -42,8 +42,11 @@ void RGVehicleOriginPt::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 void RGVehicleOriginPt::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 {
   RGVehicle *vehicle = qgraphicsitem_cast<RGVehicle *>(this->parentItem());
-  qDebug()<<"new Origin"<<event->pos()-this->boundingRect().topLeft();
-  vehicle->setOrigin(event->pos()-this->boundingRect().topLeft());
+  if (vehicle != 0)
+  {
+    qDebug()<<"new Origin"<<event->pos() - this->boundingRect().topLeft();
+    vehicle->setOrigin(event->pos() - this->boundingRect().topLeft());
+  }
 }
 
 void RGVehicleOriginPt::mouseMoveEvent ( QGraphicsSceneMouseEvent * event )

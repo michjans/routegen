@@ -25,7 +25,6 @@
 #include "RGSettings.h"
 #include "RGSettingsDialog.h"
 #include "RGGoogleMap.h"
-#include "RGVehicleDialog.h"
 #include "RGVehicleList.h"
 #include "RGEncVideo.h"
 #include "RGEncFFmpeg.h"

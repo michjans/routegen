@@ -142,9 +142,10 @@ void RGEditPath::editPathPointMoved(bool canUndo)
 void RGEditPath::editPathPointAdd(RGEditPathPoint * point)
 {
   int pointId=mEditPathPointList.indexOf(point);
-  QPoint newpoint=QPoint();
-  if (pointId!=0) newpoint=(mEditPathPointList.at(pointId)->pos().toPoint()+mEditPathPointList.at(pointId-1)->pos().toPoint())/2;
-  RGEditPathPoint *testpoint=new RGEditPathPoint(this,newpoint);
+  QPoint newpoint;
+  if (pointId!=0)
+    newpoint=(mEditPathPointList.at(pointId)->pos().toPoint()+mEditPathPointList.at(pointId-1)->pos().toPoint())/2;
+  RGEditPathPoint *testpoint = new RGEditPathPoint(this,newpoint);
   mEditPathPointList.insert(pointId,testpoint);
   QObject::connect(testpoint,SIGNAL(editMovedPoint(bool)),this,SLOT(editPathPointMoved(bool)));
   QObject::connect(testpoint,SIGNAL(editAddPoint(RGEditPathPoint *)),this,SLOT(editPathPointAdd(RGEditPathPoint *)));
@@ -174,7 +175,7 @@ void RGEditPath::deleteSelectedPoints()
   foreach (QGraphicsItem *item, scene()->selectedItems()) {
     RGEditPathPoint *point = qgraphicsitem_cast<RGEditPathPoint *>(item);
     if (!point)
-      continue;
+      return;
     //remove editPoint:
     mEditPathPointList.removeAll(point);
     delete point;

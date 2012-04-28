@@ -68,15 +68,15 @@ void RGEditPathPoint::mouseMoveEvent ( QGraphicsSceneMouseEvent * event )
   setPos(newpos);
 }
 
-void RGEditPathPoint::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event )
+void RGEditPathPoint::mouseReleaseEvent ( QGraphicsSceneMouseEvent *qEvent)
 {
   if (mMouseMove==true)
     //send signal to redraw path,stock in undo:
     emit editMovedPoint(true);
-  QGraphicsItem::mouseReleaseEvent(event);
+  QGraphicsItem::mouseReleaseEvent(qEvent);
 }
 
-void RGEditPathPoint::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+void RGEditPathPoint::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *)
 {
   qDebug()<<"DbleClick on edit point";
   emit editAddPoint(this);
