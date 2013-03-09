@@ -23,6 +23,7 @@ that image as a map background. Or check the size of the screenshot and create a
 with the same size.
 
 <h3>Import map from Google Maps</h3>
+<strong>Note:</strong> Google changes it's interface regularly, so the screenshots below probably don't completely match.<br>
 To import a map from Google Maps, go to File->Import from Google Maps or click <img src="google-maps-logo.png">.
 First set the correct resolution that you want to use for your output map.
 
@@ -48,59 +49,28 @@ Now start drawing a route, by clicking and dragging your mouse over the map.
 You can reset the route by deactivating draw mode and activating it again. 
 If you're satisfied with the route you can do some adjustments to the way the route is displayed (next section). 
 
-<h3>Interpolation mode</h3>
-A new feature since version 1.3 is automatic route interpolation. When you check the <i>Interpolation</i> checkbox
-before you start drawing a new route, you only have to click on a few points on the map. When you're ready, de-activate
-<i>Draw mode by clicking </i><img src="drawmode.png">. After that the route will automatically be "interpolated" between
-the clicked points. You can adapt the lenght of the route by modifying the number besides the <i>Interpolation</i> checkbox.
-This number indicates the number of seconds that the complete route will take.
-</p>
-
 <p>
 <h2>Adjust route settings</h2>
 <ul>
 <li> Modify the width of the route by adjusting the <i>Route width</i> settings.
-<li> Modify the line style of the route by adjusting the <i>Route style</i> settings. <b>(new since version 1.3!)</b>
+<li> Modify the line style of the route by adjusting the <i>Route style</i> settings.
 <li> Modify the color of the route by adjusting the <i>Route color</i> settings.
 <li> <i>Select vehicle icon</i> that will be shown when the route is drawn.
-<li> Correct the direction of the vehicle by checking the <i>Mirror icon</i> checbox and modifying the
-     angle. (Explained below this section.)
+<li> Optionally adapt the vehicle settings from the dialog (size, angle, mirror, orientation).
 <li> Optionally it's possible to let the Route Generator <i>Generate iconless begin/end frames</i>, 
      if you want to begin/end your movie without displaying the vehicle icon.
 </ul>
 </p>
 
-<h3>The vehicle icon</h3>
-<p> Route Generator tries to adapt the direction of the vehicle to
-the direction of the route. It assumes that the vehicle's base direction is from left to right
-(or west to east). This is indicated with a red arrow through the preview icon of the selected
-vehicle on the toolbar: <br>
-<img src="toolbar.png"><br>
-<p>
-In the situation displayed above, the vehicle is already displayed correctly left to right, so you don't need
-to correct it's angle. But for some vehicles you need to correct the angle or even mirror the icon, because it
-doesn't match the red arrow:
-<br>
-<img src="bike.png"><br>
-In this case, just modify the angle, until the vehicle direction mathces the red arrow:<br>
-<img src="bike_corrected.png">
-</p>
-</p>
 <h4>Adding custom vehicle icons</h4>
 <p>
-You can add custom icons for vehicles by adding your own icon files into the <i>vehicles</i> 
-subfolder of the Route Generator installation folder. The following icon formats should be accepted: 
-*.bmp, *.gif, *.png, *.bmp, *.jpg, *.tif</p>
+You can add custom icons for vehicles by adding your own icon files.
+The following icon formats should be accepted: *.gif, *.png, *.jpg</p>
 <p>It's recommended to add icons with a transparent background (i.e. *.gif or *.png with an alpha layer). 
 Also choose a reasonable size for the vehicle icons, e.g. 50x50 pixels.</p>
-<p>
-Route Generator needs to be restarted when you add new vehicle icons, otherwise it won't detect them.
-</p>
 <b>Animated vehicle icons</b>
 <p>When the vehicle is an animated image (e.g. animated gif), Route Generator will playback the animation
 in the generated movie!
-</p>
-
 </p>
 
 <p>
