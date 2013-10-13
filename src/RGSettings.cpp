@@ -151,7 +151,7 @@ int RGSettings::getPenSize()
 void RGSettings::setPenSize(int size)
 {
   QSettings settings;
-  settings.setValue("routeStyle", size);
+  settings.setValue("routeWidth", size);
 }
 
 int RGSettings::getPenStyle()

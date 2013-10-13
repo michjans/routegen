@@ -67,9 +67,11 @@
  *          Adding custom vehicles from vehicle settings dialog
  *          TODO (bugfixes):
  *            -Sometimes crash in release version when editing existing route
+ *  v1.7    Fix in googlemaps importer: Drag works again.
+ *          Line width and style saved again
  */
 
-extern const QString applicationName("Route Generator version 1.6");
+extern const QString applicationName("Route Generator version 1.7-alpha");
 
 int main(int argc, char *argv[])
 {

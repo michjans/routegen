@@ -28,9 +28,19 @@
  */
 class myWebPage : public QWebPage
 {
-    virtual QString userAgentForUrl(const QUrl& ) const {
+protected:
+
+#if 0
+		QString userAgentForUrl(const QUrl& ) const
+		{
         return "Chrome/1.0";
     }
+
+		void javaScriptConsoleMessage ( const QString & message, int lineNumber, const QString & sourceID )
+		{
+			qDebug() << "Javascript: " << sourceID << ":" << lineNumber << ":" << message;
+		}
+#endif
 };
 
 RGGoogleMap::RGGoogleMap(QWidget *parent)
