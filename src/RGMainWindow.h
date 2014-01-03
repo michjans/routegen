@@ -65,6 +65,7 @@ private slots:
   void movieGenerationFinished();
 
 private:
+	void initVideoEncoderFromSettings();
 
   RGViewWidget *mView;
   RGEncVideo *mVideoEncoder;

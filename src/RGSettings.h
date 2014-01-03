@@ -31,6 +31,8 @@ public:
   /*
    * Movie generation settings
    */
+  static QString getVideoEncoder();
+  static void setVideoEncoder(const QString &);
   static QString getVideoEncExec();
   static void setVideoEncExec(const QString &);
   static QString getAviOutName();

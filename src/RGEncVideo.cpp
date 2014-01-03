@@ -29,10 +29,12 @@ RGEncVideo::RGEncVideo(QWidget *parent) :
   mFps(0),
   mOutName(QString()),
   mKeyFrameRate(0),
+	mProcessWaitMessage(0),
   mCompress(QString()),
   mCompressDefault(QString())
 {
   mUi.setupUi(this);
+
   // hide all specific part of the Ui
   mUi.bitRateLabel->setVisible(false);
   mUi.bitRateLabel2->setVisible(false);
@@ -51,20 +53,12 @@ RGEncVideo::~RGEncVideo()
 
 bool RGEncVideo::initCodecExecutable()
 {
-  updateFromSettings();
-
-  while (checkForCodecExecutable(mExecName)==false){
-    //Codec executable not found, ask user for different directory
-    if (QMessageBox::question (NULL, encoderName() + " not found",
-                               "Could not find "+ encoderName() +", do you want to browse for it?",
-                               QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
-      mExecName = QFileDialog::getOpenFileName(NULL,
-                                               QString("Select the directory where " + encoderName() + " is located."),
-                                               QDir::currentPath(),
-                                               "Executables (*.exe)");
-    } else {
-      break;
-    }
+	if (checkForCodecExecutable(mExecName)==false){
+		RGSettings::setAviCompression(QString());
+		mExecName = QFileDialog::getOpenFileName(NULL,
+                   QString("Select the directory where " + encoderName() + " is located."),
+                   QDir::currentPath(),
+                   "Executables (*.exe)");
   }
 
   if ( checkForCodecExecutable(mExecName)==true )
@@ -78,6 +72,7 @@ bool RGEncVideo::initCodecExecutable()
     mExecName=QString();
   }
   RGSettings::setVideoEncExec(mExecName);
+  updateFromSettings();
 #ifdef Q_WS_WIN
   mUi.codecExecLocLE->setText(mExecName);
   mUi.codecExecLocLabel->setText(encoderName());
@@ -126,6 +121,7 @@ void RGEncVideo::saveInSettings()
   mCompress = mUi.codecCB->itemData(mUi.codecCB->currentIndex()).toString();
   RGSettings::setAviCompression(mCompress);
   mExecName=mUi.codecExecLocLE->text();
+	mExists = checkForCodecExecutable(mExecName);
   RGSettings::setVideoEncExec(mExecName);
 }
 
@@ -146,7 +142,6 @@ void RGEncVideo::createEncodingProcess(const QString &dirName,const QString &vid
     emit movieGenerationFinished();
     return;
   }
-  qDebug()<<"you shoudl'nt see that";
   mVideoEncProcess = new QProcess(this);
   QObject::connect(mVideoEncProcess, SIGNAL(finished (int , QProcess::ExitStatus)),
                    this, SLOT(encodingProcessFinished(int , QProcess::ExitStatus)));
@@ -165,7 +160,10 @@ void RGEncVideo::createEncodingProcess(const QString &dirName,const QString &vid
 
 void RGEncVideo::encodingProcessFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-  delete mProcessWaitMessage;
+	if (mProcessWaitMessage != 0)
+	{
+		delete mProcessWaitMessage;
+	}
   QByteArray output = mVideoEncProcess->readAllStandardOutput();
   QString logFileName(encoderName());
   logFileName.append(".log");
@@ -204,7 +202,10 @@ void RGEncVideo::encodingProcessFinished(int exitCode, QProcess::ExitStatus exit
 
 void RGEncVideo::encodingProcessError(QProcess::ProcessError)
 {
-  delete mProcessWaitMessage;
+	if (mProcessWaitMessage != 0)
+	{
+		delete mProcessWaitMessage;
+	}
   QMessageBox::critical (NULL, "Error", encoderName() + " execution failed!" );
 
   mVideoEncProcess->kill();
@@ -233,7 +234,6 @@ void RGEncVideo::browseClicked()
 	{
     mExists=false;
 	}
-  mExecName=QString();
   mUi.codecExecLocLE->setText(mExecName);
 }
 

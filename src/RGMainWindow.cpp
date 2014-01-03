@@ -40,7 +40,8 @@
 extern const QString applicationName;
 
 RGMainWindow::RGMainWindow(QWidget *parent)
-  :QMainWindow(parent)
+  :QMainWindow(parent),
+	 mVideoEncoder(NULL)
 {
   //Set currentPath
   QDir::setCurrent(QCoreApplication::applicationDirPath());
@@ -81,15 +82,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   action_Redo->setEnabled(false);
 
   //Video Encoder:
-#ifdef Q_WS_WIN
-	--mVideoEncoder = new RGEncBmp2avi(); //TODO: Make user option
-  mVideoEncoder = new RGEncFFmpeg();
-	mVideoEncoder->initCodecExecutable();
-#else
-  mVideoEncoder = new RGEncFFmpeg();
-#endif
-  if(mVideoEncoder->exists())
-    qDebug()<<"encoder found !";
+	initVideoEncoderFromSettings();
 
   //ViewWidget :
   mView = new RGViewWidget();
@@ -183,9 +176,16 @@ void RGMainWindow::on_actionPreferences_triggered(bool)
     mVideoEncoder->saveInSettings();
     mRoute->setSmoothCoef(rgsettings.getSmoothCoef());
     mRoute->setIconlessBeginEndFrames(rgsettings.getIconlessBeginEndFrames());
+
+		if (RGSettings::getVideoEncoder() != mVideoEncoder->encoderName())
+		{
+			initVideoEncoderFromSettings();
+		}
   }
   else
+	{
     mVideoEncoder->updateFromSettings();
+	}
 }
 
 void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
@@ -307,9 +307,16 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
     mRoute->setEditMode(actionDraw_mode->isChecked());
 
     if (generateBMPOK) {
-      blockUserInteraction(true);
-      QObject::connect(mVideoEncoder,SIGNAL(movieGenerationFinished()),this,SLOT(movieGenerationFinished()));
-      mVideoEncoder->generateMovie(dir, QString("map"));
+			if (mVideoEncoder != NULL && mVideoEncoder->exists())
+			{
+				blockUserInteraction(true);
+				QObject::connect(mVideoEncoder,SIGNAL(movieGenerationFinished()),this,SLOT(movieGenerationFinished()));
+				mVideoEncoder->generateMovie(dir, QString("map"));
+			}
+			else
+			{
+				QMessageBox::warning (this, "Encoder unavailable", "No encoder available, only BMP's have been generated!");
+			}
     }
   }
 }
@@ -402,4 +409,36 @@ void RGMainWindow::movieGenerationFinished()
   }
   blockUserInteraction(false);
   mVideoEncoder->disconnect();
+}
+
+void RGMainWindow::initVideoEncoderFromSettings()
+{
+	if ( mVideoEncoder != NULL)
+	{
+		delete mVideoEncoder;
+	}
+
+#ifdef Q_WS_WIN
+	QString vidEnc = RGSettings::getVideoEncoder();
+	if (vidEnc == "bmp2avi")
+	{
+		mVideoEncoder = new RGEncBmp2avi();
+	}
+	else if (vidEnc == "ffmpeg")
+	{
+		mVideoEncoder = new RGEncFFmpeg();
+	}
+	else
+	{
+		QMessageBox::critical (this, "Error", tr("Unknown video encoder:") + vidEnc);
+	}
+#else
+  mVideoEncoder = new RGEncFFmpeg();
+#endif
+
+	mVideoEncoder->initCodecExecutable();
+  if(mVideoEncoder->exists())
+	{
+    qDebug()<<"encoder found !";
+	}
 }

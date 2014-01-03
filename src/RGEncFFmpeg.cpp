@@ -31,7 +31,7 @@ RGEncFFmpeg::RGEncFFmpeg(QWidget *parent) :
   qDebug()<<"FFMpeg encoder class";
 
   mUi.bitRateLabel->setVisible(true);
-  mUi.bitRateLabel->setVisible(true);
+  mUi.bitRateLabel2->setVisible(true);
   mUi.bitRateSB->setVisible(true);
 }
 

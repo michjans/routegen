@@ -20,6 +20,17 @@
 #include <QtGui>
 #include <RGSettings.h>
 
+QString RGSettings::getVideoEncoder()
+{
+  QSettings settings;
+  return settings.value("videoEncoder", "bmp2avi").toString();
+}
+
+void RGSettings::setVideoEncoder(const QString &exec)
+{
+  QSettings settings;
+  settings.setValue("videoEncoder", exec);
+}
 
 QString RGSettings::getVideoEncExec()
 {

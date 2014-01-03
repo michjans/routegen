@@ -23,6 +23,7 @@
 
 #include <QDialog>
 #include "ui_settings.h"
+#include "RGEncVideo.h"
 
 class QSpinBox;
 class QPushButton;
@@ -33,12 +34,13 @@ class RGSettingsDialog : public QDialog
   Q_OBJECT
 
 public:
-  RGSettingsDialog(QWidget *videoSettings,QWidget *parent = 0);
+  RGSettingsDialog(RGEncVideo *videoSettings,QWidget *parent = 0);
   ~RGSettingsDialog();
   int getSmoothCoef();
   bool getIconlessBeginEndFrames();
 
 private slots:
+	void on_encoderSelectionCB_activated(const QString &text);
   void on_mResetDefaultsPB_clicked(bool);
   void accept();
 
@@ -46,6 +48,7 @@ private:
   QCheckBox *mGenerateBeginEndFramesCB;
   QSpinBox *mSmoothLengthSB;
   QPushButton *mResetDefaultsPB;
+	RGEncVideo *mVideoEncoder;
   Ui::Dialog ui;
 
 };
