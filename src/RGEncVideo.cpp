@@ -37,9 +37,9 @@ RGEncVideo::RGEncVideo(QWidget *parent) :
   mUi.bitRateLabel->setVisible(false);
   mUi.bitRateLabel2->setVisible(false);
   mUi.bitRateSB->setVisible(false);
-  mUi.bmp2AviLocBrowsePB->setVisible(false);
-  mUi.bmp2AviLocLabel->setVisible(false);
-  mUi.bmp2AviLocLE->setVisible(false);
+  mUi.codecExecLocBrowsePB->setVisible(false);
+  mUi.codecExecLocLabel->setVisible(false);
+  mUi.codecExecLocLE->setVisible(false);
   qDebug()<<"RGEncVideo";
 
 }
@@ -51,8 +51,10 @@ RGEncVideo::~RGEncVideo()
 
 bool RGEncVideo::initCodecExecutable()
 {
+  updateFromSettings();
+
   while (checkForCodecExecutable(mExecName)==false){
-    //Bmp2avi not found, ask user for different directory
+    //Codec executable not found, ask user for different directory
     if (QMessageBox::question (NULL, encoderName() + " not found",
                                "Could not find "+ encoderName() +", do you want to browse for it?",
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
@@ -76,12 +78,14 @@ bool RGEncVideo::initCodecExecutable()
     mExecName=QString();
   }
   RGSettings::setVideoEncExec(mExecName);
-  mUi.bmp2AviLocLE->setText(mExecName);
-
-  mUi.bmp2AviLocBrowsePB->setVisible(true);
-  mUi.bmp2AviLocLabel->setVisible(true);
-  mUi.bmp2AviLocLE->setVisible(true);
-  QObject::connect(mUi.bmp2AviLocBrowsePB, SIGNAL(clicked(bool)), this, SLOT(browseClicked()));
+#ifdef Q_WS_WIN
+  mUi.codecExecLocLE->setText(mExecName);
+  mUi.codecExecLocLabel->setText(encoderName());
+  mUi.codecExecLocBrowsePB->setVisible(true);
+  mUi.codecExecLocLabel->setVisible(true);
+  mUi.codecExecLocLE->setVisible(true);
+  QObject::connect(mUi.codecExecLocBrowsePB, SIGNAL(clicked(bool)), this, SLOT(browseClicked()));
+#endif
 
 	return mExists;
 }
@@ -106,6 +110,8 @@ void RGEncVideo::updateFromSettings()
   int index=mUi.codecCB->findData(mCompress);
   if (index>=0)
     mUi.codecCB->setCurrentIndex(index);
+  mExecName=RGSettings::getVideoEncExec();
+  mUi.codecExecLocLE->setText(mExecName);
 }
 
 void RGEncVideo::saveInSettings()
@@ -119,7 +125,8 @@ void RGEncVideo::saveInSettings()
   RGSettings::setKeyFrameRate(mKeyFrameRate);
   mCompress = mUi.codecCB->itemData(mUi.codecCB->currentIndex()).toString();
   RGSettings::setAviCompression(mCompress);
-
+  mExecName=mUi.codecExecLocLE->text();
+  RGSettings::setVideoEncExec(mExecName);
 }
 
 void RGEncVideo::createEncodingProcess(const QString &dirName,const QString &videoEncExec,const QStringList &arguments)
@@ -211,15 +218,15 @@ void RGEncVideo::encodingProcessError(QProcess::ProcessError)
 
 void RGEncVideo::browseClicked()
 {
-  QString codecExecLoc = mUi.bmp2AviLocLE->text();
+  QString codecExecLoc = mUi.codecExecLocLE->text();
   codecExecLoc = QFileDialog::getOpenFileName(this, tr("Select ") + encoderName() + tr(" location"),
                                             codecExecLoc,
-                                            tr("Bmp2Avi ( ") + encoderExecBaseName() + ")");
+                                            encoderName() + " (" + encoderExecBaseName() + ")");
   if (codecExecLoc==QString()) return;//cancel pressed
   if (checkForCodecExecutable(codecExecLoc))
 	{
     mExecName=codecExecLoc;
-    mUi.bmp2AviLocLE->setText(mExecName);
+    mUi.codecExecLocLE->setText(mExecName);
     mExists=initCodecs();
   }
   else
@@ -227,7 +234,7 @@ void RGEncVideo::browseClicked()
     mExists=false;
 	}
   mExecName=QString();
-  mUi.bmp2AviLocLE->setText(mExecName);
+  mUi.codecExecLocLE->setText(mExecName);
 }
 
 bool RGEncVideo::checkForCodecExecutable(const QString &execName)

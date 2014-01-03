@@ -15,21 +15,21 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QLabel" name="bmp2AviLocLabel">
+    <widget class="QLabel" name="codecExecLocLabel">
      <property name="text">
       <string>Bmp2Avi location</string>
      </property>
     </widget>
    </item>
    <item row="0" column="1" colspan="2">
-    <widget class="QLineEdit" name="bmp2AviLocLE">
+    <widget class="QLineEdit" name="codecExecLocLE">
      <property name="toolTip">
       <string>Enter location of bmp2avi executable.</string>
      </property>
     </widget>
    </item>
    <item row="0" column="3">
-    <widget class="QPushButton" name="bmp2AviLocBrowsePB">
+    <widget class="QPushButton" name="codecExecLocBrowsePB">
      <property name="text">
       <string>Browse...</string>
      </property>

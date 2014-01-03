@@ -26,22 +26,17 @@ RGEncBmp2avi::RGEncBmp2avi(QWidget *parent) :
   RGEncVideo(parent)
 {
   mCompressDefault=QString("DIB");
-  updateFromSettings();
   qDebug()<<"Bmp2avi encoder class";
 }
 
 void RGEncBmp2avi::updateFromSettings()
 {
   RGEncVideo::updateFromSettings();
-  mExecName=RGSettings::getVideoEncExec();
-  mUi.bmp2AviLocLE->setText(mExecName);
 }
 
 void RGEncBmp2avi::saveInSettings()
 {
   RGEncVideo::saveInSettings();
-  mExecName=mUi.bmp2AviLocLE->text();
-  RGSettings::setVideoEncExec(mExecName);
 }
 
 void RGEncBmp2avi::generateMovie(const QString &dirName, const QString &filePrefix)
@@ -72,16 +67,16 @@ bool RGEncBmp2avi::initCodecs()
 {
   //Collect codecs from bmp2avi
   mUi.codecCB->clear();
-  QProcess *bmp2AviProcess = new QProcess(this);
+  QProcess *codecExecProcess = new QProcess(this);
   QStringList arguments;
   //List codecs
   arguments << "-l";
-  bmp2AviProcess->start(mExecName, arguments);
-  if (bmp2AviProcess->waitForFinished()){
+  codecExecProcess->start(mExecName, arguments);
+  if (codecExecProcess->waitForFinished()){
     int currentIndex = 0;
     //First add "Uncompressed" codec to combobox
     mUi.codecCB->addItem("Uncompressed", "DIB");
-    QByteArray output = bmp2AviProcess->readAllStandardOutput();
+    QByteArray output = codecExecProcess->readAllStandardOutput();
     QList<QByteArray> lines = output.split('\n');
     bool inHeader = true;
     for (int i = 0; i < lines.size(); i++){
