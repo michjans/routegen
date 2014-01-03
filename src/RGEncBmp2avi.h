@@ -31,19 +31,14 @@ public:
   RGEncBmp2avi(QWidget *parent = 0);
   virtual void generateMovie(const QString &dirName, const QString &filePrefix);
   virtual QString encoderName();
+	virtual QString encoderExecBaseName();
 
-protected slots:
-  virtual void browseClicked();
+protected:
+ bool initCodecs();
 
 private:
   virtual void updateFromSettings();
   virtual void saveInSettings();
-  void setCodecs();
-  bool checkForBmp2avi(const QString &path);
-
-
-private:
-  QString mExecName;
 };
 
 #endif // RGENCBMP2AVI_H

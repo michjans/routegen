@@ -82,7 +82,9 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 
   //Video Encoder:
 #ifdef Q_WS_WIN
-  mVideoEncoder = new RGEncBmp2avi();
+	--mVideoEncoder = new RGEncBmp2avi(); //TODO: Make user option
+  mVideoEncoder = new RGEncFFmpeg();
+	mVideoEncoder->initCodecExecutable();
 #else
   mVideoEncoder = new RGEncFFmpeg();
 #endif

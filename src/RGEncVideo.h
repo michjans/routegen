@@ -32,11 +32,13 @@ class RGEncVideo : public QWidget
 public:
   explicit RGEncVideo(QWidget *parent = 0);
   ~RGEncVideo();
-  bool exists() const;
+	bool initCodecExecutable();
+	bool exists() const;
   virtual void updateFromSettings();
   virtual void saveInSettings();
   virtual void generateMovie(const QString &dirName, const QString &filePrefix)=0;
   virtual QString encoderName()=0;
+  virtual QString encoderExecBaseName()=0;
 
 signals:
   void movieGenerationFinished();
@@ -45,8 +47,14 @@ protected slots:
   void createEncodingProcess(const QString &dirName,const QString &videoEncExec,const QStringList &arguments);
   void encodingProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
   void encodingProcessError(QProcess::ProcessError error);
+	void browseClicked();
 
 protected:
+	bool checkForCodecExecutable(const QString &execName);
+	virtual bool initCodecs() = 0;
+
+protected:
+  QString mExecName;
   bool mExists;
   int mFps;
   QString mOutName;

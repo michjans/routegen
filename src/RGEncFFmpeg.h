@@ -33,6 +33,10 @@ public:
   virtual void saveInSettings();
   virtual void generateMovie(const QString &dirName, const QString &filePrefix);
   virtual QString encoderName();
+  virtual QString encoderExecBaseName();
+
+protected:
+	virtual bool initCodecs();
 
 private:
   int mBitRate;

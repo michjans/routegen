@@ -29,21 +29,70 @@ RGEncFFmpeg::RGEncFFmpeg(QWidget *parent) :
   mCompressDefault=QString("mpeg4");
   updateFromSettings();
   qDebug()<<"FFMpeg encoder class";
+
+  mUi.bitRateLabel->setVisible(true);
+  mUi.bitRateLabel->setVisible(true);
+  mUi.bitRateSB->setVisible(true);
+}
+
+void RGEncFFmpeg::updateFromSettings()
+{
+  RGEncVideo::updateFromSettings();
+  mBitRate = RGSettings::getBitRate();
+  mUi.bitRateSB->setValue(mBitRate);
+}
+
+void RGEncFFmpeg::saveInSettings()
+{
+  RGEncVideo::saveInSettings();
+  mBitRate=mUi.bitRateSB->value();
+  RGSettings::setBitRate(mBitRate);
+}
+
+void RGEncFFmpeg::generateMovie(const QString &dirName, const QString &filePrefix)
+{
+  QStringList arguments;
+  arguments << "-y" << "-i" << QString(filePrefix).append("\%05d.bmp") << "-g" << QString("%1").arg(mKeyFrameRate) <<"-r"<<QString("%1").arg(mFps)<< "-b" <<QString("%1k").arg(mBitRate) <<"-vcodec"<<mCompress<< QString(mOutName).append(".avi");
+
+  this->createEncodingProcess(dirName,mExecName,arguments);
+}
+
+QString RGEncFFmpeg::encoderName()
+{
+  return QString("ffmpeg");
+}
+
+QString RGEncFFmpeg::encoderExecBaseName()
+{
+#ifdef Q_WS_WIN
+  return QString("ffmpeg.exe");
+#else
+  return QString("ffmpeg");
+#endif
+}
+
+bool RGEncFFmpeg::initCodecs()
+{
   //Check if FFmpeg is present
   QProcess checkFFmpeg;
   checkFFmpeg.setProcessChannelMode(QProcess::MergedChannels);
-  checkFFmpeg.start("ffmpeg -version");
+  checkFFmpeg.start(mExecName + " -version");
   if (!checkFFmpeg.waitForFinished())
+	{
     QMessageBox::warning (NULL, "No video encoder", "FFmpeg has not been found, video generation will be unavailable.\nPlease install FFmpeg and restart the application.");
+		return false;
+	}
   else
+	{
     mExists=true;
+	}
 
   QProcess *ffmpegProcess = new QProcess(this);
   QStringList arguments;
   //List codecs
   arguments << "-codecs";
   //ffmpegProcess = new QProcess(this);
-  ffmpegProcess->start("ffmpeg", arguments);
+  ffmpegProcess->start(mExecName, arguments);
   if (ffmpegProcess->waitForFinished()){
     int currentIndex = 0;
     QByteArray output = ffmpegProcess->readAllStandardOutput();
@@ -78,38 +127,11 @@ RGEncFFmpeg::RGEncFFmpeg(QWidget *parent) :
   }
   else{
     QMessageBox::critical (this, "Error", "Could not run ffmpeg to collect codec selection!");
+		return false;
   }
 
-  mUi.bitRateLabel->setVisible(true);
-  mUi.bitRateLabel->setVisible(true);
-  mUi.bitRateSB->setVisible(true);
+	return true;
 }
 
-void RGEncFFmpeg::updateFromSettings()
-{
-  RGEncVideo::updateFromSettings();
-  mBitRate = RGSettings::getBitRate();
-  mUi.bitRateSB->setValue(mBitRate);
-}
-
-void RGEncFFmpeg::saveInSettings()
-{
-  RGEncVideo::saveInSettings();
-  mBitRate=mUi.bitRateSB->value();
-  RGSettings::setBitRate(mBitRate);
-}
-
-void RGEncFFmpeg::generateMovie(const QString &dirName, const QString &filePrefix)
-{
-  QStringList arguments;
-  arguments << "-y" << "-i" << QString(filePrefix).append("\%05d.bmp") << "-g" << QString("%1").arg(mKeyFrameRate) <<"-r"<<QString("%1").arg(mFps)<< "-b" <<QString("%1k").arg(mBitRate) <<"-vcodec"<<mCompress<< QString(mOutName).append(".avi");
-
-  this->createEncodingProcess(dirName,"ffmpeg",arguments);
-}
-
-QString RGEncFFmpeg::encoderName()
-{
-  return QString("FFmpeg");
-}
 
 
