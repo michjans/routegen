@@ -52,7 +52,7 @@ void RGEncFFmpeg::saveInSettings()
 void RGEncFFmpeg::generateMovie(const QString &dirName, const QString &filePrefix)
 {
   QStringList arguments;
-  arguments << "-y" << "-i" << QString(filePrefix).append("\%05d.bmp") << "-g" << QString("%1").arg(mKeyFrameRate) <<"-r"<<QString("%1").arg(mFps)<< "-b" <<QString("%1k").arg(mBitRate) <<"-vcodec"<<mCompress<< QString(mOutName).append(".avi");
+  arguments << "-report" << "-y" << "-i" << QString(filePrefix).append("\%05d.bmp") << "-g" << QString("%1").arg(mKeyFrameRate) <<"-r"<<QString("%1").arg(mFps)<< "-b" <<QString("%1k").arg(mBitRate) <<"-vcodec"<<mCompress<< QString(mOutName).append(".avi");
 
   this->createEncodingProcess(dirName,mExecName,arguments);
 }

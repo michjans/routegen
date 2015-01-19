@@ -49,6 +49,10 @@ public:
   static void setDeleteBMPs(bool val);
   static bool getIconLessBeginEndFrames();
   static void setIconLessBeginEndFrames(bool val);
+  static int getBeginDelaySeconds();
+  static void setBeginDelaySeconds(int val);
+  static int getEndDelaySeconds();
+  static void setEndDelaySeconds(int val);
 
   /*
    * Application settings

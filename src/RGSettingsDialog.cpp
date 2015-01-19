@@ -47,6 +47,8 @@ RGSettingsDialog::RGSettingsDialog(RGEncVideo *videoSettings,QWidget *parent)
   //Advanced tab
   mSmoothLengthSB->setValue(RGSettings::getSmoothLength());
   mGenerateBeginEndFramesCB->setChecked(!RGSettings::getIconLessBeginEndFrames());
+	ui.mBeginDelaySB->setValue(RGSettings::getBeginDelaySeconds());
+	ui.mEndDelaySB->setValue(RGSettings::getEndDelaySeconds());
 	ui.encoderSelectionCB->setCurrentIndex(ui.encoderSelectionCB->findText(RGSettings::getVideoEncoder()));
 
   ui.tabWidget->insertTab(0,videoSettings,QString("Movie Generation"));
@@ -102,6 +104,8 @@ void RGSettingsDialog::accept()
   RGSettings::setVideoEncoder(ui.encoderSelectionCB->currentText());
   RGSettings::setSmoothLength(mSmoothLengthSB->value());
   RGSettings::setIconLessBeginEndFrames(!mGenerateBeginEndFramesCB->isChecked());
+	RGSettings::setBeginDelaySeconds(ui.mBeginDelaySB->value());
+	RGSettings::setEndDelaySeconds(ui.mEndDelaySB->value());
 
   QDialog::accept();
 }

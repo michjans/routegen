@@ -129,6 +129,31 @@ void RGSettings::setIconLessBeginEndFrames(bool val)
   settings.setValue("iconLessBeginEndFrames", val);
 }
 
+int RGSettings::getBeginDelaySeconds()
+{
+  QSettings settings;
+  return settings.value("beginDelaySeconds", QString("0")).toInt();
+}
+
+void RGSettings::setBeginDelaySeconds(int val)
+{
+  QSettings settings;
+  settings.setValue("beginDelaySeconds", val);
+}
+
+int RGSettings::getEndDelaySeconds()
+{
+  QSettings settings;
+  return settings.value("endDelaySeconds", QString("0")).toInt();
+}
+
+void RGSettings::setEndDelaySeconds(int val)
+{
+  QSettings settings;
+  settings.setValue("endDelaySeconds", val);
+}
+
+
 
 QColor RGSettings::getPenColor()
 {

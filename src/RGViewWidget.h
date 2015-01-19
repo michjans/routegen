@@ -48,6 +48,7 @@ public slots:
 
 private slots:
   void playTimerEvent();
+	bool saveFrame(int frameCounter, const QString &dirName, const QString &filePrefix, QStringList &generatedBMPs);
 
 private:
   QGraphicsScene *mScene;
