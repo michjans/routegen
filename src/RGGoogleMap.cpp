@@ -82,21 +82,42 @@ void RGGoogleMap::accept()
 
 void RGGoogleMap::on_goButton_clicked(bool)
 {
-	QUrl url = ui.lineEdit->text();
-
-	//This is what we expect:
+	//This is what we still accept:
 	//http://maps.google.nl/?ie=UTF8&ll=52.36428,4.847116&spn=0.035902,0.077162&z=14
+	//this is what we expect since the new google maps version
+	//https://www.google.nl/maps/@52.374716,4.898623,12z
 
+	QString manUrl = ui.lineEdit->text();
+	QUrl url = manUrl;
 	QString latlon;
 	QString zoom;
-	if (url.hasFragment() || url.host().contains("google")){
+	if (url.hasFragment() || url.host().contains("google"))
+	{
 		latlon = url.queryItemValue ("ll");
 		zoom = url.queryItemValue ("z");
+		if (latlon.isEmpty() || zoom.isEmpty())
+		{
+			//Now try the new google maps URL format (the construction is not supported by QUrl, so parse the URL manually
+			//https://www.google.nl/maps/@52.374716,4.898623,12z
+			QStringList part1 = manUrl.split("/@");
+			if (part1.size() == 2)
+			{
+				QStringList locItems = part1[1].split(',');
+				if (locItems.size() > 2)
+				{
+					latlon = locItems[0] + "," + locItems[1];
+					zoom = locItems[2].mid(0, locItems[2].indexOf('z'));
+				}
+			}
+		}
 	}
-	if (latlon.isEmpty() || zoom.isEmpty()){
+	if (latlon.isEmpty() || zoom.isEmpty())
+	{
 		QMessageBox::warning(this, tr("Web Test"),
 												 tr("URL should have format similar like this:\n"
 														"http://maps.google.nl/?ie=UTF8&ll=52.36428,4.847116&spn=0.035902,0.077162&z=14\n"
+														"OR\n"
+														"https://www.google.nl/maps/@52.374716,4.898623,12z\n"
 														"Copy it from the paste link option from Google Maps in your browser."));
 		return;
 	}
@@ -129,6 +150,7 @@ void RGGoogleMap::on_webView_loadStarted ()
 
 QString RGGoogleMap::genHtml(const QString &latlon, const QString &zoom) const
 {
+	qDebug() << "Replace: LATLON = " << latlon << "; zoom = " << zoom;
 	QString html = m_html_template;
 	html.replace("LATLON", latlon);
 	html.replace("ZOOM", zoom);

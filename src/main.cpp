@@ -65,10 +65,10 @@
  *          Vehicle orientation (yes/no) is now a setting
  *          Deleting files in directory when not empty
  *          Adding custom vehicles from vehicle settings dialog
- *          TODO (bugfixes):
- *            -Sometimes crash in release version when editing existing route
- *  v1.7    Fix in googlemaps importer: Drag works again.
+ *  v1.7    Using ffmpeg codec on Windows
+ *          New version of google maps now supported
  *          Line width and style saved again
+ *          TODO: Option to add N seconds still frame before/after movie
  */
 
 extern const QString applicationName("Route Generator version 1.7-alpha");
