@@ -11,27 +11,43 @@
 This tutorial explains how to generate route movies, using Route Generator.
 </p>
 <h2>New in version 1.7</h2>
-<img src="movie-generation-preferences.png">
-<BR>
-<img src="advanced-preferences.png">
 <h3>1. Set begin/end delay</h3>
-You can now select a delay in seconds to add before the beginning or after the end of the generated movie (this delay will
-not be visible in the preview, only in the generated movie)
-<h3>2. Select different generator</h3>
 <p>
-It's now possible to select a different generator than bmp2avi on Windows, namely ffmpeg (on Linux this is the default).
-This encoder is quicker than bmp2avi and it's possible to use more different codec types (MPEG-4 is the default) and also select a different bitrate
-of the generated output video.
-If you want to do this, you will first have to download
-<a href="http://ffmpeg.zeranoe.com/builds/">the Zeranoe FFmpeg Windows builds</a>.
-To extract any of the builds you will need to download and install <a href="http://7-zip.org/">7-Zip</a>.
+You can now select a delay in seconds to add before the beginning or after the end of the generated movie (this delay will
+not be visible in the preview, only in the generated movie):
+<br>
+<img src="movie-generation-preferences.png">
+</p>
+<h3>2. Select FFmpeg as movie generator</h3>
+<p>
+It's now possible to select a different movie generator than bmp2avi on Windows, namely ffmpeg (on Linux this is the default).
+However, you will first need to download it (see instructions below):
+<br>
+<img src="advanced-preferences.png">
 </p>
 <p>
-After that you have extracted the downloaded 7-Zip file can select <i>ffmpeg</i> in the Advanced tab of the Route Generator Preferences window.
+This encoder works faster than bmp2avi and supports more different codec types (MPEG-4 is the default).
+Using this generator, it's also possible to select a different bitrate for the generated output video (this option will be added to the
+Movie Generator tab, once you have selected the ffmpeg generator.
+</p>
+<p>
+FFmpeg for Windows is not distributed with this version for Route Generator.
+If you want to use the FFmpeg generator, you will first have to download the Zeranoe FFmpeg Windows builds from:
+<strong>http://ffmpeg.zeranoe.com/builds/</strong> (copy and paste this link to your browser).
+You can either select the 32-bit Static or 64-bit Static version (however, I have only tested with the 32-bits version).
+</p>
+<p>
+To extract any of the builds you will need to download and install 7-Zip from:
+<strong>http://7-zip.org/</strong>
+</p>
+<p>
+After you have extracted the downloaded 7-Zip file, you can select <i>ffmpeg</i> in the Advanced tab of the Route Generator Preferences window.
 The program will then ask you for the location of the FFmpeg encoder. You will have to browse for the FFmpeg executable (ffmpeg.exe),
 which is usually located in the <i>bin</i> sub-directory of the extracted FFmpeg 7zip file:
 <br><br>
 <img src="select-ffmpeg.png"><br><br>
+After you have selected the FFmpeg generator, you will need to restart the Route Generator Preferences dialog, to re-configure your video settings for FFmpeg.
+The same will happen, when you switch back to bmp2avi.
 </p>
 <h3>3. New Google Maps import support</h3>
 Route Generator now supports the new interface of Google Maps. For the rest nothing has changed.
