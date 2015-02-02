@@ -53,6 +53,7 @@ RGEncVideo::~RGEncVideo()
 
 bool RGEncVideo::initCodecExecutable()
 {
+	mExecName = RGSettings::getVideoEncExec();
 	if (checkForCodecExecutable(mExecName)==false){
 		RGSettings::setAviCompression(QString());
 		mExecName = QFileDialog::getOpenFileName(NULL,
@@ -99,6 +100,8 @@ void RGEncVideo::updateFromSettings()
   mKeyFrameRate=RGSettings::getKeyFrameRate();
   mUi.keyFrSB->setValue(mKeyFrameRate);
   mUi.deleteBMPsCB->setChecked(RGSettings::getDeleteBMPs());
+	mUi.mBeginDelaySB->setValue(RGSettings::getBeginDelaySeconds());
+	mUi.mEndDelaySB->setValue(RGSettings::getEndDelaySeconds());
   mCompress=RGSettings::getAviCompression();
   if(mCompress==QString())
     mCompress=mCompressDefault;
@@ -114,6 +117,8 @@ void RGEncVideo::saveInSettings()
   mOutName=mUi.nameOutputLE->text();
   RGSettings::setAviOutName(mOutName);
   RGSettings::setDeleteBMPs(mUi.deleteBMPsCB->isChecked());
+	RGSettings::setBeginDelaySeconds(mUi.mBeginDelaySB->value());
+	RGSettings::setEndDelaySeconds(mUi.mEndDelaySB->value());
   mFps=mUi.fpsSB->value();
   RGSettings::setFps(mFps);
   mKeyFrameRate=mUi.keyFrSB->value();

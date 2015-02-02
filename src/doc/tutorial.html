@@ -6,11 +6,36 @@
 </head>
 
 <body>
-<p>
 <h1>Tutorial</h1>
+<p>
 This tutorial explains how to generate route movies, using Route Generator.
 </p>
+<h2>New in version 1.7</h2>
+<img src="movie-generation-preferences.png">
+<BR>
+<img src="advanced-preferences.png">
+<h3>1. Set begin/end delay</h3>
+You can now select a delay in seconds to add before the beginning or after the end of the generated movie (this delay will
+not be visible in the preview, only in the generated movie)
+<h3>2. Select different generator</h3>
 <p>
+It's now possible to select a different generator than bmp2avi on Windows, namely ffmpeg (on Linux this is the default).
+This encoder is quicker than bmp2avi and it's possible to use more different codec types (MPEG-4 is the default) and also select a different bitrate
+of the generated output video.
+If you want to do this, you will first have to download
+<a href="http://ffmpeg.zeranoe.com/builds/">the Zeranoe FFmpeg Windows builds</a>.
+To extract any of the builds you will need to download and install <a href="http://7-zip.org/">7-Zip</a>.
+</p>
+<p>
+After that you have extracted the downloaded 7-Zip file can select <i>ffmpeg</i> in the Advanced tab of the Route Generator Preferences window.
+The program will then ask you for the location of the FFmpeg encoder. You will have to browse for the FFmpeg executable (ffmpeg.exe),
+which is usually located in the <i>bin</i> sub-directory of the extracted FFmpeg 7zip file:
+<br><br>
+<img src="select-ffmpeg.png"><br><br>
+</p>
+<h3>3. New Google Maps import support</h3>
+Route Generator now supports the new interface of Google Maps. For the rest nothing has changed.
+See <strong>Open map</strong> below for the instructions about importing a map from Google Maps.
 <h2>Open map</h2>
 You can open an image file from an existing map or import a map from Google Maps (see below).
 
@@ -29,18 +54,18 @@ First set the correct resolution that you want to use for your output map.
 
 <p>
 Now browse to Google Maps in your browser and locate a map that you want to use. Then copy the link to the
-URL field in Route Generator as follows:
+URL field in Route Generator by:
 
 <p>
-Click Link to open the URL frame in your browser:<br>
+Selecting the properties menu and select <strong>Share or embed map</strong>:<br>
 <img src="google-link.png"><br><br>
-Right click the URL and select Copy:<br>
+Copy the link by selecting it and press Ctrl+c<br>
 <img src="google-link-copy.png"><br><br>
 Right click the URL field in Route Generator and select Paste:<br>
 <img src="google-link-paste.png"><br><br>
 </p>
 
-Now click "Go" to start loading the map. When you are satisfied, click OK to save the map and use it
+Now click "Go" to start loading the map. You can still drag the map a littlebit until you are satisfied. Then click OK to save the map and use it
 in Route Generator.
 
 <h2>Draw route</h2>
@@ -110,9 +135,9 @@ the generated *.BMP files.<br>
 </p>
 </p>
 <p>
-<h2>Modifying BMP2AVI preferences</h2>
+<h2>Modifying BMP2AVI/FFmpeg preferences</h2>
 <p>
-Since version 1.3 of Route Generator, it's possible to modify the settings that Bmp2Avi uses to
+It's possible to modify the settings that Bmp2Avi or FFmpeg uses to
 convert BMP's to an AVI file. To change these settings open the preferences through Edit->Preferences.
 Here you can change 6 Bmp2Avi settings:
 </p>
@@ -134,6 +159,10 @@ first and last frame will not be deleted, so you can still use them in your vide
 <h3>FPS</h3>
 <p>
 Here you can change the frame rate of the generated AVI (the default is 25).
+</p>
+<h3>Bitrate (FFmpeg generator only)</h3>
+<p>
+Here  you can change the bitrate (in kb/s) of the generated movie.
 </p>
 <h3>Key frame rate</h3>
 <p>

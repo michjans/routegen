@@ -4,13 +4,13 @@
 Name "Route Generator"
 
 ; The file to write
-OutFile "routegen-win32-1.6.exe"
+OutFile "routegen-win32-1.7.exe"
 
 ; The default installation directory
 InstallDir "$PROGRAMFILES\Route Generator"
 
 ; The text to prompt the user to enter a directory
-DirText "This will install Route Generator v1.6 on your computer. Choose a directory where Route Generator should be installed."
+DirText "This will install Route Generator v1.7 on your computer. Choose a directory where Route Generator should be installed."
 
 ; Registry key to check for directory (so if you install again, it will 
 ; overwrite the old one automatically)

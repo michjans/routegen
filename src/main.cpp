@@ -66,12 +66,12 @@
  *          Deleting files in directory when not empty
  *          Adding custom vehicles from vehicle settings dialog
  *  v1.7    Using ffmpeg codec on Windows
- *          New version of google maps now supported
+ *          URL format of new version of google maps now supported
  *          Line width and style saved again
- *          TODO: Option to add N seconds still frame before/after movie
+ *          Option to add N seconds still frame before/after movie
  */
 
-extern const QString applicationName("Route Generator version 1.7-alpha");
+extern const QString applicationName("Route Generator version 1.7");
 
 int main(int argc, char *argv[])
 {

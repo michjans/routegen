@@ -69,6 +69,10 @@ VERSION HISTORY
       -Vehicle orientation (yes/no) is now a setting
       -Deleting files in directory when not empty (when generating movie)
       -Adding custom vehicles from vehicle settings dialog
+1.7   -Using ffmpeg codec on Windows
+      -URL format of new version of google maps now supported
+      -Line width and style saved again
+      -Option to add N seconds still frame before/after movie
 
 INSTALLATION
 On Windows, you don't need to install it, you can just unzip everything in a directory of
