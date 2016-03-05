@@ -6,83 +6,47 @@
 </head>
 
 <body>
+<h1>New in version 1.7.1</h1>
+<p>
+FFmpeg for Windows is now distributed with the Windows version for Route Generator and will be selected as the default at installation.
+The Zeranoe FFmpeg Windows builds are provided by Kyle Schwarz from: <strong>http://ffmpeg.zeranoe.com/builds/</strong>
+</p>
+<p>
+FFmpeg works faster than bmp2avi and supports more different codec types (MPEG-4 is the default).
+Using this generator, it's also possible to select a different bitrate for the generated output video.
+</p>
+<p>
+If you still want to use Bmp2Avi as generator, you can always switch back using Edit->Preferences
+(see section: <i>Modifying BMP2AVI/FFmpeg preferences</i> at the end of the tutorial).
+</p>
+
 <h1>Tutorial</h1>
 <p>
 This tutorial explains how to generate route movies, using Route Generator.
 </p>
-<h2>New in version 1.7</h2>
-<h3>1. Set begin/end delay</h3>
-<p>
-You can now select a delay in seconds to add before the beginning or after the end of the generated movie (this delay will
-not be visible in the preview, only in the generated movie):
-<br>
-<img src="movie-generation-preferences.png">
-</p>
-<h3>2. Select FFmpeg as movie generator</h3>
-<p>
-It's now possible to select a different movie generator than bmp2avi on Windows, namely ffmpeg (on Linux this is the default).
-However, you will first need to download it (see instructions below):
-<br>
-<img src="advanced-preferences.png">
-</p>
-<p>
-This encoder works faster than bmp2avi and supports more different codec types (MPEG-4 is the default).
-Using this generator, it's also possible to select a different bitrate for the generated output video (this option will be added to the
-Movie Generator tab, once you have selected the ffmpeg generator.
-</p>
-<p>
-FFmpeg for Windows is not distributed with this version for Route Generator.
-If you want to use the FFmpeg generator, you will first have to download the Zeranoe FFmpeg Windows builds from:
-<strong>http://ffmpeg.zeranoe.com/builds/</strong> (copy and paste this link to your browser).
-You can either select the 32-bit Static or 64-bit Static version (however, I have only tested with the 32-bits version).
-</p>
-<p>
-To extract any of the builds you will need to download and install 7-Zip from:
-<strong>http://7-zip.org/</strong>
-</p>
-<p>
-After you have extracted the downloaded 7-Zip file, you can select <i>ffmpeg</i> in the Advanced tab of the Route Generator Preferences window.
-The program will then ask you for the location of the FFmpeg encoder. You will have to browse for the FFmpeg executable (ffmpeg.exe),
-which is usually located in the <i>bin</i> sub-directory of the extracted FFmpeg 7zip file:
-<br><br>
-<img src="select-ffmpeg.png"><br><br>
-After you have selected the FFmpeg generator, you will need to restart the Route Generator Preferences dialog, to re-configure your video settings for FFmpeg.
-The same will happen, when you switch back to bmp2avi.
-</p>
-<h3>3. New Google Maps import support</h3>
-Route Generator now supports the new interface of Google Maps. For the rest nothing has changed.
-See <strong>Open map</strong> below for the instructions about importing a map from Google Maps.
+
 <h2>Open map</h2>
-You can open an image file from an existing map or import a map from Google Maps (see below).
+You can open an image file from an existing map or import a map from Google Maps (see below) or you can
+grab a frame of a map you filmed with your camera, save it as BMP file and use that image as a map background.
+Or check the size of the screenshot and create an image yourself, with the same size.
 
 For the best results, the size of the map should be the same as the resolution of the movie
 in which you want to place the final route movie
 (e.g. 768 x 576 for standard DVD or 1920×1080 for full HD). Route Generator can use any format and
 does not check this, so you should find out what the best format is you want to use.
-The easiest way is to grab a frame of a map you filmed with your camera, save it as BMP file and use
-that image as a map background. Or check the size of the screenshot and create an image yourself,
-with the same size.
 
 <h3>Import map from Google Maps</h3>
-<strong>Note:</strong> Google changes it's interface regularly, so the screenshots below probably don't completely match.<br>
 To import a map from Google Maps, go to File->Import from Google Maps or click <img src="google-maps-logo.png">.
 First set the correct resolution that you want to use for your output map.
 
 <p>
-Now browse to Google Maps in your browser and locate a map that you want to use. Then copy the link to the
-URL field in Route Generator by:
-
-<p>
-Selecting the properties menu and select <strong>Share or embed map</strong>:<br>
-<img src="google-link.png"><br><br>
-Copy the link by selecting it and press Ctrl+c<br>
-<img src="google-link-copy.png"><br><br>
-Right click the URL field in Route Generator and select Paste:<br>
-<img src="google-link-paste.png"><br><br>
+Now browse to Google Maps in your browser and locate a map that you want to use. Then copy the link from your browser to the
+URL field in Route Generator: <img src="google-link-paste.png">.
 </p>
-
-Now click "Go" to start loading the map. You can still drag the map a littlebit until you are satisfied. Then click OK to save the map and use it
+<p>
+Now click "Go" to start loading the map (this might take a while). You can still drag the map a littlebit until you are satisfied. Then click OK to save the map (so you can re-use it later) and then use it
 in Route Generator.
+</p>
 
 <h2>Draw route</h2>
 Activate <i>Draw mode</i> (from menu: Tools->Draw mode, or click <img src="drawmode.png">).
@@ -137,14 +101,6 @@ the BMP-files only and another 30MB for the generated AVI movie!
 of the required diskspace, before you start generating the route)
 </p>
 <p>
-If somehow bmp2avi is not available, you can download it from:
-<u>http://www.divx-digest.com/software/bmp2avi.html</u> 
-<br>
-<u>Make sure to download the commandline version (<i>bmp2avi.exe</i>)!</u>
-You can extract <i>bmp2avi.exe</i> into any directory.
-When Route Generator starts up, it will automatically ask you to locate the file <i>bmp2avi.exe</i>.
-</p>
-<p>
 After the movie is generated, you can import it in you video editing software. You can optionally 
 finetune the movie by adding extra begin/end frames that you pick from the directory containing 
 the generated *.BMP files.<br>
@@ -155,11 +111,11 @@ the generated *.BMP files.<br>
 <p>
 It's possible to modify the settings that Bmp2Avi or FFmpeg uses to
 convert BMP's to an AVI file. To change these settings open the preferences through Edit->Preferences.
-Here you can change 6 Bmp2Avi settings:
+Here you can change these settings:
 </p>
-<h3>Bmp2Avi location</h3>
+<h3>Bmp2Avi or FFMpeg location</h3>
 <p>
-Here you can change the location of bmp2avi.exe, in case you have it in a different location
+Here you can change the location of bmp2avi.exe or ffmpeg.exe (Windows only), in case you have it in a different location
 or for some reason Route Generator is unable to find it anymore.
 </p>
 <h3>Name of output AVI</h3>
@@ -171,6 +127,13 @@ when you change this to "mymovie", the generated movie will be called "mymovie.a
 <p>
 When you check this, the BMP's will automatically be deleted after the bmp2avi conversion. The
 first and last frame will not be deleted, so you can still use them in your video editing software.
+</p>
+<h3>Set begin/end delay</h3>
+<p>
+You can select a delay in seconds to add before the beginning or after the end of the generated movie (this delay will
+not be visible in the preview, only in the generated movie):
+<br>
+<img src="movie-generation-preferences.png">
 </p>
 <h3>FPS</h3>
 <p>
@@ -186,10 +149,22 @@ This value indicates after how many frames a key frame is created (the default i
 </p>
 <h3>Codec</h3>
 <p>
-Here you can change the codec that Bmp2Avi uses to generate the movie. This can result
+Here you can change the codec that Bmp2Avi  or FFMpeg uses to generate the movie. This can result
 in smaller movies, but it's possible that not all codecs are accepted by your video editing software.
-(the default is "Uncompressed")
 </p>
+<h3>Switch between FFmpeg or Bmp2Avi as movie generator (Advanced tab)</h3>
+<p>
+In the Advanced tab it's possible to switch movie generator between ffmpeg or bmp2avi on Windows (on Linux FFmpeg this is the only option).
+<br>
+<img src="advanced-preferences.png">
 </p>
+<p>
+The program will then ask you for the location of the FFmpeg or bmp2avi executable. You will have to browse for the correct executable (ffmpeg.exe or bmp2avi.exe).
+Since version 1.7.1 FFMpeg is also included in a sub-directory of the Route Generator installation.
+<br><br>
+<img src="select-ffmpeg.png"><br><br>
+After you have selected the correct generator, you will need to restart the Route Generator Preferences dialog, to re-configure your video settings for FFmpeg or Bmp2Avi.
+</p>
+
 </body>
 </html>

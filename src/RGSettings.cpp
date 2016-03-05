@@ -23,7 +23,7 @@
 QString RGSettings::getVideoEncoder()
 {
   QSettings settings;
-  return settings.value("videoEncoder", "bmp2avi").toString();
+  return settings.value("videoEncoder", "ffmpeg").toString();
 }
 
 void RGSettings::setVideoEncoder(const QString &exec)
@@ -35,7 +35,7 @@ void RGSettings::setVideoEncoder(const QString &exec)
 QString RGSettings::getVideoEncExec()
 {
   QSettings settings;
-  return settings.value("videoEncExec", QDir::currentPath() + "/bmp2avi/bmp2avi.exe").toString();
+  return settings.value("videoEncExec", QDir::currentPath() + "/ffmpeg/bin/ffmpeg.exe").toString();
 }
 
 void RGSettings::setVideoEncExec(const QString &exec)

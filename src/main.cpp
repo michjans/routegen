@@ -69,9 +69,10 @@
  *          URL format of new version of google maps now supported
  *          Line width and style saved again
  *          Option to add N seconds still frame before/after movie
+ *  v1.7.1  FFMpeg default converter and provided with the installation
  */
 
-extern const QString applicationName("Route Generator version 1.7");
+extern const QString applicationName("Route Generator version 1.7.1");
 
 int main(int argc, char *argv[])
 {

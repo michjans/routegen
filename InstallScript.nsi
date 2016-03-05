@@ -4,13 +4,13 @@
 Name "Route Generator"
 
 ; The file to write
-OutFile "routegen-win32-1.7.exe"
+OutFile "routegen-win32-1.7.1.exe"
 
 ; The default installation directory
 InstallDir "$PROGRAMFILES\Route Generator"
 
 ; The text to prompt the user to enter a directory
-DirText "This will install Route Generator v1.7 on your computer. Choose a directory where Route Generator should be installed."
+DirText "This will install Route Generator v1.7.1 (including ffmpeg) on your computer. Choose a directory where Route Generator should be installed."
 
 ; Registry key to check for directory (so if you install again, it will 
 ; overwrite the old one automatically)
@@ -76,7 +76,11 @@ Section "Route Generator (required)" MainInstall
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Route Generator" "DisplayName" "Route Generator"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Route Generator" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Route Generator" "NoModify" 1
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Route Generator" "NoRepair" 1  
+  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Route Generator" "NoRepair" 1 
+  
+  ; By removing these keys from the registry, FFMpeg will be selected by default
+  DeleteRegValue HKCU "Software\MJProductions\Route Generator" "videoEncExec"
+  DeleteRegValue HKCU "Software\MJProductions\Route Generator" "videoEncoder"
 SectionEnd
 
 ; Optional section (can be disabled by the user)

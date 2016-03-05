@@ -76,7 +76,10 @@ bool RGEncFFmpeg::initCodecs()
   //Check if FFmpeg is present
   QProcess checkFFmpeg;
   checkFFmpeg.setProcessChannelMode(QProcess::MergedChannels);
-  checkFFmpeg.start(mExecName + " -version");
+
+  QStringList arguments;
+  arguments << "-version";
+  checkFFmpeg.start(mExecName, arguments);
   if (!checkFFmpeg.waitForFinished())
 	{
     QMessageBox::warning (NULL, "No video encoder", "FFmpeg has not been found, video generation will be unavailable.\nPlease install FFmpeg and restart the application.");
@@ -88,7 +91,7 @@ bool RGEncFFmpeg::initCodecs()
 	}
 
   QProcess *ffmpegProcess = new QProcess(this);
-  QStringList arguments;
+	arguments.clear();
   //List codecs
   arguments << "-codecs";
   //ffmpegProcess = new QProcess(this);

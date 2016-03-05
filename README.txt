@@ -1,9 +1,9 @@
-This is Route Generator version 1.7
+This is Route Generator version 1.7.1
 
 Route Generator can be used to generate route maps to be used in video editing
 software.
 
-Copyright (C) 2008-2013 Michiel Jansen.
+Copyright (C) 2008-2016 Michiel Jansen.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -73,7 +73,14 @@ VERSION HISTORY
       -URL format of new version of google maps now supported
       -Line width and style saved again
       -Option to add N seconds still frame before/after movie
-
+1.7.1 -FFmpeg for Windows is now distributed with the Windows version of
+         Route Generator and will be selected as the default at installation.
+         The Zeranoe FFmpeg Windows builds are provided by Kyle Schwarz from:
+		 http://ffmpeg.zeranoe.com/builds/
+		 NOTE: To safe space the executables ffplay.exe and ffprobe.exe are
+		            removed from the distribution.
+	  
+	  
 INSTALLATION
 On Windows, you don't need to install it, you can just unzip everything in a directory of
 your choice. After that you can execute routegen.exe or create a shortcut to it
@@ -99,7 +106,18 @@ available on my website.
 Route Generator is developed using the GPL version of Qt 4.7, which can be
 downloaded from: http://qt.nokia.com/downloads
 
-On Windows, Route Generator makes use of a freeware 3rdparty tool:
+On Linux, Route Generator makes use of a 3rdparty tool:
+FFmpeg licensed under the LGPLv2.1.
+This tool is not included in the source, so you will have to install it on
+your computer before running Route Generator. Make sure it is installed if you
+want to be able to generate a movie.
+
+As of version 1.7.1 FFmpeg for Windows is also distributed with Route Generator
+and will be selected as the default at installation.
+The Zeranoe FFmpeg Windows builds are provided by Kyle Schwarz from:
+http://ffmpeg.zeranoe.com/builds
+
+On Windows, Route Generator can also make use of a freeware 3rdparty tool:
 Bmp2Avi (Copyright (C) Paul Roberts 1996 - 1998)
 This tool is available in the subdirectory bmp2avi. By default Route Generator
 tries to find bmp2avi.exe in that directory, so you can leave it there.
@@ -108,12 +126,6 @@ when it starts up. If it cannot find it in the default location, it will ask
 you to browse to a different location.
 Bmp2Avi can freely be re-distributed as long as you provide the documentation
 with it (also located in the bmp2avi sub-directory).
-
-On linux, Route Generator makes use of a 3rdparty tool:
-FFmpeg licensed under the LGPLv2.1.
-This tool is not included in the source, so you will have to install it on
-your computer before running Route Generator. Make sure it is installed if you
-want to be able to generate a movie.
 
 AVAILABILTY
 I've only build the executable version of Route Generator for Windows, because
