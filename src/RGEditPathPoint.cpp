@@ -20,6 +20,10 @@
 
 #include "RGEditPathPoint.h"
 
+#include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
+
+
 RGEditPathPoint::RGEditPathPoint(QGraphicsItem *parent,QPoint point) :
   QGraphicsObject(parent),
   mMouseMove(false)

@@ -42,7 +42,7 @@ public:
    * Adds a custom vehicle.
    * @param  fileName the full path to the icon image to be added
    * @param  errStr if vehicle coudn't be added, contains the error message
-   * @return the added vehicle or NULL if failed
+   * @return the added vehicle or nullptr if failed
    */
   RGVehicle* addCustomVehicle(const QString &fileName, QString &errStr);
 

@@ -19,7 +19,7 @@
 */
 
 
-#include <QtGui>
+#include <QtWidgets>
 
 #include "RGMainWindow.h"
 #include "RGSettings.h"
@@ -41,7 +41,7 @@ extern const QString applicationName;
 
 RGMainWindow::RGMainWindow(QWidget *parent)
   :QMainWindow(parent),
-	 mVideoEncoder(NULL)
+     mVideoEncoder(nullptr)
 {
   //Set currentPath
   QDir::setCurrent(QCoreApplication::applicationDirPath());
@@ -307,7 +307,7 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
     mRoute->setEditMode(actionDraw_mode->isChecked());
 
     if (generateBMPOK) {
-			if (mVideoEncoder != NULL && mVideoEncoder->exists())
+            if (mVideoEncoder != nullptr && mVideoEncoder->exists())
 			{
 				blockUserInteraction(true);
 				QObject::connect(mVideoEncoder,SIGNAL(movieGenerationFinished()),this,SLOT(movieGenerationFinished()));
@@ -340,14 +340,14 @@ void RGMainWindow::on_action_About_triggered(bool checked)
   QString txt = QString(
         "<html>"
         "<center>"
-        "<p><b>") + applicationName + QString(" Copyright (C) 2008-2016  Michiel Jansen </b></p>"
+        "<p><b>") + applicationName + QString(" Copyright (C) 2008-2019  Michiel Jansen </b></p>"
                                               "<p>This program comes with ABSOLUTELY NO WARRANTY</p>"
                                               "This is free software, and you are welcome to redistribute it "
                                               "under certain conditions; see LICENSE file for details.</p>"
-                                              "<p>This program was developed using the GPL version of Qt 4.7<br>"
-                                              "(Copyright (C) 2008-2011 Nokia Corporation.),<br>"
-                                              "Qt can be <a href=\"http://qt.nokia.com/downloads\"> downloaded </a>"
-                                              "from the <a href=\"http://qt.nokia.com\">Nokia Qt</a> website. </p>"
+                                              "<p>This program was developed using the GPL version of Qt 5.12<br>"
+                                              "(Copyright (C) 2008-2019  The Qt Company Ltd. All rights reserved),<br>"
+                                              "Qt can be <a href=\"https://www.qt.io/download\"> downloaded </a>"
+                                              "from the <a href=\"https://www.qt.io\">Qt</a> website. </p>"
                                               "<p>The conversion from BMP to AVI on Windows is provided by:<br>"
 																							"<i>FFmpeg win32 static build by Kyle Schwarz.<br>"
 																							"See: <a href=\"http://ffmpeg.zeranoe.com/builds/\">Zeranoe's FFmpeg Builds Home Page</a></i><br>"
@@ -416,7 +416,7 @@ void RGMainWindow::movieGenerationFinished()
 
 void RGMainWindow::initVideoEncoderFromSettings()
 {
-	if ( mVideoEncoder != NULL)
+    if ( mVideoEncoder != nullptr)
 	{
 		delete mVideoEncoder;
 	}

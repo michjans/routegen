@@ -21,7 +21,8 @@
 #include <QDir>
 #include <QFile>
 #include <QDebug>
-#include <QDesktopServices>
+#include <QStandardPaths>
+
 
 #include "RGSettings.h"
 #include "RGVehicleList.h"
@@ -45,7 +46,9 @@ RGVehicleList::RGVehicleList()
 
   //Also look in user's local data directory for custom vehicles
   //TODO: Should also be working on linux: check! then above linux dependent block can be removed!
-  vehicleDir.setPath(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/vehicles");
+
+
+  vehicleDir.setPath(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/vehicles");
   if (vehicleDir.exists())
   {
     vehicles.append(vehicleDir.entryInfoList());
@@ -62,7 +65,7 @@ RGVehicleList::RGVehicleList()
   int i=1;
   for (QFileInfoList::iterator it = vehicles.begin(); it != vehicles.end(); it++){
     //Add vehicle (and mark vehicles that reside in custom vehicle path as custom)
-    if (addVehicle(*it, it->absoluteFilePath().startsWith(vehicleDir.absolutePath())) == NULL)
+    if (addVehicle(*it, it->absoluteFilePath().startsWith(vehicleDir.absolutePath())) == nullptr)
       continue;
     if(it->baseName()==RGSettings::getLastVehicleName())
       mCurrentVehicleId=i;
@@ -99,7 +102,7 @@ int RGVehicleList::getCurrentVehicleId()
 void RGVehicleList::setCurrentVehicleId(int idx)
 {
   //set no parent:
-  mMap.value(mCurrentVehicleId)->setParentItem(NULL);
+  mMap.value(mCurrentVehicleId)->setParentItem(nullptr);
   mMap.value(mCurrentVehicleId)->setVisible(false);
 
   mCurrentVehicleId=idx;
@@ -135,12 +138,12 @@ void RGVehicleList::loadVehiclesSettings()
 
 RGVehicle* RGVehicleList::addCustomVehicle(const QString &fileName, QString &errStr)
 {
-  QDir customVehicleDir = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/vehicles";
+  QDir customVehicleDir = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/vehicles";
   if (!customVehicleDir.exists())
   {
     //It should have been created in constructor, so it's an error if this didn't succeed
     errStr = "Unable to find folder for custom vehicles.";
-    return NULL;
+    return nullptr;
   }
 
   QFile orgFile(fileName);
@@ -148,11 +151,11 @@ RGVehicle* RGVehicleList::addCustomVehicle(const QString &fileName, QString &err
   if (!orgFile.copy(destFile.absoluteFilePath()))
   {
     errStr = "Unable to copy custom vehicle to folder for custom vehicles.";
-    return NULL;
+    return nullptr;
   }
 
   RGVehicle *vehicle = addVehicle(destFile, true);
-  if (vehicle == NULL)
+  if (vehicle == nullptr)
     errStr = "Error adding vehicle (unexpected file format or error in file?)";
 
   return vehicle;
@@ -167,7 +170,7 @@ RGVehicle* RGVehicleList::addVehicle(const QFileInfo &destFile, bool custom)
                            RGSettings::getVehicleOrigin(destFile.baseName()));
   if (vehicle->getRawSize()==0){
     delete vehicle;
-    return NULL;
+    return nullptr;
   }
   vehicle->setIsCustom(custom);
   mMap.insert(count(),vehicle);

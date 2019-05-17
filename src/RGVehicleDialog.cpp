@@ -21,16 +21,17 @@
 #include <QDebug>
 #include <QIcon>
 #include <QPainter>
-#include <QDesktopServices>
+#include <QStandardPaths>
 #include <QFileDialog>
+#include <QMessageBox>
 
 #include "RGVehicleDialog.h"
 
 RGVehicleDialog::RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList,const QPen &pen)
   : QDialog(parent),
     mVehicleList(vehicleList),
-    mVehicleOrigin(NULL),
-    mPlayTimer(NULL),
+    mVehicleOrigin(nullptr),
+    mPlayTimer(nullptr),
     mTimerCounter(0)
 {
   ui.setupUi(this);
@@ -39,7 +40,7 @@ RGVehicleDialog::RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList,cons
     ui.vehicleListWidget->addItem(item);
   }
 
-  if (mPlayTimer == NULL) {
+  if (mPlayTimer == nullptr) {
     mPlayTimer = new QTimer(this);
     QObject::connect(mPlayTimer, SIGNAL(timeout()), this, SLOT(playTimerEvent()));
   }
@@ -79,12 +80,12 @@ void RGVehicleDialog::reject()
 void RGVehicleDialog::on_addVehiclePB_clicked(bool)
 {
   QString fileName = QFileDialog::getOpenFileName(this, tr("Select image/icon file to add as custom vehicle"),
-                                                  QDesktopServices::storageLocation(QDesktopServices::PicturesLocation),
+                                                  QStandardPaths::writableLocation(QStandardPaths::PicturesLocation),
                                                   tr("Images (*.jpg *.gif *.png)"));
   if (!fileName.isNull()){
     QString errStr;
     RGVehicle *vehicle = mVehicleList->addCustomVehicle(fileName, errStr);
-    if (vehicle != NULL)
+    if (vehicle != nullptr)
     {
       QListWidgetItem *item = new QListWidgetItem(QIcon(vehicle->getPixmapAtSize(40)),vehicle->getName());
       ui.vehicleListWidget->addItem(item);
@@ -109,7 +110,7 @@ void RGVehicleDialog::on_removeVehiclePB_clicked(bool)
   //Remove currently selected vehicle from list as well
   //Current row will be changed automatically by delete, and currentRowChanged will occur, but
   //VehicleOrigin will implicitely be deleted with the item as well, so reset pointer.
-  mVehicleOrigin = NULL;
+  mVehicleOrigin = nullptr;
   delete ui.vehicleListWidget->currentItem();
 }
 

@@ -20,6 +20,10 @@
 
 #include "RGEditPath.h"
 
+#include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
+#include <QGraphicsView>
+
 RGEditPath::RGEditPath(QGraphicsItem *parent) :
   QGraphicsObject(parent),
   mBoundingRect(QRectF()),
@@ -29,7 +33,7 @@ RGEditPath::RGEditPath(QGraphicsItem *parent) :
 {
   setPos(0,0);
   setCursor(Qt::CrossCursor);
-  setAcceptsHoverEvents(true);
+  setAcceptHoverEvents(true);
   setFlag(QGraphicsItem::ItemHasNoContents);
 }
 

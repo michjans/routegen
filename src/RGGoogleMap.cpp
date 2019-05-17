@@ -20,28 +20,8 @@
 #include "RGGoogleMap.h"
 #include "RGSettings.h"
 
-#include <QtGui>
-
-/**
- * Workaround with google api, dragging the map doesn't work,
- * emulating Chrome, fixes this.
- */
-class myWebPage : public QWebPage
-{
-protected:
-
-#if 0
-		QString userAgentForUrl(const QUrl& ) const
-		{
-        return "Chrome/1.0";
-    }
-
-		void javaScriptConsoleMessage ( const QString & message, int lineNumber, const QString & sourceID )
-		{
-			qDebug() << "Javascript: " << sourceID << ":" << lineNumber << ":" << message;
-		}
-#endif
-};
+#include <QtWidgets>
+#include <QUrlQuery>
 
 RGGoogleMap::RGGoogleMap(QWidget *parent)
 	: QDialog(parent)
@@ -62,7 +42,8 @@ RGGoogleMap::RGGoogleMap(QWidget *parent)
   ui.spinBoxX->setValue(RGSettings::getGMXResolution());
   ui.spinBoxY->setValue(RGSettings::getGMYResolution());
 
-  ui.webView->setPage(new myWebPage());
+  //TODO:PORT!!!
+  //ui.webView->setPage(new myWebPage());
 
 	//Init map resolution
 	on_fixButton_clicked(true);
@@ -88,13 +69,14 @@ void RGGoogleMap::on_goButton_clicked(bool)
 	//https://www.google.nl/maps/@52.374716,4.898623,12z
 
 	QString manUrl = ui.lineEdit->text();
-	QUrl url = manUrl;
+    QUrl url(manUrl);
+    QUrlQuery urlQuery(url);
 	QString latlon;
 	QString zoom;
 	if (url.hasFragment() || url.host().contains("google"))
 	{
-		latlon = url.queryItemValue ("ll");
-		zoom = url.queryItemValue ("z");
+        latlon = urlQuery.queryItemValue ("ll");
+        zoom = urlQuery.queryItemValue ("z");
 		if (latlon.isEmpty() || zoom.isEmpty())
 		{
 			//Now try the new google maps URL format (the construction is not supported by QUrl, so parse the URL manually
@@ -122,9 +104,9 @@ void RGGoogleMap::on_goButton_clicked(bool)
 		return;
 	}
 
-
-	ui.webView->setHtml(genHtml(latlon, zoom));
-	ui.webView->reload();
+    //TODO:PORT!!!
+    //ui.webView->setHtml(genHtml(latlon, zoom));
+    //ui.webView->reload();
 }
 
 void RGGoogleMap::on_fixButton_clicked(bool)

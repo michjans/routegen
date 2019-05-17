@@ -55,7 +55,7 @@ RGSettingsDialog::RGSettingsDialog(RGEncVideo *videoSettings,QWidget *parent)
 
 RGSettingsDialog::~RGSettingsDialog()
 {
-  ui.tabWidget->widget(0)->setParent(NULL);
+  ui.tabWidget->widget(0)->setParent(nullptr);
 }
 
 int RGSettingsDialog::getSmoothCoef()

@@ -20,6 +20,8 @@
 
 #include "RGViewWidget.h"
 #include "RGSettings.h"
+#include <QMessageBox>
+#include <QProgressDialog>
 
 //The number of field with of the numbers before the generated file names,
 //e.g. if 5 then always 5 digits, e.g. map00001.bmp, etc.
@@ -29,7 +31,7 @@ extern const QString applicationName;
 
 RGViewWidget::RGViewWidget(QWidget *parent) :
   QGraphicsView(parent),
-  mPlayTimer(NULL),
+  mPlayTimer(nullptr),
   mTimerCounter(0)
 {
   mScene = new QGraphicsScene;
@@ -43,7 +45,7 @@ RGViewWidget::RGViewWidget(QWidget *parent) :
   mWelcomeText->setDefaultTextColor(Qt::blue);
 
   //timer
-  if (mPlayTimer == NULL) {
+  if (mPlayTimer == nullptr) {
     mPlayTimer = new QTimer(this);
     QObject::connect(mPlayTimer, SIGNAL(timeout()), this, SLOT(playTimerEvent()));
   }
@@ -71,7 +73,7 @@ void RGViewWidget::play()
 
 void RGViewWidget::stop()
 {
-  if (mPlayTimer == NULL || !mPlayTimer->isActive()) return;
+  if (mPlayTimer == nullptr || !mPlayTimer->isActive()) return;
   //Finished
   mPlayTimer->stop();
   mRoute->startPlayback(false);
@@ -149,9 +151,9 @@ bool RGViewWidget::generateMovie(const QString &dirName, const QString &filePref
 
 void RGViewWidget::loadImage(const QPixmap &pm)
 {
-  if(mWelcomeText!=NULL){
+  if(mWelcomeText!=nullptr){
     delete mWelcomeText;
-    mWelcomeText=NULL;
+    mWelcomeText=nullptr;
   }
   mScene->setBackgroundBrush(pm);
   this->setCacheMode(QGraphicsView::CacheBackground);

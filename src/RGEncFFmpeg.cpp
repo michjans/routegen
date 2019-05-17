@@ -82,7 +82,7 @@ bool RGEncFFmpeg::initCodecs()
   checkFFmpeg.start(mExecName, arguments);
   if (!checkFFmpeg.waitForFinished())
 	{
-    QMessageBox::warning (NULL, "No video encoder", "FFmpeg has not been found, video generation will be unavailable.\nPlease install FFmpeg and restart the application.");
+    QMessageBox::warning (nullptr, "No video encoder", "FFmpeg has not been found, video generation will be unavailable.\nPlease install FFmpeg and restart the application.");
 		return false;
 	}
   else

@@ -20,6 +20,7 @@
 
 #include "RGEncVideo.h"
 #include <QtGui>
+#include <QFileDialog>
 #include <RGSettings.h>
 
 RGEncVideo::RGEncVideo(QWidget *parent) :
@@ -56,7 +57,7 @@ bool RGEncVideo::initCodecExecutable()
 	mExecName = RGSettings::getVideoEncExec();
 	if (checkForCodecExecutable(mExecName)==false){
 		RGSettings::setAviCompression(QString());
-		mExecName = QFileDialog::getOpenFileName(NULL,
+		mExecName = QFileDialog::getOpenFileName(nullptr,
                    QString("Select the directory where " + encoderName() + " is located."),
                    QDir::currentPath(),
                    "Executables (*.exe)");
@@ -68,7 +69,7 @@ bool RGEncVideo::initCodecExecutable()
   }
   else
 	{
-    QMessageBox::warning (NULL, tr("No video encoder found"), encoderName() + tr(" has not been found, therefore video generation will be unavailable.") +
+    QMessageBox::warning (nullptr, tr("No video encoder found"), encoderName() + tr(" has not been found, therefore video generation will be unavailable.") +
                           tr("\nYou can set ") + encoderName() + tr(" directory in the preferences"));
     mExecName=QString();
   }
@@ -143,7 +144,7 @@ void RGEncVideo::createEncodingProcess(const QString &dirName,const QString &vid
           "</html>"
           );
 
-    QMessageBox::information (NULL, "Map Generation Finished", txt );
+    QMessageBox::information (nullptr, "Map Generation Finished", txt );
     emit movieGenerationFinished();
     return;
   }
@@ -155,7 +156,7 @@ void RGEncVideo::createEncodingProcess(const QString &dirName,const QString &vid
   mVideoEncProcess->setWorkingDirectory(dirName);
   mVideoEncProcess->start(videoEncExec, arguments);
 
-  mProcessWaitMessage = new QMessageBox(NULL);
+  mProcessWaitMessage = new QMessageBox(nullptr);
   mProcessWaitMessage->setWindowTitle("One moment please...");
   mProcessWaitMessage->setText(QString("Executing ") + encoderName() + " to convert BMP files to video file, one moment please...");
   mProcessWaitMessage->setStandardButtons(QMessageBox::NoButton);
@@ -178,7 +179,7 @@ void RGEncVideo::encodingProcessFinished(int exitCode, QProcess::ExitStatus exit
     logFile.write(output);
     logFile.close();
   } else {
-    QMessageBox::critical (NULL, "Error",
+    QMessageBox::critical (nullptr, "Error",
                            QString("Unable to write ") + logFileName + "! Disk full or no permissions?");
   }
 
@@ -195,10 +196,10 @@ void RGEncVideo::encodingProcessFinished(int exitCode, QProcess::ExitStatus exit
                                                                          "</center>"
                                                                          "</html>"
                                                                          );
-    QMessageBox::information (NULL, "Map Generation Finished", txt );
+    QMessageBox::information (nullptr, "Map Generation Finished", txt );
 
   } else {
-    QMessageBox::critical (NULL, "Error", encoderName() + " did not finish successfully! See file "+ logFileName +" in output directory for details.");
+    QMessageBox::critical (nullptr, "Error", encoderName() + " did not finish successfully! See file "+ logFileName +" in output directory for details.");
   }
 
   mVideoEncProcess->deleteLater();
@@ -211,12 +212,12 @@ void RGEncVideo::encodingProcessError(QProcess::ProcessError)
 	{
 		delete mProcessWaitMessage;
 	}
-  QMessageBox::critical (NULL, "Error", encoderName() + " execution failed!" );
+  QMessageBox::critical (nullptr, "Error", encoderName() + " execution failed!" );
 
   mVideoEncProcess->kill();
 
   if (mVideoEncProcess->state() != QProcess::NotRunning)
-    QMessageBox::critical (NULL, "Error", QString("Unable to kill ") + encoderName() + ", check your processes!" );
+    QMessageBox::critical (nullptr, "Error", QString("Unable to kill ") + encoderName() + ", check your processes!" );
 
   mVideoEncProcess->deleteLater();
   emit movieGenerationFinished();
