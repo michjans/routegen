@@ -5,9 +5,9 @@
 #-------------------------------------------------
 
 QT += core gui
+QT += widgets
+QT += webkitwidgets
 #QT += webenginewidgets
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = routegen
 TEMPLATE = app

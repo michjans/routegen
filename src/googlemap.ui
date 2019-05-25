@@ -99,12 +99,18 @@ p, li { white-space: pre-wrap; }
         <x>0</x>
         <y>0</y>
         <width>716</width>
-        <height>526</height>
+        <height>514</height>
        </rect>
       </property>
       <layout class="QGridLayout">
        <item row="0" column="0">
-        <widget class="QWidget" name="webView" native="true"/>
+        <widget class="QWebView" name="webView">
+         <property name="url">
+          <url>
+           <string>about:blank</string>
+          </url>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -129,6 +135,13 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKitWidgets/QWebView</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="routegen.qrc"/>
  </resources>

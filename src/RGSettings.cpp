@@ -35,7 +35,11 @@ void RGSettings::setVideoEncoder(const QString &exec)
 QString RGSettings::getVideoEncExec()
 {
   QSettings settings;
+#ifdef __linux__
+  return settings.value("videoEncExec", "/usr/bin/ffmpeg").toString();
+#else
   return settings.value("videoEncExec", QDir::currentPath() + "/ffmpeg/bin/ffmpeg.exe").toString();
+#endif
 }
 
 void RGSettings::setVideoEncExec(const QString &exec)

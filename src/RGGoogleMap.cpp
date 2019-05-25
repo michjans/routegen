@@ -23,6 +23,28 @@
 #include <QtWidgets>
 #include <QUrlQuery>
 
+/**
+ * Workaround with google api, dragging the map doesn't work,
+ * emulating Chrome, fixes this.
+ */
+class myWebPage : public QWebPage
+{
+protected:
+
+#if 0
+        QString userAgentForUrl(const QUrl& ) const
+        {
+            return "Chrome/1.0";
+        }
+#endif
+
+        void javaScriptConsoleMessage ( const QString & message, int lineNumber, const QString & sourceID )
+        {
+            qDebug() << "Javascript: " << sourceID << ":" << lineNumber << ":" << message;
+        }
+};
+
+
 RGGoogleMap::RGGoogleMap(QWidget *parent)
 	: QDialog(parent)
 {
@@ -39,11 +61,10 @@ RGGoogleMap::RGGoogleMap(QWidget *parent)
 
 	ui.progressBar->hide();
 	ui.progressBar->setRange(0, 100);
-  ui.spinBoxX->setValue(RGSettings::getGMXResolution());
-  ui.spinBoxY->setValue(RGSettings::getGMYResolution());
+    ui.spinBoxX->setValue(RGSettings::getGMXResolution());
+    ui.spinBoxY->setValue(RGSettings::getGMYResolution());
 
-  //TODO:PORT!!!
-  //ui.webView->setPage(new myWebPage());
+    //ui.webView->setPage(new myWebPage());
 
 	//Init map resolution
 	on_fixButton_clicked(true);
@@ -54,8 +75,8 @@ void RGGoogleMap::accept()
 	m_map = QPixmap(ui.webView->size());
 	ui.webView->render(&m_map);
 
-  RGSettings::setGMXResolution(ui.spinBoxX->value());
-  RGSettings::setGMYResolution(ui.spinBoxY->value());
+    RGSettings::setGMXResolution(ui.spinBoxX->value());
+    RGSettings::setGMYResolution(ui.spinBoxY->value());
 
 	QDialog::accept();
 }
@@ -104,9 +125,8 @@ void RGGoogleMap::on_goButton_clicked(bool)
 		return;
 	}
 
-    //TODO:PORT!!!
-    //ui.webView->setHtml(genHtml(latlon, zoom));
-    //ui.webView->reload();
+    ui.webView->setHtml(genHtml(latlon, zoom));
+    ui.webView->reload();
 }
 
 void RGGoogleMap::on_fixButton_clicked(bool)

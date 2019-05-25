@@ -60,7 +60,11 @@ bool RGEncVideo::initCodecExecutable()
 		mExecName = QFileDialog::getOpenFileName(nullptr,
                    QString("Select the directory where " + encoderName() + " is located."),
                    QDir::currentPath(),
+#ifdef __linux__
+                   "Executables (*)");
+#else
                    "Executables (*.exe)");
+#endif
   }
 
   if ( checkForCodecExecutable(mExecName)==true )
