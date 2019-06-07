@@ -6,8 +6,7 @@
 
 QT += core gui
 QT += widgets
-QT += webkitwidgets
-#QT += webenginewidgets
+QT += webenginewidgets
 
 TARGET = routegen
 TEMPLATE = app
