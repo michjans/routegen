@@ -425,6 +425,7 @@ Section Uninstall
   Delete "$INSTDIR\bmp2avi\out.avi"
   Delete "$INSTDIR\bmp2avi\bmp2avi.htm"
   Delete "$INSTDIR\bmp2avi\bmp2avi.exe"
+  Delete "$INSTDIR\Uninstall.exe"
 
   Delete "$SMPROGRAMS\Route Generator\Uninstall.lnk"
   Delete "$SMPROGRAMS\Route Generator\Website.lnk"
