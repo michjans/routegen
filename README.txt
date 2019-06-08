@@ -1,9 +1,9 @@
-This is Route Generator version 1.7.1
+This is Route Generator version 1.8
 
 Route Generator can be used to generate route maps to be used in video editing
 software.
 
-Copyright (C) 2008-2016 Michiel Jansen.
+Copyright (C) 2008-2019 Michiel Jansen.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,9 +19,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 LICENSE
-Route Generator is developed using the GPL version of Qt 4.7.3
-(Copyright (C)) 2008-2010 Nokia Corporation), which can be
-downloaded from: http://qt.nokia.com/downloads
+Route Generator is developed using the GPL version of Qt 5.12.3
+(Copyright (C) 2017 The Qt Company Ltd.), which can be
+downloaded from: https://www.qt.io/download
 
 This means that Route Generator should also be distributed as GPL software and
 can be used for free. As a result the source code of Route Generator is also
@@ -79,6 +79,8 @@ VERSION HISTORY
 		 http://ffmpeg.zeranoe.com/builds/
 		 NOTE: To safe space the executables ffplay.exe and ffprobe.exe are
 		            removed from the distribution.
+1.8  -Route Generator ported to Qt 5.
+      -No main functional changes, however import from Google maps now works again!
 	  
 	  
 INSTALLATION
@@ -142,8 +144,8 @@ last stage of the generation process:converting a list of bmp files to an avi
 file.
 
 BUILDING ROUTE GENERATOR FROM THE SOURCE CODE
-Since version 1.6 Route Generator should be built using Qt 4.6 or higher. 
-So Qt 4.6 or higher should be downloaded and installed. 
+Since version 1.8 Route Generator should be built using Qt 5.7 or higher. 
+So Qt 5.7 or higher should be downloaded and installed. 
 After your Qt build environment is setup correctly, all you need to do is:
 -unzip the source code in a new directory
 -open a command shell with the Qt build environment correctly set-up
