@@ -72,6 +72,8 @@ RGGoogleMap::RGGoogleMap(QWidget *parent)
     ui.spinBoxX->setValue(RGSettings::getGMXResolution());
     ui.spinBoxY->setValue(RGSettings::getGMYResolution());
 
+    qDebug() << "Datapath:" << QLibraryInfo::location(QLibraryInfo::DataPath);
+
     ui.webView->setPage(new QWebEnginePage(ui.webView));
 
 	//Init map resolution

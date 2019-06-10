@@ -79,7 +79,7 @@ bool RGEncVideo::initCodecExecutable()
   }
   RGSettings::setVideoEncExec(mExecName);
   updateFromSettings();
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
   mUi.codecExecLocLE->setText(mExecName);
   mUi.codecExecLocLabel->setText(encoderName());
   mUi.codecExecLocBrowsePB->setVisible(true);

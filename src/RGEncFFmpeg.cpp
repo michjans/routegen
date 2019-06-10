@@ -64,7 +64,7 @@ QString RGEncFFmpeg::encoderName()
 
 QString RGEncFFmpeg::encoderExecBaseName()
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
   return QString("ffmpeg.exe");
 #else
   return QString("ffmpeg");

@@ -30,7 +30,7 @@ RGSettingsDialog::RGSettingsDialog(RGEncVideo *videoSettings,QWidget *parent)
 {
   ui.setupUi(this);
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	ui.encoderSelectionCB->addItem("bmp2avi");
 	ui.encoderSelectionCB->addItem("ffmpeg");
 #else

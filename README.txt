@@ -80,7 +80,8 @@ VERSION HISTORY
 		 NOTE: To safe space the executables ffplay.exe and ffprobe.exe are
 		            removed from the distribution.
 1.8  -Route Generator ported to Qt 5.
-      -No main functional changes, however import from Google maps now works again!
+     -No main functional changes, however import from Google maps now works again
+     -Updated Zeranoe FFmpeg to 4.1.3
 	  
 	  
 INSTALLATION

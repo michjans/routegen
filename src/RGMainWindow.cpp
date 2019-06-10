@@ -421,7 +421,7 @@ void RGMainWindow::initVideoEncoderFromSettings()
 		delete mVideoEncoder;
 	}
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	QString vidEnc = RGSettings::getVideoEncoder();
 	if (vidEnc == "bmp2avi")
 	{
