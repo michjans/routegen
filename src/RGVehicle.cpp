@@ -136,7 +136,10 @@ bool RGVehicle::getMirror()
 void RGVehicle::setMirror(bool mirror)
 {
   if(mMirror!=mirror)
-    this->setScale(-1.0);
+  {
+    this->setTransform(QTransform::fromScale(-1.0, 1.0), true);
+  }
+
   mMirror=mirror;
 }
 
@@ -168,13 +171,13 @@ void RGVehicle::setRotation(qreal angle)
   if(angle<270 && angle>90){
     if(mRotMirror==false){
       mRotMirror=true;
-      this->setScale(-1.0);
+      this->setTransform(QTransform::fromScale(-1.0, 1.0), true);
     }
     angle=180-angle;
   }
   else if(mRotMirror==true){
     mRotMirror=false;
-    this->setScale(-1.0);
+    this->setTransform(QTransform::fromScale(-1.0, 1.0), true);
   }
   if(mMirror) angle=-angle;
   QGraphicsItem::setRotation(angle+mStartAngle);
