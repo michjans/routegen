@@ -1,4 +1,4 @@
-This is Route Generator version 1.8 (pre-release)
+This is Route Generator version 1.8
 
 Route Generator can be used to generate route maps to be used in video editing
 software.
