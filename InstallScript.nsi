@@ -27,6 +27,7 @@
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
 !define MUI_FINISHPAGE_RUN "$INSTDIR\routegen.exe"
+!define MUI_FINISHPAGE_SHOWREADME_NOTCHECKED
 !define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\README.txt"
 !insertmacro MUI_PAGE_FINISH
 
@@ -48,7 +49,10 @@ InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" "Install_Dir"
 ShowInstDetails show
 ShowUnInstDetails show
 
-Section "MainSection" SEC01
+; Request application privileges for Windows Vista
+RequestExecutionLevel admin
+
+Section "Route Generator" MainInstall
   SetOutPath "$INSTDIR\bmp2avi"
   SetOverwrite try
   File "redist\bmp2avi\bmp2avi.exe"
@@ -162,9 +166,9 @@ Section "MainSection" SEC01
   File "redist\vcruntime140.dll"
   File "redist\README.txt"
   File "redist\routegen.exe"
+  SetShellVarContext all
   CreateDirectory "$SMPROGRAMS\Route Generator"
   CreateShortCut "$SMPROGRAMS\Route Generator\Route Generator.lnk" "$INSTDIR\routegen.exe"
-  CreateShortCut "$DESKTOP\Route Generator.lnk" "$INSTDIR\routegen.exe"
   SetOutPath "$INSTDIR\vehicles"
   File "redist\vehicles\airplane.png"
   File "redist\vehicles\bicycle.png"
@@ -177,6 +181,7 @@ SectionEnd
 Section -AdditionalIcons
   SetOutPath $INSTDIR
   WriteIniStr "$INSTDIR\${PRODUCT_NAME}.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
+  SetShellVarContext all
   CreateShortCut "$SMPROGRAMS\Route Generator\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
   CreateShortCut "$SMPROGRAMS\Route Generator\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
 SectionEnd
@@ -201,7 +206,7 @@ alreadyInstalled:
     Exec $INSTDIR\Uninstall.exe
     Goto theEnd
   noUnInstall:
-    DetailPrint "Old version will not be uninstalled"
+    DetailPrint "Old version will be overwritten"
   theEnd:
 FunctionEnd
 
@@ -215,7 +220,7 @@ Function un.onInit
   Abort
 FunctionEnd
 
-Section Uninstall
+Section Uninstall 
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\uninst.exe"
   Delete "$INSTDIR\vehicles\train.png"
@@ -326,12 +331,12 @@ Section Uninstall
   Delete "$INSTDIR\bmp2avi\bmp2avi.exe"
   Delete "$INSTDIR\Uninstall.exe"
 
+  SetShellVarContext all
   Delete "$SMPROGRAMS\Route Generator\Uninstall.lnk"
   Delete "$SMPROGRAMS\Route Generator\Website.lnk"
-  Delete "$DESKTOP\Route Generator.lnk"
   Delete "$SMPROGRAMS\Route Generator\Route Generator.lnk"
-
   RMDir "$SMPROGRAMS\Route Generator"
+  
   RMDir "$INSTDIR\vehicles"
   RMDir "$INSTDIR\imageformats"
   RMDir "$INSTDIR\styles"
