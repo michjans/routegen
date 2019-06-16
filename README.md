@@ -10,7 +10,7 @@ to it.
 	  
 ## INSTALLATION
 On Windows use the distributed installer named routegen-winxx-x.x.exe, which is
-available as a GitHub Asset under [Releases](https://github.com/domoticz/domoticz/releases)
+available as a GitHub Asset under [Releases](https://github.com/michjans/routegen/releases)
 
 ## VERSION HISTORY
 - 1.0   -Initial version
