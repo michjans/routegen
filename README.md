@@ -8,11 +8,11 @@ I have cloned this repository from SourceForge, to have the source code availabl
 on GitHub as well, with the intention that more people are willing to contribute
 to it.
 	  
-## INSTALLATION
+## Installation
 On Windows use the distributed installer named routegen-winxx-x.x.exe, which is
 available as a GitHub Asset under [Releases](https://github.com/michjans/routegen/releases)
 
-## VERSION HISTORY
+## Version history
 - 1.0   -Initial version
 - 1.1   -Added custom vehicle icons by adding icons (image files, e.g. *.png,
          *.jpg, etc.) to the vehicles sub-folder of routegen.
