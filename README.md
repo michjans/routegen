@@ -1,4 +1,4 @@
-# Route Generator version 1.8
+# Route Generator
 
 Route Generator is a tool to draw routes on a map and generate a movie from it.
 This movie can be imported in your video editing software, so you can add it to
