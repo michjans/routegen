@@ -69,8 +69,10 @@ available as a GitHub Asset under [Releases](https://github.com/michjans/routege
 
 ## Technical details
 
-Route Generator is developed using the GPL version of Qt 4.7, which can be
-downloaded from: http://qt.nokia.com/downloads
+Route Generator is developed using the GPL version of Qt 5.12
+(Copyright (C) 2008-2019  The Qt Company Ltd. All rights reserved).
+Qt can be [downloaded](https://www.qt.io/download) from the Qt Company website.
+
 
 On Linux, Route Generator makes use of a 3rdparty tool:
 FFmpeg licensed under the LGPLv2.1.
