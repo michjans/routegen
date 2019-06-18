@@ -9,8 +9,21 @@ on GitHub as well, with the intention that more people are willing to contribute
 to it.
 	  
 ## Installation
-On Windows use the distributed installer named routegen-winxx-x.x.exe, which is
-available as a GitHub Asset under [Releases](https://github.com/michjans/routegen/releases)
+On Windows use the distributed installer named routegen-winxx-x.x.exe
+On Linux and Mac OS the program has to be build from source code (see below)
+
+## Building Route Generator from the source code
+Since version 1.8 Route Generator should be built using Qt 5.7 or higher. 
+So Qt 5.7 or higher should be downloaded and installed. 
+After your Qt build environment is setup correctly, all you need to do is:
+- unzip or clone the source code in a new directory
+- open a command shell with the Qt build environment correctly set-up
+- cd to the the directory where you unzipped the source code
+  (e.g. cd routegen/src)
+- execute the following commands:
+  - qmake routegen.pro  
+  - make/gmake (on Linux)
+  - whatever build command on other OS's
 
 ## Version history
 - 1.0   -Initial version
@@ -108,24 +121,6 @@ ffmpeg on linux)! However, the video encoder is not required to run Route
 Generator. The only thing that will not work without the video encoder is the
 last stage of the generation process:converting a list of bmp files to an avi
 file.
-
-## Building Route Generator from the source code
-Since version 1.8 Route Generator should be built using Qt 5.7 or higher. 
-So Qt 5.7 or higher should be downloaded and installed. 
-After your Qt build environment is setup correctly, all you need to do is:
-- unzip or clone the source code in a new directory
-- open a command shell with the Qt build environment correctly set-up
-- cd to the the directory where you unzipped the source code
-  (e.g. cd routegen/src)
-- execute the following commands:
-  - qmake routegen.pro  
-  - make/gmake (on Linux)
-  - whatever build command on other OS's
-
-## Installation under Linux
-Since version 1.6 Route GENERATOR can be installed after building process, 
-using this command as root:
-   - make install
 
 ## License
 This program is free software: you can redistribute it and/or modify
