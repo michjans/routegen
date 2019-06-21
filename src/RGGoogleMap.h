@@ -30,13 +30,15 @@ public:
 	RGGoogleMap(QWidget *parent);
 
 	QPixmap getMap() const {return m_map;}
+    QRectF getMapBounds() const {return m_mapBounds;}
 
 public slots:
 	void accept();
 
 private slots:
-  void on_goButton_clicked(bool);
-  void on_fixButton_clicked(bool);
+    void on_accept();
+    void on_goButton_clicked(bool);
+    void on_fixButton_clicked(bool);
 
 	void on_webView_loadFinished ( bool ok );
 	void on_webView_loadProgress ( int progress );
@@ -46,6 +48,7 @@ private:
 	QString genHtml(const QString &latlon, const QString &zoom) const;
 
 	Ui_googleMap ui;
-	QString    m_html_template;
-	QPixmap    m_map;
+    QString m_html_template;
+    QPixmap m_map;
+    QRectF m_mapBounds;
 };

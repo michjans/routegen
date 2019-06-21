@@ -31,8 +31,21 @@
           disableDefaultUI: true
         });
       }
+      
+      function getBounds() {
+        mapBounds = map.getBounds();
+        ne = mapBounds.getNorthEast();
+        sw = mapBounds.getSouthWest();
+        
+        return {
+            xTop : sw.lng(),
+            yTop : ne.lat(),
+            width : ne.lng() - sw.lng(),
+            height: ne.lat() - sw.lat()
+        }
+      }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=XXXXXX&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=XXXXXXX&callback=initMap"
     async defer></script>
   </body>
 </html>

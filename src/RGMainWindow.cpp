@@ -82,7 +82,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   action_Redo->setEnabled(false);
 
   //Video Encoder:
-	initVideoEncoderFromSettings();
+  initVideoEncoderFromSettings();
 
   //ViewWidget :
   mView = new RGViewWidget();
@@ -143,7 +143,8 @@ void RGMainWindow::on_actionOpen_image_triggered(bool checked)
     if (pm.isNull()) QMessageBox::critical (this, "Oops", "Could not load image");
     else{
       //TODO:Duplicated in on_actionImport_Google_Map_triggered
-      mView->loadImage(pm);
+      //TODO: We need to store the map's bounds
+      mView->loadImage(pm, QRectF());
       actionSave_image->setEnabled(true);
       actionDraw_mode->setEnabled(true);
       actionNew_route->setEnabled(true);
@@ -191,7 +192,8 @@ void RGMainWindow::on_actionPreferences_triggered(bool)
 void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 {
   RGGoogleMap gm(this);
-  if (gm.exec() == QDialog::Accepted){
+  if (gm.exec() == QDialog::Accepted)
+  {
     QPixmap map = gm.getMap();
     if (map.isNull())
       return;
@@ -208,7 +210,7 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 	  map.save(fileName);
 
     //TODO:Duplicated in on_actionOpen_image_triggered
-    mView->loadImage(map);
+    mView->loadImage(map, gm.getMapBounds());
     actionSave_image->setEnabled(true);
     actionDraw_mode->setEnabled(true);
     RGSettings::setLastOpenDir(fileName);

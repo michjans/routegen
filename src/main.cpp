@@ -73,7 +73,7 @@
  *  v1.8    Ported to Qt 5
  */
 
-extern const QString applicationName("Route Generator version 1.8");
+extern const QString applicationName("Route Generator version 1.9-alpha");
 
 int main(int argc, char *argv[])
 {

@@ -149,12 +149,13 @@ bool RGViewWidget::generateMovie(const QString &dirName, const QString &filePref
   return generationOK;
 }
 
-void RGViewWidget::loadImage(const QPixmap &pm)
+void RGViewWidget::loadImage(const QPixmap &pm, const QRectF &mapBounds)
 {
   if(mWelcomeText!=nullptr){
     delete mWelcomeText;
     mWelcomeText=nullptr;
   }
+  qDebug() << "RGViewWidget::loadImage: mapBounds:" << mapBounds;
   mScene->setBackgroundBrush(pm);
   this->setCacheMode(QGraphicsView::CacheBackground);
   mScene->setSceneRect(0,0,pm.width(),pm.height());
@@ -163,7 +164,6 @@ void RGViewWidget::loadImage(const QPixmap &pm)
   viewport()->setMaximumSize(pm.size());
   this->setAlignment((Qt::AlignLeft | Qt::AlignTop));
   updateGeometry();
-
 }
 
 void RGViewWidget::playTimerEvent()

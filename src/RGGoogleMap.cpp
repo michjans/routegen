@@ -24,6 +24,7 @@
 #include <QUrlQuery>
 
 #include <QWebEnginePage>
+#include <QWebEngineScript>
 
 #if 0
 //Debug only
@@ -76,6 +77,10 @@ RGGoogleMap::RGGoogleMap(QWidget *parent)
 
     ui.webView->setPage(new QWebEnginePage(ui.webView));
 
+    //TODO: Hier moet nog een slot tussen!
+    QObject::connect(ui.buttonBox, &QDialogButtonBox::accepted,
+                        this, &RGGoogleMap::on_accept);
+
 	//Init map resolution
 	on_fixButton_clicked(true);
 }
@@ -88,7 +93,28 @@ void RGGoogleMap::accept()
     RGSettings::setGMXResolution(ui.spinBoxX->value());
     RGSettings::setGMYResolution(ui.spinBoxY->value());
 
-	QDialog::accept();
+
+    QDialog::accept();
+}
+
+void RGGoogleMap::on_accept()
+{
+    //First get the map boundaries from google's map
+    ui.webView->page()->runJavaScript("getBounds();", QWebEngineScript::MainWorld,
+                                      [this](const QVariant &v)
+    {
+        qDebug() << "Result of getBounds():" << v.typeName();
+        if (v.type() == QMetaType::QVariantMap)
+        {
+            QMap<QString, QVariant> bounds = v.toMap();
+            m_mapBounds.setRect(
+                    bounds[QStringLiteral("xTop")].toFloat(),
+                    bounds[QStringLiteral("yTop")].toFloat(),
+                    bounds[QStringLiteral("width")].toFloat(),
+                    bounds[QStringLiteral("height")].toFloat());
+            this->accept();
+        }
+    });
 }
 
 
