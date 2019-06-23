@@ -29,6 +29,7 @@
 #include "RGEncVideo.h"
 #include "RGEncFFmpeg.h"
 #include "RGEncBmp2avi.h"
+#include "RGGPXReader.h"
 #include "RGRoute.h"
 #include "RGRouteUi.h"
 #include "RGViewWidget.h"
@@ -61,6 +62,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   action_Quit = ui.action_Quit;
   actionSave_image = ui.actionSave_image;
   actionImport_Google_Map = ui.actionImport_Google_Map;
+  actionImport_GPX = ui.actionImport_GPX;
   actionDraw_mode = ui.actionDraw_mode;
   actionNew_route = ui.actionNew_route;
   action_Undo = ui.action_Undo;
@@ -144,7 +146,7 @@ void RGMainWindow::on_actionOpen_image_triggered(bool checked)
     else{
       //TODO:Duplicated in on_actionImport_Google_Map_triggered
       //TODO: We need to store the map's bounds
-      mView->loadImage(pm, QRectF());
+      mView->loadImage(pm);
       actionSave_image->setEnabled(true);
       actionDraw_mode->setEnabled(true);
       actionNew_route->setEnabled(true);
@@ -210,11 +212,25 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 	  map.save(fileName);
 
     //TODO:Duplicated in on_actionOpen_image_triggered
-    mView->loadImage(map, gm.getMapBounds());
+    mView->loadImage(map);
+    mRoute->setRealWorldMapping(gm.getMapBounds(), map.width(), map.height());
     actionSave_image->setEnabled(true);
     actionDraw_mode->setEnabled(true);
     RGSettings::setLastOpenDir(fileName);
   }
+}
+
+void RGMainWindow::on_actionImport_GPX_triggered(bool)
+{
+    QString lastSaveDir = RGSettings::getLastOpenDir();
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open GPX File"),
+                                                    lastSaveDir,
+                                                    tr("GPX files (*.gpx)"));
+    if (!fileName.isNull())
+    {
+        RGGPXReader gpxReader(mRoute);
+        gpxReader.readFile(fileName);
+    }
 }
 
 void RGMainWindow::on_actionDraw_mode_triggered(bool checked)
@@ -380,6 +396,7 @@ void RGMainWindow::blockUserInteraction(bool busy)
   actionGenerate_map->setEnabled(!busy);
   actionPlayback->setEnabled(!busy);
   actionImport_Google_Map->setEnabled(!busy);
+  actionImport_GPX->setEnabled(!busy);
   mRouteUi->blockEssentialControls(busy);
   //Stop is only enabled while playing back
   actionStop->setEnabled(false);

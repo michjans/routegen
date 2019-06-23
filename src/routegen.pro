@@ -25,6 +25,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += main.cpp RGMainWindow.cpp RGVehicleDialog.cpp RGSettings.cpp RGSettingsDialog.cpp RGGoogleMap.cpp \
+    RGGPXReader.cpp \
+    RGReader.cpp \
     RGVehicle.cpp \
     RGVehicleList.cpp \
     RGEncVideo.cpp \
@@ -43,6 +45,8 @@ SOURCES += main.cpp RGMainWindow.cpp RGVehicleDialog.cpp RGSettings.cpp RGSettin
 RESOURCES += routegen.qrc
 
 HEADERS += RGMainWindow.h RGVehicleDialog.h RGSettings.h RGSettingsDialog.h RGGoogleMap.h \
+    RGGPXReader.h \
+    RGReader.h \
     RGVehicle.h \
     RGVehicleList.h \
     RGEncVideo.h \

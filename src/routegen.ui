@@ -58,6 +58,7 @@
     </property>
     <addaction name="actionOpen_image"/>
     <addaction name="actionImport_Google_Map"/>
+    <addaction name="actionImport_GPX"/>
     <addaction name="actionSave_image"/>
     <addaction name="separator"/>
     <addaction name="action_Quit"/>
@@ -252,6 +253,14 @@
    </property>
    <property name="toolTip">
     <string>Import map from Google Maps</string>
+   </property>
+  </action>
+  <action name="actionImport_GPX">
+   <property name="text">
+    <string>&amp;Import from GPX</string>
+   </property>
+   <property name="toolTip">
+    <string>Import route points from GPX file</string>
    </property>
   </action>
   <action name="actionNew_route">

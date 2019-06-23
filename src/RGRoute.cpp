@@ -114,9 +114,36 @@ void RGRoute::changePath(QList<QPoint> pointlist,bool canUndo)
   }
 }
 
-void RGRoute::setNewPoints(QList<QPoint> pointlist)
+void RGRoute::setNewPoints(const QList<QPoint> &pointlist)
 {
-  mEditPath->setNewPoints(pointlist);
+    mEditPath->setNewPoints(pointlist);
+}
+
+void RGRoute::setNewWorldCoordinates(const QList<QGeoCoordinate> &geoCoordinates)
+{
+    QList<QPoint> pointlist;
+    double xScale = mWidth / mRealWorldBounds.width();
+    double yScale = mHeight / mRealWorldBounds.height();
+
+    for (const QGeoCoordinate &coord: geoCoordinates)
+    {
+        QPoint point((coord.longitude() - mRealWorldBounds.x()) * xScale,
+                     (mRealWorldBounds.y() - coord.latitude()) * yScale);
+        pointlist.append(point);
+    }
+    mEditPath->setNewPoints(pointlist);
+}
+
+void RGRoute::setRealWorldMapping(const QRectF &mapBounds, int width, int height)
+{
+    mRealWorldBounds = mapBounds;
+    mWidth = width;
+    mHeight = height;
+}
+
+const QRectF RGRoute::getRealWorldBounds() const
+{
+    return mRealWorldBounds;
 }
 
 void RGRoute::undoredo(QVariant data)

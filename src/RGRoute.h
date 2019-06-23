@@ -26,6 +26,8 @@
 #include "RGPath.h"
 #include "RGEditPath.h"
 
+#include <QGeoCoordinate>
+
 class RGRoute : public RGGraphicsObjectUndo
 {
   Q_OBJECT
@@ -39,7 +41,10 @@ public:
   int countFrames();
   void setCurrentFrame(int);
   void setIconlessBeginEndFrames(bool);
-  void setNewPoints(QList<QPoint>);
+  void setNewPoints(const QList<QPoint> &);
+  void setNewWorldCoordinates(const QList<QGeoCoordinate> &geoCoordinates);
+  void setRealWorldMapping(const QRectF &mapBounds, int width, int height);
+  const QRectF getRealWorldBounds() const;
   virtual void undoredo(QVariant=0);
 
 signals:
@@ -64,6 +69,8 @@ protected:
   RGVehicleList *mVehicleList;
   RGPath  *mPath;
   RGEditPath * mEditPath;
+  QRectF mRealWorldBounds;
+  int mWidth, mHeight;
   bool mIconlessBeginEndFrames;
   bool mPlayback;
   bool mEditMode;

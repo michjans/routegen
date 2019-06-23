@@ -42,7 +42,7 @@ signals:
   void sceneRectChanged();
 
 public slots:
-  void loadImage(const QPixmap &pm, const QRectF &mapBounds);
+  void loadImage(const QPixmap &pm);
   void play();
   void stop();
 

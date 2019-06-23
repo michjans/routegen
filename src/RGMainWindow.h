@@ -51,6 +51,7 @@ private slots:
   void on_actionSave_image_triggered(bool );
   void on_actionPreferences_triggered(bool );
   void on_actionImport_Google_Map_triggered(bool );
+  void on_actionImport_GPX_triggered(bool );
   void on_actionDraw_mode_triggered(bool );
   void on_actionNew_route_triggered(bool );
   void on_actionGenerate_map_triggered(bool );
@@ -78,6 +79,7 @@ private:
   QAction *action_Quit;
   QAction *actionSave_image;
   QAction *actionImport_Google_Map;
+  QAction *actionImport_GPX;
   QAction *actionDraw_mode;
   QAction *actionNew_route;
   QAction *action_Undo;
