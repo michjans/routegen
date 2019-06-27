@@ -15,5 +15,6 @@
         <file>icons/undo.png</file>
         <file>icons/settings.png</file>
         <file>icons/redo.png</file>
+        <file>icons/gps.png</file>
     </qresource>
 </RCC>

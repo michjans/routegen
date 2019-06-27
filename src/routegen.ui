@@ -46,7 +46,7 @@
      <x>0</x>
      <y>0</y>
      <width>720</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -58,7 +58,6 @@
     </property>
     <addaction name="actionOpen_image"/>
     <addaction name="actionImport_Google_Map"/>
-    <addaction name="actionImport_GPX"/>
     <addaction name="actionSave_image"/>
     <addaction name="separator"/>
     <addaction name="action_Quit"/>
@@ -68,6 +67,7 @@
      <string>&amp;Tools</string>
     </property>
     <addaction name="actionDraw_mode"/>
+    <addaction name="actionImport_GPX"/>
     <addaction name="actionPlayback"/>
     <addaction name="actionStop"/>
     <addaction name="actionGenerate_map"/>
@@ -112,6 +112,7 @@
    <addaction name="actionSave_image"/>
    <addaction name="separator"/>
    <addaction name="actionDraw_mode"/>
+   <addaction name="actionImport_GPX"/>
    <addaction name="actionNew_route"/>
    <addaction name="action_Undo"/>
    <addaction name="action_Redo"/>
@@ -256,8 +257,12 @@
    </property>
   </action>
   <action name="actionImport_GPX">
+   <property name="icon">
+    <iconset resource="routegen.qrc">
+     <normaloff>:/icons/icons/gps.png</normaloff>:/icons/icons/gps.png</iconset>
+   </property>
    <property name="text">
-    <string>&amp;Import from GPX</string>
+    <string>Import from GP&amp;X</string>
    </property>
    <property name="toolTip">
     <string>Import route points from GPX file</string>

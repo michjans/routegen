@@ -80,6 +80,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionSave_image->setEnabled(false);
   actionDraw_mode->setEnabled(false);
   actionNew_route->setEnabled(false);
+  actionImport_GPX->setEnabled(false);
   action_Undo->setEnabled(false);
   action_Redo->setEnabled(false);
 
@@ -150,6 +151,7 @@ void RGMainWindow::on_actionOpen_image_triggered(bool checked)
       actionSave_image->setEnabled(true);
       actionDraw_mode->setEnabled(true);
       actionNew_route->setEnabled(true);
+      actionImport_GPX->setEnabled(true);
       RGSettings::setLastOpenDir(fileName);
     }
   }
@@ -216,6 +218,7 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
     mRoute->setRealWorldMapping(gm.getMapBounds(), map.width(), map.height());
     actionSave_image->setEnabled(true);
     actionDraw_mode->setEnabled(true);
+    actionImport_GPX->setEnabled(true);
     RGSettings::setLastOpenDir(fileName);
   }
 }

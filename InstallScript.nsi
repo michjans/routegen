@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Route Generator"
-!define PRODUCT_VERSION "1.8"
+!define PRODUCT_VERSION "1.9-alpha-1"
 !define PRODUCT_PUBLISHER "MJProductions"
 !define PRODUCT_WEB_SITE "http://www.routegenerator.net"
 !define PRODUCT_DIR_REGKEY "Software\MJProductions\Route Generator"
@@ -28,7 +28,7 @@
 ; Finish page
 !define MUI_FINISHPAGE_RUN "$INSTDIR\routegen.exe"
 !define MUI_FINISHPAGE_SHOWREADME_NOTCHECKED
-!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\README.txt"
+!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\README.md"
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
@@ -40,7 +40,7 @@
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "routegen-win32-1.8.exe"
+OutFile "routegen-win32-1.9-alpha-1.exe"
 InstallDir "$PROGRAMFILES\Route Generator"
 
 ; Registry key to check for directory (so if you install again, it will
@@ -164,7 +164,7 @@ Section "Route Generator" MainInstall
   File "redist\msvcp140.dll"
   File "redist\vccorlib140.dll"
   File "redist\vcruntime140.dll"
-  File "redist\README.txt"
+  File "redist\README.md"
   File "redist\routegen.exe"
   SetShellVarContext all
   CreateDirectory "$SMPROGRAMS\Route Generator"
@@ -230,7 +230,7 @@ Section Uninstall
   Delete "$INSTDIR\vehicles\bicycle.png"
   Delete "$INSTDIR\vehicles\airplane.png"
   Delete "$INSTDIR\routegen.exe"
-  Delete "$INSTDIR\README.txt"
+  Delete "$INSTDIR\README.md"
   Delete "$INSTDIR\LICENSE"
   Delete "$INSTDIR\imageformats\qgif.dll"
   Delete "$INSTDIR\imageformats\qicns.dll"

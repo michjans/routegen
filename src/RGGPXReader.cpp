@@ -26,7 +26,9 @@ bool RGGPXReader::readFile(const QString &fileName)
         inputStream.readNext();
         if (inputStream.isStartElement()) {
             QString name = inputStream.name().toString();
-            if (name == "wpt")
+            qDebug() << "elementName:" << name;
+            //if (name == "wpt")
+            if (name == "trkpt")
             {
                 geoCoordinates.append(QGeoCoordinate(inputStream.attributes().value("lat").toFloat(), inputStream.attributes().value("lon").toFloat()));
                 qDebug() << "lon:" << inputStream.attributes().value("lon").toFloat() << "lat:" << inputStream.attributes().value("lat").toFloat();
