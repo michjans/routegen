@@ -121,17 +121,28 @@ void RGRoute::setNewPoints(const QList<QPoint> &pointlist)
 
 void RGRoute::setNewWorldCoordinates(const QList<QGeoCoordinate> &geoCoordinates)
 {
-    QList<QPoint> pointlist;
-    double xScale = mWidth / mRealWorldBounds.width();
-    double yScale = mHeight / mRealWorldBounds.height();
-
-    for (const QGeoCoordinate &coord: geoCoordinates)
+    //TODO: Introduce RGMap with realworld bounds method and store pointer in RGRoute
+    if (mRealWorldBounds.isValid())
     {
-        QPoint point((coord.longitude() - mRealWorldBounds.x()) * xScale,
-                     (mRealWorldBounds.y() - coord.latitude()) * yScale);
-        pointlist.append(point);
+        //TODO: Put this in separate method, so that once a valid map boundary is set
+        //      we call this same method
+        QList<QPoint> pointlist;
+        double xScale = mWidth / mRealWorldBounds.width();
+        double yScale = mHeight / mRealWorldBounds.height();
+
+        for (const QGeoCoordinate &coord: geoCoordinates)
+        {
+            QPoint point((coord.longitude() - mRealWorldBounds.x()) * xScale,
+                         (mRealWorldBounds.y() - coord.latitude()) * yScale);
+            pointlist.append(point);
+        }
+        mEditPath->setNewPoints(pointlist);
     }
-    mEditPath->setNewPoints(pointlist);
+    else
+    {
+        //TODO: No map boundaries known, yet, store the coordinates
+    }
+    mGeoPath.setPath(geoCoordinates);
 }
 
 void RGRoute::setRealWorldMapping(const QRectF &mapBounds, int width, int height)

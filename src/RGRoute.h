@@ -27,6 +27,7 @@
 #include "RGEditPath.h"
 
 #include <QGeoCoordinate>
+#include <QGeoPath>
 
 class RGRoute : public RGGraphicsObjectUndo
 {
@@ -70,6 +71,7 @@ protected:
   RGPath  *mPath;
   RGEditPath * mEditPath;
   QRectF mRealWorldBounds;
+  QGeoPath mGeoPath;
   int mWidth, mHeight;
   bool mIconlessBeginEndFrames;
   bool mPlayback;
