@@ -132,6 +132,7 @@ void RGEditPath::clear(bool canUndo)
 void RGEditPath::setNewPoints(const QList<QPoint> &pointlist)
 {
   clear(false);
+  qDebug() << "RGEditPath::setNewPoints: pointlist.size():" << pointlist.size();
   for(int i=0;i<pointlist.size();i++){
     addPoint(pointlist.at(i));
   }
@@ -163,6 +164,7 @@ void RGEditPath::updatePointList(bool canUndo)
   for(int i=0;i<mEditPathPointList.size();++i){
     pointList.append(mEditPathPointList.at(i)->pos().toPoint());
   }
+  qDebug() << "RGEditPath::updatePointList: pointList.size():" << pointList.size();
   emit newPointList(pointList,canUndo);
 }
 

@@ -35,7 +35,7 @@ bool RGGPXReader::readFile(const QString &fileName)
             }
         }
     }
-    m_route->setNewWorldCoordinates(geoCoordinates);
+    m_route->setRouteCoordinates(geoCoordinates);
     return true;
 }
 

@@ -25,13 +25,14 @@
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
 #include <QTimer>
+#include "RGMap.h"
 #include "RGRoute.h"
 
 class RGViewWidget : public QGraphicsView
 {
   Q_OBJECT
 public:
-  explicit RGViewWidget(QWidget *parent = 0);
+  explicit RGViewWidget(RGMap *map, QWidget *parent = 0);
   QSize   sizeHint () const;
   void addRoute(RGRoute*);
   bool saveRenderedImage(const QString &filename);

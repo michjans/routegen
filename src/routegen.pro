@@ -41,7 +41,11 @@ SOURCES += main.cpp RGMainWindow.cpp RGVehicleDialog.cpp RGSettings.cpp RGSettin
     RGEditPath.cpp \
     RGVehicleOriginPt.cpp \
     RGUndoRedo.cpp \
-    RGGraphicsObjectUndo.cpp
+    RGGraphicsObjectUndo.cpp \
+    RGWriter.cpp \
+    RGProjectReader.cpp \
+    RGProjectWriter.cpp \
+    RGMap.cpp
 	
 RESOURCES += routegen.qrc
 
@@ -61,7 +65,11 @@ HEADERS += RGMainWindow.h RGVehicleDialog.h RGSettings.h RGSettingsDialog.h RGGo
     RGEditPath.h \
     RGVehicleOriginPt.h \
     RGUndoRedo.h \
-    RGGraphicsObjectUndo.h
+    RGGraphicsObjectUndo.h \
+    RGWriter.h \
+    RGProjectReader.h \
+    RGProjectWriter.h \
+    RGMap.h
 
 FORMS += routegen.ui settings.ui googlemap.ui \
     vehicledialog.ui \

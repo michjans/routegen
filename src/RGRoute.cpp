@@ -21,8 +21,9 @@
 #include "RGRoute.h"
 #include <QDebug>
 
-RGRoute::RGRoute(QGraphicsItem *parent) :
+RGRoute::RGRoute(RGMap *map, QGraphicsItem *parent) :
   RGGraphicsObjectUndo(parent),
+  mMap(map),
   mIconlessBeginEndFrames(false),
   mPlayback(false),
   mEditMode(false)
@@ -33,6 +34,12 @@ RGRoute::RGRoute(QGraphicsItem *parent) :
   QObject::connect(mEditPath,SIGNAL(newPointList(QList<QPoint>,bool)),this,SLOT(changePath(QList<QPoint>,bool)));
   QObject::connect(this,SIGNAL(sceneRectChanged()),mEditPath,SLOT(on_sceneRectChanged()));
   QObject::connect(this,SIGNAL(sceneRectChanged()),this,SLOT(clearPath()));
+
+  if (mMap)
+  {
+      QObject::connect(map, &RGMap::mapLoaded,
+                       this, &RGRoute::handleMapLoaded);
+  }
 
   //create and set up vehicleList
   mVehicleList = new RGVehicleList();
@@ -93,8 +100,10 @@ void RGRoute::handleVehicleChange()
   updateVehicle();
 }
 
-void RGRoute::changePath(QList<QPoint> pointlist,bool canUndo)
+void RGRoute::changePath(const QList<QPoint> &pointlist,bool canUndo)
 {
+  qDebug() << "RGRoute::changePath: pointlist.size():" << pointlist.size();
+
   mPath->newPointList(pointlist);
   updateVehicle();
 
@@ -114,47 +123,20 @@ void RGRoute::changePath(QList<QPoint> pointlist,bool canUndo)
   }
 }
 
+void RGRoute::handleMapLoaded(const QPixmap &/*map*/)
+{
+    processMapUpdate();
+}
+
 void RGRoute::setNewPoints(const QList<QPoint> &pointlist)
 {
     mEditPath->setNewPoints(pointlist);
 }
 
-void RGRoute::setNewWorldCoordinates(const QList<QGeoCoordinate> &geoCoordinates)
+void RGRoute::setRouteCoordinates(const QList<QGeoCoordinate> &geoCoordinates)
 {
-    //TODO: Introduce RGMap with realworld bounds method and store pointer in RGRoute
-    if (mRealWorldBounds.isValid())
-    {
-        //TODO: Put this in separate method, so that once a valid map boundary is set
-        //      we call this same method
-        QList<QPoint> pointlist;
-        double xScale = mWidth / mRealWorldBounds.width();
-        double yScale = mHeight / mRealWorldBounds.height();
-
-        for (const QGeoCoordinate &coord: geoCoordinates)
-        {
-            QPoint point((coord.longitude() - mRealWorldBounds.x()) * xScale,
-                         (mRealWorldBounds.y() - coord.latitude()) * yScale);
-            pointlist.append(point);
-        }
-        mEditPath->setNewPoints(pointlist);
-    }
-    else
-    {
-        //TODO: No map boundaries known, yet, store the coordinates
-    }
     mGeoPath.setPath(geoCoordinates);
-}
-
-void RGRoute::setRealWorldMapping(const QRectF &mapBounds, int width, int height)
-{
-    mRealWorldBounds = mapBounds;
-    mWidth = width;
-    mHeight = height;
-}
-
-const QRectF RGRoute::getRealWorldBounds() const
-{
-    return mRealWorldBounds;
+    processMapUpdate();
 }
 
 void RGRoute::undoredo(QVariant data)
@@ -178,6 +160,7 @@ void RGRoute::setEditMode(bool checked)
 
 void RGRoute::clearPath()
 {
+  mGeoPath.clearPath();
   mEditPath->clear();
   updateVehicle();
 }
@@ -218,5 +201,19 @@ void RGRoute::updateVehicle()
   if(mIconlessBeginEndFrames && (frame==0 || frame==countFrames()-1))
     mVehicleList->getCurrentVehicle()->setVisible(false);
   else
-    mVehicleList->getCurrentVehicle()->setVisible(true);
+      mVehicleList->getCurrentVehicle()->setVisible(true);
+}
+
+void RGRoute::processMapUpdate()
+{
+    if (mMap->hasWorldBounds() && !mGeoPath.isEmpty())
+    {
+        qDebug() << "RGRoute::processMapUpdate: calculating new route from geopath";
+        QList<QPoint> pointlist = mMap->mapRoutePoints(mGeoPath.path());
+        if (!pointlist.empty())
+        {
+            qDebug() << "RGRoute::processMapUpdate: setNewPoints";
+            setNewPoints(pointlist);
+        }
+    }
 }

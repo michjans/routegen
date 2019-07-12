@@ -22,6 +22,7 @@
 #define RGROUTE_H
 
 #include "RGGraphicsObjectUndo.h"
+#include "RGMap.h"
 #include "RGVehicleList.h"
 #include "RGPath.h"
 #include "RGEditPath.h"
@@ -33,7 +34,7 @@ class RGRoute : public RGGraphicsObjectUndo
 {
   Q_OBJECT
 public:
-  explicit RGRoute(QGraphicsItem *parent = 0);
+  explicit RGRoute(RGMap *map, QGraphicsItem *parent = 0);
   QRectF boundingRect() const;
   RGVehicleList *getVehicleList() const {return mVehicleList;}
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget);
@@ -43,9 +44,8 @@ public:
   void setCurrentFrame(int);
   void setIconlessBeginEndFrames(bool);
   void setNewPoints(const QList<QPoint> &);
-  void setNewWorldCoordinates(const QList<QGeoCoordinate> &geoCoordinates);
-  void setRealWorldMapping(const QRectF &mapBounds, int width, int height);
-  const QRectF getRealWorldBounds() const;
+  void setRouteCoordinates(const QList<QGeoCoordinate> &geoCoordinates);
+
   virtual void undoredo(QVariant=0);
 
 signals:
@@ -61,16 +61,20 @@ public slots:
   void activateSmoothPath(bool);
   void setRouteTime(int);
   void handleVehicleChange();
-  void changePath(QList<QPoint>,bool);
+  void changePath(const QList<QPoint> &, bool);
+
+protected slots:
+  void handleMapLoaded(const QPixmap &map);
 
 private:
   void updateVehicle();
+  void processMapUpdate();
 
 protected:
+  RGMap *mMap;
   RGVehicleList *mVehicleList;
   RGPath  *mPath;
   RGEditPath * mEditPath;
-  QRectF mRealWorldBounds;
   QGeoPath mGeoPath;
   int mWidth, mHeight;
   bool mIconlessBeginEndFrames;

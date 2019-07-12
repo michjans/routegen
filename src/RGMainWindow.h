@@ -34,6 +34,7 @@ class QSpinBox;
 class QPushButton;
 class QLabel;
 class RGEncVideo;
+class RGMap;
 class RGRoute;
 class RGRouteUi;
 class RGViewWidget;
@@ -60,6 +61,7 @@ private slots:
   void on_action_Tutorial_triggered(bool );
   void on_action_About_triggered(bool );
   void on_action_Quit_triggered(bool );
+  void handleMapLoaded(const QPixmap& map);
   
   void blockUserInteraction(bool);
   void enableGenerateActions(bool);
@@ -70,6 +72,7 @@ private:
 
   RGViewWidget *mView;
   RGEncVideo *mVideoEncoder;
+  RGMap *mMap;
   RGRoute *mRoute;
   RGRouteUi *mRouteUi;
 

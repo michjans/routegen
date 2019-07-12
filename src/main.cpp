@@ -74,7 +74,7 @@
  *  v1.9    GPX import
  */
 
-extern const QString applicationName("Route Generator version 1.9-alpha-1");
+extern const QString applicationName("Route Generator version 1.9-alpha-2");
 
 int main(int argc, char *argv[])
 {

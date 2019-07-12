@@ -42,7 +42,7 @@ public:
 signals:
 
 public slots:
-  void newPointList(QList<QPoint>);
+  void newPointList(const QList<QPoint> &);
   void setDrawTime(int);
   void setSmoothPath(bool);
   void setSmoothCoef(int);

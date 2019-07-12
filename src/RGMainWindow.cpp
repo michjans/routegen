@@ -29,6 +29,7 @@
 #include "RGEncVideo.h"
 #include "RGEncFFmpeg.h"
 #include "RGEncBmp2avi.h"
+#include "RGMap.h"
 #include "RGGPXReader.h"
 #include "RGRoute.h"
 #include "RGRouteUi.h"
@@ -80,29 +81,30 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionSave_image->setEnabled(false);
   actionDraw_mode->setEnabled(false);
   actionNew_route->setEnabled(false);
-  actionImport_GPX->setEnabled(false);
   action_Undo->setEnabled(false);
   action_Redo->setEnabled(false);
 
   //Video Encoder:
   initVideoEncoderFromSettings();
 
+  mMap = new RGMap(this);
+
+  //Route :
+  mRoute= new RGRoute(mMap);
+  mRoute->setZValue(1);
+  mRoute->setSmoothCoef(RGSettings::getSmoothLength());
+  mRoute->setIconlessBeginEndFrames(RGSettings::getIconLessBeginEndFrames());
+  QObject::connect(mRoute, SIGNAL(canGenerate(bool)),
+                   this, SLOT(enableGenerateActions(bool)));
+
   //ViewWidget :
-  mView = new RGViewWidget();
+  mView = new RGViewWidget(mMap);
   ui.centralwidget->layout()->addWidget(mView);
   QObject::connect(actionStop, SIGNAL(triggered()),
                    mView, SLOT(stop()));
   QObject::connect(mView, SIGNAL(playbackStopped(bool)),
                    this, SLOT(enableGenerateActions(bool)));
-
-  //Route :
-  mRoute= new RGRoute();
-  mRoute->setZValue(1);
-  mRoute->setSmoothCoef(RGSettings::getSmoothLength());
-  mRoute->setIconlessBeginEndFrames(RGSettings::getIconLessBeginEndFrames());
   mView->addRoute(mRoute);
-  QObject::connect(mRoute, SIGNAL(canGenerate(bool)),
-                   this, SLOT(enableGenerateActions(bool)));
 
   //Route UI (Toolbar with route controls):
   mRouteUi = new RGRouteUi();
@@ -112,6 +114,12 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   QObject::connect(mRouteUi,SIGNAL(routeTimeChanged(int)),mRoute,SLOT(setRouteTime(int)));
   QObject::connect(mRouteUi,SIGNAL(vehicleChanged()),mRoute,SLOT(handleVehicleChange()));
   mRouteUi->setVehicleList(mRoute->getVehicleList());
+
+  if (mMap)
+  {
+      QObject::connect(mMap, &RGMap::mapLoaded,
+                       this, &RGMainWindow::handleMapLoaded);
+  }
 
   //set initial by sending signals
   mRouteUi->init();
@@ -145,14 +153,7 @@ void RGMainWindow::on_actionOpen_image_triggered(bool checked)
     QPixmap pm(fileName);
     if (pm.isNull()) QMessageBox::critical (this, "Oops", "Could not load image");
     else{
-      //TODO:Duplicated in on_actionImport_Google_Map_triggered
-      //TODO: We need to store the map's bounds
-      mView->loadImage(pm);
-      actionSave_image->setEnabled(true);
-      actionDraw_mode->setEnabled(true);
-      actionNew_route->setEnabled(true);
-      actionImport_GPX->setEnabled(true);
-      RGSettings::setLastOpenDir(fileName);
+      mMap->loadMap(fileName, pm);
     }
   }
 }
@@ -195,32 +196,28 @@ void RGMainWindow::on_actionPreferences_triggered(bool)
 
 void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 {
-  RGGoogleMap gm(this);
-  if (gm.exec() == QDialog::Accepted)
-  {
-    QPixmap map = gm.getMap();
-    if (map.isNull())
-      return;
+    RGGoogleMap gm(this);
+    if (gm.exec() == QDialog::Accepted)
+    {
+        QPixmap map = gm.getMap();
+        if (map.isNull())
+            return;
 
-    //Yes, lastOpenDir, because lastSaveDir is used to save map files
-    //from the main window
-    QString lastSaveDir = RGSettings::getLastOpenDir();
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                                                    lastSaveDir,
-                                                    tr("Images (*.bmp)"));
-    if (fileName.isEmpty())
-      return;
+        //Yes, lastOpenDir, because lastSaveDir is used to save map files
+        //from the main window
+        QString lastSaveDir = RGSettings::getLastOpenDir();
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                                                        lastSaveDir,
+                                                        tr("Images (*.bmp)"));
+        if (fileName.isEmpty())
+        {
+            return;
+        }
 
-	  map.save(fileName);
-
-    //TODO:Duplicated in on_actionOpen_image_triggered
-    mView->loadImage(map);
-    mRoute->setRealWorldMapping(gm.getMapBounds(), map.width(), map.height());
-    actionSave_image->setEnabled(true);
-    actionDraw_mode->setEnabled(true);
-    actionImport_GPX->setEnabled(true);
-    RGSettings::setLastOpenDir(fileName);
-  }
+        map.save(fileName);
+        qDebug() << "Retrieved map: " << fileName << map.width() << map.height() << gm.getMapBounds();
+        mMap->loadMap(fileName, map, gm.getMapBounds());
+    }
 }
 
 void RGMainWindow::on_actionImport_GPX_triggered(bool)
@@ -248,10 +245,12 @@ void RGMainWindow::on_actionDraw_mode_triggered(bool checked)
 
 void RGMainWindow::on_actionNew_route_triggered(bool)
 {
-  if(!actionDraw_mode->isChecked())
-    actionDraw_mode->trigger();
-  mRoute->clearPath();
-  enableGenerateActions(false);
+    if(!actionDraw_mode->isChecked())
+    {
+        actionDraw_mode->trigger();
+    }
+    mRoute->clearPath();
+    enableGenerateActions(false);
 }
 
 void RGMainWindow::on_actionPlayback_triggered(bool checked)
@@ -385,39 +384,48 @@ void RGMainWindow::on_action_About_triggered(bool checked)
 void RGMainWindow::on_action_Quit_triggered(bool checked)
 {
   Q_UNUSED(checked);
-  qApp->quit();
+    qApp->quit();
+}
+
+void RGMainWindow::handleMapLoaded(const QPixmap &map)
+{
+    actionSave_image->setEnabled(!map.isNull());
+    actionDraw_mode->setEnabled(!map.isNull());
+    actionNew_route->setEnabled(!map.isNull());
+    RGSettings::setLastOpenDir(mMap->fileName());
 }
 
 void RGMainWindow::blockUserInteraction(bool busy)
 {
-
-  actionOpen_image->setEnabled(!busy);
-  action_Quit->setEnabled(!busy);
-  actionSave_image->setEnabled(!busy);
-  actionDraw_mode->setEnabled(!busy);
-  actionNew_route->setEnabled(!busy);
-  actionGenerate_map->setEnabled(!busy);
-  actionPlayback->setEnabled(!busy);
-  actionImport_Google_Map->setEnabled(!busy);
-  actionImport_GPX->setEnabled(!busy);
-  mRouteUi->blockEssentialControls(busy);
-  //Stop is only enabled while playing back
-  actionStop->setEnabled(false);
+    actionOpen_image->setEnabled(!busy);
+    action_Quit->setEnabled(!busy);
+    actionSave_image->setEnabled(!busy);
+    actionDraw_mode->setEnabled(!busy);
+    actionNew_route->setEnabled(!busy);
+    actionGenerate_map->setEnabled(!busy);
+    actionPlayback->setEnabled(!busy);
+    actionImport_Google_Map->setEnabled(!busy);
+    actionImport_GPX->setEnabled(!busy);
+    mRouteUi->blockEssentialControls(busy);
+    //Stop is only enabled while playing back
+    actionStop->setEnabled(false);
 }
 
 void RGMainWindow::enableGenerateActions(bool val)
 {
-  actionGenerate_map->setEnabled(val);
-  actionPlayback->setEnabled(val);
-  actionStop->setEnabled(false);
-  mUndoRedo->sendActionSignals();
+    actionGenerate_map->setEnabled(val);
+    actionPlayback->setEnabled(val);
+    actionStop->setEnabled(false);
+    mUndoRedo->sendActionSignals();
 
-  //FIXME:
-  //Route UI contains no "generate actions", so this is a hack to re-enable the controls in the route ui (to modify time, etc.),
-  //when playback is finished (then val is true). In other cases (val == false) the controls should not be affected!
-  //Currently the playback signal (triggering this slot) is emited by the view widget, but should be emitted by RGRoute
-  if (val)
-	  mRouteUi->blockEssentialControls(false);
+    //FIXME:
+    //Route UI contains no "generate actions", so this is a hack to re-enable the controls in the route ui (to modify time, etc.),
+    //when playback is finished (then val is true). In other cases (val == false) the controls should not be affected!
+    //Currently the playback signal (triggering this slot) is emited by the view widget, but should be emitted by RGRoute
+    if (val)
+    {
+        mRouteUi->blockEssentialControls(false);
+    }
 }
 
 void RGMainWindow::movieGenerationFinished()

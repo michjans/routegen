@@ -29,7 +29,7 @@
 
 extern const QString applicationName;
 
-RGViewWidget::RGViewWidget(QWidget *parent) :
+RGViewWidget::RGViewWidget(RGMap *map, QWidget *parent) :
   QGraphicsView(parent),
   mPlayTimer(nullptr),
   mTimerCounter(0)
@@ -49,6 +49,13 @@ RGViewWidget::RGViewWidget(QWidget *parent) :
     mPlayTimer = new QTimer(this);
     QObject::connect(mPlayTimer, SIGNAL(timeout()), this, SLOT(playTimerEvent()));
   }
+
+  if (map)
+  {
+      QObject::connect(map, &RGMap::mapLoaded,
+                       this, &RGViewWidget::loadImage);
+  }
+
 }
 
 QSize RGViewWidget::sizeHint () const
@@ -188,7 +195,8 @@ bool RGViewWidget::saveFrame(int frameCounter, const QString &dirName, const QSt
 	{
 		return false;
 	}
-	else{
+    else
+    {
 		generatedBMPs.append(fileName);
 	}
 	return true;

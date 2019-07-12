@@ -164,7 +164,7 @@ float RGPath::getAngle()
   return (360-angle);
 }
 
-void RGPath::newPointList(QList<QPoint> pointList)
+void RGPath::newPointList(const QList<QPoint> &pointList)
 {
   if(pointList.size()<0)
     return;
@@ -219,6 +219,7 @@ void RGPath::setPen(const QPen & pen)
 
 void RGPath::createPath()
 {
+  qDebug() << "RGPath::createPathh: mRawPath.size():" << mRawPath.size();
   prepareGeometryChange();
   //create path from data :
   mPath = QPainterPath();
