@@ -19,7 +19,7 @@ bool RGGPXReader::readFile(const QString &fileName)
         return false;
     }
     QXmlStreamReader inputStream(&file);
-    m_route->clearPath();
+    m_route->clearPath(true);
     QList<QGeoCoordinate> geoCoordinates;
     while (!inputStream.atEnd() && !inputStream.hasError())
     {

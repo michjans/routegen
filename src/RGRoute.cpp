@@ -158,11 +158,14 @@ void RGRoute::setEditMode(bool checked)
   mEditPath->grabKeyboard();
 }
 
-void RGRoute::clearPath()
+void RGRoute::clearPath(bool clearGeoPath)
 {
-  mGeoPath.clearPath();
-  mEditPath->clear();
-  updateVehicle();
+    if (clearGeoPath)
+    {
+        mGeoPath.clearPath();
+    }
+    mEditPath->clear(!clearGeoPath);
+    updateVehicle();
 }
 
 int RGRoute::countFrames()

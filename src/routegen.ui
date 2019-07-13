@@ -46,28 +46,14 @@
      <x>0</x>
      <y>0</y>
      <width>720</width>
-     <height>23</height>
+     <height>25</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu_File">
-    <property name="windowTitle">
-     <string>Route Generator v0.1</string>
-    </property>
-    <property name="title">
-     <string>&amp;File</string>
-    </property>
-    <addaction name="actionOpen_image"/>
-    <addaction name="actionImport_Google_Map"/>
-    <addaction name="actionSave_image"/>
-    <addaction name="separator"/>
-    <addaction name="action_Quit"/>
-   </widget>
    <widget class="QMenu" name="menu_Tools">
     <property name="title">
      <string>&amp;Tools</string>
     </property>
     <addaction name="actionDraw_mode"/>
-    <addaction name="actionImport_GPX"/>
     <addaction name="actionPlayback"/>
     <addaction name="actionStop"/>
     <addaction name="actionGenerate_map"/>
@@ -87,6 +73,20 @@
     <addaction name="action_Redo"/>
     <addaction name="separator"/>
     <addaction name="actionPreferences"/>
+   </widget>
+   <widget class="QMenu" name="menu_File">
+    <property name="windowTitle">
+     <string>Route Generator v0.1</string>
+    </property>
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionOpen_image"/>
+    <addaction name="actionImport_Google_Map"/>
+    <addaction name="actionImport_GPX"/>
+    <addaction name="actionSave_image"/>
+    <addaction name="separator"/>
+    <addaction name="action_Quit"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
@@ -109,10 +109,10 @@
    </attribute>
    <addaction name="actionOpen_image"/>
    <addaction name="actionImport_Google_Map"/>
+   <addaction name="actionImport_GPX"/>
    <addaction name="actionSave_image"/>
    <addaction name="separator"/>
    <addaction name="actionDraw_mode"/>
-   <addaction name="actionImport_GPX"/>
    <addaction name="actionNew_route"/>
    <addaction name="action_Undo"/>
    <addaction name="action_Redo"/>
@@ -262,7 +262,7 @@
      <normaloff>:/icons/icons/gps.png</normaloff>:/icons/icons/gps.png</iconset>
    </property>
    <property name="text">
-    <string>Import from GP&amp;X</string>
+    <string>Import route from GP&amp;X</string>
    </property>
    <property name="toolTip">
     <string>Import route points from GPX file</string>

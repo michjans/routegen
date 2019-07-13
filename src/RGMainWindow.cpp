@@ -24,7 +24,10 @@
 #include "RGMainWindow.h"
 #include "RGSettings.h"
 #include "RGSettingsDialog.h"
+//Under linux Ubuntu 16 which doesn't have QWebEngine
+#if QT_VERSION >= 0x050900
 #include "RGGoogleMap.h"
+#endif
 #include "RGVehicleList.h"
 #include "RGEncVideo.h"
 #include "RGEncFFmpeg.h"
@@ -89,6 +92,14 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 
   mMap = new RGMap(this);
 
+  //ViewWidget :
+  mView = new RGViewWidget(mMap);
+  ui.centralwidget->layout()->addWidget(mView);
+  QObject::connect(actionStop, SIGNAL(triggered()),
+                   mView, SLOT(stop()));
+  QObject::connect(mView, SIGNAL(playbackStopped(bool)),
+                   this, SLOT(enableGenerateActions(bool)));
+
   //Route :
   mRoute= new RGRoute(mMap);
   mRoute->setZValue(1);
@@ -97,13 +108,6 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   QObject::connect(mRoute, SIGNAL(canGenerate(bool)),
                    this, SLOT(enableGenerateActions(bool)));
 
-  //ViewWidget :
-  mView = new RGViewWidget(mMap);
-  ui.centralwidget->layout()->addWidget(mView);
-  QObject::connect(actionStop, SIGNAL(triggered()),
-                   mView, SLOT(stop()));
-  QObject::connect(mView, SIGNAL(playbackStopped(bool)),
-                   this, SLOT(enableGenerateActions(bool)));
   mView->addRoute(mRoute);
 
   //Route UI (Toolbar with route controls):
@@ -196,6 +200,8 @@ void RGMainWindow::on_actionPreferences_triggered(bool)
 
 void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 {
+//Under linux Ubuntu 16 which doesn't have QGeoCoordinate and QGeoPath
+#ifndef UBUNTU_DEBUG
     RGGoogleMap gm(this);
     if (gm.exec() == QDialog::Accepted)
     {
@@ -218,6 +224,23 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
         qDebug() << "Retrieved map: " << fileName << map.width() << map.height() << gm.getMapBounds();
         mMap->loadMap(fileName, map, gm.getMapBounds());
     }
+#else
+    QString lastOpenDir = RGSettings::getLastOpenDir();
+
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                    lastOpenDir,
+                                                    tr("Images (*.bmp *.jpg *.gif *.png *.tif)"));
+    if (!fileName.isNull())
+    {
+      QPixmap pm(fileName);
+      if (pm.isNull()) QMessageBox::critical (this, "Oops", "Could not load image");
+      else
+      {
+          QRectF debugBounds(5.74894,52.1726, 0.527344, 0.24322);
+          mMap->loadMap(fileName, pm, debugBounds);
+      }
+    }
+#endif
 }
 
 void RGMainWindow::on_actionImport_GPX_triggered(bool)
@@ -249,7 +272,7 @@ void RGMainWindow::on_actionNew_route_triggered(bool)
     {
         actionDraw_mode->trigger();
     }
-    mRoute->clearPath();
+    mRoute->clearPath(true);
     enableGenerateActions(false);
 }
 
