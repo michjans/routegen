@@ -60,7 +60,7 @@ public:
     explicit RGMap(QObject *parent = 0);
 
     bool loadMap(const QString &fileName, const QPixmap &map = QPixmap(), const QRectF mapBounds = QRectF());
-    bool hasWorldBounds() const;
+    bool hasGeoBounds() const;
     QList<QPoint> mapRoutePoints(const QList<QGeoCoordinate> &geoCoordinates) const;
     QString fileName() const;
 
@@ -70,7 +70,7 @@ signals:
 public slots:
 
 private:
-    QRectF mWorldBounds;
+    QRectF mGeoBounds;
     QPixmap mMap;
     QString mFileName;
 };

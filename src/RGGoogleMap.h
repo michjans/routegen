@@ -21,13 +21,14 @@
 
 #include <QString>
 #include <QPixmap>
+#include <QGeoRectangle>
 
 class RGGoogleMap : public QDialog
 {
 	Q_OBJECT
 
 public:
-	RGGoogleMap(QWidget *parent);
+    RGGoogleMap(QWidget *parent, QGeoRectangle startGeoRect = QGeoRectangle());
 
 	QPixmap getMap() const {return m_map;}
     QRectF getMapBounds() const {return m_mapBounds;}
@@ -39,6 +40,7 @@ private slots:
     void on_accept();
     void on_goButton_clicked(bool);
     void on_fixButton_clicked(bool);
+    void on_zoomBox_valueChanged(int zoom);
 
 	void on_webView_loadFinished ( bool ok );
 	void on_webView_loadProgress ( int progress );

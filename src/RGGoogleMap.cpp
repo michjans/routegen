@@ -54,7 +54,7 @@ protected:
 };
 #endif
 
-RGGoogleMap::RGGoogleMap(QWidget *parent)
+RGGoogleMap::RGGoogleMap(QWidget *parent, QGeoRectangle startGeoRect)
 	: QDialog(parent)
 {
 	ui.setupUi(this);
@@ -77,12 +77,31 @@ RGGoogleMap::RGGoogleMap(QWidget *parent)
 
     ui.webView->setPage(new QWebEnginePage(ui.webView));
 
-    //TODO: Hier moet nog een slot tussen!
     QObject::connect(ui.buttonBox, &QDialogButtonBox::accepted,
                         this, &RGGoogleMap::on_accept);
 
 	//Init map resolution
 	on_fixButton_clicked(true);
+
+    if (startGeoRect.isValid())
+    {
+        //Load initial map location from incoming geo rectangle
+        qDebug() << "startGeoRect:"
+                 << "  topLeft:" << startGeoRect.topLeft()
+                 << "  bottomLeft:" << startGeoRect.bottomLeft()
+                 << "  topRight:" << startGeoRect.topRight()
+                 << "  bottomRight:" << startGeoRect.bottomRight()
+                 << "  center:" << startGeoRect.center();
+
+        ui.lineEdit->setEnabled(false);
+        ui.goButton->setEnabled(false);
+
+        QString latlon = QString::number(startGeoRect.center().latitude()) +
+                         "," +
+                         QString::number(startGeoRect.center().longitude());
+        ui.webView->setHtml(genHtml(latlon, "10"));
+        ui.webView->reload();
+    }
 }
 
 void RGGoogleMap::accept()
@@ -167,7 +186,13 @@ void RGGoogleMap::on_goButton_clicked(bool)
 
 void RGGoogleMap::on_fixButton_clicked(bool)
 {
-	ui.webView->setFixedSize(QSize(ui.spinBoxX->value(), ui.spinBoxY->value()));
+    ui.webView->setFixedSize(QSize(ui.spinBoxX->value(), ui.spinBoxY->value()));
+}
+
+void RGGoogleMap::on_zoomBox_valueChanged(int zoom)
+{
+    ui.webView->page()->runJavaScript(QString(QStringLiteral("map.setZoom(")) +
+                                      QString::number(zoom) + QStringLiteral(");"));
 }
 
 void RGGoogleMap::on_webView_loadFinished ( bool )

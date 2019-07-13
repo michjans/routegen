@@ -133,10 +133,15 @@ void RGRoute::setNewPoints(const QList<QPoint> &pointlist)
     mEditPath->setNewPoints(pointlist);
 }
 
-void RGRoute::setRouteCoordinates(const QList<QGeoCoordinate> &geoCoordinates)
+void RGRoute::setGeoCoordinates(const QList<QGeoCoordinate> &geoCoordinates)
 {
     mGeoPath.setPath(geoCoordinates);
     processMapUpdate();
+}
+
+QGeoRectangle RGRoute::getGeoBounds() const
+{
+    return mGeoPath.boundingGeoRectangle();
 }
 
 void RGRoute::undoredo(QVariant data)
@@ -209,7 +214,7 @@ void RGRoute::updateVehicle()
 
 void RGRoute::processMapUpdate()
 {
-    if (mMap->hasWorldBounds() && !mGeoPath.isEmpty())
+    if (mMap->hasGeoBounds() && !mGeoPath.isEmpty())
     {
         qDebug() << "RGRoute::processMapUpdate: calculating new route from geopath";
         QList<QPoint> pointlist = mMap->mapRoutePoints(mGeoPath.path());

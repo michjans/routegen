@@ -31,6 +31,7 @@
 #ifndef UBUNTU_DEBUG
 #include <QGeoCoordinate>
 #include <QGeoPath>
+#include <QGeoRectangle>
 #else
 class QGeoPath : QObject
 {
@@ -82,7 +83,8 @@ public:
   void setCurrentFrame(int);
   void setIconlessBeginEndFrames(bool);
   void setNewPoints(const QList<QPoint> &);
-  void setRouteCoordinates(const QList<QGeoCoordinate> &geoCoordinates);
+  void setGeoCoordinates(const QList<QGeoCoordinate> &geoCoordinates);
+  QGeoRectangle getGeoBounds() const;
 
   virtual void undoredo(QVariant=0);
 

@@ -10,7 +10,7 @@ bool RGMap::loadMap(const QString &fileName, const QPixmap &map, const QRectF ma
 {
     bool success = !map.isNull();
     mFileName = fileName;
-    mWorldBounds = mapBounds;
+    mGeoBounds = mapBounds;
     if (map.isNull())
     {
         success = mMap.load(fileName);
@@ -26,23 +26,23 @@ bool RGMap::loadMap(const QString &fileName, const QPixmap &map, const QRectF ma
     return success;
 }
 
-bool RGMap::hasWorldBounds() const
+bool RGMap::hasGeoBounds() const
 {
-    return mWorldBounds.isValid();
+    return mGeoBounds.isValid();
 }
 
 QList<QPoint> RGMap::mapRoutePoints(const QList<QGeoCoordinate> &geoCoordinates) const
 {
     QList<QPoint> pointlist;
-    if (mWorldBounds.isValid())
+    if (mGeoBounds.isValid())
     {
-        double xScale = mMap.width() / mWorldBounds.width();
-        double yScale = mMap.height() / mWorldBounds.height();
+        double xScale = mMap.width() / mGeoBounds.width();
+        double yScale = mMap.height() / mGeoBounds.height();
 
         for (const QGeoCoordinate &coord: geoCoordinates)
         {
-            QPoint point((coord.longitude() - mWorldBounds.x()) * xScale,
-                         (mWorldBounds.y() - coord.latitude()) * yScale);
+            QPoint point((coord.longitude() - mGeoBounds.x()) * xScale,
+                         (mGeoBounds.y() - coord.latitude()) * yScale);
             pointlist.append(point);
         }
     }
