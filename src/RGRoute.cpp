@@ -144,6 +144,11 @@ QGeoRectangle RGRoute::getGeoBounds() const
     return mGeoPath.boundingGeoRectangle();
 }
 
+QGeoPath RGRoute::getGeoPath() const
+{
+    return mGeoPath;
+}
+
 void RGRoute::undoredo(QVariant data)
 {
   QList<QVariant> vlist=data.toList();

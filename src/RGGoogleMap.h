@@ -21,14 +21,14 @@
 
 #include <QString>
 #include <QPixmap>
-#include <QGeoRectangle>
+#include <QGeoPath>
 
 class RGGoogleMap : public QDialog
 {
 	Q_OBJECT
 
 public:
-    RGGoogleMap(QWidget *parent, QGeoRectangle startGeoRect = QGeoRectangle());
+    RGGoogleMap(QWidget *parent, const QGeoPath &geoPath = QGeoPath());
 
 	QPixmap getMap() const {return m_map;}
     QRectF getMapBounds() const {return m_mapBounds;}
@@ -53,4 +53,5 @@ private:
     QString m_html_template;
     QPixmap m_map;
     QRectF m_mapBounds;
+    QGeoPath m_geoPath;
 };

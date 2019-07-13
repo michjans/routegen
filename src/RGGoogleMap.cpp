@@ -25,6 +25,8 @@
 
 #include <QWebEnginePage>
 #include <QWebEngineScript>
+#include <QGeoCoordinate>
+#include <QGeoRectangle>
 
 #if 0
 //Debug only
@@ -54,8 +56,9 @@ protected:
 };
 #endif
 
-RGGoogleMap::RGGoogleMap(QWidget *parent, QGeoRectangle startGeoRect)
-	: QDialog(parent)
+RGGoogleMap::RGGoogleMap(QWidget *parent, const QGeoPath &geoPath)
+    : QDialog(parent),
+      m_geoPath(geoPath)
 {
 	ui.setupUi(this);
 
@@ -83,8 +86,9 @@ RGGoogleMap::RGGoogleMap(QWidget *parent, QGeoRectangle startGeoRect)
 	//Init map resolution
 	on_fixButton_clicked(true);
 
-    if (startGeoRect.isValid())
+    if (geoPath.isValid())
     {
+        QGeoRectangle startGeoRect = geoPath.boundingGeoRectangle();
         //Load initial map location from incoming geo rectangle
         qDebug() << "startGeoRect:"
                  << "  topLeft:" << startGeoRect.topLeft()
@@ -118,7 +122,10 @@ void RGGoogleMap::accept()
 
 void RGGoogleMap::on_accept()
 {
-    //First get the map boundaries from google's map
+    //First delete the drawn rectangle, then retrieve the map boundaries from google's map
+    ui.webView->page()->runJavaScript("deleteGeoRect();");
+    //TODO: We need to wait until the georect is deleted
+
     ui.webView->page()->runJavaScript("getBounds();", QWebEngineScript::MainWorld,
                                       [this](const QVariant &v)
     {
@@ -197,6 +204,28 @@ void RGGoogleMap::on_zoomBox_valueChanged(int zoom)
 
 void RGGoogleMap::on_webView_loadFinished ( bool )
 {
+    qDebug() << "webView::loadFinished";
+    QGeoRectangle geoRect = m_geoPath.boundingGeoRectangle();
+
+    QString javaRect = "[";
+    javaRect += "{lat: " + QString::number(geoRect.topLeft().latitude()) +
+               ", lng: " + QString::number(geoRect.topLeft().longitude()) + "},";
+    javaRect += "{lat: " + QString::number(geoRect.topRight().latitude()) +
+               ", lng: " + QString::number(geoRect.topRight().longitude()) + "},";
+    javaRect += "{lat: " + QString::number(geoRect.bottomRight().latitude()) +
+               ", lng: " + QString::number(geoRect.bottomRight().longitude()) + "},";
+    javaRect += "{lat: " + QString::number(geoRect.bottomLeft().latitude()) +
+               ", lng: " + QString::number(geoRect.bottomLeft().longitude()) + "},";
+    javaRect += "{lat: " + QString::number(geoRect.topLeft().latitude()) +
+               ", lng: " + QString::number(geoRect.topLeft().longitude()) + "}]";
+
+    qDebug() << "javaRect:" + javaRect;
+
+
+    ui.webView->page()->runJavaScript(QString(QStringLiteral("drawGeoRect(")) +
+                                      javaRect + QStringLiteral(");"));
+
+
 	ui.progressBar->hide();
 }
 
@@ -208,7 +237,8 @@ void RGGoogleMap::on_webView_loadProgress ( int progress )
 
 void RGGoogleMap::on_webView_loadStarted ()
 {
-	ui.progressBar->show();
+    qDebug() << "webView::loadStarted";
+    ui.progressBar->show();
 }
 
 QString RGGoogleMap::genHtml(const QString &latlon, const QString &zoom) const

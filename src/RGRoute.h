@@ -85,6 +85,7 @@ public:
   void setNewPoints(const QList<QPoint> &);
   void setGeoCoordinates(const QList<QGeoCoordinate> &geoCoordinates);
   QGeoRectangle getGeoBounds() const;
+  QGeoPath getGeoPath() const;
 
   virtual void undoredo(QVariant=0);
 

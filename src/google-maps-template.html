@@ -24,6 +24,7 @@
       var latLonInputString = "LATLON";
       var latLonInput = latLonInputString.split(",");
       var map;
+	  var geoRect;
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: parseFloat(latLonInput[0]), lng: parseFloat(latLonInput[1])},
@@ -44,8 +45,25 @@
             height: ne.lat() - sw.lat()
         }
       }
+	  
+	  function drawGeoRect(rectCoordinates) {
+		  geoRect = new google.maps.Polyline({
+			path: rectCoordinates,
+			geodesic: true,
+			strokeColor: '#00FF00',
+			strokeOpacity: 1.0,
+			strokeWeight: 2
+		  });
+
+		  geoRect.setMap(map);	
+      }
+	  
+	  function deleteGeoRect() {
+          geoRect.setMap(null);
+	  }
+
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=XXXXXXX&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=XXXXXXXXXXXXXXXXXXXx&callback=initMap"
     async defer></script>
   </body>
 </html>

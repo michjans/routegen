@@ -202,7 +202,7 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 {
 //Under linux Ubuntu 16 which doesn't have QGeoCoordinate and QGeoPath
 #ifndef UBUNTU_DEBUG
-    RGGoogleMap gm(this, mRoute->getGeoBounds());
+    RGGoogleMap gm(this, mRoute->getGeoPath());
     if (gm.exec() == QDialog::Accepted)
     {
         QPixmap map = gm.getMap();
