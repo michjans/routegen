@@ -23,86 +23,91 @@
 #include <QColor>
 #include <QString>
 #include <QPointF>
+#include <QRectF>
 
 class RGSettings
 {
 public:
+    enum FileLocation
+    {
+        RG_MAP_LOCATION,
+        RG_GPX_LOCATION,
+        RG_MOVIE_LOCATION
+    };
 
-  /*
-   * Movie generation settings
-   */
-  static QString getVideoEncoder();
-  static void setVideoEncoder(const QString &);
-  static QString getVideoEncExec();
-  static void setVideoEncExec(const QString &);
-  static QString getAviOutName();
-  static void setAviOutName(const QString &);
-  static int getFps();
-  static void setFps(int);
-  static int getKeyFrameRate();
-  static void setKeyFrameRate(int);
-  static int getBitRate();
-  static void setBitRate(const int);
-  static QString getAviCompression();
-  static void setAviCompression(const QString &);
-  static bool getDeleteBMPs();
-  static void setDeleteBMPs(bool val);
-  static bool getIconLessBeginEndFrames();
-  static void setIconLessBeginEndFrames(bool val);
-  static int getBeginDelaySeconds();
-  static void setBeginDelaySeconds(int val);
-  static int getEndDelaySeconds();
-  static void setEndDelaySeconds(int val);
+    /*
+    * Movie generation settings
+    */
+    static QString getVideoEncoder();
+    static void setVideoEncoder(const QString &);
+    static QString getVideoEncExec();
+    static void setVideoEncExec(const QString &);
+    static QString getAviOutName();
+    static void setAviOutName(const QString &);
+    static int getFps();
+    static void setFps(int);
+    static int getKeyFrameRate();
+    static void setKeyFrameRate(int);
+    static int getBitRate();
+    static void setBitRate(const int);
+    static QString getAviCompression();
+    static void setAviCompression(const QString &);
+    static bool getDeleteBMPs();
+    static void setDeleteBMPs(bool val);
+    static bool getIconLessBeginEndFrames();
+    static void setIconLessBeginEndFrames(bool val);
+    static int getBeginDelaySeconds();
+    static void setBeginDelaySeconds(int val);
+    static int getEndDelaySeconds();
+    static void setEndDelaySeconds(int val);
 
-  /*
-   * Application settings
-   */
-  static QColor getPenColor();
-  static void setPenColor(const QColor &);
-  static int getPenSize();
-  static void setPenSize(int);
-  static int getPenStyle();
-  static void setPenStyle(int);
-  static QString getLastOpenDir();
-  static void setLastOpenDir(const QString &fileName);
-  static QString getLastSaveDir();
-  static void setLastSaveDir(const QString &fileName);
-  static QString getLastGenDir();
-  static void setLastGenDir(const QString &fileName);
-  static QString getLastVehicleName();
-  static void setLastVehicleName(const QString &name);
-  static int getVehicleAngle(const QString &name);
-  static void setVehicleAngle(const QString &name, int angle);
-  static int getVehicleSize(const QString &name);
-  static void setVehicleSize(const QString &name, int size);
-  static bool getVehicleMirrored(const QString &name);
-  static void setVehicleMirrored(const QString &name, bool mirror);
-  static QPointF getVehicleOrigin(const QString &name);
-  static void setVehicleOrigin(const QString &name, QPointF point);
-  static bool getVehicleAcceptsRotation(const QString &name);
-  static void setVehicleAcceptsRotation(const QString &name, bool rotate);
-  
-  static void setTotalTimeMode(bool val);
-  static bool getTotalTimeMode();
-  static void setRoutePlayTime(int time);
-  static int  getRoutePlayTime();
+    /*
+    * Application settings
+    */
+    static QRectF getMapGeoBounds(const QString &fileNme);
+    static void setMapGeoBounds(const QString &fileNme, const QRectF &geoBounds);
+    static QColor getPenColor();
+    static void setPenColor(const QColor &);
+    static int getPenSize();
+    static void setPenSize(int);
+    static int getPenStyle();
+    static void setPenStyle(int);
+    static QString getLastOpenDir(FileLocation loc);
+    static void setLastOpenDir(const QString &fileName, FileLocation loc);
+    static QString getLastVehicleName();
+    static void setLastVehicleName(const QString &name);
+    static int getVehicleAngle(const QString &name);
+    static void setVehicleAngle(const QString &name, int angle);
+    static int getVehicleSize(const QString &name);
+    static void setVehicleSize(const QString &name, int size);
+    static bool getVehicleMirrored(const QString &name);
+    static void setVehicleMirrored(const QString &name, bool mirror);
+    static QPointF getVehicleOrigin(const QString &name);
+    static void setVehicleOrigin(const QString &name, QPointF point);
+    static bool getVehicleAcceptsRotation(const QString &name);
+    static void setVehicleAcceptsRotation(const QString &name, bool rotate);
 
-  //Google maps resolution
-  static void setGMXResolution(int xres);
-  static int  getGMXResolution();
-  static void setGMYResolution(int xres);
-  static int  getGMYResolution();
+    static void setTotalTimeMode(bool val);
+    static bool getTotalTimeMode();
+    static void setRoutePlayTime(int time);
+    static int  getRoutePlayTime();
 
-  /*
-   * Advanced settings
-   */
+    //Google maps resolution
+    static void setGMXResolution(int xres);
+    static int  getGMXResolution();
+    static void setGMYResolution(int xres);
+    static int  getGMYResolution();
 
-  //Enable experimental curve interpolation for routes?
-  //(Still needs to be fixed, so made experimental)
-  static void setSmoothPathMode(bool enable);
-  static bool getSmoothPathMode(bool defaultVal = false);
-  static void setSmoothLength(int val);
-  static int  getSmoothLength(bool defaultVal = false);
+    /*
+    * Advanced settings
+    */
+
+    //Enable experimental curve interpolation for routes?
+    //(Still needs to be fixed, so made experimental)
+    static void setSmoothPathMode(bool enable);
+    static bool getSmoothPathMode(bool defaultVal = false);
+    static void setSmoothLength(int val);
+    static int  getSmoothLength(bool defaultVal = false);
 
 };
 

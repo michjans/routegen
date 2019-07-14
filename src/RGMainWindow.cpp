@@ -25,7 +25,7 @@
 #include "RGSettings.h"
 #include "RGSettingsDialog.h"
 //Under linux Ubuntu 16 which doesn't have QWebEngine
-#if QT_VERSION >= 0x050900
+#ifndef UBUNTU_DEBUG
 #include "RGGoogleMap.h"
 #endif
 #include "RGVehicleList.h"
@@ -148,7 +148,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 void RGMainWindow::on_actionOpen_image_triggered(bool checked)
 {
   Q_UNUSED(checked);
-  QString lastOpenDir = RGSettings::getLastOpenDir();
+  QString lastOpenDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
   
   QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                                                   lastOpenDir,
@@ -166,7 +166,7 @@ void RGMainWindow::on_actionSave_image_triggered(bool checked)
 {
   Q_UNUSED(checked);
 
-  QString lastSaveDir = RGSettings::getLastSaveDir();
+  QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
 
   QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                   lastSaveDir,
@@ -174,7 +174,7 @@ void RGMainWindow::on_actionSave_image_triggered(bool checked)
 
   if (!fileName.isNull()){
     mView->saveRenderedImage(fileName);
-    RGSettings::setLastSaveDir(fileName);
+    RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
   }
 }
 
@@ -211,7 +211,7 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 
         //Yes, lastOpenDir, because lastSaveDir is used to save map files
         //from the main window
-        QString lastSaveDir = RGSettings::getLastOpenDir();
+        QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
         QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                         lastSaveDir,
                                                         tr("Images (*.bmp)"));
@@ -245,14 +245,25 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 
 void RGMainWindow::on_actionImport_GPX_triggered(bool)
 {
-    QString lastSaveDir = RGSettings::getLastOpenDir();
+    QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_GPX_LOCATION);
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open GPX File"),
                                                     lastSaveDir,
                                                     tr("GPX files (*.gpx)"));
     if (!fileName.isNull())
     {
+        RGSettings::setLastOpenDir(fileName, RGSettings::RG_GPX_LOCATION);
         RGGPXReader gpxReader(mRoute);
-        gpxReader.readFile(fileName);
+        if (gpxReader.readFile(fileName) && !mMap->hasGeoBounds())
+        {
+            //Route loaded but map has no geo boundaries
+            QMessageBox::StandardButton answer = QMessageBox::question (this, tr("No geo boundaries"),
+                                     tr("GPX route cannot be displayed, because map has no known geographic boundaries, import new map using Google Maps?"),
+                                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+            if (answer == QMessageBox::Yes)
+            {
+                on_actionImport_Google_Map_triggered(true);
+            }
+        }
     }
 }
 
@@ -298,7 +309,7 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
 {
   Q_UNUSED(checked);
   bool generateBMPOK = false;
-  QString lastGenDir = RGSettings::getLastGenDir();
+  QString lastGenDir = RGSettings::getLastOpenDir(RGSettings::RG_MOVIE_LOCATION);
 
   //Calculate MB the full movie (all uncompressed BMP's + AVI) will take
   //(This is a rough proximation, but the calculated number is always higher,
@@ -343,7 +354,7 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
        //Continue
     }
 
-    RGSettings::setLastGenDir(dir);
+    RGSettings::setLastOpenDir(dir, RGSettings::RG_MOVIE_LOCATION);
     //generate images :
     mRoute->setEditMode(false);
     generateBMPOK = mView->generateMovie(dir, QString("map"), mGeneratedBMPs);
@@ -415,7 +426,7 @@ void RGMainWindow::handleMapLoaded(const QPixmap &map)
     actionSave_image->setEnabled(!map.isNull());
     actionDraw_mode->setEnabled(!map.isNull());
     actionNew_route->setEnabled(!map.isNull());
-    RGSettings::setLastOpenDir(mMap->fileName());
+    RGSettings::setLastOpenDir(mMap->fileName(), RGSettings::RG_MAP_LOCATION);
 }
 
 void RGMainWindow::blockUserInteraction(bool busy)

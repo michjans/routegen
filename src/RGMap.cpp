@@ -1,4 +1,5 @@
 #include "RGMap.h"
+#include "RGSettings.h"
 
 RGMap::RGMap(QObject *parent)
     :QObject(parent)
@@ -10,7 +11,6 @@ bool RGMap::loadMap(const QString &fileName, const QPixmap &map, const QRectF ma
 {
     bool success = !map.isNull();
     mFileName = fileName;
-    mGeoBounds = mapBounds;
     if (map.isNull())
     {
         success = mMap.load(fileName);
@@ -19,8 +19,20 @@ bool RGMap::loadMap(const QString &fileName, const QPixmap &map, const QRectF ma
     {
         mMap = map;
     }
+
     if (success)
     {
+        //Store or retrieve map's geo boundaries
+        if (mapBounds.isValid())
+        {
+            mGeoBounds = mapBounds;
+            RGSettings::setMapGeoBounds(fileName, mapBounds);
+        }
+        else
+        {
+            mGeoBounds = RGSettings::getMapGeoBounds(fileName);
+        }
+
         emit mapLoaded(mMap);
     }
     return success;

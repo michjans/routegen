@@ -18,6 +18,7 @@
 */
 
 #include <QtGui>
+#include <QHash>
 #include <RGSettings.h>
 
 QString RGSettings::getVideoEncoder()
@@ -157,7 +158,23 @@ void RGSettings::setEndDelaySeconds(int val)
   settings.setValue("endDelaySeconds", val);
 }
 
+QRectF RGSettings::getMapGeoBounds(const QString &fileName)
+{
+    QSettings settings;
 
+    QHash<QString, QVariant> geoBoundMap = settings.value("geoBounds", QHash<QString, QVariant>()).toHash();
+    return geoBoundMap[fileName].toRectF();
+}
+
+void RGSettings::setMapGeoBounds(const QString &fileName, const QRectF &geoBounds)
+{
+    QSettings settings;
+
+    QHash<QString, QVariant> geoBoundMap = settings.value("geoBounds", QHash<QString, QVariant>()).toHash();
+    geoBoundMap[fileName] = QVariant(geoBounds);
+
+    settings.setValue("geoBounds", geoBoundMap);
+}
 
 QColor RGSettings::getPenColor()
 {
@@ -206,41 +223,37 @@ void RGSettings::setPenStyle(int style)
   settings.setValue("routeStyle", style);
 }
 
-QString RGSettings::getLastOpenDir()
+QString RGSettings::getLastOpenDir(FileLocation loc)
 {
   QSettings settings;
-  return settings.value("lastOpenDir", QDir::homePath()).toString();
+  switch (loc)
+  {
+  case RG_GPX_LOCATION:
+      return settings.value("lastGPXDir", QDir::homePath()).toString();
+  case RG_MOVIE_LOCATION:
+      return settings.value("lastGenDir", QDir::homePath()).toString();
+  case RG_MAP_LOCATION:
+  default:
+      return settings.value("lastOpenDir", QDir::homePath()).toString();
+  }
 }
 
-void RGSettings::setLastOpenDir(const QString &fileName)
+void RGSettings::setLastOpenDir(const QString &fileName, FileLocation loc)
 {
   QSettings settings;
-  settings.setValue("lastOpenDir", fileName);
+  switch (loc)
+  {
+  case RG_GPX_LOCATION:
+      settings.setValue("lastGPXDir", fileName);
+      break;
+  case RG_MOVIE_LOCATION:
+      settings.setValue("lastGenDir", fileName);
+      break;
+  case RG_MAP_LOCATION:
+  default:
+      settings.setValue("lastOpenDir", fileName);
+  }
 }
-QString RGSettings::getLastSaveDir()
-{
-  QSettings settings;
-  return settings.value("lastSaveDir", QDir::homePath()).toString();
-}
-
-void RGSettings::setLastSaveDir(const QString &fileName)
-{
-  QSettings settings;
-  settings.setValue("lastSaveDir", fileName);
-}
-
-QString RGSettings::getLastGenDir()
-{
-  QSettings settings;
-  return settings.value("lastGenDir", QDir::homePath()).toString();
-}
-
-void RGSettings::setLastGenDir(const QString &dir)
-{
-  QSettings settings;
-  settings.setValue("lastGenDir", dir);
-}
-
 
 QString RGSettings::getLastVehicleName()
 {
