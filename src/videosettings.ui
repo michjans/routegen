@@ -6,18 +6,28 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>493</width>
-    <height>279</height>
+    <width>564</width>
+    <height>339</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="codecExecLocLabel">
+   <item row="2" column="1">
+    <widget class="QCheckBox" name="deleteBMPsCB">
+     <property name="toolTip">
+      <string>Delete BMP's after AVI generation</string>
+     </property>
      <property name="text">
-      <string>Bmp2Avi location</string>
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QSpinBox" name="mBeginDelaySB">
+     <property name="toolTip">
+      <string>Number of seconds delay before the route animation starts</string>
      </property>
     </widget>
    </item>
@@ -25,20 +35,6 @@
     <widget class="QLineEdit" name="codecExecLocLE">
      <property name="toolTip">
       <string>Enter location of bmp2avi executable.</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QPushButton" name="codecExecLocBrowsePB">
-     <property name="text">
-      <string>Browse...</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="nameOutputLabel">
-     <property name="text">
-      <string>Name output AVI</string>
      </property>
     </widget>
    </item>
@@ -52,41 +48,10 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="deleteBMPsLabel">
+   <item row="0" column="0">
+    <widget class="QLabel" name="codecExecLocLabel">
      <property name="text">
-      <string>Delete BMP's</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QCheckBox" name="deleteBMPsCB">
-     <property name="toolTip">
-      <string>Delete BMP's after AVI generation</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Begin delay (seconds)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QSpinBox" name="mBeginDelaySB">
-     <property name="toolTip">
-      <string>Number of seconds delay before the route animation starts</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>End delay (seconds)</string>
+      <string>Bmp2Avi location</string>
      </property>
     </widget>
    </item>
@@ -97,118 +62,250 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="fpsLabel">
+   <item row="1" column="0">
+    <widget class="QLabel" name="nameOutputLabel">
      <property name="text">
-      <string>FPS</string>
+      <string>Name output AVI</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>End delay (seconds)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Begin delay (seconds)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QPushButton" name="codecExecLocBrowsePB">
+     <property name="text">
+      <string>Browse...</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="deleteBMPsLabel">
+     <property name="text">
+      <string>Delete BMP's</string>
      </property>
     </widget>
    </item>
    <item row="5" column="1">
-    <widget class="QSpinBox" name="fpsSB">
-     <property name="toolTip">
-      <string>Select frame rate of output AVI</string>
-     </property>
-     <property name="minimum">
-      <number>1</number>
-     </property>
-     <property name="maximum">
-      <number>50</number>
-     </property>
-     <property name="value">
-      <number>25</number>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="2" colspan="2">
-    <spacer name="spacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>221</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="bitRateLabel">
-     <property name="text">
-      <string>Bitrate</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="1">
-    <widget class="QSpinBox" name="bitRateSB">
-     <property name="minimum">
-      <number>200</number>
-     </property>
-     <property name="maximum">
-      <number>8000</number>
-     </property>
-     <property name="singleStep">
-      <number>10</number>
-     </property>
-     <property name="value">
-      <number>1500</number>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="2">
-    <widget class="QLabel" name="bitRateLabel2">
-     <property name="text">
-      <string>kb/s</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="keyFrLabel">
-     <property name="text">
-      <string>Key frame rate</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="1">
-    <widget class="QSpinBox" name="keyFrSB">
-     <property name="toolTip">
-      <string>Select key frame rate of output AVI</string>
-     </property>
-     <property name="maximum">
-      <number>50</number>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0">
-    <widget class="QLabel" name="codecLabel">
-     <property name="text">
-      <string>Codec</string>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="1">
-    <widget class="QComboBox" name="codecCB">
-     <property name="toolTip">
-      <string>Select codec used for output AVI</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="1">
-    <spacer name="verticalSpacer_2">
+    <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>82</width>
-       <height>7</height>
+       <width>20</width>
+       <height>40</height>
       </size>
      </property>
     </spacer>
    </item>
+   <item row="6" column="0" colspan="3">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Movie encoder settings</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="3" column="0">
+       <widget class="QLabel" name="codecLabel">
+        <property name="text">
+         <string>Codec</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="codecCB">
+        <property name="toolTip">
+         <string>Select codec used for output AVI</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="bitRateLabel2">
+        <property name="text">
+         <string>kb/s</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="keyFrLabel">
+        <property name="text">
+         <string>Key frame rate</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSpinBox" name="keyFrSB">
+        <property name="toolTip">
+         <string>Select key frame rate of output AVI</string>
+        </property>
+        <property name="maximum">
+         <number>50</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="fpsSB">
+        <property name="toolTip">
+         <string>Select frame rate of output AVI</string>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>50</number>
+        </property>
+        <property name="value">
+         <number>25</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="fpsLabel">
+        <property name="text">
+         <string>FPS</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="bitRateSB">
+        <property name="minimum">
+         <number>200</number>
+        </property>
+        <property name="maximum">
+         <number>8000</number>
+        </property>
+        <property name="singleStep">
+         <number>10</number>
+        </property>
+        <property name="value">
+         <number>1500</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="bitRateLabel">
+        <property name="text">
+         <string>Bitrate</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QCheckBox" name="mCommandLineCB">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="toolTip">
+         <string>Manually enter ffmpeg commandline arguments</string>
+        </property>
+        <property name="text">
+         <string>Manual ffmpeg arguments</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="mCommandLineLE">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>mCommandLineCB</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>fpsSB</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>27</x>
+     <y>411</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>239</x>
+     <y>262</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mCommandLineCB</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>bitRateSB</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>102</x>
+     <y>414</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>209</x>
+     <y>306</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mCommandLineCB</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>codecCB</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>130</x>
+     <y>413</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>179</x>
+     <y>374</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mCommandLineCB</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>mCommandLineLE</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>164</x>
+     <y>414</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>206</x>
+     <y>410</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mCommandLineCB</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>keyFrSB</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>71</x>
+     <y>412</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>191</x>
+     <y>336</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

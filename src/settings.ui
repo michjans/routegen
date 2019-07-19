@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>698</width>
-    <height>314</height>
+    <width>835</width>
+    <height>468</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -138,10 +138,50 @@
          </property>
         </spacer>
        </item>
+       <item row="2" column="0">
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>GPX import</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QRadioButton" name="mTrkRB">
+            <property name="toolTip">
+             <string>Use track points to generate a route from GPX</string>
+            </property>
+            <property name="text">
+             <string>Track points</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="mRouteRB">
+            <property name="toolTip">
+             <string>Use route points to generate a route from GPX</string>
+            </property>
+            <property name="text">
+             <string>Route points</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="mWpRB">
+            <property name="toolTip">
+             <string>Use waypoints to generate a route from GPX</string>
+            </property>
+            <property name="text">
+             <string>Waypoints</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
       </layout>
       <zorder>groupBox</zorder>
       <zorder>groupBox_2</zorder>
       <zorder>horizontalSpacer</zorder>
+      <zorder>groupBox_3</zorder>
      </widget>
     </widget>
    </item>

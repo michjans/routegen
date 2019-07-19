@@ -110,6 +110,30 @@ void RGSettings::setAviCompression(const QString &comp)
   settings.setValue("videoArgCompression", comp);
 }
 
+bool RGSettings::getManualCommandLineChecked()
+{
+    QSettings settings;
+    return settings.value("manualCommandLineChecked", false).toBool();
+}
+
+void RGSettings::setManualCommandLineChecked(bool val)
+{
+    QSettings settings;
+    settings.setValue("manualCommandLineChecked", val);
+}
+
+QString RGSettings::getFFMpegCommandlineArgs()
+{
+    QSettings settings;
+    return settings.value("ffMpegCommandlineArgs",QString("")).toString();
+}
+
+void RGSettings::setFFMpegCommandlineArgs(const QString &args)
+{
+    QSettings settings;
+    settings.setValue("ffMpegCommandlineArgs", args);
+}
+
 bool RGSettings::getDeleteBMPs()
 {
   QSettings settings;

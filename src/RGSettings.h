@@ -52,6 +52,12 @@ public:
     static void setBitRate(const int);
     static QString getAviCompression();
     static void setAviCompression(const QString &);
+    static bool getManualCommandLineChecked();
+    static void setManualCommandLineChecked(bool val);
+    static QString getFFMpegCommandlineArgs();
+    static void setFFMpegCommandlineArgs(const QString &args);
+
+
     static bool getDeleteBMPs();
     static void setDeleteBMPs(bool val);
     static bool getIconLessBeginEndFrames();

@@ -40,7 +40,7 @@ public:
   bool getIconlessBeginEndFrames();
 
 private slots:
-	void on_encoderSelectionCB_activated(const QString &text);
+  void on_encoderSelectionCB_activated(const QString &text);
   void on_mResetDefaultsPB_clicked(bool);
   void accept();
 

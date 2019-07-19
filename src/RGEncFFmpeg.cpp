@@ -33,6 +33,10 @@ RGEncFFmpeg::RGEncFFmpeg(QWidget *parent) :
   mUi.bitRateLabel->setVisible(true);
   mUi.bitRateLabel2->setVisible(true);
   mUi.bitRateSB->setVisible(true);
+
+  QObject::connect(mUi.mCommandLineCB, &QAbstractButton::toggled,
+                   this, &RGEncFFmpeg::handleManualCommandLineChecked);
+
 }
 
 void RGEncFFmpeg::updateFromSettings()
@@ -40,6 +44,11 @@ void RGEncFFmpeg::updateFromSettings()
   RGEncVideo::updateFromSettings();
   mBitRate = RGSettings::getBitRate();
   mUi.bitRateSB->setValue(mBitRate);
+  mUi.mCommandLineCB->setChecked(RGSettings::getManualCommandLineChecked());
+  if (RGSettings::getManualCommandLineChecked())
+  {
+    mUi.mCommandLineLE->setText(RGSettings::getFFMpegCommandlineArgs());
+  }
 }
 
 void RGEncFFmpeg::saveInSettings()
@@ -47,14 +56,28 @@ void RGEncFFmpeg::saveInSettings()
   RGEncVideo::saveInSettings();
   mBitRate=mUi.bitRateSB->value();
   RGSettings::setBitRate(mBitRate);
+  RGSettings::setManualCommandLineChecked(mUi.mCommandLineCB->isChecked());
+  if (mUi.mCommandLineCB->isChecked())
+  {
+      RGSettings::setFFMpegCommandlineArgs(mUi.mCommandLineLE->text());
+  }
 }
 
-void RGEncFFmpeg::generateMovie(const QString &dirName, const QString &filePrefix)
+void RGEncFFmpeg::generateMovie(const QString &dirName)
 {
-  QStringList arguments;
-  arguments << "-report" << "-y" << "-i" << QString(filePrefix).append("\%05d.bmp") << "-g" << QString("%1").arg(mKeyFrameRate) <<"-r"<<QString("%1").arg(mFps)<< "-b" <<QString("%1k").arg(mBitRate) <<"-vcodec"<<mCompress<< QString(mOutName).append(".avi");
+    QStringList arguments;
+    if (RGSettings::getManualCommandLineChecked())
+    {
+        arguments = RGSettings::getFFMpegCommandlineArgs().split(" ");
+        qDebug() << "ffmpeg arguments in:" << RGSettings::getFFMpegCommandlineArgs();
+        qDebug() << "ffmpeg arguments out:" << arguments;
+    }
+    else
+    {
+        arguments << "-report" << "-y" << "-i" << QString("map").append("\%05d.bmp") << "-g" << QString("%1").arg(mKeyFrameRate) <<"-r"<<QString("%1").arg(mFps)<< "-b" <<QString("%1k").arg(mBitRate) <<"-vcodec"<<mCompress<< QString(mOutName).append(".avi");
+    }
 
-  this->createEncodingProcess(dirName,mExecName,arguments);
+    this->createEncodingProcess(dirName,mExecName,arguments);
 }
 
 QString RGEncFFmpeg::encoderName()
@@ -133,7 +156,28 @@ bool RGEncFFmpeg::initCodecs()
 		return false;
   }
 
-	return true;
+  return true;
+}
+
+void RGEncFFmpeg::handleManualCommandLineChecked(bool checked)
+{
+    if (checked)
+    {
+        QString keyFrameRate=QString::number(mUi.keyFrSB->value());
+        QString fps=QString::number(mUi.fpsSB->value());
+        QString bitRate=QString::number(mUi.bitRateSB->value());
+        QString compress = mUi.codecCB->itemData(mUi.codecCB->currentIndex()).toString();
+        QString outName=mUi.nameOutputLE->text();
+
+        QString arguments = "-report -y -i ";
+        arguments += QString("map").append("\%05d.bmp") + " -g" + QString(" %1").arg(keyFrameRate) + " -r" + QString(" %1").arg(fps)
+                  + " -b" + QString(" %1k").arg(bitRate) + " -vcodec " + compress + " " + QString(outName).append(".avi");
+        mUi.mCommandLineLE->setText(arguments);
+    }
+    else
+    {
+        mUi.mCommandLineLE->clear();
+    }
 }
 
 

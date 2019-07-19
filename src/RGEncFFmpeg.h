@@ -31,12 +31,15 @@ public:
 
   virtual void updateFromSettings();
   virtual void saveInSettings();
-  virtual void generateMovie(const QString &dirName, const QString &filePrefix);
+  virtual void generateMovie(const QString &dirName);
   virtual QString encoderName();
   virtual QString encoderExecBaseName();
 
 protected:
 	virtual bool initCodecs();
+
+private slots:
+    void handleManualCommandLineChecked(bool checked);
 
 private:
   int mBitRate;

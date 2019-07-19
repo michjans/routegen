@@ -36,7 +36,7 @@ public:
 	bool exists() const;
   virtual void updateFromSettings();
   virtual void saveInSettings();
-  virtual void generateMovie(const QString &dirName, const QString &filePrefix)=0;
+  virtual void generateMovie(const QString &dirName)=0;
   virtual QString encoderName()=0;
   virtual QString encoderExecBaseName()=0;
 

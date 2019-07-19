@@ -32,6 +32,8 @@ RGEncBmp2avi::RGEncBmp2avi(QWidget *parent) :
 void RGEncBmp2avi::updateFromSettings()
 {
   RGEncVideo::updateFromSettings();
+  //For bmp2avi we don't support the custom commandline
+  mUi.mCommandLineCB->setEnabled(false);
 }
 
 void RGEncBmp2avi::saveInSettings()
@@ -39,9 +41,8 @@ void RGEncBmp2avi::saveInSettings()
   RGEncVideo::saveInSettings();
 }
 
-void RGEncBmp2avi::generateMovie(const QString &dirName, const QString &filePrefix)
+void RGEncBmp2avi::generateMovie(const QString &dirName)
 {
-  Q_UNUSED(filePrefix);
   QStringList arguments;
   arguments << "-f" << QString("%1").arg(mFps) << "-k" << QString("%1").arg(mKeyFrameRate) << "-o" << QString(mOutName) << "-c" << mCompress;
 

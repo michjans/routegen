@@ -365,7 +365,7 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
 			{
 				blockUserInteraction(true);
 				QObject::connect(mVideoEncoder,SIGNAL(movieGenerationFinished()),this,SLOT(movieGenerationFinished()));
-				mVideoEncoder->generateMovie(dir, QString("map"));
+                mVideoEncoder->generateMovie(dir);
 			}
 			else
 			{
