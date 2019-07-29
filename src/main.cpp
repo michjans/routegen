@@ -72,9 +72,14 @@
  *  v1.7.1  FFMpeg default converter and provided with the installation
  *  v1.8    Ported to Qt 5
  *  v1.9    GPX import
+ *          Loading / saving projects
+ *          Storing Geo coordinates with map
+ *          Manually enter FFMpeg commandline options
+ *          Maximize button of google maps
+ *          Increased maximum resolution of google map to 8K
  */
 
-extern const QString applicationName("Route Generator version 1.9-alpha-2");
+extern const QString applicationName("Route Generator version 1.9-alpha-3");
 
 int main(int argc, char *argv[])
 {

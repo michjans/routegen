@@ -79,7 +79,12 @@ After your Qt build environment is setup correctly, all you need to do is:
        -No main functional changes, however import from Google maps now works again
        -Updated Zeranoe FFmpeg to 4.1.3
 - 1.9  -GPX Import
-
+       -Loading / saving projects
+       -Storing Geo coordinates with map
+       -Manually enter FFMpeg commandline options
+       -Maximize button of google maps
+       -Increased maximum resolution of google map to 8K
+ 
 ## Technical details
 
 Route Generator is developed using the GPL version of Qt 5.12
