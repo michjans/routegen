@@ -58,7 +58,7 @@ protected:
 #endif
 
 RGGoogleMap::RGGoogleMap(QWidget *parent, const QGeoPath &geoPath)
-    : QDialog(parent),
+    : QDialog(parent, Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::Dialog | Qt::WindowMaximizeButtonHint),
       m_geoPath(geoPath)
 {
 	ui.setupUi(this);

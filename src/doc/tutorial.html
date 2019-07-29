@@ -6,20 +6,6 @@
 </head>
 
 <body>
-<h1>New in version 1.7.1</h1>
-<p>
-FFmpeg for Windows is now distributed with the Windows version for Route Generator and will be selected as the default at installation.
-The Zeranoe FFmpeg Windows builds are provided by Kyle Schwarz from: <strong>http://ffmpeg.zeranoe.com/builds/</strong>
-</p>
-<p>
-FFmpeg works faster than bmp2avi and supports more different codec types (MPEG-4 is the default).
-Using this generator, it's also possible to select a different bitrate for the generated output video.
-</p>
-<p>
-If you still want to use Bmp2Avi as generator, you can always switch back using Edit->Preferences
-(see section: <i>Modifying BMP2AVI/FFmpeg preferences</i> at the end of the tutorial).
-</p>
-
 <h1>Tutorial</h1>
 <p>
 This tutorial explains how to generate route movies, using Route Generator.
@@ -109,6 +95,20 @@ the generated *.BMP files.<br>
 <p>
 <h2>Modifying BMP2AVI/FFmpeg preferences</h2>
 <p>
+Since version 1.7.1 FFmpeg is distributed with the Windows version for Route Generator and will be selected as the default at installation.
+The Zeranoe FFmpeg Windows builds are provided by Kyle Schwarz from: <strong>http://ffmpeg.zeranoe.com/builds/</strong>
+</p>
+<p>
+FFmpeg works faster than bmp2avi and supports more different codec types (MPEG-4 is the default).
+Using this generator, it's also possible to select a different bitrate for the generated output video.
+</p>
+<p>
+If you still want to use Bmp2Avi as generator, you can always switch back using Edit->Preferences
+(see section: <i>Modifying BMP2AVI/FFmpeg preferences</i> at the end of the tutorial).
+</p>
+
+
+<p>
 It's possible to modify the settings that Bmp2Avi or FFmpeg uses to
 convert BMP's to an AVI file. To change these settings open the preferences through Edit->Preferences.
 Here you can change these settings:
@@ -152,7 +152,7 @@ This value indicates after how many frames a key frame is created (the default i
 Here you can change the codec that Bmp2Avi  or FFMpeg uses to generate the movie. This can result
 in smaller movies, but it's possible that not all codecs are accepted by your video editing software.
 </p>
-<h3>Switch between FFmpeg or Bmp2Avi as movie generator (Advanced tab)</h3>
+<h3 id="switchgenerator">Switch between FFmpeg or Bmp2Avi as movie generator (Advanced tab)</h3>
 <p>
 In the Advanced tab it's possible to switch movie generator between ffmpeg or bmp2avi on Windows (on Linux FFmpeg this is the only option).
 <br>
