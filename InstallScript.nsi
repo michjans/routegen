@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Route Generator"
-!define PRODUCT_VERSION "1.9-alpha-2"
+!define PRODUCT_VERSION "1.9-alpha-3"
 !define PRODUCT_PUBLISHER "MJProductions"
 !define PRODUCT_WEB_SITE "http://www.routegenerator.net"
 !define PRODUCT_DIR_REGKEY "Software\MJProductions\Route Generator"
@@ -28,7 +28,7 @@
 ; Finish page
 !define MUI_FINISHPAGE_RUN "$INSTDIR\routegen.exe"
 !define MUI_FINISHPAGE_SHOWREADME_NOTCHECKED
-!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\README.md"
+!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\README.txt"
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
@@ -40,7 +40,7 @@
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "routegen-win32-1.9-alpha-2.exe"
+OutFile "routegen-win32-1.9-alpha-3.exe"
 InstallDir "$PROGRAMFILES\Route Generator"
 
 ; Registry key to check for directory (so if you install again, it will
