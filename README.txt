@@ -1,4 +1,4 @@
-This is Route Generator version 1.8
+This is Route Generator version 1.8.1
 
 Route Generator can be used to generate route maps to be used in video editing
 software.
@@ -79,9 +79,10 @@ VERSION HISTORY
 		 http://ffmpeg.zeranoe.com/builds/
 		 NOTE: To safe space the executables ffplay.exe and ffprobe.exe are
 		            removed from the distribution.
-1.8  -Route Generator ported to Qt 5.
-     -No main functional changes, however import from Google maps now works again
-     -Updated Zeranoe FFmpeg to 4.1.3
+1.8   -Route Generator ported to Qt 5.
+      -No main functional changes, however import from Google maps now works again
+      -Updated Zeranoe FFmpeg to 4.1.3
+1.8.1 -Output pixel format of ffmpeg avi yuv420p instead of yuv444p
 	  
 	  
 INSTALLATION

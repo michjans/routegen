@@ -71,9 +71,10 @@
  *          Option to add N seconds still frame before/after movie
  *  v1.7.1  FFMpeg default converter and provided with the installation
  *  v1.8    Ported to Qt 5
+ *  v1.8.1  Output pixel format of ffmpeg avi yuv420p (better supported) instead of yuv444p
  */
 
-extern const QString applicationName("Route Generator version 1.8");
+extern const QString applicationName("Route Generator version 1.8.1");
 
 int main(int argc, char *argv[])
 {

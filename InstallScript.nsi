@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Route Generator"
-!define PRODUCT_VERSION "1.8"
+!define PRODUCT_VERSION "1.8.1"
 !define PRODUCT_PUBLISHER "MJProductions"
 !define PRODUCT_WEB_SITE "http://www.routegenerator.net"
 !define PRODUCT_DIR_REGKEY "Software\MJProductions\Route Generator"
@@ -40,7 +40,7 @@
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "routegen-win32-1.8.exe"
+OutFile "routegen-win32-1.8.1.exe"
 InstallDir "$PROGRAMFILES\Route Generator"
 
 ; Registry key to check for directory (so if you install again, it will
