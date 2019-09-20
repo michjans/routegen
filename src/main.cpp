@@ -71,6 +71,7 @@
  *          Option to add N seconds still frame before/after movie
  *  v1.7.1  FFMpeg default converter and provided with the installation
  *  v1.8    Ported to Qt 5
+ *  v1.8.1  pixel format of output video's is now always set to yuv420p
  *  v1.9    GPX import
  *          Loading / saving projects
  *          Storing Geo coordinates with map
@@ -79,7 +80,7 @@
  *          Increased maximum resolution of google map to 8K
  */
 
-extern const QString applicationName("Route Generator version 1.9-alpha-3");
+extern const QString applicationName("Route Generator version 1.9-alpha-4");
 
 int main(int argc, char *argv[])
 {
