@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QString>
 #include <QFile>
+#include <QInputDialog>
 
 RGGPXReader::RGGPXReader(RGRoute *route, QObject *parent)
     : RGReader(route, parent)
@@ -34,14 +35,22 @@ bool RGGPXReader::readFile(const QString &fileName)
             }
         }
     }
+    inputStream.clear();
 
     qDebug() << "trackNames:" << trackNames;
 
-    QString selectedTrack = "ACTIVE LOG063900";
+    QString selectedTrack;
+    if (trackNames.size() > 1)
+    {
+        selectedTrack = QInputDialog::getItem(nullptr, "Track selectionn", "Select track to import", trackNames, 0, false);
+    }
+    else
+    {
+        selectedTrack = trackNames.first();
+    }
 
     QList<QGeoCoordinate> geoCoordinates;
     file.reset();
-    inputStream.clear();
     inputStream.setDevice(&file);
     bool selectionFound = false;
     while (!inputStream.atEnd() && !inputStream.hasError())

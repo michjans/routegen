@@ -55,7 +55,15 @@
 			strokeWeight: 2
 		  });
 
-		  geoRect.setMap(map);	
+		  geoRect.setMap(map);
+		  
+/*		  
+			TODO: Not working yet (getting javascript error)
+		  map.panToBounds(new google.maps.LatLngBounds([
+			new google.maps.LatLng(rectCoordinates[3].lat, rectCoordinates[3].lng),
+			new google.maps.LatLng(rectCoordinates[1].lat, rectCoordinates[1].lng)
+			]));
+*/
       }
 	  
 	  function deleteGeoRect() {
@@ -63,7 +71,7 @@
 	  }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=XXXXXXXXXXXXXXXXXXXx&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=XXXXXXXXXXXXX&callback=initMap"
     async defer></script>
   </body>
 </html>
