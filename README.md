@@ -78,6 +78,7 @@ After your Qt build environment is setup correctly, all you need to do is:
 - 1.8  -Route Generator ported to Qt 5.
        -No main functional changes, however import from Google maps now works again
        -Updated Zeranoe FFmpeg to 4.1.3
+- 1.8.1 -Pixel format always yuv420p (when supported by selected codec)	   -
 - 1.9  -GPX Import
        -Loading / saving projects
        -Storing Geo coordinates with map

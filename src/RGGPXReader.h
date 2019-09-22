@@ -6,7 +6,7 @@
 class RGGPXReader : public RGReader
 {
 public:
-    RGGPXReader(RGRoute *route, QObject *parent = nullptr);
+    RGGPXReader(RGRoute *route, QWidget *parent = nullptr);
 
     bool readFile(const QString &fileName) override;
 };

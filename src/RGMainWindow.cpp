@@ -252,7 +252,7 @@ void RGMainWindow::on_actionImport_GPX_triggered(bool)
     if (!fileName.isNull())
     {
         RGSettings::setLastOpenDir(fileName, RGSettings::RG_GPX_LOCATION);
-        RGGPXReader gpxReader(mRoute);
+        RGGPXReader gpxReader(mRoute, this);
         if (gpxReader.readFile(fileName) && !mMap->hasGeoBounds())
         {
             //Route loaded but map has no geo boundaries

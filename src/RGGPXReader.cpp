@@ -5,8 +5,9 @@
 #include <QString>
 #include <QFile>
 #include <QInputDialog>
+#include <QProgressDialog>
 
-RGGPXReader::RGGPXReader(RGRoute *route, QObject *parent)
+RGGPXReader::RGGPXReader(RGRoute *route, QWidget *parent)
     : RGReader(route, parent)
 {
 
@@ -20,7 +21,13 @@ bool RGGPXReader::readFile(const QString &fileName)
         return false;
     }
     QXmlStreamReader inputStream(&file);
-    m_route->clearPath(true);
+
+    int progVal = 10;
+    QProgressDialog progress("Analyzig gpx...", "GPX import", 0, 100, m_parentWidget);
+    progress.setWindowModality(Qt::WindowModal);
+    progress.setMinimumDuration (100);
+    progress.setValue(progVal);
+
 
     //First collect available data from GPX file
     QStringList trackNames;
@@ -29,6 +36,11 @@ bool RGGPXReader::readFile(const QString &fileName)
     {
         if (inputStream.readNext() == QXmlStreamReader::StartElement && inputStream.name().toString() == "trk")
         {
+            progress.setValue(progVal++ % 100);
+            if (progress.wasCanceled())
+            {
+                return false;
+            }
             if (inputStream.readNextStartElement() && inputStream.name().toString() == "name")
             {
                 trackNames << inputStream.readElementText();
@@ -36,30 +48,48 @@ bool RGGPXReader::readFile(const QString &fileName)
         }
     }
     inputStream.clear();
+    progress.reset();
 
     qDebug() << "trackNames:" << trackNames;
 
     QString selectedTrack;
     if (trackNames.size() > 1)
     {
-        selectedTrack = QInputDialog::getItem(nullptr, "Track selectionn", "Select track to import", trackNames, 0, false);
+        bool ok;
+        selectedTrack = QInputDialog::getItem(m_parentWidget, "Track selectionn", "Select track to import", trackNames, 0, false, &ok);
+        if (!ok)
+        {
+            return false;
+        }
     }
     else
     {
         selectedTrack = trackNames.first();
     }
 
+    progVal = 10;
+    progress.setRange(0, 200);
+    progress.setValue(progVal);
+    progress.setLabelText(QStringLiteral("Importing route..."));
+
+    m_route->clearPath(true);
     QList<QGeoCoordinate> geoCoordinates;
     file.reset();
     inputStream.setDevice(&file);
     bool selectionFound = false;
-    while (!inputStream.atEnd() && !inputStream.hasError())
+    while (!selectedTrack.isEmpty() && !inputStream.atEnd() && !inputStream.hasError())
     {
         if (selectionFound)
         {
             inputStream.readNext();
             if ( inputStream.isStartElement() && inputStream.name().toString() == "trkpt")
             {
+                progress.setValue(progVal++ % 100);
+                if (progress.wasCanceled())
+                {
+                    return false;
+                }
+
                 geoCoordinates.append(QGeoCoordinate(inputStream.attributes().value("lat").toFloat(), inputStream.attributes().value("lon").toFloat()));
                 qDebug() << "lon:" << inputStream.attributes().value("lon").toFloat() << "lat:" << inputStream.attributes().value("lat").toFloat();
             }

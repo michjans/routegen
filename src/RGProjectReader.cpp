@@ -1,6 +1,6 @@
 #include "RGProjectReader.h"
 
-RGProjectReader::RGProjectReader(RGRoute *route, QObject *parent)
+RGProjectReader::RGProjectReader(RGRoute *route, QWidget *parent)
     : RGReader(route, parent)
 {
 
