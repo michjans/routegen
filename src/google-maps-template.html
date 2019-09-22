@@ -58,11 +58,14 @@
 		  geoRect.setMap(map);
 		  
 /*		  
-			TODO: Not working yet (getting javascript error)
-		  map.panToBounds(new google.maps.LatLngBounds([
-			new google.maps.LatLng(rectCoordinates[3].lat, rectCoordinates[3].lng),
-			new google.maps.LatLng(rectCoordinates[1].lat, rectCoordinates[1].lng)
-			]));
+          TODO: Not working yet (bug in google maps API always results in "InvalidValueError" exception)
+          //sw = new google.maps.LatLng(rectCoordinates[3].lat, rectCoordinates[3].lon);
+		  //ne = new google.maps.LatLng(rectCoordinates[1].lat, rectCoordinates[1].lon);
+          //map.fitBounds(new google.maps.LatLngBounds(sw,ne));
+		  
+          llBounds = {north : rectCoordinates[1].lat, east : rectCoordinates[1].lon,
+                      south : rectCoordinates[3].lat, west : rectCoordinates[3].lon};
+          map.fitBounds(llBounds);
 */
       }
 	  

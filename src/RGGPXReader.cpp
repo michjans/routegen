@@ -88,25 +88,6 @@ bool RGGPXReader::readFile(const QString &fileName)
 
 
     return selectionFound;
-
-#if 0
-    while (!inputStream.atEnd() && !inputStream.hasError())
-    {
-        inputStream.readNext();
-        if (inputStream.isStartElement()) {
-            QString name = inputStream.name().toString();
-            qDebug() << "elementName:" << name;
-            //if (name == "wpt")
-            if (name == "trkpt")
-            {
-                geoCoordinates.append(QGeoCoordinate(inputStream.attributes().value("lat").toFloat(), inputStream.attributes().value("lon").toFloat()));
-                qDebug() << "lon:" << inputStream.attributes().value("lon").toFloat() << "lat:" << inputStream.attributes().value("lat").toFloat();
-            }
-        }
-    }
-    m_route->setGeoCoordinates(geoCoordinates);
-    return true;
-#endif
 }
 
 
