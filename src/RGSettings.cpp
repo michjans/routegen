@@ -256,6 +256,8 @@ QString RGSettings::getLastOpenDir(FileLocation loc)
       return settings.value("lastGPXDir", QDir::homePath()).toString();
   case RG_MOVIE_LOCATION:
       return settings.value("lastGenDir", QDir::homePath()).toString();
+  case RG_PROJECT_LOCATION:
+      return settings.value("lastProjDir", QDir::homePath()).toString();
   case RG_MAP_LOCATION:
   default:
       return settings.value("lastOpenDir", QDir::homePath()).toString();
@@ -272,6 +274,9 @@ void RGSettings::setLastOpenDir(const QString &fileName, FileLocation loc)
       break;
   case RG_MOVIE_LOCATION:
       settings.setValue("lastGenDir", fileName);
+      break;
+  case RG_PROJECT_LOCATION:
+      settings.setValue("lastProjDir", fileName);
       break;
   case RG_MAP_LOCATION:
   default:

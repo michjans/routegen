@@ -182,6 +182,7 @@ void RGMainWindow::on_actionSave_image_triggered(bool)
                                                   lastSaveDir,
                                                   tr("Images (*.bmp *.jpg)"));
 
+  //TODO: Filename extension not added automatically!
   if (!fileName.isNull()){
     mView->saveRenderedImage(fileName);
     RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
@@ -190,7 +191,19 @@ void RGMainWindow::on_actionSave_image_triggered(bool)
 
 void RGMainWindow::on_actionSave_project_triggered(bool)
 {
-    QMessageBox::warning (this, "Cannot save project", "Not implemented, yet!");
+    QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_PROJECT_LOCATION);
+
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                                                    lastSaveDir,
+                                                    tr("Projects (*.rgp)"));
+
+    //TODO: Filename extension not added automatically!
+    if (!fileName.isNull())
+    {
+      RGProjectWriter projWriteer(mRoute, mMap, this);
+      projWriteer.writeFile(fileName);
+      RGSettings::setLastOpenDir(fileName, RGSettings::RG_PROJECT_LOCATION);
+    }
 }
 
 void RGMainWindow::on_actionPreferences_triggered(bool)

@@ -1,6 +1,8 @@
 #include "RGMap.h"
 #include "RGSettings.h"
 
+#include <QJsonObject>
+
 RGMap::RGMap(QObject *parent)
     :QObject(parent)
 {
@@ -68,10 +70,14 @@ QString RGMap::fileName() const
 
 void RGMap::read(const QJsonObject &json)
 {
-
 }
 
 void RGMap::write(QJsonObject &json)
 {
+    QJsonObject mapObject;
+    mapObject.insert(QStringLiteral("fileName"), mFileName);
 
+    //The geobounds are stored along with the map in the settings, so no meed to store them in the project
+
+    json.insert(QStringLiteral("map"), mapObject);
 }
