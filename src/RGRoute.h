@@ -27,46 +27,9 @@
 #include "RGPath.h"
 #include "RGEditPath.h"
 
-//Under linux Ubuntu 16 which doesn't have QGeoCoordinate and QGeoPath
-#ifndef UBUNTU_DEBUG
 #include <QGeoCoordinate>
 #include <QGeoPath>
 #include <QGeoRectangle>
-#else
-class QGeoPath : QObject
-{
-    Q_OBJECT
-public:
-    QGeoPath()
-        : QObject()
-    {
-
-    }
-
-    void setPath(const QList<QGeoCoordinate> &path)
-    {
-        mPath = path;
-    }
-
-    void clearPath()
-    {
-        mPath.clear();
-    }
-
-    bool isEmpty() const
-    {
-        return mPath.isEmpty();
-    }
-
-    QList<QGeoCoordinate> path() const
-    {
-        return mPath;
-    }
-
-private:
-    QList<QGeoCoordinate> mPath;
-};
-#endif
 
 
 class RGRoute : public RGGraphicsObjectUndo
@@ -88,6 +51,10 @@ public:
   QGeoPath getGeoPath() const;
 
   virtual void undoredo(QVariant=0);
+
+  void read (const QJsonObject &json);
+  void write (QJsonObject &json);
+
 
 signals:
   void canGenerate(bool);

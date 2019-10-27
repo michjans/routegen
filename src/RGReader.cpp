@@ -1,9 +1,10 @@
 #include "RGReader.h"
 
-RGReader::RGReader(RGRoute *route, QWidget *parent)
+RGReader::RGReader(RGRoute *route, RGMap *map, QWidget *parent)
     : QObject(parent),
-      m_parentWidget(parent),
-      m_route(route)
+      m_route(route),
+      m_map(map),
+      m_parentWidget(parent)
 {
 
 }

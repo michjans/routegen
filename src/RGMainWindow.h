@@ -50,6 +50,7 @@ public:
 private slots:
   void on_actionOpen_image_triggered(bool );
   void on_actionSave_image_triggered(bool );
+  void on_actionSave_project_triggered(bool );
   void on_actionPreferences_triggered(bool );
   void on_actionImport_Google_Map_triggered(bool );
   void on_actionImport_GPX_triggered(bool );
@@ -81,6 +82,7 @@ private:
   QAction *actionOpen_image;
   QAction *action_Quit;
   QAction *actionSave_image;
+  QAction *actionSave_project;
   QAction *actionImport_Google_Map;
   QAction *actionImport_GPX;
   QAction *actionDraw_mode;

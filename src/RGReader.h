@@ -6,12 +6,13 @@
 #include <QWidget>
 
 #include "RGRoute.h"
+#include "RGMap.h"
 
 class RGReader : public QObject
 {
     Q_OBJECT
 public:
-    explicit RGReader(RGRoute *route, QWidget *parent = nullptr);
+    explicit RGReader(RGRoute *route, RGMap *map, QWidget *parent = nullptr);
 
     virtual bool readFile(const QString &fileName) = 0;
 
@@ -21,6 +22,7 @@ public slots:
 
 protected:
     RGRoute *m_route;
+    RGMap *m_map;
     QWidget *m_parentWidget;
 };
 

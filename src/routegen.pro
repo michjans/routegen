@@ -81,6 +81,13 @@ FORMS += routegen.ui settings.ui googlemap.ui \
 win32 {
   RC_FILE = routegen.rc
 } 
+
+CONFIG(release, debug|release) {
+  message( "release" )
+}
+CONFIG(debug, debug|release) {
+    CONFIG += debug
+}
 	
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

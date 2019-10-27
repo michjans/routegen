@@ -5,12 +5,13 @@
 #include <QString>
 
 #include "RGRoute.h"
+#include "RGMap.h"
 
 class RGWriter : public QObject
 {
     Q_OBJECT
 public:
-    explicit RGWriter(RGRoute *route, QObject *parent = nullptr);
+    explicit RGWriter(RGRoute *route, RGMap *map, QObject *parent = nullptr);
 
     virtual bool writeFile(const QString &fileName) = 0;
 
@@ -20,6 +21,7 @@ public slots:
 
 protected:
     RGRoute *m_route;
+    RGMap *m_map;
 };
 
 #endif // RGWRITER_H

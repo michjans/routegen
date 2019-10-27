@@ -24,16 +24,15 @@
 #include "RGMainWindow.h"
 #include "RGSettings.h"
 #include "RGSettingsDialog.h"
-//Under linux Ubuntu 16 which doesn't have QWebEngine
-#ifndef UBUNTU_DEBUG
 #include "RGGoogleMap.h"
-#endif
 #include "RGVehicleList.h"
 #include "RGEncVideo.h"
 #include "RGEncFFmpeg.h"
 #include "RGEncBmp2avi.h"
 #include "RGMap.h"
 #include "RGGPXReader.h"
+#include "RGProjectReader.h"
+#include "RGProjectWriter.h"
 #include "RGRoute.h"
 #include "RGRouteUi.h"
 #include "RGViewWidget.h"
@@ -65,6 +64,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionOpen_image = ui.actionOpen_image;
   action_Quit = ui.action_Quit;
   actionSave_image = ui.actionSave_image;
+  actionSave_project = ui.actionSave_project;
   actionImport_Google_Map = ui.actionImport_Google_Map;
   actionImport_GPX = ui.actionImport_GPX;
   actionDraw_mode = ui.actionDraw_mode;
@@ -82,6 +82,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionGenerate_map->setEnabled(false);
   actionPlayback->setEnabled(false);
   actionSave_image->setEnabled(false);
+  actionSave_project->setEnabled(false);
   actionDraw_mode->setEnabled(false);
   actionNew_route->setEnabled(false);
   action_Undo->setEnabled(false);
@@ -145,27 +146,36 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 
 }
 
-void RGMainWindow::on_actionOpen_image_triggered(bool checked)
+void RGMainWindow::on_actionOpen_image_triggered(bool /*checked*/)
 {
-  Q_UNUSED(checked);
-  QString lastOpenDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
-  
-  QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+    QString lastOpenDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
+
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                                                   lastOpenDir,
-                                                  tr("Images (*.bmp *.jpg *.gif *.png *.tif)"));
-  if (!fileName.isNull()){
-    QPixmap pm(fileName);
-    if (pm.isNull()) QMessageBox::critical (this, "Oops", "Could not load image");
-    else{
-      mMap->loadMap(fileName, pm);
+                                                  tr("Project files (*.rgp);;Images (*.bmp *.jpg *.gif *.png *.tif)"));
+    if (!fileName.isNull())
+    {
+        if (fileName.endsWith(QStringLiteral("rgp"), Qt::CaseInsensitive))
+        {
+            RGProjectReader rgReader(mRoute, mMap);
+            if (!rgReader.readFile(fileName))
+            {
+                QMessageBox::warning (this, "Cannot read file", "Unable to openn RG project file!");
+            }
+        }
+        else
+        {
+            QPixmap pm(fileName);
+            if (pm.isNull()) QMessageBox::critical (this, "Oops", "Could not load image");
+            else{
+              mMap->loadMap(fileName, pm);
+            }
+        }
     }
-  }
 }
 
-void RGMainWindow::on_actionSave_image_triggered(bool checked)
+void RGMainWindow::on_actionSave_image_triggered(bool)
 {
-  Q_UNUSED(checked);
-
   QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
 
   QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
@@ -176,6 +186,11 @@ void RGMainWindow::on_actionSave_image_triggered(bool checked)
     mView->saveRenderedImage(fileName);
     RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
   }
+}
+
+void RGMainWindow::on_actionSave_project_triggered(bool)
+{
+    QMessageBox::warning (this, "Cannot save project", "Not implemented, yet!");
 }
 
 void RGMainWindow::on_actionPreferences_triggered(bool)
@@ -200,8 +215,6 @@ void RGMainWindow::on_actionPreferences_triggered(bool)
 
 void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 {
-//Under linux Ubuntu 16 which doesn't have QGeoCoordinate and QGeoPath
-#ifndef UBUNTU_DEBUG
     RGGoogleMap gm(this, mRoute->getGeoPath());
     if (gm.exec() == QDialog::Accepted)
     {
@@ -224,23 +237,6 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
         qDebug() << "Retrieved map: " << fileName << map.width() << map.height() << gm.getMapBounds();
         mMap->loadMap(fileName, map, gm.getMapBounds());
     }
-#else
-    QString lastOpenDir = RGSettings::getLastOpenDir();
-
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                                    lastOpenDir,
-                                                    tr("Images (*.bmp *.jpg *.gif *.png *.tif)"));
-    if (!fileName.isNull())
-    {
-      QPixmap pm(fileName);
-      if (pm.isNull()) QMessageBox::critical (this, "Oops", "Could not load image");
-      else
-      {
-          QRectF debugBounds(5.74894,52.1726, 0.527344, 0.24322);
-          mMap->loadMap(fileName, pm, debugBounds);
-      }
-    }
-#endif
 }
 
 void RGMainWindow::on_actionImport_GPX_triggered(bool)
@@ -252,7 +248,7 @@ void RGMainWindow::on_actionImport_GPX_triggered(bool)
     if (!fileName.isNull())
     {
         RGSettings::setLastOpenDir(fileName, RGSettings::RG_GPX_LOCATION);
-        RGGPXReader gpxReader(mRoute, this);
+        RGGPXReader gpxReader(mRoute, mMap, this);
         if (gpxReader.readFile(fileName) && !mMap->hasGeoBounds())
         {
             //Route loaded but map has no geo boundaries
@@ -424,6 +420,7 @@ void RGMainWindow::on_action_Quit_triggered(bool checked)
 void RGMainWindow::handleMapLoaded(const QPixmap &map)
 {
     actionSave_image->setEnabled(!map.isNull());
+    actionSave_project->setEnabled(!map.isNull());
     actionDraw_mode->setEnabled(!map.isNull());
     actionNew_route->setEnabled(!map.isNull());
     RGSettings::setLastOpenDir(mMap->fileName(), RGSettings::RG_MAP_LOCATION);
@@ -434,6 +431,7 @@ void RGMainWindow::blockUserInteraction(bool busy)
     actionOpen_image->setEnabled(!busy);
     action_Quit->setEnabled(!busy);
     actionSave_image->setEnabled(!busy);
+    actionSave_project->setEnabled(!busy);
     actionDraw_mode->setEnabled(!busy);
     actionNew_route->setEnabled(!busy);
     actionGenerate_map->setEnabled(!busy);

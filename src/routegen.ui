@@ -46,7 +46,7 @@
      <x>0</x>
      <y>0</y>
      <width>720</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Tools">
@@ -85,6 +85,7 @@
     <addaction name="actionImport_Google_Map"/>
     <addaction name="actionImport_GPX"/>
     <addaction name="actionSave_image"/>
+    <addaction name="actionSave_project"/>
     <addaction name="separator"/>
     <addaction name="action_Quit"/>
    </widget>
@@ -130,10 +131,10 @@
      <normaloff>:/icons/icons/fileopen.png</normaloff>:/icons/icons/fileopen.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Open image</string>
+    <string>&amp;Open image or project</string>
    </property>
    <property name="toolTip">
-    <string>Open background image with map</string>
+    <string>Open project or background image with map</string>
    </property>
   </action>
   <action name="action_Quit">
@@ -278,6 +279,15 @@
    </property>
    <property name="toolTip">
     <string>Start New Route</string>
+   </property>
+  </action>
+  <action name="actionSave_project">
+   <property name="icon">
+    <iconset resource="routegen.qrc">
+     <normaloff>:/icons/icons/filesave.png</normaloff>:/icons/icons/filesave.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save &amp;project</string>
    </property>
   </action>
  </widget>

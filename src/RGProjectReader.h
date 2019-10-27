@@ -8,7 +8,7 @@ class RGProjectReader : public RGReader
 {
     Q_OBJECT
 public:
-    explicit RGProjectReader(RGRoute *route, QWidget *parent = 0);
+    explicit RGProjectReader(RGRoute *route, RGMap *map, QWidget *parent = nullptr);
 
     bool readFile(const QString &fileName) override;
 

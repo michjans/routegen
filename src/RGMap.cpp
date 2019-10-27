@@ -65,3 +65,13 @@ QString RGMap::fileName() const
 {
     return mFileName;
 }
+
+void RGMap::read(const QJsonObject &json)
+{
+
+}
+
+void RGMap::write(QJsonObject &json)
+{
+
+}

@@ -7,8 +7,8 @@
 #include <QInputDialog>
 #include <QProgressDialog>
 
-RGGPXReader::RGGPXReader(RGRoute *route, QWidget *parent)
-    : RGReader(route, parent)
+RGGPXReader::RGGPXReader(RGRoute *route, RGMap *map, QWidget *parent)
+    : RGReader(route, map, parent)
 {
 
 }

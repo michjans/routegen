@@ -159,6 +159,16 @@ void RGRoute::undoredo(QVariant data)
   setNewPoints(pointlist);
 }
 
+void RGRoute::read(const QJsonObject &json)
+{
+
+}
+
+void RGRoute::write(QJsonObject &json)
+{
+
+}
+
 void RGRoute::setEditMode(bool checked)
 {
   mEditMode=checked;
