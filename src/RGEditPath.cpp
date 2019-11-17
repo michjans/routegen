@@ -44,7 +44,12 @@ QRectF RGEditPath::boundingRect() const
 
 void RGEditPath::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-  Q_UNUSED(painter);
+    Q_UNUSED(painter);
+}
+
+const QList<RGEditPathPoint*> &RGEditPath::path() const
+{
+    return mEditPathPointList;
 }
 
 void RGEditPath::on_sceneRectChanged()

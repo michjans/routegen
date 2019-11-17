@@ -16,5 +16,6 @@
         <file>icons/settings.png</file>
         <file>icons/redo.png</file>
         <file>icons/gps.png</file>
+        <file>icons/save-project.png</file>
     </qresource>
 </RCC>

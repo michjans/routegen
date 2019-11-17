@@ -80,7 +80,7 @@
  *          Increased maximum resolution of google map to 8K
  */
 
-extern const QString applicationName("Route Generator version 1.9-alpha-4");
+extern const QString applicationName("Route Generator version 1.9-alpha-5");
 
 int main(int argc, char *argv[])
 {

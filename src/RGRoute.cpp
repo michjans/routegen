@@ -50,9 +50,8 @@ QRectF RGRoute::boundingRect() const
   return QRectF();//mBoundingRect;
 }
 
-void RGRoute::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+void RGRoute::paint(QPainter */*painter*/, const QStyleOptionGraphicsItem *, QWidget *)
 {
-  Q_UNUSED(painter);
 }
 
 void RGRoute::setSmoothCoef(int dsmooth)
@@ -161,12 +160,68 @@ void RGRoute::undoredo(QVariant data)
 
 void RGRoute::read(const QJsonObject &json)
 {
+    QJsonValue routeValue = json.value(QStringLiteral("route"));
+    if (routeValue.isObject())
+    {
+        QJsonObject routeObject = routeValue.toObject();
+        //If the loaded map has geo coordinates, it is useful to load the geoCoordinates,
+        //else use the wndCoordinates
+        bool geoBoundsRead = false;
+        if (mMap->hasGeoBounds())
+        {
+            QJsonArray jsonGeoCoords = routeObject.value(QStringLiteral("geoCoordinates")).toArray();
+            QList<QGeoCoordinate> geoCoordinates;
+            for (const QJsonValue geoValue: jsonGeoCoords)
+            {
+                QJsonObject geoObject = geoValue.toObject();
+                geoCoordinates.append(QGeoCoordinate(geoObject["latitude"].toDouble(), geoObject["longitude"].toDouble()));
+            }
+            if (!geoCoordinates.isEmpty())
+            {
+                setGeoCoordinates(geoCoordinates);
+                geoBoundsRead = true;
+            }
+        }
 
+        if (!geoBoundsRead)
+        {
+            QJsonArray jsonCoords = routeObject.value(QStringLiteral("wndCoordinates")).toArray();
+            QList<QPoint> pointlist;
+            for (const QJsonValue coordValue: jsonCoords)
+            {
+                QJsonObject coordObject = coordValue.toObject();
+                pointlist.append(QPoint(coordObject["x"].toInt(), coordObject["y"].toInt()));
+            }
+            setNewPoints(pointlist);
+        }
+    }
 }
 
 void RGRoute::write(QJsonObject &json)
 {
+    QJsonObject routeObject;
 
+    QJsonArray jsonGeoCoords;
+    for (const QGeoCoordinate &coord: mGeoPath.path())
+    {
+        QJsonObject jsonCoord;
+        jsonCoord.insert(QStringLiteral("longitude"), coord.longitude());
+        jsonCoord.insert(QStringLiteral("latitude"), coord.latitude());
+        jsonGeoCoords.append(jsonCoord);
+    }
+    routeObject.insert(QStringLiteral("geoCoordinates"), jsonGeoCoords);
+
+    QJsonArray jsonCoords;
+    for (const RGEditPathPoint*point: mEditPath->path())
+    {
+        QJsonObject jsonCoord;
+        jsonCoord.insert(QStringLiteral("x"), point->x());
+        jsonCoord.insert(QStringLiteral("y"), point->y());
+        jsonCoords.append(jsonCoord);
+    }
+    routeObject.insert(QStringLiteral("wndCoordinates"), jsonCoords);
+
+    json.insert(QStringLiteral("route"), routeObject);
 }
 
 void RGRoute::setEditMode(bool checked)

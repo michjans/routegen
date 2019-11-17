@@ -20,6 +20,7 @@ bool RGProjectReader::readFile(const QString &fileName)
 
     QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
 
+    m_route->clearPath(true);
     m_map->read(loadDoc.object());
     m_route->read(loadDoc.object());
 

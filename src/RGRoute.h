@@ -81,7 +81,11 @@ private:
 protected:
   RGMap *mMap;
   RGVehicleList *mVehicleList;
+
+  //The generated/interpolated path, from the mEditPath
   RGPath  *mPath;
+
+  //The actual points, edited by the user (or translated from the geopoints in mGeoPath)
   RGEditPath * mEditPath;
   QGeoPath mGeoPath;
   int mWidth, mHeight;

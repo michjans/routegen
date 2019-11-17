@@ -32,7 +32,7 @@ public:
   explicit RGEditPath(QGraphicsItem *parent = 0);
   QRectF boundingRect() const;
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget);
-
+  const QList<RGEditPathPoint*>& path() const;
 
 protected:
   void mousePressEvent ( QGraphicsSceneMouseEvent * event );
@@ -52,7 +52,7 @@ public slots:
   void editPathPointAdd(RGEditPathPoint *);
   void on_sceneRectChanged();
 
-private :
+private:
   void updatePointList(bool canUndo=true);
   void addPoint(QPoint);
   void deleteSelectedPoints();

@@ -182,8 +182,8 @@ void RGMainWindow::on_actionSave_image_triggered(bool)
                                                   lastSaveDir,
                                                   tr("Images (*.bmp *.jpg)"));
 
-  //TODO: Filename extension not added automatically!
-  if (!fileName.isNull()){
+  if (!fileName.isNull())
+  {
     mView->saveRenderedImage(fileName);
     RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
   }
@@ -193,11 +193,11 @@ void RGMainWindow::on_actionSave_project_triggered(bool)
 {
     QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_PROJECT_LOCATION);
 
+    QString selectedFilter = "rgp";
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                     lastSaveDir,
-                                                    tr("Projects (*.rgp)"));
+                                                    tr("Projects (*.rgp)"), &selectedFilter);
 
-    //TODO: Filename extension not added automatically!
     if (!fileName.isNull())
     {
       RGProjectWriter projWriteer(mRoute, mMap, this);
