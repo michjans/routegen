@@ -101,6 +101,12 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   QObject::connect(mView, SIGNAL(playbackStopped(bool)),
                    this, SLOT(enableGenerateActions(bool)));
 
+  mMapStatus = new QLabel();
+  mRouteStatus = new QLabel();
+  statusBar()->addPermanentWidget(mMapStatus);
+  statusBar()->addPermanentWidget(mRouteStatus);
+
+
   //Route :
   mRoute= new RGRoute(mMap);
   mRoute->setZValue(1);
@@ -148,10 +154,8 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 
 void RGMainWindow::on_actionOpen_image_triggered(bool /*checked*/)
 {
-    QString lastOpenDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
-
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                                  lastOpenDir,
+                                                  QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
                                                   tr("Project files (*.rgp);;Images (*.bmp *.jpg *.gif *.png *.tif)"));
     if (!fileName.isNull())
     {
@@ -180,7 +184,7 @@ void RGMainWindow::on_actionSave_image_triggered(bool)
 
   QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                   lastSaveDir,
-                                                  tr("Images (*.bmp *.jpg)"));
+                                                  tr("Images (*.bmp *.jpg *.png *.tif *.gif)"));
 
   if (!fileName.isNull())
   {
@@ -240,7 +244,7 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
         QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
         QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                         lastSaveDir,
-                                                        tr("Images (*.bmp)"));
+                                                        tr("Images (*.bmp *.gif *.jpg *.tif *.png)"));
         if (fileName.isEmpty())
         {
             return;
@@ -272,6 +276,7 @@ void RGMainWindow::on_actionImport_GPX_triggered(bool)
             {
                 on_actionImport_Google_Map_triggered(true);
             }
+            updateStatusMessage();
         }
     }
 }
@@ -281,9 +286,13 @@ void RGMainWindow::on_actionDraw_mode_triggered(bool checked)
   mView->stop();
   mRoute->setEditMode(checked);
   if(checked)
+  {
     this->statusBar()->showMessage("hold SHIFT to record free drawing, CTRL to select several points. Del key to delete selected points");
+  }
   else
+  {
     this->statusBar()->clearMessage();
+  }
 }
 
 void RGMainWindow::on_actionNew_route_triggered(bool)
@@ -437,6 +446,8 @@ void RGMainWindow::handleMapLoaded(const QPixmap &map)
     actionDraw_mode->setEnabled(!map.isNull());
     actionNew_route->setEnabled(!map.isNull());
     RGSettings::setLastOpenDir(mMap->fileName(), RGSettings::RG_MAP_LOCATION);
+
+    updateStatusMessage();
 }
 
 void RGMainWindow::blockUserInteraction(bool busy)
@@ -471,6 +482,7 @@ void RGMainWindow::enableGenerateActions(bool val)
     {
         mRouteUi->blockEssentialControls(false);
     }
+    updateStatusMessage();
 }
 
 void RGMainWindow::movieGenerationFinished()
@@ -518,5 +530,20 @@ void RGMainWindow::initVideoEncoderFromSettings()
   if(mVideoEncoder->exists())
 	{
     qDebug()<<"encoder found !";
-	}
+  }
+}
+
+void RGMainWindow::updateStatusMessage()
+{
+    qDebug() << "RGMainWindow::updateStatusMessage()";
+    if (mMap->hasGeoBounds())
+    {
+        qDebug() << "  1";
+        mMapStatus->setText("Map loaded with geographic boundaries");
+    }
+    if (mRoute->hasGeoBounds())
+    {
+        qDebug() << "  2";
+        mRouteStatus->setText("Route loaded with geographic boundaries");
+    }
 }

@@ -50,7 +50,7 @@ QRectF RGRoute::boundingRect() const
   return QRectF();//mBoundingRect;
 }
 
-void RGRoute::paint(QPainter */*painter*/, const QStyleOptionGraphicsItem *, QWidget *)
+void RGRoute::paint(QPainter * /*painter*/, const QStyleOptionGraphicsItem *, QWidget *)
 {
 }
 
@@ -148,6 +148,11 @@ QGeoPath RGRoute::getGeoPath() const
     return mGeoPath;
 }
 
+bool RGRoute::hasGeoBounds() const
+{
+    return mGeoPath.isValid();
+}
+
 void RGRoute::undoredo(QVariant data)
 {
   QList<QVariant> vlist=data.toList();
@@ -171,7 +176,7 @@ void RGRoute::read(const QJsonObject &json)
         {
             QJsonArray jsonGeoCoords = routeObject.value(QStringLiteral("geoCoordinates")).toArray();
             QList<QGeoCoordinate> geoCoordinates;
-            for (const QJsonValue geoValue: jsonGeoCoords)
+            for (const QJsonValue &geoValue: jsonGeoCoords)
             {
                 QJsonObject geoObject = geoValue.toObject();
                 geoCoordinates.append(QGeoCoordinate(geoObject["latitude"].toDouble(), geoObject["longitude"].toDouble()));
@@ -187,7 +192,7 @@ void RGRoute::read(const QJsonObject &json)
         {
             QJsonArray jsonCoords = routeObject.value(QStringLiteral("wndCoordinates")).toArray();
             QList<QPoint> pointlist;
-            for (const QJsonValue coordValue: jsonCoords)
+            for (const QJsonValue &coordValue: jsonCoords)
             {
                 QJsonObject coordObject = coordValue.toObject();
                 pointlist.append(QPoint(coordObject["x"].toInt(), coordObject["y"].toInt()));

@@ -70,6 +70,7 @@ private slots:
 
 private:
 	void initVideoEncoderFromSettings();
+    void updateStatusMessage();
 
   RGViewWidget *mView;
   RGEncVideo *mVideoEncoder;
@@ -78,6 +79,9 @@ private:
   RGRouteUi *mRouteUi;
 
   RGUndoRedo  *mUndoRedo;
+
+  QLabel *mRouteStatus;
+  QLabel *mMapStatus;
 
   QAction *actionOpen_image;
   QAction *action_Quit;

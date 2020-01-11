@@ -46,7 +46,7 @@
      <x>0</x>
      <y>0</y>
      <width>720</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Tools">
@@ -158,8 +158,14 @@
    <property name="text">
     <string>&amp;Save image</string>
    </property>
+   <property name="iconText">
+    <string>Save map image</string>
+   </property>
    <property name="toolTip">
-    <string>Save the currently displayed image</string>
+    <string>Save the currently displayed map (and route)</string>
+   </property>
+   <property name="statusTip">
+    <string>Save the currently displayed image (map and route), which can be used as start point for generating another route.</string>
    </property>
   </action>
   <action name="actionDraw_mode">

@@ -49,6 +49,7 @@ public:
   void setGeoCoordinates(const QList<QGeoCoordinate> &geoCoordinates);
   QGeoRectangle getGeoBounds() const;
   QGeoPath getGeoPath() const;
+  bool hasGeoBounds() const;
 
   virtual void undoredo(QVariant=0);
 
