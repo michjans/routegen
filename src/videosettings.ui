@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>564</width>
-    <height>339</height>
+    <height>369</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,7 +65,7 @@
    <item row="1" column="0">
     <widget class="QLabel" name="nameOutputLabel">
      <property name="text">
-      <string>Name output AVI</string>
+      <string>Name output movie</string>
      </property>
     </widget>
    </item>

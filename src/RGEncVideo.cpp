@@ -144,7 +144,7 @@ void RGEncVideo::createEncodingProcess(const QString &dirName,const QString &vid
           "Your route has been generated in the selected directory. "
           "Each frame is generated as a *.bmp file in that directory. "
           "</p>"
-          "<p><b>NOTE: Since no video encoder is available, no avi file is generated!</b></p>"
+          "<p><b>NOTE: Since no video encoder is available, no video file is generated!</b></p>"
           "</html>"
           );
 
@@ -195,7 +195,7 @@ void RGEncVideo::encodingProcessFinished(int exitCode, QProcess::ExitStatus exit
           "<p>"
           "Your route has been generated in the selected directory. "
           "Each frame is generated as a *.bmp file in that directory. "
-          "The name of the generated movie is <b>") + mOutName + QString(".avi</b>."
+          "The name of the generated movie is <b>") + mOutName + QString(".mp4</b>."
                                                                          "</p>"
                                                                          "</center>"
                                                                          "</html>"

@@ -32,11 +32,11 @@ RGSettingsDialog::RGSettingsDialog(RGEncVideo *videoSettings,QWidget *parent)
 
 #ifdef Q_OS_WIN
 	ui.encoderSelectionCB->addItem("bmp2avi");
-	ui.encoderSelectionCB->addItem("ffmpeg");
+    ui.encoderSelectionCB->addItem("ffmpeg");
 #else
 	//No bmp2avi on Linux, so nu use to display this option
-	ui.encoderSelectionCB->setVisible(false);
-	ui.encoderSelectionLabel->setVisible(false);
+    ui.encoderSelectionCB->addItem("ffmpeg");
+    ui.encoderSelectionCB->setEnabled(false);
 #endif
 
 

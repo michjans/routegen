@@ -539,11 +539,19 @@ void RGMainWindow::updateStatusMessage()
     if (mMap->hasGeoBounds())
     {
         qDebug() << "  1";
-        mMapStatus->setText("Map loaded with geographic boundaries");
+        mMapStatus->setText("Map:GEO");
+    }
+    else
+    {
+        mMapStatus->setText("Map:NOGEO");
     }
     if (mRoute->hasGeoBounds())
     {
         qDebug() << "  2";
-        mRouteStatus->setText("Route loaded with geographic boundaries");
+        mRouteStatus->setText("Route:GEO");
+    }
+    else
+    {
+        mRouteStatus->setText("Route:NOGEO");
     }
 }

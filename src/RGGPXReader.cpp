@@ -5,6 +5,7 @@
 #include <QString>
 #include <QFile>
 #include <QInputDialog>
+#include <QMessageBox>
 #include <QProgressDialog>
 
 RGGPXReader::RGGPXReader(RGRoute *route, RGMap *map, QWidget *parent)
@@ -53,7 +54,12 @@ bool RGGPXReader::readFile(const QString &fileName)
     qDebug() << "trackNames:" << trackNames;
 
     QString selectedTrack;
-    if (trackNames.size() > 1)
+    if (trackNames.empty())
+    {
+        QMessageBox::warning (m_parentWidget, "No tracks found", "No tracks found in GPX file!");
+        return false;
+    }
+    else if (trackNames.size() > 1)
     {
         bool ok;
         selectedTrack = QInputDialog::getItem(m_parentWidget, "Track selectionn", "Select track to import", trackNames, 0, false, &ok);
