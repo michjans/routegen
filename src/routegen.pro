@@ -29,6 +29,7 @@ CONFIG += debug_and_release
 # CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
 
 SOURCES += main.cpp RGMainWindow.cpp RGVehicleDialog.cpp RGSettings.cpp RGSettingsDialog.cpp RGGoogleMap.cpp \
+    GPXSelectionDialog.cpp \
     RGGPXReader.cpp \
     RGReader.cpp \
     RGVehicle.cpp \
@@ -53,6 +54,7 @@ SOURCES += main.cpp RGMainWindow.cpp RGVehicleDialog.cpp RGSettings.cpp RGSettin
 RESOURCES += routegen.qrc
 
 HEADERS += RGMainWindow.h RGVehicleDialog.h RGSettings.h RGSettingsDialog.h RGGoogleMap.h \
+    GPXSelectionDialog.h \
     RGGPXReader.h \
     RGReader.h \
     RGVehicle.h \
@@ -75,6 +77,7 @@ HEADERS += RGMainWindow.h RGVehicleDialog.h RGSettings.h RGSettingsDialog.h RGGo
     RGMap.h
 
 FORMS += routegen.ui settings.ui googlemap.ui \
+    gpxselectiondialog.ui \
     vehicledialog.ui \
     videosettings.ui \
     routeui.ui
