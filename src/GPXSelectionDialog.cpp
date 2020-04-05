@@ -30,22 +30,23 @@ GPXSelectionDialog::~GPXSelectionDialog()
     delete ui;
 }
 
-QString GPXSelectionDialog::selectedItem(GPXSelectionDialog::GPXItemType &itemType) const
+int GPXSelectionDialog::selectedItem(GPXSelectionDialog::GPXItemType &itemType) const
 {
-    QString selectedItemTxt;
+    int selectedItemIdx = -1;
     itemType = GPXItemType::ITEM_TYPE_NONE;
     if (!ui->gpxTreeView->selectedItems().empty())
     {
         QTreeWidgetItem *selectedItem = ui->gpxTreeView->selectedItems().first();
-        selectedItemTxt = selectedItem->text(0);
         if (selectedItem->parent() == routeItem)
         {
             itemType = GPXItemType::ITEM_TYPE_ROUTE;
+            selectedItemIdx = routeItem->indexOfChild(selectedItem);
         }
         else if (selectedItem->parent() == trackItem)
         {
             itemType = GPXItemType::ITEM_TYPE_TRACK;
+            selectedItemIdx = trackItem->indexOfChild(selectedItem);
         }
     }
-    return selectedItemTxt;
+    return selectedItemIdx;
 }

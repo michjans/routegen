@@ -38,7 +38,7 @@ bool RGGPXReader::readFile(const QString &fileName)
     qDebug() << "trackNames:" << trackNames;
     qDebug() << "routeNames:" << routeNames;
 
-    QString selectedRoute;
+    int selectedRouteItemIdx = -1;
     QString waypointTagName;
     QString routeTagName; //trk or rte
     if (trackNames.empty() && routeNames.empty())
@@ -55,7 +55,7 @@ bool RGGPXReader::readFile(const QString &fileName)
         }
 
         GPXSelectionDialog::GPXItemType gpxItemType;
-        selectedRoute = gpxSel.selectedItem(gpxItemType);
+        selectedRouteItemIdx = gpxSel.selectedItem(gpxItemType);
         switch (gpxItemType)
         {
         case GPXSelectionDialog::ITEM_TYPE_ROUTE:
@@ -81,7 +81,8 @@ bool RGGPXReader::readFile(const QString &fileName)
     file.reset();
     inputStream.setDevice(&file);
     bool selectionFound = false;
-    while (!selectedRoute.isEmpty() && !inputStream.atEnd() && !inputStream.hasError())
+    int currentRouteIdx = 0;
+    while (selectedRouteItemIdx >= 0 && !inputStream.atEnd() && !inputStream.hasError())
     {
         if (selectionFound)
         {
@@ -109,17 +110,13 @@ bool RGGPXReader::readFile(const QString &fileName)
         {
             if (inputStream.readNext() == QXmlStreamReader::StartElement && inputStream.name().toString() == routeTagName)
             {
-                if (inputStream.readNextStartElement() && inputStream.name().toString() == "name")
+                if (currentRouteIdx == selectedRouteItemIdx++)
                 {
-                    if (inputStream.readElementText() == selectedRoute)
-                    {
-                        selectionFound = true;
-                    }
+                    selectionFound = true;
                 }
             }
         }
     }
-
 
     return selectionFound;
 }
@@ -128,16 +125,18 @@ bool RGGPXReader::collectNames(QXmlStreamReader &inputStream, QProgressDialog &p
 {
     int progVal = 10;
     pd.setValue(progVal);
+    QStringList *namesList = nullptr;
     while (!inputStream.atEnd() && !inputStream.hasError())
     {
-        if (inputStream.readNext() == QXmlStreamReader::StartElement)
+        QString name;
+        QXmlStreamReader::TokenType nextTokenType = inputStream.readNext();
+        if (nextTokenType == QXmlStreamReader::StartElement)
         {
             pd.setValue(progVal++ % 100);
             if (pd.wasCanceled())
             {
                 return false;
             }
-            QStringList *namesList = nullptr;
             if (inputStream.name().toString() == "rte")
             {
                 namesList = &routeNames;
@@ -148,8 +147,20 @@ bool RGGPXReader::collectNames(QXmlStreamReader &inputStream, QProgressDialog &p
             }
             if (inputStream.readNextStartElement() && inputStream.name().toString() == "name" && namesList)
             {
-                *namesList << inputStream.readElementText();
+                name = inputStream.readElementText();
             }
+        }
+        else if (nextTokenType == QXmlStreamReader::EndElement && namesList != nullptr &&
+                 (inputStream.name().toString() == "rte" || inputStream.name().toString() == "trk"))
+        {
+            if (name.isEmpty())
+            {
+                //Track or route without name, generate one by number
+                int nrIndex = namesList->size() + 1;
+                name = QString::number(nrIndex);
+            }
+            *namesList << name;
+            namesList = nullptr;
         }
     }
     inputStream.clear();
