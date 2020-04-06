@@ -13,8 +13,8 @@ On Windows use the distributed installer named routegen-winxx-x.x.exe
 On Linux and Mac OS the program has to be build from source code (see below)
 
 ## Building Route Generator from the source code
-Since version 1.8 Route Generator should be built using Qt 5.7 or higher. 
-So Qt 5.7 or higher should be downloaded and installed. 
+Since version 1.9 Route Generator should be built using Qt 5.12 or higher. 
+So Qt 5.12 or higher should be downloaded and installed. 
 After your Qt build environment is setup correctly, all you need to do is:
 - unzip or clone the source code in a new directory
 - open a command shell with the Qt build environment correctly set-up
@@ -79,12 +79,14 @@ After your Qt build environment is setup correctly, all you need to do is:
        -No main functional changes, however import from Google maps now works again
        -Updated Zeranoe FFmpeg to 4.1.3
 - 1.8.1 -Pixel format always yuv420p (when supported by selected codec)	   -
-- 1.9  -GPX Import
-       -Loading / saving projects
-       -Storing Geo coordinates with map
-       -Manually enter FFMpeg commandline options
-       -Maximize button of google maps
-       -Increased maximum resolution of google map to 8K
+- 1.9
+  -GPX Import (both routes and tracks)
+  -Loading / saving projects
+  -Storing Geo coordinates with map and route
+  -Manually enter FFMpeg commandline options
+  -Maximize button of google maps
+  -Increased maximum resolution of google map to 8K
+  -Default output container format of video files now mp4 (instead of avi)
  
 ## Technical details
 
