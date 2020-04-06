@@ -79,14 +79,14 @@ After your Qt build environment is setup correctly, all you need to do is:
        -No main functional changes, however import from Google maps now works again
        -Updated Zeranoe FFmpeg to 4.1.3
 - 1.8.1 -Pixel format always yuv420p (when supported by selected codec)	   -
-- 1.9
-  -GPX Import (both routes and tracks)
-  -Loading / saving projects
-  -Storing Geo coordinates with map and route
-  -Manually enter FFMpeg commandline options
-  -Maximize button of google maps
-  -Increased maximum resolution of google map to 8K
-  -Default output container format of video files now mp4 (instead of avi)
+- 1.9 release
+  - GPX Import (both routes and tracks)
+  - Loading / saving projects
+  - Storing Geo coordinates with map and route
+  - Manually enter FFMpeg commandline options
+  - Maximize button of google maps
+  - Increased maximum resolution of google map to 8K
+  - Default output container format of video files now mp4 (instead of avi)
  
 ## Technical details
 
