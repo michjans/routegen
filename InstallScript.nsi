@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Route Generator"
-!define PRODUCT_VERSION "1.9-alpha-5"
+!define PRODUCT_VERSION "1.9-alpha-6"
 !define PRODUCT_PUBLISHER "MJProductions"
 !define PRODUCT_WEB_SITE "http://www.routegenerator.net"
 !define PRODUCT_DIR_REGKEY "Software\MJProductions\Route Generator"
