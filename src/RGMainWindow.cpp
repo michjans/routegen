@@ -101,11 +101,31 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   QObject::connect(mView, SIGNAL(playbackStopped(bool)),
                    this, SLOT(enableGenerateActions(bool)));
 
-  mMapStatus = new QLabel();
-  mRouteStatus = new QLabel();
-  statusBar()->addPermanentWidget(mMapStatus);
-  statusBar()->addPermanentWidget(mRouteStatus);
-
+  //Prepare status icons in status bar
+  QPixmap checkPM(":/icons/icons/checkmark_green.svg");
+  QPixmap globePM(":/icons/icons/globe.svg");
+  mMapLoadedStatus = new QLabel();
+  mMapGeoStatus = new QLabel();
+  mRouteLoadedStatus = new QLabel();
+  mRouteGeoStatus = new QLabel();
+  statusBar()->addPermanentWidget(new QLabel(QStringLiteral("Map:")));
+  statusBar()->addPermanentWidget(mMapLoadedStatus);
+  statusBar()->addPermanentWidget(mMapGeoStatus);
+  statusBar()->addPermanentWidget(new QLabel(QStringLiteral("Route:")));
+  statusBar()->addPermanentWidget(mRouteLoadedStatus);
+  statusBar()->addPermanentWidget(mRouteGeoStatus);
+  mMapLoadedStatus->setPixmap(checkPM.scaledToHeight(20, Qt::SmoothTransformation));
+  mMapGeoStatus->setPixmap(globePM.scaledToHeight(20, Qt::SmoothTransformation));
+  mRouteLoadedStatus->setPixmap(checkPM.scaledToHeight(20, Qt::SmoothTransformation));
+  mRouteGeoStatus->setPixmap(globePM.scaledToHeight(20, Qt::SmoothTransformation));
+  mMapLoadedStatus->setEnabled(false);
+  mMapGeoStatus->setEnabled(false);
+  mRouteLoadedStatus->setEnabled(false);
+  mRouteGeoStatus->setEnabled(false);
+  mMapLoadedStatus->setToolTip("Enabled if map loaded");
+  mMapGeoStatus->setToolTip("Enabled if map is loaded with geographic coordinates");
+  mRouteLoadedStatus->setToolTip("Enabled if a route loaded");
+  mRouteGeoStatus->setToolTip("Enabled if the route is generated from geographic coordinates");
 
   //Route :
   mRoute= new RGRoute(mMap);
@@ -534,24 +554,9 @@ void RGMainWindow::initVideoEncoderFromSettings()
 }
 
 void RGMainWindow::updateStatusMessage()
-{
-    qDebug() << "RGMainWindow::updateStatusMessage()";
-    if (mMap->hasGeoBounds())
-    {
-        qDebug() << "  1";
-        mMapStatus->setText("Map:GEO");
-    }
-    else
-    {
-        mMapStatus->setText("Map:NOGEO");
-    }
-    if (mRoute->hasGeoBounds())
-    {
-        qDebug() << "  2";
-        mRouteStatus->setText("Route:GEO");
-    }
-    else
-    {
-        mRouteStatus->setText("Route:NOGEO");
-    }
+{   
+    mMapLoadedStatus->setEnabled(!mMap->isEmpty());
+    mMapGeoStatus->setEnabled(mMap->hasGeoBounds());
+    mRouteLoadedStatus->setEnabled(!mRoute->isEmpty());
+    mRouteGeoStatus->setEnabled(mRoute->hasGeoBounds());
 }

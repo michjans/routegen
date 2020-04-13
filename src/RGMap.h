@@ -18,6 +18,7 @@ public:
     bool hasGeoBounds() const;
     QList<QPoint> mapRoutePoints(const QList<QGeoCoordinate> &geoCoordinates) const;
     QString fileName() const;
+    bool isEmpty() const;
 
     void read (const QJsonObject &json);
     void write (QJsonObject &json);

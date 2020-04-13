@@ -153,6 +153,11 @@ bool RGRoute::hasGeoBounds() const
     return mGeoPath.isValid();
 }
 
+bool RGRoute::isEmpty() const
+{
+    return mEditPath->path().empty();
+}
+
 void RGRoute::undoredo(QVariant data)
 {
   QList<QVariant> vlist=data.toList();

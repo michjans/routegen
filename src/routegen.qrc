@@ -17,5 +17,7 @@
         <file>icons/redo.png</file>
         <file>icons/gps.png</file>
         <file>icons/save-project.png</file>
+        <file>icons/checkmark_green.svg</file>
+        <file>icons/globe.svg</file>
     </qresource>
 </RCC>

@@ -50,6 +50,7 @@ public:
   QGeoRectangle getGeoBounds() const;
   QGeoPath getGeoPath() const;
   bool hasGeoBounds() const;
+  bool isEmpty() const;
 
   virtual void undoredo(QVariant=0);
 

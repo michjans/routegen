@@ -68,6 +68,11 @@ QString RGMap::fileName() const
     return mFileName;
 }
 
+bool RGMap::isEmpty() const
+{
+    return mMap.isNull();
+}
+
 void RGMap::read(const QJsonObject &json)
 {
     QJsonValue mapValue = json.value(QStringLiteral("map"));

@@ -80,8 +80,10 @@ private:
 
   RGUndoRedo  *mUndoRedo;
 
-  QLabel *mRouteStatus;
-  QLabel *mMapStatus;
+  QLabel *mRouteGeoStatus;
+  QLabel *mRouteLoadedStatus;
+  QLabel *mMapGeoStatus;
+  QLabel *mMapLoadedStatus;
 
   QAction *actionOpen_image;
   QAction *action_Quit;
