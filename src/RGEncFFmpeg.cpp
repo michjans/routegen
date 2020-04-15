@@ -74,7 +74,7 @@ void RGEncFFmpeg::generateMovie(const QString &dirName)
     }
     else
     {
-        arguments << "-report" << "-y" << "-i" << QString("map").append("\%05d.bmp") << "-g" << QString("%1").arg(mKeyFrameRate) <<
+        arguments << "-report" << "-y" << "-i" << QString("map").append("\%05d.").append(frameFileType()) << "-g" << QString("%1").arg(mKeyFrameRate) <<
                      "-r" << QString("%1").arg(mFps)<< "-b" <<QString("%1k").arg(mBitRate) <<"-vcodec"<< mCompress <<
                      QString("-pix_fmt") <<  QString("yuv420p") << QString(mOutName).append(".mp4");
     }
@@ -94,6 +94,11 @@ QString RGEncFFmpeg::encoderExecBaseName()
 #else
   return QString("ffmpeg");
 #endif
+}
+
+QString RGEncFFmpeg::frameFileType() const
+{
+    return QString("png");
 }
 
 bool RGEncFFmpeg::initCodecs()
@@ -172,7 +177,7 @@ void RGEncFFmpeg::handleManualCommandLineChecked(bool checked)
         QString outName=mUi.nameOutputLE->text();
 
         QString arguments = "-report -y -i ";
-        arguments += QString("map").append("\%05d.bmp") + " -g" + QString(" %1").arg(keyFrameRate) + " -r" + QString(" %1").arg(fps)
+        arguments += QString("map").append("\%05d.").append(frameFileType()) + " -g" + QString(" %1").arg(keyFrameRate) + " -r" + QString(" %1").arg(fps)
                   + " -b" + QString(" %1k").arg(bitRate) + " -vcodec " + compress + " -pix_fmt yuv420p " + QString(outName).append(".mp4");
         mUi.mCommandLineLE->setText(arguments);
     }

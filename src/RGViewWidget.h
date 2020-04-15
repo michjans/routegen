@@ -36,7 +36,7 @@ public:
   QSize   sizeHint () const;
   void addRoute(RGRoute*);
   bool saveRenderedImage(const QString &filename);
-  bool generateMovie(const QString &dirName, const QString &filePrefix, QStringList &generatedBMPs);
+  bool generateMovie(const QString &dirName, const QString &filePrefix, const QString &frameFileType, QStringList &generatedImageFiles);
 
 signals:
   void playbackStopped(bool);
@@ -49,7 +49,7 @@ public slots:
 
 private slots:
   void playTimerEvent();
-	bool saveFrame(int frameCounter, const QString &dirName, const QString &filePrefix, QStringList &generatedBMPs);
+    bool saveFrame(int frameCounter, const QString &dirName, const QString &filePrefix, const QString &frameFileType, QStringList &generatedBMPs);
 
 private:
   QGraphicsScene *mScene;

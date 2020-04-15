@@ -29,9 +29,11 @@ class RGEncBmp2avi : public RGEncVideo
 public:
 
   RGEncBmp2avi(QWidget *parent = 0);
-  virtual void generateMovie(const QString &dirName);
-  virtual QString encoderName();
-	virtual QString encoderExecBaseName();
+  void generateMovie(const QString &dirName) override;
+  QString encoderName() override;
+  QString encoderExecBaseName() override;
+  QString frameFileType() const override;
+
 
 protected:
  bool initCodecs();

@@ -64,6 +64,11 @@ QString RGEncBmp2avi::encoderExecBaseName()
 
 }
 
+QString RGEncBmp2avi::frameFileType() const
+{
+    return QString("bmp");
+}
+
 bool RGEncBmp2avi::initCodecs()
 {
   //Collect codecs from bmp2avi

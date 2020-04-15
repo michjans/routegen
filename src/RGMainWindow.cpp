@@ -346,16 +346,10 @@ void RGMainWindow::on_actionStop_triggered(bool checked)
 void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
 {
   Q_UNUSED(checked);
-  bool generateBMPOK = false;
+  bool generateFramesOK = false;
   QString lastGenDir = RGSettings::getLastOpenDir(RGSettings::RG_MOVIE_LOCATION);
 
-  //Calculate MB the full movie (all uncompressed BMP's + AVI) will take
-  //(This is a rough proximation, but the calculated number is always higher,
-  // so we're safe)
-  int sizeEstimate = int (mRoute->countFrames() * mRoute->scene()->sceneRect().width()* mRoute->scene()->sceneRect().height() *24/8/1024.0/1000.0* 2);
-  QString dirInfoText = QString("Select an empty directory on a drive with at least ") + 
-      QString::number(sizeEstimate) +
-      QString(" MB of free diskspace, where the map should be generated.");
+  QString dirInfoText = QString("Select an empty directory where the movie should be generated.");
   QString dir = QFileDialog::getExistingDirectory(this,
                                                   dirInfoText,
                                                   lastGenDir,
@@ -395,10 +389,17 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
     RGSettings::setLastOpenDir(dir, RGSettings::RG_MOVIE_LOCATION);
     //generate images :
     mRoute->setEditMode(false);
-    generateBMPOK = mView->generateMovie(dir, QString("map"), mGeneratedBMPs);
+
+    QString frameFileType = "png";
+    if (mVideoEncoder != nullptr && mVideoEncoder->exists())
+    {
+        frameFileType = mVideoEncoder->frameFileType();
+    }
+
+    generateFramesOK = mView->generateMovie(dir, QString("map"), frameFileType, mGeneratedFrames);
     mRoute->setEditMode(actionDraw_mode->isChecked());
 
-    if (generateBMPOK) {
+    if (generateFramesOK) {
             if (mVideoEncoder != nullptr && mVideoEncoder->exists())
 			{
 				blockUserInteraction(true);
@@ -407,7 +408,7 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
 			}
 			else
 			{
-				QMessageBox::warning (this, "Encoder unavailable", "No encoder available, only BMP's have been generated!");
+                QMessageBox::warning (this, "Encoder unavailable", "No encoder available, only image frames have been generated!");
 			}
     }
   }
@@ -510,9 +511,9 @@ void RGMainWindow::movieGenerationFinished()
   qDebug()<<"Movie generation finished";
   if (RGSettings::getDeleteBMPs()) {
     //Delete generated BMP's except for first and last frame (user might want to use them)
-    for (int i = 1; i < mGeneratedBMPs.size() - 1; i++) {
-      if (!QFile::remove(mGeneratedBMPs[i])) {
-        QMessageBox::critical (this, "Error", "Unable to delete generated BMP's! No permissions?");
+    for (int i = 1; i < mGeneratedFrames.size() - 1; i++) {
+      if (!QFile::remove(mGeneratedFrames[i])) {
+        QMessageBox::critical (this, "Error", "Unable to delete generated image frames! No permissions?");
         break;
       }
     }

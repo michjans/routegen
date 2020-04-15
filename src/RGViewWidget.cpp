@@ -102,9 +102,9 @@ bool RGViewWidget::saveRenderedImage(const QString &filename)
   return result;
 }
 
-bool RGViewWidget::generateMovie(const QString &dirName, const QString &filePrefix, QStringList &generatedBMPs)
+bool RGViewWidget::generateMovie(const QString &dirName, const QString &filePrefix, const QString &frameFileType, QStringList &generatedImageFiles)
 {
-  generatedBMPs.clear();
+  generatedImageFiles.clear();
   bool generationOK = true;
 	int secsBefore = RGSettings::getBeginDelaySeconds();
 	int framesBefore = secsBefore * RGSettings::getFps();
@@ -120,12 +120,12 @@ bool RGViewWidget::generateMovie(const QString &dirName, const QString &filePref
   mRoute->setCurrentFrame(0);
 	for (int frameCounter = 0; frameCounter < framesBefore; ++frameCounter)
 	{
-		progress.setValue(frameCounter);
-    if (!saveFrame(frameCounter, dirName, filePrefix, generatedBMPs))
-		{
-			return false;
-		}
-    if (progress.wasCanceled()) return false;
+        progress.setValue(frameCounter);
+        if (!saveFrame(frameCounter, dirName, filePrefix, frameFileType, generatedImageFiles))
+        {
+            return false;
+        }
+        if (progress.wasCanceled()) return false;
 	}
 
 	//Generate the animated frames
@@ -133,7 +133,7 @@ bool RGViewWidget::generateMovie(const QString &dirName, const QString &filePref
 	{
     progress.setValue(framesBefore + mTimerCounter);
     mRoute->setCurrentFrame(mTimerCounter);
-    if (!saveFrame(framesBefore + mTimerCounter, dirName, filePrefix, generatedBMPs))
+    if (!saveFrame(framesBefore + mTimerCounter, dirName, filePrefix, frameFileType, generatedImageFiles))
 		{
       break;
     }
@@ -143,12 +143,12 @@ bool RGViewWidget::generateMovie(const QString &dirName, const QString &filePref
 	//Generate number of static frames after
 	for (int frameCounter = 0; frameCounter < framesAfter; ++frameCounter)
 	{
-		progress.setValue(framesBefore + mTimerCounter + frameCounter);
-    if (!saveFrame(framesBefore + mTimerCounter + frameCounter, dirName, filePrefix, generatedBMPs))
-		{
-			return false;
-		}
-    if (progress.wasCanceled()) return false;
+        progress.setValue(framesBefore + mTimerCounter + frameCounter);
+        if (!saveFrame(framesBefore + mTimerCounter + frameCounter, dirName, filePrefix, frameFileType, generatedImageFiles))
+        {
+            return false;
+        }
+        if (progress.wasCanceled()) return false;
 	}
 
   generationOK = (mTimerCounter == mRoute->countFrames());
@@ -186,10 +186,10 @@ void RGViewWidget::playTimerEvent()
 
 }
 
-bool RGViewWidget::saveFrame(int frameCounter, const QString &dirName, const QString &filePrefix, QStringList &generatedBMPs)
+bool RGViewWidget::saveFrame(int frameCounter, const QString &dirName, const QString &filePrefix, const QString &frameFileType, QStringList &generatedImages)
 {
 	QString fileName;
-	QString postFix = QString("%1.bmp").arg(frameCounter, FILE_NUMBER_FIELD_WIDTH, 10, QChar('0'));
+    QString postFix = QString("%1.%2").arg(frameCounter, FILE_NUMBER_FIELD_WIDTH, 10, QChar('0')).arg(frameFileType);
 	fileName = dirName + "/" + filePrefix + postFix;
 	if (!saveRenderedImage(fileName))
 	{
@@ -197,7 +197,7 @@ bool RGViewWidget::saveFrame(int frameCounter, const QString &dirName, const QSt
 	}
     else
     {
-		generatedBMPs.append(fileName);
+        generatedImages.append(fileName);
 	}
 	return true;
 }

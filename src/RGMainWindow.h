@@ -99,7 +99,7 @@ private:
   QAction *actionPlayback;
   QAction *actionStop;
 
-  QStringList  mGeneratedBMPs;
+  QStringList  mGeneratedFrames;
 
 };
 

@@ -29,11 +29,12 @@ class RGEncFFmpeg : public RGEncVideo
 public:
   RGEncFFmpeg(QWidget *parent = 0);
 
-  virtual void updateFromSettings();
-  virtual void saveInSettings();
-  virtual void generateMovie(const QString &dirName);
-  virtual QString encoderName();
-  virtual QString encoderExecBaseName();
+  void updateFromSettings() override;
+  void saveInSettings() override;
+  void generateMovie(const QString &dirName) override;
+  QString encoderName() override;
+  QString encoderExecBaseName() override;
+  QString frameFileType() const override;
 
 protected:
 	virtual bool initCodecs();

@@ -39,6 +39,8 @@ public:
   virtual void generateMovie(const QString &dirName)=0;
   virtual QString encoderName()=0;
   virtual QString encoderExecBaseName()=0;
+  virtual QString frameFileType() const = 0;
+
 
 signals:
   void movieGenerationFinished();

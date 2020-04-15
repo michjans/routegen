@@ -17,7 +17,7 @@
    <item row="2" column="1">
     <widget class="QCheckBox" name="deleteBMPsCB">
      <property name="toolTip">
-      <string>Delete BMP's after AVI generation</string>
+      <string>Delete generated image frames after movie generation</string>
      </property>
      <property name="text">
       <string/>
@@ -93,7 +93,7 @@
    <item row="2" column="0">
     <widget class="QLabel" name="deleteBMPsLabel">
      <property name="text">
-      <string>Delete BMP's</string>
+      <string>Delete image frames</string>
      </property>
     </widget>
    </item>

@@ -142,11 +142,11 @@ void RGEncVideo::createEncodingProcess(const QString &dirName,const QString &vid
           "<html>"
           "<p>"
           "Your route has been generated in the selected directory. "
-          "Each frame is generated as a *.bmp file in that directory. "
+          "Each frame is generated as a *.%1 file in that directory. "
           "</p>"
           "<p><b>NOTE: Since no video encoder is available, no video file is generated!</b></p>"
           "</html>"
-          );
+          ).arg(frameFileType());
 
     QMessageBox::information (nullptr, "Map Generation Finished", txt );
     emit movieGenerationFinished();
@@ -162,7 +162,7 @@ void RGEncVideo::createEncodingProcess(const QString &dirName,const QString &vid
 
   mProcessWaitMessage = new QMessageBox(nullptr);
   mProcessWaitMessage->setWindowTitle("One moment please...");
-  mProcessWaitMessage->setText(QString("Executing ") + encoderName() + " to convert BMP files to video file, one moment please...");
+  mProcessWaitMessage->setText(QString("Executing ") + encoderName() + " to convert image files to video file, one moment please...");
   mProcessWaitMessage->setStandardButtons(QMessageBox::NoButton);
   mProcessWaitMessage->setCursor(Qt::WaitCursor);
   mProcessWaitMessage->show();
@@ -194,8 +194,8 @@ void RGEncVideo::encodingProcessFinished(int exitCode, QProcess::ExitStatus exit
           "<center>"
           "<p>"
           "Your route has been generated in the selected directory. "
-          "Each frame is generated as a *.bmp file in that directory. "
-          "The name of the generated movie is <b>") + mOutName + QString(".mp4</b>."
+          "Each frame is generated as a *.%1 file in that directory. "
+          "The name of the generated movie is <b>").arg(frameFileType()) + mOutName + QString(".mp4</b>."
                                                                          "</p>"
                                                                          "</center>"
                                                                          "</html>"
