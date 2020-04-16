@@ -33,7 +33,8 @@ public:
         RG_MAP_LOCATION,
         RG_GPX_LOCATION,
         RG_MOVIE_LOCATION,
-        RG_PROJECT_LOCATION
+        RG_PROJECT_LOCATION,
+        RG_FILE_OPEN_LOCATION
     };
 
     /*

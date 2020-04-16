@@ -174,11 +174,13 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 
 void RGMainWindow::on_actionOpen_image_triggered(bool /*checked*/)
 {
+    QString lastOpenDir = RGSettings::getLastOpenDir(RGSettings::RG_FILE_OPEN_LOCATION);
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                                  QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
+                                                  lastOpenDir,
                                                   tr("Project files (*.rgp);;Images (*.bmp *.jpg *.gif *.png *.tif)"));
     if (!fileName.isNull())
     {
+        RGSettings::setLastOpenDir(fileName, RGSettings::RG_FILE_OPEN_LOCATION);
         if (fileName.endsWith(QStringLiteral("rgp"), Qt::CaseInsensitive))
         {
             RGProjectReader rgReader(mRoute, mMap);
