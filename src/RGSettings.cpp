@@ -200,6 +200,22 @@ void RGSettings::setMapGeoBounds(const QString &fileName, const QRectF &geoBound
     settings.setValue("geoBounds", geoBoundMap);
 }
 
+QRect RGSettings::getMainWindowGeometry()
+{
+    QSettings settings;
+
+    QVariant geoVariant = settings.value("mainWindowGeom", QVariant(QRect(10, 10, 1024, 768)));
+
+    return geoVariant.toRect();
+}
+
+void RGSettings::setMainWindowGeometry(const QRect &geometry)
+{
+    QSettings settings;
+
+    settings.setValue("mainWindowGeom", QVariant(geometry));
+}
+
 QColor RGSettings::getPenColor()
 {
   QSettings settings;
@@ -260,10 +276,10 @@ QString RGSettings::getLastOpenDir(FileLocation loc)
       return settings.value("lastProjDir", QDir::homePath()).toString();
   case RG_MAP_LOCATION:
       return settings.value("lastMapDir", QDir::homePath()).toString();
-  case RG_FILE_OPEN_LOCATION:
-      return settings.value("lastOpenDir", QDir::homePath()).toString();
+  case RG_IMAGE_LOCATION:
+      return settings.value("lastImageDir", QDir::homePath()).toString();
   default:
-      return settings.value("lastOpenDir", QDir::homePath()).toString();
+      return settings.value("lastImageDir", QDir::homePath()).toString();
   }
 }
 
@@ -284,11 +300,11 @@ void RGSettings::setLastOpenDir(const QString &fileName, FileLocation loc)
   case RG_MAP_LOCATION:
       settings.setValue("lastMapDir", fileName);
       break;
-  case RG_FILE_OPEN_LOCATION:
-      settings.setValue("lastOpenDir", fileName);
+  case RG_IMAGE_LOCATION:
+      settings.setValue("lastImageDir", fileName);
       break;
   default:
-      settings.setValue("lastOpenDir", fileName);
+      settings.setValue("lastImageDir", fileName);
   }
 }
 

@@ -19,6 +19,9 @@ public:
     QList<QPoint> mapRoutePoints(const QList<QGeoCoordinate> &geoCoordinates) const;
     QString fileName() const;
     bool isEmpty() const;
+    bool isDirty() const;
+    void resetDirty();
+    void clearMap();
 
     void read (const QJsonObject &json);
     void write (QJsonObject &json);
@@ -32,6 +35,7 @@ private:
     QRectF mGeoBounds;
     QPixmap mMap;
     QString mFileName;
+    bool mDirty;
 };
 
 #endif // RGMAP_H

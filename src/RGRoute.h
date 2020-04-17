@@ -51,6 +51,8 @@ public:
   QGeoPath getGeoPath() const;
   bool hasGeoBounds() const;
   bool isEmpty() const;
+  bool isDirty() const;
+  void resetDirty();
 
   virtual void undoredo(QVariant=0);
 
@@ -94,6 +96,7 @@ protected:
   bool mIconlessBeginEndFrames;
   bool mPlayback;
   bool mEditMode;
+  bool mDirty;
 };
 
 #endif // RGROUTE_H

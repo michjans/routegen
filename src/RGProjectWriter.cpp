@@ -21,7 +21,5 @@ bool RGProjectWriter::writeFile(const QString &fileName)
     m_route->write(rgProjObject);
 
     QJsonDocument saveDoc(rgProjObject);
-    saveFile.write(saveDoc.toJson());
-
-    return true;
+    return saveFile.write(saveDoc.toJson()) > -1;
 }

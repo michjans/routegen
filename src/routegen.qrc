@@ -4,7 +4,6 @@
         <file>icons/desktop-32.png</file>
         <file>icons/exit.png</file>
         <file>icons/fileopen.png</file>
-        <file>icons/filesave.png</file>
         <file>icons/generate.png</file>
         <file>icons/mapgen.png</file>
         <file>icons/player_play.png</file>
@@ -16,8 +15,11 @@
         <file>icons/settings.png</file>
         <file>icons/redo.png</file>
         <file>icons/gps.png</file>
-        <file>icons/save-project.png</file>
         <file>icons/checkmark_green.svg</file>
         <file>icons/globe.svg</file>
+        <file>icons/action_filenew.svg</file>
+        <file>icons/map_pencil.svg</file>
+        <file>icons/save-project.png</file>
+        <file>icons/media-floppy.svg</file>
     </qresource>
 </RCC>

@@ -4,7 +4,8 @@
 #include <QJsonObject>
 
 RGMap::RGMap(QObject *parent)
-    :QObject(parent)
+    :QObject(parent),
+     mDirty(false)
 {
 
 }
@@ -37,6 +38,9 @@ bool RGMap::loadMap(const QString &fileName, const QPixmap &map, const QRectF ma
 
         emit mapLoaded(mMap);
     }
+
+    mDirty = true;
+
     return success;
 }
 
@@ -71,6 +75,24 @@ QString RGMap::fileName() const
 bool RGMap::isEmpty() const
 {
     return mMap.isNull();
+}
+
+bool RGMap::isDirty() const
+{
+    return mDirty;
+}
+
+void RGMap::resetDirty()
+{
+    mDirty = false;
+}
+
+void RGMap::clearMap()
+{
+    mMap = QPixmap();
+    mGeoBounds = QRectF();
+    resetDirty();
+    emit mapLoaded(mMap);
 }
 
 void RGMap::read(const QJsonObject &json)

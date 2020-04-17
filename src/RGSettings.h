@@ -24,6 +24,7 @@
 #include <QString>
 #include <QPointF>
 #include <QRectF>
+#include <QRect>
 
 class RGSettings
 {
@@ -34,7 +35,7 @@ public:
         RG_GPX_LOCATION,
         RG_MOVIE_LOCATION,
         RG_PROJECT_LOCATION,
-        RG_FILE_OPEN_LOCATION
+        RG_IMAGE_LOCATION
     };
 
     /*
@@ -74,6 +75,8 @@ public:
     */
     static QRectF getMapGeoBounds(const QString &fileNme);
     static void setMapGeoBounds(const QString &fileNme, const QRectF &geoBounds);
+    static QRect getMainWindowGeometry();
+    static void setMainWindowGeometry(const QRect &geometry);
     static QColor getPenColor();
     static void setPenColor(const QColor &);
     static int getPenSize();

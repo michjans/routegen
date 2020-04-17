@@ -81,11 +81,13 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="actionNew_project"/>
+    <addaction name="actionOpen_project"/>
+    <addaction name="actionSave_project"/>
+    <addaction name="actionSave_image"/>
     <addaction name="actionOpen_image"/>
     <addaction name="actionImport_Google_Map"/>
     <addaction name="actionImport_GPX"/>
-    <addaction name="actionSave_image"/>
-    <addaction name="actionSave_project"/>
     <addaction name="separator"/>
     <addaction name="action_Quit"/>
    </widget>
@@ -108,11 +110,14 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionNew_project"/>
+   <addaction name="actionOpen_project"/>
+   <addaction name="actionSave_project"/>
+   <addaction name="actionSave_image"/>
+   <addaction name="separator"/>
    <addaction name="actionOpen_image"/>
    <addaction name="actionImport_Google_Map"/>
    <addaction name="actionImport_GPX"/>
-   <addaction name="actionSave_image"/>
-   <addaction name="actionSave_project"/>
    <addaction name="separator"/>
    <addaction name="actionDraw_mode"/>
    <addaction name="actionNew_route"/>
@@ -125,17 +130,18 @@
    <addaction name="actionGenerate_map"/>
    <addaction name="separator"/>
    <addaction name="action_Quit"/>
+   <addaction name="separator"/>
   </widget>
   <action name="actionOpen_image">
    <property name="icon">
     <iconset resource="routegen.qrc">
-     <normaloff>:/icons/icons/fileopen.png</normaloff>:/icons/icons/fileopen.png</iconset>
+     <normaloff>:/icons/icons/map_pencil.svg</normaloff>:/icons/icons/map_pencil.svg</iconset>
    </property>
    <property name="text">
-    <string>&amp;Open image or project</string>
+    <string>&amp;Open map image</string>
    </property>
    <property name="toolTip">
-    <string>Open project or background image with map</string>
+    <string>Open image with map (and route)</string>
    </property>
   </action>
   <action name="action_Quit">
@@ -153,19 +159,19 @@
   <action name="actionSave_image">
    <property name="icon">
     <iconset resource="routegen.qrc">
-     <normaloff>:/icons/icons/filesave.png</normaloff>:/icons/icons/filesave.png</iconset>
+     <normaloff>:/icons/icons/save-project.png</normaloff>:/icons/icons/save-project.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Save image</string>
+    <string>&amp;Save map image</string>
    </property>
    <property name="iconText">
     <string>Save map image</string>
    </property>
    <property name="toolTip">
-    <string>Save the currently displayed map (and route)</string>
+    <string>Save the currently displayed map with route as image</string>
    </property>
    <property name="statusTip">
-    <string>Save the currently displayed image (map and route), which can be used as start point for generating another route.</string>
+    <string>Save the currently displayed map and route as image, which can be used as start point for generating another route.</string>
    </property>
   </action>
   <action name="actionDraw_mode">
@@ -291,13 +297,37 @@
   <action name="actionSave_project">
    <property name="icon">
     <iconset resource="routegen.qrc">
-     <normaloff>:/icons/icons/save-project.png</normaloff>:/icons/icons/save-project.png</iconset>
+     <normaloff>:/icons/icons/media-floppy.svg</normaloff>:/icons/icons/media-floppy.svg</iconset>
    </property>
    <property name="text">
     <string>Save &amp;project</string>
    </property>
    <property name="toolTip">
     <string>Save project (map and route)</string>
+   </property>
+  </action>
+  <action name="actionNew_project">
+   <property name="icon">
+    <iconset resource="routegen.qrc">
+     <normaloff>:/icons/icons/action_filenew.svg</normaloff>:/icons/icons/action_filenew.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;New project</string>
+   </property>
+   <property name="toolTip">
+    <string>Start new project</string>
+   </property>
+  </action>
+  <action name="actionOpen_project">
+   <property name="icon">
+    <iconset resource="routegen.qrc">
+     <normaloff>:/icons/icons/fileopen.png</normaloff>:/icons/icons/fileopen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open p&amp;roject</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a route generator project</string>
    </property>
   </action>
  </widget>

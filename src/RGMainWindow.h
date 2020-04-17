@@ -47,7 +47,12 @@ class RGMainWindow : public QMainWindow
 public:
   RGMainWindow(QWidget *parent = 0);
 
+protected:
+  void closeEvent(QCloseEvent *event) override;
+
 private slots:
+  void on_actionNew_project_triggered(bool);
+  void on_actionOpen_project_triggered(bool );
   void on_actionOpen_image_triggered(bool );
   void on_actionSave_image_triggered(bool );
   void on_actionSave_project_triggered(bool );
@@ -71,6 +76,7 @@ private slots:
 private:
 	void initVideoEncoderFromSettings();
     void updateStatusMessage();
+    bool checkMapSaveOrCancel();
 
   RGViewWidget *mView;
   RGEncVideo *mVideoEncoder;

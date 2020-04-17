@@ -43,6 +43,17 @@
 //Defined in main.cpp
 extern const QString applicationName;
 
+namespace  {
+    void forceFileSuffix(QString &fileName, const QString &suffix)
+    {
+        if (QFileInfo (fileName).suffix().isEmpty())
+        {
+            fileName += "." + suffix;
+        }
+
+    }
+}
+
 RGMainWindow::RGMainWindow(QWidget *parent)
   :QMainWindow(parent),
      mVideoEncoder(nullptr)
@@ -170,49 +181,93 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   QObject::connect(action_Redo, SIGNAL(triggered()),
                    mUndoRedo, SLOT(redo()));
 
+  setGeometry(RGSettings::getMainWindowGeometry());
+}
+
+void RGMainWindow::closeEvent(QCloseEvent *event)
+{
+    RGSettings::setMainWindowGeometry(geometry());
+
+    if (checkMapSaveOrCancel())
+    {
+        event->accept();
+    }
+    else
+    {
+        event->ignore();
+    }
+
+}
+
+void RGMainWindow::on_actionNew_project_triggered(bool)
+{
+    if (checkMapSaveOrCancel())
+    {
+        mRoute->clearPath(true);
+        mMap->clearMap();
+    }
+}
+
+void RGMainWindow::on_actionOpen_project_triggered(bool)
+{
+    QString lastOpenDir = RGSettings::getLastOpenDir(RGSettings::RG_PROJECT_LOCATION);
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open RG project file"),
+                                                  lastOpenDir,
+                                                  tr("Project files (*.rgp)"));
+    if (!fileName.isNull())
+    {
+        RGProjectReader rgReader(mRoute, mMap);
+        if (!rgReader.readFile(fileName))
+        {
+            QMessageBox::warning (this, "Cannot read file", "Unable to open RG project file!");
+        }
+        else
+        {
+            RGSettings::setLastOpenDir(fileName, RGSettings::RG_PROJECT_LOCATION);
+            mMap->resetDirty();
+            mRoute->resetDirty();
+        }
+    }
 }
 
 void RGMainWindow::on_actionOpen_image_triggered(bool /*checked*/)
 {
-    QString lastOpenDir = RGSettings::getLastOpenDir(RGSettings::RG_FILE_OPEN_LOCATION);
+    QString lastOpenDir = RGSettings::getLastOpenDir(RGSettings::RG_IMAGE_LOCATION);
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                                                   lastOpenDir,
-                                                  tr("Project files (*.rgp);;Images (*.bmp *.jpg *.gif *.png *.tif)"));
+                                                  tr("Images (*.bmp *.jpg *.gif *.png *.tif)"));
     if (!fileName.isNull())
     {
-        RGSettings::setLastOpenDir(fileName, RGSettings::RG_FILE_OPEN_LOCATION);
-        if (fileName.endsWith(QStringLiteral("rgp"), Qt::CaseInsensitive))
+        QPixmap pm(fileName);
+        if (pm.isNull())
         {
-            RGProjectReader rgReader(mRoute, mMap);
-            if (!rgReader.readFile(fileName))
-            {
-                QMessageBox::warning (this, "Cannot read file", "Unable to openn RG project file!");
-            }
+            QMessageBox::critical (this, "Oops", "Could not load image");
         }
         else
         {
-            QPixmap pm(fileName);
-            if (pm.isNull()) QMessageBox::critical (this, "Oops", "Could not load image");
-            else{
-              mMap->loadMap(fileName, pm);
-            }
+            mMap->loadMap(fileName, pm);
         }
     }
 }
 
 void RGMainWindow::on_actionSave_image_triggered(bool)
 {
-  QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
+    QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
 
-  QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                   lastSaveDir,
-                                                  tr("Images (*.bmp *.jpg *.png *.tif *.gif)"));
+                                                  tr("Images (*.png *.jpg *.png *.tif *.gif)"));
 
-  if (!fileName.isNull())
-  {
-    mView->saveRenderedImage(fileName);
-    RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
-  }
+
+    if (!fileName.isNull())
+    {
+        if (QFileInfo (fileName).suffix().isEmpty())
+        {
+            fileName += ".png";
+        }
+        mView->saveRenderedImage(fileName);
+        RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
+    }
 }
 
 void RGMainWindow::on_actionSave_project_triggered(bool)
@@ -226,9 +281,18 @@ void RGMainWindow::on_actionSave_project_triggered(bool)
 
     if (!fileName.isNull())
     {
-      RGProjectWriter projWriteer(mRoute, mMap, this);
-      projWriteer.writeFile(fileName);
-      RGSettings::setLastOpenDir(fileName, RGSettings::RG_PROJECT_LOCATION);
+        forceFileSuffix(fileName, "rgp");
+        RGProjectWriter projWriteer(mRoute, mMap, this);
+        if (projWriteer.writeFile(fileName))
+        {
+            RGSettings::setLastOpenDir(fileName, RGSettings::RG_PROJECT_LOCATION);
+            mMap->resetDirty();
+            mRoute->resetDirty();
+        }
+        else
+        {
+            QMessageBox::critical(this, "Cannot write file", "Unable to write RG project file!");
+        }
     }
 }
 
@@ -272,6 +336,7 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
             return;
         }
 
+        forceFileSuffix(fileName, "png");
         map.save(fileName);
         qDebug() << "Retrieved map: " << fileName << map.width() << map.height() << gm.getMapBounds();
         mMap->loadMap(fileName, map, gm.getMapBounds());
@@ -458,8 +523,8 @@ void RGMainWindow::on_action_About_triggered(bool checked)
 
 void RGMainWindow::on_action_Quit_triggered(bool checked)
 {
-  Q_UNUSED(checked);
-    qApp->quit();
+    Q_UNUSED(checked);
+    close();
 }
 
 void RGMainWindow::handleMapLoaded(const QPixmap &map)
@@ -562,4 +627,28 @@ void RGMainWindow::updateStatusMessage()
     mMapGeoStatus->setEnabled(mMap->hasGeoBounds());
     mRouteLoadedStatus->setEnabled(!mRoute->isEmpty());
     mRouteGeoStatus->setEnabled(mRoute->hasGeoBounds());
+}
+
+bool RGMainWindow::checkMapSaveOrCancel()
+{
+    if (mMap->isDirty() || mRoute->isDirty())
+    {
+        QMessageBox::StandardButton answer = QMessageBox::question (this, tr("Project not saved"),
+                                 tr("Do you want to save the current map and route as a project?"),
+                                            QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes);
+        if (answer == QMessageBox::Cancel)
+        {
+            return false;
+        }
+        else
+        {
+            if (answer == QMessageBox::Yes)
+            {
+                on_actionSave_project_triggered(true);
+            }
+            return true;
+        }
+    }
+
+    return true;
 }

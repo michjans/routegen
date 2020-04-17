@@ -26,7 +26,8 @@ RGRoute::RGRoute(RGMap *map, QGraphicsItem *parent) :
   mMap(map),
   mIconlessBeginEndFrames(false),
   mPlayback(false),
-  mEditMode(false)
+  mEditMode(false),
+  mDirty(false)
 {
   mPath=new RGPath(this);
   mEditPath=new RGEditPath(this);
@@ -120,6 +121,8 @@ void RGRoute::changePath(const QList<QPoint> &pointlist,bool canUndo)
     QVariant data(vlist);
     emit newUndoable(this,data);
   }
+
+  mDirty = true;
 }
 
 void RGRoute::handleMapLoaded(const QPixmap &/*map*/)
@@ -156,6 +159,16 @@ bool RGRoute::hasGeoBounds() const
 bool RGRoute::isEmpty() const
 {
     return mEditPath->path().empty();
+}
+
+bool RGRoute::isDirty() const
+{
+    return mDirty;
+}
+
+void RGRoute::resetDirty()
+{
+    mDirty = false;
 }
 
 void RGRoute::undoredo(QVariant data)
@@ -251,6 +264,7 @@ void RGRoute::clearPath(bool clearGeoPath)
     }
     mEditPath->clear(!clearGeoPath);
     updateVehicle();
+    resetDirty();
 }
 
 int RGRoute::countFrames()
