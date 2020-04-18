@@ -26,7 +26,7 @@ RGEncFFmpeg::RGEncFFmpeg(QWidget *parent) :
   RGEncVideo(parent),
   mBitRate(100)
 {
-  mCompressDefault=QString("mpeg4");
+  mCompressDefault=QString("h264");
   updateFromSettings();
   qDebug()<<"FFMpeg encoder class";
 

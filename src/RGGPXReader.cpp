@@ -54,6 +54,20 @@ bool RGGPXReader::readFile(const QString &fileName)
         QMessageBox::warning (m_parentWidget, "No routes or tracks found", "No routes or tracks found in GPX file!");
         return false;
     }
+    else if (trackNames.empty() && routeNames.size() == 1)
+    {
+        //Only one route found, just pick it
+        routeTagName = rteTagName;
+        waypointTagName = rteptTagName;
+        selectedRouteItemIdx = 0;
+    }
+    else if (trackNames.size() == 1 && routeNames.empty())
+    {
+        //Only one track found, just pick it
+        routeTagName = trkTagName;
+        waypointTagName = trkptTagName;
+        selectedRouteItemIdx = 0;
+    }
     else
     {
         GPXSelectionDialog gpxSel(routeNames, trackNames);

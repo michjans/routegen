@@ -263,7 +263,7 @@ void RGMainWindow::on_actionSave_image_triggered(bool)
 
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                   lastSaveDir,
-                                                  tr("Images (*.png *.jpg *.png *.tif *.gif)"));
+                                                  tr("Images (*.bmp *.jpg *.png *.tif *.gif)"));
 
 
     if (!fileName.isNull())
