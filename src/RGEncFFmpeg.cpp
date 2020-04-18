@@ -98,7 +98,8 @@ QString RGEncFFmpeg::encoderExecBaseName()
 
 QString RGEncFFmpeg::frameFileType() const
 {
-    return QString("png");
+    //Saving a frame as bmp is much faster than png, so put it back to bmp again
+    return QString("bmp");
 }
 
 bool RGEncFFmpeg::initCodecs()

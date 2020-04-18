@@ -69,7 +69,10 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionOpen_image = ui.actionOpen_image;
   action_Quit = ui.action_Quit;
   actionSave_image = ui.actionSave_image;
+  actionNew_project = ui.actionNew_project;
   actionSave_project = ui.actionSave_project;
+  actionSave_project_as = ui.actionSave_project_as;
+  actionOpen_project = ui.actionOpen_project;
   actionImport_Google_Map = ui.actionImport_Google_Map;
   actionImport_GPX = ui.actionImport_GPX;
   actionDraw_mode = ui.actionDraw_mode;
@@ -88,6 +91,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   actionPlayback->setEnabled(false);
   actionSave_image->setEnabled(false);
   actionSave_project->setEnabled(false);
+  actionSave_project_as->setEnabled(false);
   actionDraw_mode->setEnabled(false);
   actionNew_route->setEnabled(false);
   action_Undo->setEnabled(false);
@@ -127,10 +131,10 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mMapGeoStatus->setEnabled(false);
   mRouteLoadedStatus->setEnabled(false);
   mRouteGeoStatus->setEnabled(false);
-  mMapLoadedStatus->setToolTip("Enabled if map loaded");
-  mMapGeoStatus->setToolTip("Enabled if map is loaded with geographic coordinates");
-  mRouteLoadedStatus->setToolTip("Enabled if a route loaded");
-  mRouteGeoStatus->setToolTip("Enabled if the route is generated from geographic coordinates");
+  mMapLoadedStatus->setToolTip("Enabled if a map is loaded");
+  mMapGeoStatus->setToolTip("If the globe is enabled, the map is imported from google maps and has geographic coordinates");
+  mRouteLoadedStatus->setToolTip("Enabled if a route is loaded");
+  mRouteGeoStatus->setToolTip("If the globe is enabled, the route is generated from (gpx) geographic coordinates");
 
   //Route :
   mRoute= new RGRoute(mMap);
@@ -199,27 +203,35 @@ void RGMainWindow::on_actionNew_project_triggered(bool)
     {
         mRoute->clearPath(true);
         mMap->clearMap();
+        mCurrentProjectFileName.clear();
     }
 }
 
 void RGMainWindow::on_actionOpen_project_triggered(bool)
 {
-    QString lastOpenDir = RGSettings::getLastOpenDir(RGSettings::RG_PROJECT_LOCATION);
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open RG project file"),
-                                                  lastOpenDir,
-                                                  tr("Project files (*.rgp)"));
-    if (!fileName.isNull())
+    if (checkMapSaveOrCancel())
     {
-        RGProjectReader rgReader(mRoute, mMap);
-        if (!rgReader.readFile(fileName))
+        QString lastOpenDir = RGSettings::getLastOpenDir(RGSettings::RG_PROJECT_LOCATION);
+        QString fileName = QFileDialog::getOpenFileName(this, tr("Open RG project file"),
+                                                      lastOpenDir,
+                                                      tr("Project files (*.rgp)"));
+        if (!fileName.isNull())
         {
-            QMessageBox::warning (this, "Cannot read file", "Unable to open RG project file!");
-        }
-        else
-        {
-            RGSettings::setLastOpenDir(fileName, RGSettings::RG_PROJECT_LOCATION);
-            mMap->resetDirty();
-            mRoute->resetDirty();
+            mRoute->clearPath(true);
+            mMap->clearMap();
+            mCurrentProjectFileName.clear();
+            RGProjectReader rgReader(mRoute, mMap);
+            if (!rgReader.readFile(fileName))
+            {
+                QMessageBox::warning (this, "Cannot read file", "Unable to open RG project file!");
+            }
+            else
+            {
+                RGSettings::setLastOpenDir(QFileInfo(fileName).absolutePath(), RGSettings::RG_PROJECT_LOCATION);
+                mMap->resetDirty();
+                mRoute->resetDirty();
+                mCurrentProjectFileName = fileName;
+            }
         }
     }
 }
@@ -267,6 +279,18 @@ void RGMainWindow::on_actionSave_image_triggered(bool)
 
 void RGMainWindow::on_actionSave_project_triggered(bool)
 {
+    if (mCurrentProjectFileName.isEmpty())
+    {
+        on_actionSave_project_as_triggered(true);
+    }
+    else
+    {
+        saveProjectFile(mCurrentProjectFileName);
+    }
+}
+
+void RGMainWindow::on_actionSave_project_as_triggered(bool)
+{
     QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_PROJECT_LOCATION);
 
     QString selectedFilter = "rgp";
@@ -277,17 +301,7 @@ void RGMainWindow::on_actionSave_project_triggered(bool)
     if (!fileName.isNull())
     {
         forceFileSuffix(fileName, "rgp");
-        RGProjectWriter projWriteer(mRoute, mMap, this);
-        if (projWriteer.writeFile(fileName))
-        {
-            RGSettings::setLastOpenDir(fileName, RGSettings::RG_PROJECT_LOCATION);
-            mMap->resetDirty();
-            mRoute->resetDirty();
-        }
-        else
-        {
-            QMessageBox::critical(this, "Cannot write file", "Unable to write RG project file!");
-        }
+        saveProjectFile(fileName);
     }
 }
 
@@ -502,7 +516,7 @@ void RGMainWindow::on_action_About_triggered(bool checked)
   QString txt = QString(
         "<html>"
         "<center>"
-        "<p><b>") + applicationName + QString(" Copyright (C) 2008-2019  Michiel Jansen </b></p>"
+        "<p><b>") + applicationName + QString(" Copyright (C) 2008-2020  Michiel Jansen </b></p>"
                                               "<p>This program comes with ABSOLUTELY NO WARRANTY</p>"
                                               "This is free software, and you are welcome to redistribute it "
                                               "under certain conditions; see LICENSE file for details.</p>"
@@ -533,6 +547,7 @@ void RGMainWindow::handleMapLoaded(const QPixmap &map)
 {
     actionSave_image->setEnabled(!map.isNull());
     actionSave_project->setEnabled(!map.isNull());
+    actionSave_project_as->setEnabled(!map.isNull());
     actionDraw_mode->setEnabled(!map.isNull());
     actionNew_route->setEnabled(!map.isNull());
     RGSettings::setLastOpenDir(mMap->fileName(), RGSettings::RG_MAP_LOCATION);
@@ -543,9 +558,12 @@ void RGMainWindow::handleMapLoaded(const QPixmap &map)
 void RGMainWindow::blockUserInteraction(bool busy)
 {
     actionOpen_image->setEnabled(!busy);
+    actionNew_project->setEnabled(!busy);
+    actionOpen_project->setEnabled(!busy);
     action_Quit->setEnabled(!busy);
     actionSave_image->setEnabled(!busy);
     actionSave_project->setEnabled(!busy);
+    actionSave_project_as->setEnabled(!busy);
     actionDraw_mode->setEnabled(!busy);
     actionNew_route->setEnabled(!busy);
     actionGenerate_map->setEnabled(!busy);
@@ -653,4 +671,21 @@ bool RGMainWindow::checkMapSaveOrCancel()
     }
 
     return true;
+}
+
+void RGMainWindow::saveProjectFile(const QString &projectFileName)
+{
+    RGProjectWriter projWriteer(mRoute, mMap, this);
+    if (projWriteer.writeFile(projectFileName))
+    {
+
+        RGSettings::setLastOpenDir(QFileInfo(projectFileName).absolutePath(), RGSettings::RG_PROJECT_LOCATION);
+        mMap->resetDirty();
+        mRoute->resetDirty();
+        mCurrentProjectFileName = projectFileName;
+    }
+    else
+    {
+        QMessageBox::critical(this, "Cannot write file", "Unable to write RG project file!");
+    }
 }

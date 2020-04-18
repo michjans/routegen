@@ -87,7 +87,8 @@ win32 {
 } 
 
 CONFIG(release, debug|release) {
-  message( "release" )
+    DEFINES += QT_NO_DEBUG_OUTPUT
+    message( "release" )
 }
 CONFIG(debug, debug|release) {
     CONFIG += debug
