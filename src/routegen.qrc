@@ -21,5 +21,6 @@
         <file>icons/map_pencil.svg</file>
         <file>icons/save-project.png</file>
         <file>icons/media-floppy.svg</file>
+        <file>icons/map_pencil_save.svg</file>
     </qresource>
 </RCC>

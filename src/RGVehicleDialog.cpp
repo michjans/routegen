@@ -81,7 +81,7 @@ void RGVehicleDialog::on_addVehiclePB_clicked(bool)
 {
   QString fileName = QFileDialog::getOpenFileName(this, tr("Select image/icon file to add as custom vehicle"),
                                                   QStandardPaths::writableLocation(QStandardPaths::PicturesLocation),
-                                                  tr("Images (*.jpg *.gif *.png)"));
+                                                  tr("Images (*.jpg *.gif *.png *.svg)"));
   if (!fileName.isNull()){
     QString errStr;
     RGVehicle *vehicle = mVehicleList->addCustomVehicle(fileName, errStr);

@@ -159,7 +159,7 @@
   <action name="actionSave_image">
    <property name="icon">
     <iconset resource="routegen.qrc">
-     <normaloff>:/icons/icons/save-project.png</normaloff>:/icons/icons/save-project.png</iconset>
+     <normaloff>:/icons/icons/map_pencil_save.svg</normaloff>:/icons/icons/map_pencil_save.svg</iconset>
    </property>
    <property name="text">
     <string>&amp;Save map image</string>

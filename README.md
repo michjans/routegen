@@ -81,7 +81,7 @@ After your Qt build environment is setup correctly, all you need to do is:
 - 1.8.1 -Pixel format always yuv420p (when supported by selected codec)	   -
 - 1.9 release
   - GPX Import (both routes and tracks)
-  - Loading / saving projects
+  - Map and route can now be saved and loaded from project files
   - Storing Geo coordinates with map and route
   - Manually enter FFMpeg commandline options
   - Maximize button of google maps
@@ -90,7 +90,7 @@ After your Qt build environment is setup correctly, all you need to do is:
   - Default output container for movies now mp4 (in case of ffmpeg generator)
   - Default output frame images now png instead of bmp (in case of ffmpeg generator)
   - Added map and route status indicators (icons) in status bar
-
+  - SVG format support for custom vehicles
  
 ## Technical details
 

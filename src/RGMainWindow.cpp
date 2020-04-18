@@ -60,12 +60,6 @@ RGMainWindow::RGMainWindow(QWidget *parent)
 {
   //Set currentPath
   QDir::setCurrent(QCoreApplication::applicationDirPath());
-#ifdef Q_WS_X11
-  QDir vehicleDir = QDir::currentPath() + "/vehicles";
-  if(!vehicleDir.exists()){
-    QDir::setCurrent(QDir::cleanPath(QCoreApplication::applicationDirPath()+"/../share/routegen"));
-  }
-#endif
 
   setWindowIcon (QIcon(":/icons/icons/mapgen.png"));
   Ui::MainWindow ui;
@@ -232,7 +226,7 @@ void RGMainWindow::on_actionOpen_project_triggered(bool)
 
 void RGMainWindow::on_actionOpen_image_triggered(bool /*checked*/)
 {
-    QString lastOpenDir = RGSettings::getLastOpenDir(RGSettings::RG_IMAGE_LOCATION);
+    QString lastOpenDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                                                   lastOpenDir,
                                                   tr("Images (*.bmp *.jpg *.gif *.png *.tif)"));
@@ -245,6 +239,7 @@ void RGMainWindow::on_actionOpen_image_triggered(bool /*checked*/)
         }
         else
         {
+            RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
             mMap->loadMap(fileName, pm);
         }
     }
@@ -337,9 +332,16 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
         }
 
         forceFileSuffix(fileName, "png");
-        map.save(fileName);
-        qDebug() << "Retrieved map: " << fileName << map.width() << map.height() << gm.getMapBounds();
-        mMap->loadMap(fileName, map, gm.getMapBounds());
+        if (map.save(fileName))
+        {
+            RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
+            qDebug() << "Retrieved map: " << fileName << map.width() << map.height() << gm.getMapBounds();
+            mMap->loadMap(fileName, map, gm.getMapBounds());
+        }
+        else
+        {
+            QMessageBox::critical(this, "Cannot write file", "Unable to save map file!");
+        }
     }
 }
 

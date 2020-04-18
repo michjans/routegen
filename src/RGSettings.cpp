@@ -276,10 +276,8 @@ QString RGSettings::getLastOpenDir(FileLocation loc)
       return settings.value("lastProjDir", QDir::homePath()).toString();
   case RG_MAP_LOCATION:
       return settings.value("lastMapDir", QDir::homePath()).toString();
-  case RG_IMAGE_LOCATION:
-      return settings.value("lastImageDir", QDir::homePath()).toString();
   default:
-      return settings.value("lastImageDir", QDir::homePath()).toString();
+      return settings.value("lastMapDir", QDir::homePath()).toString();
   }
 }
 
@@ -300,11 +298,8 @@ void RGSettings::setLastOpenDir(const QString &fileName, FileLocation loc)
   case RG_MAP_LOCATION:
       settings.setValue("lastMapDir", fileName);
       break;
-  case RG_IMAGE_LOCATION:
-      settings.setValue("lastImageDir", fileName);
-      break;
   default:
-      settings.setValue("lastImageDir", fileName);
+      settings.setValue("lastMapDir", fileName);
   }
 }
 
