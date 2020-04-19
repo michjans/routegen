@@ -32,8 +32,9 @@ RGEncBmp2avi::RGEncBmp2avi(QWidget *parent) :
 void RGEncBmp2avi::updateFromSettings()
 {
   RGEncVideo::updateFromSettings();
-  //For bmp2avi we don't support the custom commandline
+  //For bmp2avi we don't support the custom commandline and output file selection
   mUi.mCommandLineCB->setEnabled(false);
+  mUi.outputFileCB->setEnabled(false);
 }
 
 void RGEncBmp2avi::saveInSettings()
@@ -67,6 +68,11 @@ QString RGEncBmp2avi::encoderExecBaseName()
 QString RGEncBmp2avi::frameFileType() const
 {
     return QString("bmp");
+}
+
+QString RGEncBmp2avi::outputFileType() const
+{
+    return QString("avi");
 }
 
 bool RGEncBmp2avi::initCodecs()

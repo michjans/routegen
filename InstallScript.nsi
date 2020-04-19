@@ -174,7 +174,7 @@ Section "Route Generator" MainInstall
   File "redist\vehicles\bicycle.png"
   File "redist\vehicles\bike.gif"
   File "redist\vehicles\boat.png"
-  File "redist\vehicles\car.png"
+  File "redist\vehicles\car.svg"
   File "redist\vehicles\train.png"
 SectionEnd
 
@@ -224,7 +224,7 @@ Section Uninstall
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\uninst.exe"
   Delete "$INSTDIR\vehicles\train.png"
-  Delete "$INSTDIR\vehicles\car.png"
+  Delete "$INSTDIR\vehicles\car.svg"
   Delete "$INSTDIR\vehicles\boat.png"
   Delete "$INSTDIR\vehicles\bike.gif"
   Delete "$INSTDIR\vehicles\bicycle.png"

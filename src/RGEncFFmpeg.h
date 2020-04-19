@@ -35,6 +35,8 @@ public:
   QString encoderName() override;
   QString encoderExecBaseName() override;
   QString frameFileType() const override;
+  QString outputFileType() const override;
+
 
 protected:
 	virtual bool initCodecs();

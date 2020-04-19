@@ -26,13 +26,18 @@ RGEncFFmpeg::RGEncFFmpeg(QWidget *parent) :
   RGEncVideo(parent),
   mBitRate(100)
 {
-  mCompressDefault=QString("h264");
+  mCompressDefault=QString("mpeg4");
   updateFromSettings();
   qDebug()<<"FFMpeg encoder class";
 
   mUi.bitRateLabel->setVisible(true);
   mUi.bitRateLabel2->setVisible(true);
   mUi.bitRateSB->setVisible(true);
+
+  mUi.outputFileCB->addItem(QString("avi"));
+  mUi.outputFileCB->addItem(QString("mp4"));
+  mUi.outputFileCB->addItem(QString("mpg"));
+  mUi.outputFileCB->addItem(QString("mkv"));
 
   QObject::connect(mUi.mCommandLineCB, &QAbstractButton::toggled,
                    this, &RGEncFFmpeg::handleManualCommandLineChecked);
@@ -45,6 +50,14 @@ void RGEncFFmpeg::updateFromSettings()
   mBitRate = RGSettings::getBitRate();
   mUi.bitRateSB->setValue(mBitRate);
   mUi.mCommandLineCB->setChecked(RGSettings::getManualCommandLineChecked());
+
+  QString outputFileType = RGSettings::getFFMpegOutputFileType();
+  if (outputFileType.isEmpty())
+  {
+      outputFileType = "avi";
+  }
+  mUi.outputFileCB->setCurrentText(outputFileType);
+
   if (RGSettings::getManualCommandLineChecked())
   {
     mUi.mCommandLineLE->setText(RGSettings::getFFMpegCommandlineArgs());
@@ -61,6 +74,8 @@ void RGEncFFmpeg::saveInSettings()
   {
       RGSettings::setFFMpegCommandlineArgs(mUi.mCommandLineLE->text());
   }
+
+  RGSettings::setFFMpegOutputFileType(mUi.outputFileCB->currentText());
 }
 
 void RGEncFFmpeg::generateMovie(const QString &dirName)
@@ -74,9 +89,9 @@ void RGEncFFmpeg::generateMovie(const QString &dirName)
     }
     else
     {
-        arguments << "-report" << "-y" << "-i" << QString("map").append("\%05d.").append(frameFileType()) << "-g" << QString("%1").arg(mKeyFrameRate) <<
+        arguments << "-report" << "-y" << "-i" << QString("map").append("%05d.").append(frameFileType()) << "-g" << QString("%1").arg(mKeyFrameRate) <<
                      "-r" << QString("%1").arg(mFps)<< "-b" <<QString("%1k").arg(mBitRate) <<"-vcodec"<< mCompress <<
-                     QString("-pix_fmt") <<  QString("yuv420p") << QString(mOutName).append(".mp4");
+                     QString("-pix_fmt") <<  QString("yuv420p") << QString(mOutName).append(".").append(outputFileType());
     }
 
     this->createEncodingProcess(dirName,mExecName,arguments);
@@ -100,6 +115,11 @@ QString RGEncFFmpeg::frameFileType() const
 {
     //Saving a frame as bmp is much faster than png, so put it back to bmp again
     return QString("bmp");
+}
+
+QString RGEncFFmpeg::outputFileType() const
+{
+    return RGSettings::getFFMpegOutputFileType();
 }
 
 bool RGEncFFmpeg::initCodecs()
@@ -178,8 +198,8 @@ void RGEncFFmpeg::handleManualCommandLineChecked(bool checked)
         QString outName=mUi.nameOutputLE->text();
 
         QString arguments = "-report -y -i ";
-        arguments += QString("map").append("\%05d.").append(frameFileType()) + " -g" + QString(" %1").arg(keyFrameRate) + " -r" + QString(" %1").arg(fps)
-                  + " -b" + QString(" %1k").arg(bitRate) + " -vcodec " + compress + " -pix_fmt yuv420p " + QString(outName).append(".mp4");
+        arguments += QString("map").append("%05d.").append(frameFileType()) + " -g" + QString(" %1").arg(keyFrameRate) + " -r" + QString(" %1").arg(fps)
+                  + " -b" + QString(" %1k").arg(bitRate) + " -vcodec " + compress + " -pix_fmt yuv420p " + QString(outName).append(".").append(outputFileType());
         mUi.mCommandLineLE->setText(arguments);
     }
     else

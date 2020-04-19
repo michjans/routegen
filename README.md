@@ -86,9 +86,7 @@ After your Qt build environment is setup correctly, all you need to do is:
   - Manually enter FFMpeg commandline options
   - Maximize button of google maps
   - Increased maximum resolution of google map to 8K
-  - Default output format of video files now mp4 encoded with h.264 (instead of avi with mpeg-4)
-  - Tried to set default output frame images to png (in case of ffmpeg generator), but found out that
-    saving/loading an image in bmp is much faster (due to uncompressed format), so left it at bmp.
+  - Default output format of video files now configurable for ffmpeg (default still avi)
   - Added map and route status indicators (icons) in status bar
   - SVG format support for custom vehicles
  

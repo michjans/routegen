@@ -40,6 +40,7 @@ public:
   virtual QString encoderName()=0;
   virtual QString encoderExecBaseName()=0;
   virtual QString frameFileType() const = 0;
+  virtual QString outputFileType() const = 0;
 
 
 signals:

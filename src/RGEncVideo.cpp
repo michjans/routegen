@@ -195,11 +195,10 @@ void RGEncVideo::encodingProcessFinished(int exitCode, QProcess::ExitStatus exit
           "<p>"
           "Your route has been generated in the selected directory. "
           "Each frame is generated as a *.%1 file in that directory. "
-          "The name of the generated movie is <b>").arg(frameFileType()) + mOutName + QString(".mp4</b>."
-                                                                         "</p>"
-                                                                         "</center>"
-                                                                         "</html>"
-                                                                         );
+          "The name of the generated movie is <b>%2.%3</b>."
+          "</p>"
+          "</center>"
+          "</html>").arg(frameFileType()).arg(mOutName).arg(outputFileType());
     QMessageBox::information (nullptr, "Map Generation Finished", txt );
 
   } else {

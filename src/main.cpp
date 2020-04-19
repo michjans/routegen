@@ -78,7 +78,7 @@
  *          Manually enter FFMpeg commandline options
  *          Maximize button of google maps
  *          Increased maximum resolution of google map to 8K
- *          Default output container for movies now mp4 (in case of ffmpeg generator)
+ *          Default output container for movies now configurable (in case of ffmpeg generator)
  *          Tried to set default output frame images to png (in case of ffmpeg generator), but found out that
  *          saving/loading an image in bmp is much faster (due to uncompressed format), so left it at bmp.
  *          Added map and route status indicators (icons) in status bar

@@ -110,6 +110,18 @@ void RGSettings::setAviCompression(const QString &comp)
   settings.setValue("videoArgCompression", comp);
 }
 
+QString RGSettings::getFFMpegOutputFileType()
+{
+    QSettings settings;
+    return settings.value("ffmpegOutputFileType",QString("avi")).toString();
+}
+
+void RGSettings::setFFMpegOutputFileType(const QString &fileType)
+{
+    QSettings settings;
+    settings.setValue("ffmpegOutputFileType", fileType);
+}
+
 bool RGSettings::getManualCommandLineChecked()
 {
     QSettings settings;
