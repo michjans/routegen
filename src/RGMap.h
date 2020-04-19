@@ -16,6 +16,7 @@ public:
 
     bool loadMap(const QString &fileName, const QPixmap &map = QPixmap(), const QRectF mapBounds = QRectF());
     bool hasGeoBounds() const;
+    QRectF geoBounds() const;
     QList<QPoint> mapRoutePoints(const QList<QGeoCoordinate> &geoCoordinates) const;
     QString fileName() const;
     bool isEmpty() const;

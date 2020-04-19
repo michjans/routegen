@@ -241,7 +241,7 @@ void RGMainWindow::on_actionOpen_image_triggered(bool /*checked*/)
     QString lastOpenDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                                                   lastOpenDir,
-                                                  tr("Images (*.bmp *.jpg *.gif *.png *.tif)"));
+                                                  tr("Images (*.png *.bmp *.jpg *.tif *.gif)"));
     if (!fileName.isNull())
     {
         QPixmap pm(fileName);
@@ -263,7 +263,7 @@ void RGMainWindow::on_actionSave_image_triggered(bool)
 
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                   lastSaveDir,
-                                                  tr("Images (*.bmp *.jpg *.png *.tif *.gif)"));
+                                                  tr("Images (*.png *.bmp *.jpg *.tif *.gif)"));
 
 
     if (!fileName.isNull())
@@ -273,6 +273,12 @@ void RGMainWindow::on_actionSave_image_triggered(bool)
             fileName += ".png";
         }
         mView->saveRenderedImage(fileName);
+        if (mMap->hasGeoBounds())
+        {
+            //If current map has geo bounds, also store geo bounds along with the saved map image
+            RGSettings::setMapGeoBounds(fileName, mMap->geoBounds());
+        }
+
         RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
     }
 }
@@ -293,10 +299,9 @@ void RGMainWindow::on_actionSave_project_as_triggered(bool)
 {
     QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_PROJECT_LOCATION);
 
-    QString selectedFilter = "rgp";
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                     lastSaveDir,
-                                                    tr("Projects (*.rgp)"), &selectedFilter);
+                                                    tr("Projects (*.rgp)"));
 
     if (!fileName.isNull())
     {
@@ -339,7 +344,7 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
         QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
         QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                         lastSaveDir,
-                                                        tr("Images (*.bmp *.gif *.jpg *.tif *.png)"));
+                                                        tr("Images (*.png *.bmp *.jpg *.tif *.gif)"));
         if (fileName.isEmpty())
         {
             return;

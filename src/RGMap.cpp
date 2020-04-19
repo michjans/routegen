@@ -49,6 +49,11 @@ bool RGMap::hasGeoBounds() const
     return mGeoBounds.isValid();
 }
 
+QRectF RGMap::geoBounds() const
+{
+    return mGeoBounds;
+}
+
 QList<QPoint> RGMap::mapRoutePoints(const QList<QGeoCoordinate> &geoCoordinates) const
 {
     QList<QPoint> pointlist;
