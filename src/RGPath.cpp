@@ -151,9 +151,18 @@ float RGPath::getAngle()
     int step=mCurrentFrame;
     //for the first frame :
     if(step==0)
-      angle=QLineF(mPath.elementAt(0).x,mPath.elementAt(0).y,mPath.elementAt(1).x,mPath.elementAt(1).y).angle();
+    {
+        angle=QLineF(mPath.elementAt(0).x,mPath.elementAt(0).y,mPath.elementAt(1).x,mPath.elementAt(1).y).angle();
+    }
+    else if (step > mDSmooth)
+    {
+        //Smooth movement of vehicle rotation
+        angle=QLineF(mPath.elementAt(step-mDSmooth).x,mPath.elementAt(step-mDSmooth).y,mPath.elementAt(step).x,mPath.elementAt(step).y).angle();
+    }
     else
-      angle=QLineF(mPath.elementAt(step-1).x,mPath.elementAt(step-1).y,mPath.elementAt(step).x,mPath.elementAt(step).y).angle();
+    {
+        angle=QLineF(mPath.elementAt(step-1).x,mPath.elementAt(step-1).y,mPath.elementAt(step).x,mPath.elementAt(step).y).angle();
+    }
   }
   if (mPlayMode==1){
     qreal percent = (double) (mCurrentFrame*(1.0 / (double) mFPS)) / ((double) mTotalTime);//mTotalTime should never be null;

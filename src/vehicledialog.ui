@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>496</width>
+    <width>498</width>
     <height>374</height>
    </rect>
   </property>
@@ -117,7 +117,7 @@
             <number>1</number>
            </property>
            <property name="maximum">
-            <number>200</number>
+            <number>400</number>
            </property>
            <property name="singleStep">
             <number>10</number>

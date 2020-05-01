@@ -48,12 +48,12 @@ RGVehicleDialog::RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList,cons
 
   ui.vehiclePreview->setRenderHint(QPainter::Antialiasing);
   ui.vehiclePreview->setRenderHint(QPainter::SmoothPixmapTransform);
-  ui.vehiclePreview->setMinimumHeight(200+2*ui.vehiclePreview->frameWidth());
-  ui.vehiclePreview->setMinimumWidth(200+2*ui.vehiclePreview->frameWidth());
-  mScene = new QGraphicsScene(0,0,200,200);
+  ui.vehiclePreview->setMinimumHeight(400+2*ui.vehiclePreview->frameWidth());
+  ui.vehiclePreview->setMinimumWidth(400+2*ui.vehiclePreview->frameWidth());
+  mScene = new QGraphicsScene(0,0,400,400);
   ui.vehiclePreview->setScene(mScene);
 
-  mScene->addLine(100,100,0,100,pen); //QGraphicsLineItem *line=
+  mScene->addLine(200,200,0,200,pen); //QGraphicsLineItem *line=
 
   ui.vehicleListWidget->setCurrentRow(mVehicleList->getCurrentVehicleId());
 }
@@ -139,7 +139,7 @@ void RGVehicleDialog::on_vehicleListWidget_currentRowChanged(int currentRow)
 
   //center vehicle
   vehicle->setRotation(0);
-  vehicle->setPos(100,100);
+  vehicle->setPos(200,200);
   vehicle->setVisible(true);
 
   ui.removeVehiclePB->setEnabled(vehicle->isCustom());
