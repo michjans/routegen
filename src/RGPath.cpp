@@ -21,7 +21,10 @@
 #include "RGPath.h"
 #include <math.h>
 
-const float Pi = 3.14159265f;
+namespace
+{
+    const int gVehicleLookBack=1;
+}
 
 RGPath::RGPath(QGraphicsItem *parent) :
   QGraphicsObject(parent),
@@ -146,6 +149,7 @@ float RGPath::getAngle()
 {
   qreal angle=0;
   if (mPlayMode==0){
+    //NOTE: Non-interpolation mode! (rarely used)
     if(mPath.elementCount()<=1)
       return 0;
     int step=mCurrentFrame;
@@ -154,17 +158,18 @@ float RGPath::getAngle()
     {
         angle=QLineF(mPath.elementAt(0).x,mPath.elementAt(0).y,mPath.elementAt(1).x,mPath.elementAt(1).y).angle();
     }
-    else if (step > mDSmooth)
+    else if (step > gVehicleLookBack)
     {
         //Smooth movement of vehicle rotation
-        angle=QLineF(mPath.elementAt(step-mDSmooth).x,mPath.elementAt(step-mDSmooth).y,mPath.elementAt(step).x,mPath.elementAt(step).y).angle();
+        angle=QLineF(mPath.elementAt(step-gVehicleLookBack).x,mPath.elementAt(step-gVehicleLookBack).y,mPath.elementAt(step).x,mPath.elementAt(step).y).angle();
     }
     else
     {
-        angle=QLineF(mPath.elementAt(step-1).x,mPath.elementAt(step-1).y,mPath.elementAt(step).x,mPath.elementAt(step).y).angle();
+        angle=QLineF(mPath.elementAt(0).x,mPath.elementAt(0).y,mPath.elementAt(step).x,mPath.elementAt(step).y).angle();
     }
   }
   if (mPlayMode==1){
+    //NOTE: Interpolation mode! (most commonly used)
     qreal percent = (double) (mCurrentFrame*(1.0 / (double) mFPS)) / ((double) mTotalTime);//mTotalTime should never be null;
     if(percent>1)
       percent=1;
