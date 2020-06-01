@@ -64,6 +64,12 @@ QList<QPoint> RGMap::mapRoutePoints(const QList<QGeoCoordinate> &geoCoordinates)
 
         for (const QGeoCoordinate &coord: geoCoordinates)
         {
+            //Make the long range from -180.0/180.0 to 0.0/360.0 to scale it on the map
+            double longitude = coord.longitude();
+            if (longitude < 0.0)
+            {
+                longitude = 180.0 + (180.0 + longitude);
+            }
             QPoint point((coord.longitude() - mGeoBounds.x()) * xScale,
                          (mGeoBounds.y() - coord.latitude()) * yScale);
             pointlist.append(point);

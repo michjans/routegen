@@ -89,6 +89,9 @@ After your Qt build environment is setup correctly, all you need to do is:
   - Default output format of video files now configurable for ffmpeg (default still avi)
   - Added map and route status indicators (icons) in status bar
   - SVG format support for custom vehicles
+- 1.9.1 release
+  - Vehicle movement less jerky when route moves around direct north or south
+  - Fix when map boundaries cross the 180 degrees longitude boundary
  
 ## Technical details
 

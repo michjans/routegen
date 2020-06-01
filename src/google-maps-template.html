@@ -37,11 +37,24 @@
         mapBounds = map.getBounds();
         ne = mapBounds.getNorthEast();
         sw = mapBounds.getSouthWest();
+
+        /*Prevent going through -180/180 long boundary*/
+        var neLng = ne.lng();
+        if (neLng < 0.0)
+        {
+            neLng = 180.0 + (180.0 + neLng);
+        }
+        var swLng = sw.lng();
+        if (swLng < 0.0)
+        {
+            swLng = 180.0 + (180.0 + swLng);
+        }
+
         
         return {
-            xTop : sw.lng(),
+            xTop : swLng,
             yTop : ne.lat(),
-            width : ne.lng() - sw.lng(),
+            width : neLng - swLng,
             height: ne.lat() - sw.lat()
         }
       }
