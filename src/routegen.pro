@@ -56,6 +56,7 @@ RESOURCES += routegen.qrc
 HEADERS += RGMainWindow.h RGVehicleDialog.h RGSettings.h RGSettingsDialog.h RGGoogleMap.h \
     GPXSelectionDialog.h \
     RGGPXReader.h \
+    RGMapBounds.h \
     RGReader.h \
     RGVehicle.h \
     RGVehicleList.h \

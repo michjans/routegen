@@ -2,6 +2,14 @@
 #include "RGSettings.h"
 
 #include <QJsonObject>
+#include <QtMath>
+
+#include <algorithm>
+
+namespace
+{
+    int TILE_SIZE = 256;
+}
 
 RGMap::RGMap(QObject *parent)
     :QObject(parent),
@@ -10,7 +18,7 @@ RGMap::RGMap(QObject *parent)
 
 }
 
-bool RGMap::loadMap(const QString &fileName, const QPixmap &map, const QRectF mapBounds)
+bool RGMap::loadMap(const QString &fileName, const QPixmap &map, const RGMapBounds &mapBounds)
 {
     bool success = !map.isNull();
     mFileName = fileName;
@@ -28,13 +36,17 @@ bool RGMap::loadMap(const QString &fileName, const QPixmap &map, const QRectF ma
         //Store or retrieve map's geo boundaries
         if (mapBounds.isValid())
         {
-            mGeoBounds = mapBounds;
-            RGSettings::setMapGeoBounds(fileName, mapBounds);
+            m_bounds = mapBounds;
+            //TODO:RGSettings::setMapGeoBounds(fileName, mapBounds);
         }
         else
         {
-            mGeoBounds = RGSettings::getMapGeoBounds(fileName);
+            //TODO:mGeoBounds = RGSettings::getMapGeoBounds(fileName);
         }
+
+        //Calculate topleft/bottomright of the current map in pixel coordinates
+        mTopLeft = worldToPixel(project(QGeoCoordinate(m_bounds.getNE().latitude(), m_bounds.getSW().longitude())));
+        mBottomRight = worldToPixel(project(QGeoCoordinate(m_bounds.getSW().latitude(), m_bounds.getNE().longitude())));
 
         emit mapLoaded(mMap);
     }
@@ -46,33 +58,27 @@ bool RGMap::loadMap(const QString &fileName, const QPixmap &map, const QRectF ma
 
 bool RGMap::hasGeoBounds() const
 {
-    return mGeoBounds.isValid();
+    return m_bounds.isValid();
 }
 
-QRectF RGMap::geoBounds() const
+RGMapBounds RGMap::geoBounds() const
 {
-    return mGeoBounds;
+    return m_bounds;
 }
 
 QList<QPoint> RGMap::mapRoutePoints(const QList<QGeoCoordinate> &geoCoordinates) const
 {
     QList<QPoint> pointlist;
-    if (mGeoBounds.isValid())
+    if (m_bounds.isValid())
     {
-        double xScale = mMap.width() / mGeoBounds.width();
-        double yScale = mMap.height() / mGeoBounds.height();
-
         for (const QGeoCoordinate &coord: geoCoordinates)
         {
-            //Make the long range from -180.0/180.0 to 0.0/360.0 to scale it on the map
-            double longitude = coord.longitude();
-            if (longitude < 0.0)
-            {
-                longitude = 180.0 + (180.0 + longitude);
-            }
+            //TODO: convert to google projection algorithm
+            /*
             QPoint point((coord.longitude() - mGeoBounds.x()) * xScale,
                          (mGeoBounds.y() - coord.latitude()) * yScale);
             pointlist.append(point);
+            */
         }
     }
     return pointlist;
@@ -101,7 +107,7 @@ void RGMap::resetDirty()
 void RGMap::clearMap()
 {
     mMap = QPixmap();
-    mGeoBounds = QRectF();
+    m_bounds = RGMapBounds();
     resetDirty();
     emit mapLoaded(mMap);
 }
@@ -128,4 +134,26 @@ void RGMap::write(QJsonObject &json)
     //The geobounds are stored along with the map in the settings, so no meed to store them in the project
 
     json.insert(QStringLiteral("map"), mapObject);
+}
+
+QPointF RGMap::project(const QGeoCoordinate &geoPoint)
+{
+    qreal siny = qSin(geoPoint.latitude() * M_PI / 180);
+
+    // Algorithm copied from Google maps API
+    // Truncating to 0.9999 effectively limits latitude to 89.189. This is
+    // about a third of a tile past the edge of the world tile.
+    siny = std::min(std::max(siny, -0.9999), 0.9999);
+
+    return QPointF(
+        TILE_SIZE * (0.5 + geoPoint.longitude() / 360),
+        TILE_SIZE * (0.5 - std::log((1 + siny) / (1 - siny)) / (4 * M_PI)));
+}
+
+QPoint RGMap::worldToPixel(const QPointF &worldPoint)
+{
+    int scale = 1 << m_bounds.getZoom();
+    return QPoint(
+         qFloor(worldPoint.x() * scale),
+         qFloor(worldPoint.y() * scale));
 }

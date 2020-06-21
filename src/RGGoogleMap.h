@@ -18,6 +18,7 @@
 */
 
 #include "ui_googlemap.h"
+#include "RGMapBounds.h"
 
 #include <QString>
 #include <QPixmap>
@@ -31,7 +32,7 @@ public:
     RGGoogleMap(QWidget *parent, const QGeoPath &geoPath = QGeoPath());
 
 	QPixmap getMap() const {return m_map;}
-    QRectF getMapBounds() const {return m_mapBounds;}
+    const RGMapBounds& getMapBounds() const {return m_mapBounds;}
 
 public slots:
 	void accept();
@@ -53,6 +54,6 @@ private:
 	Ui_googleMap ui;
     QString m_html_template;
     QPixmap m_map;
-    QRectF m_mapBounds;
     QGeoPath m_geoPath;
+    RGMapBounds m_mapBounds;
 };

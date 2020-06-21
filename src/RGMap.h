@@ -1,11 +1,14 @@
 #ifndef RGMAP_H
 #define RGMAP_H
 
+#include "RGMapBounds.h"
+
 #include <QObject>
 #include <QPixmap>
 #include <QRectF>
 #include <QList>
 #include <QPoint>
+#include <QPointF>
 #include <QGeoCoordinate>
 
 class RGMap : public QObject
@@ -14,9 +17,10 @@ class RGMap : public QObject
 public:
     explicit RGMap(QObject *parent = 0);
 
-    bool loadMap(const QString &fileName, const QPixmap &map = QPixmap(), const QRectF mapBounds = QRectF());
+    bool loadMap(const QString &fileName, const QPixmap &map = QPixmap(),
+                 const RGMapBounds &bounds=RGMapBounds());
     bool hasGeoBounds() const;
-    QRectF geoBounds() const;
+    RGMapBounds geoBounds() const;
     QList<QPoint> mapRoutePoints(const QList<QGeoCoordinate> &geoCoordinates) const;
     QString fileName() const;
     bool isEmpty() const;
@@ -33,10 +37,20 @@ signals:
 public slots:
 
 private:
-    QRectF mGeoBounds;
+    //Coordinate to world coordinates
+    QPointF project(const QGeoCoordinate& geoPoint);
+
+    //World to pixels
+    QPoint worldToPixel(const QPointF &worldPoint);
+
+
     QPixmap mMap;
     QString mFileName;
     bool mDirty;
+    RGMapBounds m_bounds;
+
+    QPoint mTopLeft;
+    QPoint mBottomRight;
 };
 
 #endif // RGMAP_H

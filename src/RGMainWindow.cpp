@@ -276,7 +276,7 @@ void RGMainWindow::on_actionSave_image_triggered(bool)
         if (mMap->hasGeoBounds())
         {
             //If current map has geo bounds, also store geo bounds along with the saved map image
-            RGSettings::setMapGeoBounds(fileName, mMap->geoBounds());
+            //TODO:RGSettings::setMapGeoBounds(fileName, mMap->geoBounds());
         }
 
         RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
@@ -354,7 +354,6 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
         if (map.save(fileName))
         {
             RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
-            qDebug() << "Retrieved map: " << fileName << map.width() << map.height() << gm.getMapBounds();
             mMap->loadMap(fileName, map, gm.getMapBounds());
         }
         else

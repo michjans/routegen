@@ -149,16 +149,13 @@ void RGGoogleMap::continue_Accept()
         if (v.type() == QMetaType::QVariantMap)
         {
             QMap<QString, QVariant> bounds = v.toMap();
-            m_mapBounds.setRect(
-                    bounds[QStringLiteral("xTop")].toFloat(),
-                    bounds[QStringLiteral("yTop")].toFloat(),
-                    bounds[QStringLiteral("width")].toFloat(),
-                    bounds[QStringLiteral("height")].toFloat());
+            m_mapBounds.setNeCoord(QGeoCoordinate(bounds["neLat"].toDouble(), bounds["neLng"].toDouble()));
+            m_mapBounds.setSwCoord(QGeoCoordinate(bounds["swLat"].toDouble(), bounds["swLng"].toDouble()));
+            m_mapBounds.setZoom(bounds["swLng"].toInt());
             this->accept();
         }
     });
 }
-
 
 void RGGoogleMap::on_goButton_clicked(bool)
 {
