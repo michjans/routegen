@@ -92,6 +92,7 @@ After your Qt build environment is setup correctly, all you need to do is:
 - 1.9.1 release
   - Vehicle movement less jerky when route moves around direct north or south
   - Fix when map boundaries cross the 180 degrees longitude boundary
+  - Lat/lon to x,y using Google maps (web mercator) projection algorithm
  
 ## Technical details
 
