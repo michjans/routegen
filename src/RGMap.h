@@ -38,10 +38,10 @@ public slots:
 
 private:
     //Coordinate to world coordinates
-    QPointF project(const QGeoCoordinate& geoPoint);
+    QPointF project(const QGeoCoordinate& geoPoint) const;
 
     //World to pixels
-    QPoint worldToPixel(const QPointF &worldPoint);
+    QPoint worldToPixel(const QPointF &worldPoint) const;
 
 
     QPixmap mMap;
@@ -51,6 +51,7 @@ private:
 
     QPoint mTopLeft;
     QPoint mBottomRight;
+    int mAntiMeredianPosX;
 };
 
 #endif // RGMAP_H

@@ -4,6 +4,8 @@
 #include <QJsonObject>
 #include <QtMath>
 
+#include <QDebug>
+
 #include <algorithm>
 
 namespace
@@ -47,6 +49,10 @@ bool RGMap::loadMap(const QString &fileName, const QPixmap &map, const RGMapBoun
         //Calculate topleft/bottomright of the current map in pixel coordinates
         mTopLeft = worldToPixel(project(QGeoCoordinate(m_bounds.getNE().latitude(), m_bounds.getSW().longitude())));
         mBottomRight = worldToPixel(project(QGeoCoordinate(m_bounds.getSW().latitude(), m_bounds.getNE().longitude())));
+        mAntiMeredianPosX = worldToPixel(QPointF(TILE_SIZE, TILE_SIZE)).x();
+        qDebug() << "zoom:" << m_bounds.getZoom();
+        qDebug() << "pixWidth:" << mBottomRight.x() - mTopLeft.x();
+        qDebug() << "pixHeigth:" << mBottomRight.y() - mTopLeft.y();
 
         emit mapLoaded(mMap);
     }
@@ -73,12 +79,15 @@ QList<QPoint> RGMap::mapRoutePoints(const QList<QGeoCoordinate> &geoCoordinates)
     {
         for (const QGeoCoordinate &coord: geoCoordinates)
         {
-            //TODO: convert to google projection algorithm
-            /*
-            QPoint point((coord.longitude() - mGeoBounds.x()) * xScale,
-                         (mGeoBounds.y() - coord.latitude()) * yScale);
-            pointlist.append(point);
-            */
+            QPoint point = worldToPixel(project(coord));
+            if (mTopLeft.x() > mBottomRight.x() && point.x() < mTopLeft.x())
+            {
+                //When the route passes around the 180.0/-180.0 meridian (antimeridian), the coordinates will wrap around and we need to correct for this
+                //by calculating the x pixel position of the antimeridan boundary and add that to all coordinates < the top left x value
+                point.setX(mAntiMeredianPosX + point.x());
+            }
+
+            pointlist.append(point - mTopLeft);
         }
     }
     return pointlist;
@@ -136,7 +145,7 @@ void RGMap::write(QJsonObject &json)
     json.insert(QStringLiteral("map"), mapObject);
 }
 
-QPointF RGMap::project(const QGeoCoordinate &geoPoint)
+QPointF RGMap::project(const QGeoCoordinate &geoPoint) const
 {
     qreal siny = qSin(geoPoint.latitude() * M_PI / 180);
 
@@ -150,10 +159,9 @@ QPointF RGMap::project(const QGeoCoordinate &geoPoint)
         TILE_SIZE * (0.5 - std::log((1 + siny) / (1 - siny)) / (4 * M_PI)));
 }
 
-QPoint RGMap::worldToPixel(const QPointF &worldPoint)
+QPoint RGMap::worldToPixel(const QPointF &worldPoint) const
 {
     int scale = 1 << m_bounds.getZoom();
-    return QPoint(
-         qFloor(worldPoint.x() * scale),
-         qFloor(worldPoint.y() * scale));
+
+    return QPoint(qFloor(worldPoint.x() * scale), qFloor(worldPoint.y() * scale));
 }

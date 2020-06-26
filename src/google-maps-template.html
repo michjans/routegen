@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple Map</title>
+    <title>Route Generator Map</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <style>
@@ -34,28 +34,16 @@
       }
       
       function getBounds() {
-        mapBounds = map.getBounds();
-        ne = mapBounds.getNorthEast();
-        sw = mapBounds.getSouthWest();
-
-        /*Prevent going through -180/180 long boundary*/
-        var neLng = ne.lng();
-        if (neLng < 0.0)
-        {
-            neLng = 180.0 + (180.0 + neLng);
-        }
-        var swLng = sw.lng();
-        if (swLng < 0.0)
-        {
-            swLng = 180.0 + (180.0 + swLng);
-        }
-
-        
+        var mapBounds = map.getBounds();
+        var ne = mapBounds.getNorthEast();
+        var sw = mapBounds.getSouthWest();
+      
         return {
-            xTop : swLng,
-            yTop : ne.lat(),
-            width : neLng - swLng,
-            height: ne.lat() - sw.lat()
+            neLat : ne.lat(),
+            neLng : ne.lng(),
+            swLat : sw.lat(),
+            swLng : sw.lng(),
+            zoom  : map.getZoom()
         }
       }
 	  

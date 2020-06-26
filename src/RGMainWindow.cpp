@@ -376,8 +376,8 @@ void RGMainWindow::on_actionImport_GPX_triggered(bool)
         if (gpxReader.readFile(fileName) && !mMap->hasGeoBounds())
         {
             //Route loaded but map has no geo boundaries
-            QMessageBox::StandardButton answer = QMessageBox::question (this, tr("No geo boundaries"),
-                                     tr("GPX route cannot be displayed, because map has no known geographic boundaries, import new map using Google Maps?"),
+            QMessageBox::StandardButton answer = QMessageBox::question (this, tr("No geo boundaries in map"),
+                                     tr("GPX route loaded correctly. Import new map using Google Maps?"),
                                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
             if (answer == QMessageBox::Yes)
             {

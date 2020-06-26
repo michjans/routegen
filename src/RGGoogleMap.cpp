@@ -151,7 +151,7 @@ void RGGoogleMap::continue_Accept()
             QMap<QString, QVariant> bounds = v.toMap();
             m_mapBounds.setNeCoord(QGeoCoordinate(bounds["neLat"].toDouble(), bounds["neLng"].toDouble()));
             m_mapBounds.setSwCoord(QGeoCoordinate(bounds["swLat"].toDouble(), bounds["swLng"].toDouble()));
-            m_mapBounds.setZoom(bounds["swLng"].toInt());
+            m_mapBounds.setZoom(bounds["zoom"].toInt());
             this->accept();
         }
     });

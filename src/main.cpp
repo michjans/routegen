@@ -84,10 +84,11 @@
  *          Added map and route status indicators (icons) in status bar
  *          SVG format support for custom vehicles
  *  v1.9.1  Vehicle movement less jerky when route moves around direct north or south
- *          Fix when map boundaries cross the 180 degrees longitude boundary
+ *          Fix when map boundaries cross the 180 degrees longitude boundary (e.g. around New Zealand)
+ *          Now using google map's web mercator projection algorithm to convert lat,lon to x,y
  */
 
-extern const QString applicationName("Route Generator version 1.9.1rc1");
+extern const QString applicationName("Route Generator version 1.9.1rc2");
 
 int main(int argc, char *argv[])
 {
