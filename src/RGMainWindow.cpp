@@ -276,7 +276,7 @@ void RGMainWindow::on_actionSave_image_triggered(bool)
         if (mMap->hasGeoBounds())
         {
             //If current map has geo bounds, also store geo bounds along with the saved map image
-            //TODO:RGSettings::setMapGeoBounds(fileName, mMap->geoBounds());
+            RGSettings::setMapGeoBounds(fileName, mMap->geoBounds());
         }
 
         RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
@@ -373,15 +373,31 @@ void RGMainWindow::on_actionImport_GPX_triggered(bool)
     {
         RGSettings::setLastOpenDir(fileName, RGSettings::RG_GPX_LOCATION);
         RGGPXReader gpxReader(mRoute, mMap, this);
-        if (gpxReader.readFile(fileName) && !mMap->hasGeoBounds())
+        if (gpxReader.readFile(fileName))
         {
-            //Route loaded but map has no geo boundaries
-            QMessageBox::StandardButton answer = QMessageBox::question (this, tr("No geo boundaries in map"),
-                                     tr("GPX route loaded correctly. Import new map using Google Maps?"),
-                                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-            if (answer == QMessageBox::Yes)
+            QMessageBox msgBox;
+            msgBox.setText("GXP route imported succesfully!");
+            QPushButton *importButton = msgBox.addButton(tr("Import new map (Google maps)..."), QMessageBox::ActionRole);
+            QPushButton *existingButton = msgBox.addButton(tr("Open existing map..."), QMessageBox::ActionRole);
+            msgBox.addButton(tr("Keep current map"), QMessageBox::RejectRole);
+            if (mMap->hasGeoBounds())
+            {
+                //Route loaded but map already has geo boundaries
+                msgBox.setInformativeText(tr("Draw route on current map, open existing or import new map?"));
+            }
+            else
+            {
+                //Route loaded but map has no geo boundaries
+                msgBox.setInformativeText(tr("Cannot draw route on current map, open existing map or import new map?"));
+            }
+            msgBox.exec();
+            if (msgBox.clickedButton() == importButton)
             {
                 on_actionImport_Google_Map_triggered(true);
+            }
+            else if (msgBox.clickedButton() == existingButton)
+            {
+                on_actionOpen_image_triggered(true);
             }
             updateStatusMessage();
         }

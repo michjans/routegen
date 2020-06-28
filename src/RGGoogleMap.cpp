@@ -146,12 +146,8 @@ void RGGoogleMap::continue_Accept()
                                       [this](const QVariant &v)
     {
         qDebug() << "Result of getBounds():" << v.typeName();
-        if (v.type() == QMetaType::QVariantMap)
+        if (m_mapBounds.fromQVariant(v))
         {
-            QMap<QString, QVariant> bounds = v.toMap();
-            m_mapBounds.setNeCoord(QGeoCoordinate(bounds["neLat"].toDouble(), bounds["neLng"].toDouble()));
-            m_mapBounds.setSwCoord(QGeoCoordinate(bounds["swLat"].toDouble(), bounds["swLng"].toDouble()));
-            m_mapBounds.setZoom(bounds["zoom"].toInt());
             this->accept();
         }
     });

@@ -39,20 +39,29 @@ bool RGMap::loadMap(const QString &fileName, const QPixmap &map, const RGMapBoun
         if (mapBounds.isValid())
         {
             m_bounds = mapBounds;
-            //TODO:RGSettings::setMapGeoBounds(fileName, mapBounds);
+            RGSettings::setMapGeoBounds(fileName, mapBounds);
         }
         else
         {
-            //TODO:mGeoBounds = RGSettings::getMapGeoBounds(fileName);
+            m_bounds = RGSettings::getMapGeoBounds(fileName);
         }
 
-        //Calculate topleft/bottomright of the current map in pixel coordinates
-        mTopLeft = worldToPixel(project(QGeoCoordinate(m_bounds.getNE().latitude(), m_bounds.getSW().longitude())));
-        mBottomRight = worldToPixel(project(QGeoCoordinate(m_bounds.getSW().latitude(), m_bounds.getNE().longitude())));
-        mAntiMeredianPosX = worldToPixel(QPointF(TILE_SIZE, TILE_SIZE)).x();
-        qDebug() << "zoom:" << m_bounds.getZoom();
-        qDebug() << "pixWidth:" << mBottomRight.x() - mTopLeft.x();
-        qDebug() << "pixHeigth:" << mBottomRight.y() - mTopLeft.y();
+        if (m_bounds.isValid())
+        {
+            //Calculate topleft/bottomright of the current map in pixel coordinates
+            mTopLeft = worldToPixel(project(QGeoCoordinate(m_bounds.getNE().latitude(), m_bounds.getSW().longitude())));
+            mBottomRight = worldToPixel(project(QGeoCoordinate(m_bounds.getSW().latitude(), m_bounds.getNE().longitude())));
+            mAntiMeredianPosX = worldToPixel(QPointF(TILE_SIZE, TILE_SIZE)).x();
+            qDebug() << "zoom:" << m_bounds.getZoom();
+            qDebug() << "pixWidth:" << mBottomRight.x() - mTopLeft.x();
+            qDebug() << "pixHeigth:" << mBottomRight.y() - mTopLeft.y();
+        }
+        else
+        {
+            mTopLeft = QPoint();
+            mBottomRight = QPoint();
+            mAntiMeredianPosX = 0.0;
+        }
 
         emit mapLoaded(mMap);
     }

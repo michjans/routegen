@@ -88,7 +88,7 @@
  *          Now using google map's web mercator projection algorithm to convert lat,lon to x,y
  */
 
-extern const QString applicationName("Route Generator version 1.9.1rc2");
+extern const QString applicationName("Route Generator version 1.9.1rc3");
 
 int main(int argc, char *argv[])
 {

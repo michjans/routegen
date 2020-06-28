@@ -2,6 +2,8 @@
 #define RGMAPBOUNDS_H
 
 #include <QGeoCoordinate>
+#include <QMap>
+#include <QVariant>
 
 class RGMapBounds
 {
@@ -9,7 +11,7 @@ public:
     RGMapBounds()
         : m_neCoord(),
           m_swCoord(),
-          m_zoom(-1)
+          m_zoom(0)
     {
     }
 
@@ -22,7 +24,7 @@ public:
 
     bool isValid() const
     {
-        return m_neCoord.isValid() && m_swCoord.isValid() && m_zoom > -1;
+        return m_neCoord.isValid() && m_swCoord.isValid() && m_zoom > 0;
     }
 
     void setSwCoord(const QGeoCoordinate &swCoord)
@@ -53,6 +55,33 @@ public:
     int getZoom() const
     {
         return m_zoom;
+    }
+
+    bool fromQVariant(const QVariant &v)
+    {
+        if (QMetaType::Type(v.type()) == QMetaType::QVariantMap)
+        {
+            QMap<QString, QVariant> bounds = v.toMap();
+            setNeCoord(QGeoCoordinate(bounds["neLat"].toDouble(), bounds["neLng"].toDouble()));
+            setSwCoord(QGeoCoordinate(bounds["swLat"].toDouble(), bounds["swLng"].toDouble()));
+            setZoom(bounds["zoom"].toInt());
+            return isValid();
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    QVariant toQVariant() const
+    {
+        QMap<QString, QVariant> bounds;
+        bounds["neLat"] = m_neCoord.latitude();
+        bounds["neLng"] = m_neCoord.longitude();
+        bounds["swLat"] = m_swCoord.latitude();
+        bounds["swLng"] = m_swCoord.longitude();
+        bounds["zoom"] = m_zoom;
+        return QVariant(bounds);
     }
 
 private:

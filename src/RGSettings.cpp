@@ -194,22 +194,31 @@ void RGSettings::setEndDelaySeconds(int val)
   settings.setValue("endDelaySeconds", val);
 }
 
-QRectF RGSettings::getMapGeoBounds(const QString &fileName)
+RGMapBounds RGSettings::getMapGeoBounds(const QString &fileName)
 {
     QSettings settings;
 
+    RGMapBounds bounds;
     QHash<QString, QVariant> geoBoundMap = settings.value("geoBounds", QHash<QString, QVariant>()).toHash();
-    return geoBoundMap[fileName].toRectF();
+    if (geoBoundMap.contains(fileName))
+    {
+        bounds.fromQVariant(geoBoundMap[fileName]);
+    }
+
+    return bounds;
 }
 
-void RGSettings::setMapGeoBounds(const QString &fileName, const QRectF &geoBounds)
+void RGSettings::setMapGeoBounds(const QString &fileName, const RGMapBounds &geoBounds)
 {
-    QSettings settings;
 
-    QHash<QString, QVariant> geoBoundMap = settings.value("geoBounds", QHash<QString, QVariant>()).toHash();
-    geoBoundMap[fileName] = QVariant(geoBounds);
+    if (geoBounds.isValid())
+    {
+        QSettings settings;
+        QHash<QString, QVariant> geoBoundMap = settings.value("geoBounds", QHash<QString, QVariant>()).toHash();
 
-    settings.setValue("geoBounds", geoBoundMap);
+        geoBoundMap[fileName] = geoBounds.toQVariant();
+        settings.setValue("geoBounds", geoBoundMap);
+    }
 }
 
 QRect RGSettings::getMainWindowGeometry()

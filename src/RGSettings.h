@@ -26,6 +26,8 @@
 #include <QRectF>
 #include <QRect>
 
+#include "RGMapBounds.h"
+
 class RGSettings
 {
 public:
@@ -74,8 +76,8 @@ public:
     /*
     * Application settings
     */
-    static QRectF getMapGeoBounds(const QString &fileNme);
-    static void setMapGeoBounds(const QString &fileNme, const QRectF &geoBounds);
+    static RGMapBounds getMapGeoBounds(const QString &fileNme);
+    static void setMapGeoBounds(const QString &fileNme, const RGMapBounds &geoBounds);
     static QRect getMainWindowGeometry();
     static void setMainWindowGeometry(const QRect &geometry);
     static QColor getPenColor();
