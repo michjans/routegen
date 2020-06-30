@@ -376,19 +376,21 @@ void RGMainWindow::on_actionImport_GPX_triggered(bool)
         if (gpxReader.readFile(fileName))
         {
             QMessageBox msgBox;
+            msgBox.setIcon(QMessageBox::Information);
             msgBox.setText("GXP route imported succesfully!");
             QPushButton *importButton = msgBox.addButton(tr("Import new map (Google maps)..."), QMessageBox::ActionRole);
             QPushButton *existingButton = msgBox.addButton(tr("Open existing map..."), QMessageBox::ActionRole);
-            msgBox.addButton(tr("Keep current map"), QMessageBox::RejectRole);
             if (mMap->hasGeoBounds())
             {
                 //Route loaded but map already has geo boundaries
-                msgBox.setInformativeText(tr("Draw route on current map, open existing or import new map?"));
+                msgBox.setInformativeText(tr("Import new map, open other map, or draw route on current map?"));
+                msgBox.addButton(tr("Keep current map"), QMessageBox::RejectRole);
             }
             else
             {
                 //Route loaded but map has no geo boundaries
-                msgBox.setInformativeText(tr("Cannot draw route on current map, open existing map or import new map?"));
+                msgBox.setInformativeText(tr("Unable to draw route on current map: import new (Google) map or open existing map?"));
+                msgBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
             }
             msgBox.exec();
             if (msgBox.clickedButton() == importButton)

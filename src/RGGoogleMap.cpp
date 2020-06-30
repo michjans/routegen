@@ -196,6 +196,10 @@ void RGGoogleMap::on_goButton_clicked(bool)
 		return;
 	}
 
+    //Zoom should be an integer value, but sometimes url's contain zoomlevels as floats
+    int zoomValue = int(zoom.toFloat());
+    zoom = QString::number(zoomValue);
+
     ui.webView->setHtml(genHtml(latlon, zoom));
     ui.webView->reload();
 }
