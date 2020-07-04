@@ -237,6 +237,22 @@ void RGSettings::setMainWindowGeometry(const QRect &geometry)
     settings.setValue("mainWindowGeom", QVariant(geometry));
 }
 
+QRect RGSettings::getGoogleMapDialogGeometry()
+{
+    QSettings settings;
+
+    QVariant geoVariant = settings.value("googleMapDialogGeom", QVariant(QRect(10, 10, 1024, 768)));
+
+    return geoVariant.toRect();
+}
+
+void RGSettings::setGoogleMapDialogGeometry(const QRect &geometry)
+{
+    QSettings settings;
+
+    settings.setValue("googleMapDialogGeom", QVariant(geometry));
+}
+
 QColor RGSettings::getPenColor()
 {
   QSettings settings;

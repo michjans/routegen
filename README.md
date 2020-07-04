@@ -90,9 +90,13 @@ After your Qt build environment is setup correctly, all you need to do is:
   - Added map and route status indicators (icons) in status bar
   - SVG format support for custom vehicles
 - 1.9.1 release
+  - Maximum size for custom vehicles increased
   - Vehicle movement less jerky when route moves around direct north or south
   - Fix when map boundaries cross the 180 degrees longitude boundary
   - Lat/lon to x,y using Google maps (web mercator) projection algorithm
+  - More options after importing route from GPX file
+  - Prevent zoomlevels with decimal numbers in Google map URL's
+  - Google maps dialog geometry saved and restored
  
 ## Technical details
 

@@ -83,12 +83,16 @@
  *          saving/loading an image in bmp is much faster (due to uncompressed format), so left it at bmp.
  *          Added map and route status indicators (icons) in status bar
  *          SVG format support for custom vehicles
- *  v1.9.1  Vehicle movement less jerky when route moves around direct north or south
+ *  v1.9.1  Maximum size for custom vehicles increased
+ *          Vehicle movement less jerky when route moves around direct north or south
  *          Fix when map boundaries cross the 180 degrees longitude boundary (e.g. around New Zealand)
  *          Now using google map's web mercator projection algorithm to convert lat,lon to x,y
+ *          More options after importing route from GPX file
+ *          Prevent zoomlevels with decimal numbers in Google map URL's
+ *          Google maps dialog geometry saved and restored
  */
 
-extern const QString applicationName("Route Generator version 1.9.1rc3");
+extern const QString applicationName("Route Generator version 1.9.1");
 
 int main(int argc, char *argv[])
 {

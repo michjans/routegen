@@ -80,6 +80,8 @@ public:
     static void setMapGeoBounds(const QString &fileNme, const RGMapBounds &geoBounds);
     static QRect getMainWindowGeometry();
     static void setMainWindowGeometry(const QRect &geometry);
+    static QRect getGoogleMapDialogGeometry();
+    static void setGoogleMapDialogGeometry(const QRect &geometry);
     static QColor getPenColor();
     static void setPenColor(const QColor &);
     static int getPenSize();

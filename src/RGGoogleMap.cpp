@@ -107,6 +107,8 @@ RGGoogleMap::RGGoogleMap(QWidget *parent, const QGeoPath &geoPath)
         ui.webView->setHtml(genHtml(latlon, "10"));
         ui.webView->reload();
     }
+
+    setGeometry(RGSettings::getGoogleMapDialogGeometry());
 }
 
 void RGGoogleMap::accept()
@@ -116,7 +118,7 @@ void RGGoogleMap::accept()
 
     RGSettings::setGMXResolution(ui.spinBoxX->value());
     RGSettings::setGMYResolution(ui.spinBoxY->value());
-
+    RGSettings::setGoogleMapDialogGeometry(geometry());
 
     QDialog::accept();
 }

@@ -35,7 +35,7 @@ public:
     const RGMapBounds& getMapBounds() const {return m_mapBounds;}
 
 public slots:
-	void accept();
+    void accept() override;
 
 private slots:
     void on_accept();
