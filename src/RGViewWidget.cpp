@@ -32,7 +32,8 @@ extern const QString applicationName;
 RGViewWidget::RGViewWidget(RGMap *map, QWidget *parent) :
   QGraphicsView(parent),
   mPlayTimer(nullptr),
-  mTimerCounter(0)
+  mTimerCounter(0),
+  mNumScheduledScalings(0)
 {
   mScene = new QGraphicsScene;
   this->setScene(mScene);
@@ -49,6 +50,12 @@ RGViewWidget::RGViewWidget(RGMap *map, QWidget *parent) :
     mPlayTimer = new QTimer(this);
     QObject::connect(mPlayTimer, SIGNAL(timeout()), this, SLOT(playTimerEvent()));
   }
+
+  //zoom animation
+  mAnim = new QTimeLine(350, this);
+  mAnim->setUpdateInterval(20);
+  connect(mAnim, SIGNAL (valueChanged(qreal)), SLOT (scalingTime(qreal)));
+  connect(mAnim, SIGNAL (finished()), SLOT (animFinished()));
 
   if (map)
   {
@@ -85,6 +92,21 @@ void RGViewWidget::stop()
   mPlayTimer->stop();
   mRoute->startPlayback(false);
   emit playbackStopped(true);
+}
+
+void RGViewWidget::wheelEvent(QWheelEvent *event)
+{
+    //Example from: https://wiki.qt.io/Smooth_Zoom_In_QGraphicsView
+    int numDegrees = event->delta() / 8;
+    int numSteps = numDegrees / 15;
+    mNumScheduledScalings += numSteps;
+    if (mNumScheduledScalings * numSteps < 0)
+    {
+        // if user moved the wheel in another direction, we reset previously scheduled scalings
+        mNumScheduledScalings = numSteps;
+    }
+
+    mAnim->start();
 }
 
 
@@ -183,7 +205,6 @@ void RGViewWidget::playTimerEvent()
     //Finished
     this->stop();
   }
-
 }
 
 bool RGViewWidget::saveFrame(int frameCounter, const QString &dirName, const QString &filePrefix, const QString &frameFileType, QStringList &generatedImages)
@@ -199,6 +220,24 @@ bool RGViewWidget::saveFrame(int frameCounter, const QString &dirName, const QSt
     {
         generatedImages.append(fileName);
 	}
-	return true;
+    return true;
+}
+
+void RGViewWidget::scalingTime(qreal /* x */)
+{
+    qreal factor = 1.0+ qreal(mNumScheduledScalings) / 300.0;
+    scale(factor, factor);
+}
+
+void RGViewWidget::animFinished()
+{
+    if (mNumScheduledScalings > 0)
+    {
+        mNumScheduledScalings--;
+    }
+    else
+    {
+        mNumScheduledScalings++;
+    }
 }
 

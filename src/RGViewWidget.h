@@ -25,6 +25,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
 #include <QTimer>
+#include <QTimeLine>
+
 #include "RGMap.h"
 #include "RGRoute.h"
 
@@ -47,17 +49,23 @@ public slots:
   void play();
   void stop();
 
+protected:
+   void wheelEvent ( QWheelEvent * event );
+
 private slots:
   void playTimerEvent();
-    bool saveFrame(int frameCounter, const QString &dirName, const QString &filePrefix, const QString &frameFileType, QStringList &generatedBMPs);
+  bool saveFrame(int frameCounter, const QString &dirName, const QString &filePrefix, const QString &frameFileType, QStringList &generatedBMPs);
+  void scalingTime(qreal x);
+  void animFinished();
 
 private:
   QGraphicsScene *mScene;
   QGraphicsTextItem *mWelcomeText;
   RGRoute *mRoute;
   QTimer        *mPlayTimer;
+  QTimeLine     *mAnim;
   int           mTimerCounter;
-
+  int           mNumScheduledScalings;
 };
 
 #endif // RGVIEWWIDGET_H
