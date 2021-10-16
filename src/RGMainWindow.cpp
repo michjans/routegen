@@ -455,45 +455,38 @@ void RGMainWindow::on_actionStop_triggered(bool checked)
 
 void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
 {
-  Q_UNUSED(checked);
-  bool generateFramesOK = false;
-  QString lastGenDir = RGSettings::getLastOpenDir(RGSettings::RG_MOVIE_LOCATION);
+    Q_UNUSED(checked);
+    bool generateFramesOK = false;
+    QString lastGenDir = RGSettings::getLastOpenDir(RGSettings::RG_MOVIE_LOCATION);
 
-  QString dirInfoText = QString("Select an empty directory where the movie should be generated.");
-  QString dir = QFileDialog::getExistingDirectory(this,
-                                                  dirInfoText,
-                                                  lastGenDir,
-                                                  QFileDialog::ShowDirsOnly
-                                                  | QFileDialog::DontResolveSymlinks);
-
-  if (!dir.isNull()){
-    //First generate the bmp files into a directory
-    QDir qDir(dir);
-    //Directory should be empty
-    QFileInfoList entries = qDir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files);
-    if (entries.count() > 0)
+    QString dir;
+    bool emptyDirectorySelected = false;
+    while (!emptyDirectorySelected)
     {
-       QMessageBox::StandardButton answer = QMessageBox::question (this, "Folder not empty",
-                                "Folder not empty, delete all existing files in this folder first?",
-                                           QMessageBox::Yes | QMessageBox::No |
-                                           QMessageBox::Cancel, QMessageBox::No);
-       if (answer == QMessageBox::Yes)
-       {
-         //Delete all files (or at least try to)
-         for (QFileInfoList::iterator it = entries.begin(); it != entries.end(); ++it)
-         {
-           if (it->isWritable())
-           {
-             qDebug() << "Deleting " + it->absoluteFilePath();
-             QFile::remove(it->absoluteFilePath());
-           }
-         }
-       }
-       else if (answer == QMessageBox::Cancel)
-       {
-         return;
-       }
-       //Continue
+        //Repeat until empty directory was selected
+        QString dirInfoText = QString("Select or create a new empty directory where the movie should be generated.");
+        dir = QFileDialog::getExistingDirectory(this,
+                                                      dirInfoText,
+                                                      lastGenDir,
+                                                      QFileDialog::ShowDirsOnly
+                                                      | QFileDialog::DontResolveSymlinks);
+
+        if (!dir.isNull())
+        {
+            QDir qDir(dir);
+            //Directory should be empty
+            emptyDirectorySelected = qDir.isEmpty();
+
+            if (!emptyDirectorySelected)
+            {
+                QMessageBox::warning (this, "Directory not empty!", "Selected directory not empty, please select (or create) an empty directory!");
+            }
+        }
+        else
+        {
+            //Cancelled
+            return;
+        }
     }
 
     RGSettings::setLastOpenDir(dir, RGSettings::RG_MOVIE_LOCATION);
@@ -509,7 +502,8 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
     generateFramesOK = mView->generateMovie(dir, QString("map"), frameFileType, mGeneratedFrames);
     mRoute->setEditMode(actionDraw_mode->isChecked());
 
-    if (generateFramesOK) {
+    if (generateFramesOK)
+    {
             if (mVideoEncoder != nullptr && mVideoEncoder->exists())
 			{
 				blockUserInteraction(true);
@@ -521,7 +515,6 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
                 QMessageBox::warning (this, "Encoder unavailable", "No encoder available, only image frames have been generated!");
 			}
     }
-  }
 }
 
 void RGMainWindow::on_action_Tutorial_triggered(bool checked)

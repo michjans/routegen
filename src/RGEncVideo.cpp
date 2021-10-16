@@ -154,8 +154,8 @@ void RGEncVideo::createEncodingProcess(const QString &dirName,const QString &vid
     return;
   }
   mVideoEncProcess = new QProcess(this);
-  QObject::connect(mVideoEncProcess, SIGNAL(finished (int , QProcess::ExitStatus)),
-                   this, SLOT(encodingProcessFinished(int , QProcess::ExitStatus)));
+  QObject::connect(mVideoEncProcess, SIGNAL(finished (int, QProcess::ExitStatus)),
+                   this, SLOT(encodingProcessFinished(int, QProcess::ExitStatus)));
   QObject::connect(mVideoEncProcess, SIGNAL(error (QProcess::ProcessError)),
                    this, SLOT(encodingProcessError(QProcess::ProcessError)));
   mVideoEncProcess->setWorkingDirectory(dirName);
