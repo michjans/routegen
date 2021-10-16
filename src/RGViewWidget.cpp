@@ -39,7 +39,7 @@ RGViewWidget::RGViewWidget(RGMap *map, QWidget *parent) :
   this->setScene(mScene);
   this->setRenderHint(QPainter::Antialiasing);
   this->setRenderHint(QPainter::SmoothPixmapTransform);
-  this->setDragMode(QGraphicsView::RubberBandDrag);
+  this->setDragMode(QGraphicsView::ScrollHandDrag);
 
   //init text
   mWelcomeText = mScene->addText(applicationName,QFont("Arial", 30));
@@ -95,9 +95,10 @@ void RGViewWidget::stop()
 }
 
 void RGViewWidget::wheelEvent(QWheelEvent *event)
-{
+{    
     //Example from: https://wiki.qt.io/Smooth_Zoom_In_QGraphicsView
-    int numDegrees = event->delta() / 8;
+    int numDegrees = event->angleDelta().y() / 8;
+
     int numSteps = numDegrees / 15;
     mNumScheduledScalings += numSteps;
     if (mNumScheduledScalings * numSteps < 0)
@@ -108,7 +109,6 @@ void RGViewWidget::wheelEvent(QWheelEvent *event)
 
     mAnim->start();
 }
-
 
 bool RGViewWidget::saveRenderedImage(const QString &filename)
 {
@@ -225,8 +225,12 @@ bool RGViewWidget::saveFrame(int frameCounter, const QString &dirName, const QSt
 
 void RGViewWidget::scalingTime(qreal /* x */)
 {
+    //Prevent zooming out below 1.0
     qreal factor = 1.0+ qreal(mNumScheduledScalings) / 300.0;
-    scale(factor, factor);
+    if (factor * transform().m11() >= 1.0)
+    {
+        scale(factor, factor);
+    }
 }
 
 void RGViewWidget::animFinished()

@@ -50,7 +50,7 @@ public slots:
   void stop();
 
 protected:
-   void wheelEvent ( QWheelEvent * event );
+   void wheelEvent ( QWheelEvent * event ) override;
 
 private slots:
   void playTimerEvent();
@@ -66,6 +66,7 @@ private:
   QTimeLine     *mAnim;
   int           mTimerCounter;
   int           mNumScheduledScalings;
+  QPoint        mDragOrigin;
 };
 
 #endif // RGVIEWWIDGET_H

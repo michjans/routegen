@@ -54,7 +54,6 @@ void RGPath::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget 
 {
   painter->setPen(mPen);
   painter->drawPath(mPaintPath);
-  qDebug()<<"paint path at Current Frame "<<mCurrentFrame;
 }
 
 QPainterPath RGPath::getPathAtStep(int step) //return Path at step (begin at 0)

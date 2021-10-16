@@ -417,11 +417,11 @@ void RGMainWindow::on_actionDraw_mode_triggered(bool checked)
   mRoute->setEditMode(checked);
   if(checked)
   {
-    this->statusBar()->showMessage("hold SHIFT to record free drawing, CTRL to select several points. Del key to delete selected points");
+      this->statusBar()->showMessage("hold SHIFT to record free drawing, CTRL to select several points. Del key to delete selected points");
   }
   else
   {
-    this->statusBar()->clearMessage();
+      this->statusBar()->clearMessage();
   }
 }
 
