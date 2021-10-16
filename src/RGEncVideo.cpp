@@ -21,6 +21,8 @@
 #include "RGEncVideo.h"
 #include <QtGui>
 #include <QFileDialog>
+#include <QStandardPaths>
+
 #include <RGSettings.h>
 
 RGEncVideo::RGEncVideo(QWidget *parent) :
@@ -55,37 +57,36 @@ RGEncVideo::~RGEncVideo()
 bool RGEncVideo::initCodecExecutable()
 {
 	mExecName = RGSettings::getVideoEncExec();
-	if (checkForCodecExecutable(mExecName)==false){
+#ifdef Q_OS_WIN
+    if (checkForCodecExecutable(mExecName)==false)
+    {
 		RGSettings::setAviCompression(QString());
 		mExecName = QFileDialog::getOpenFileName(nullptr,
                    QString("Select the directory where " + encoderName() + " is located."),
                    QDir::currentPath(),
-#ifdef __linux__
-                   "Executables (*)");
-#else
                    "Executables (*.exe)");
+  }
 #endif
-  }
 
-  if ( checkForCodecExecutable(mExecName)==true )
+    if ( checkForCodecExecutable(mExecName)==true )
 	{
-    mExists=initCodecs();
-  }
-  else
+        mExists=initCodecs();
+    }
+    else
 	{
-    QMessageBox::warning (nullptr, tr("No video encoder found"), encoderName() + tr(" has not been found, therefore video generation will be unavailable.") +
-                          tr("\nYou can set ") + encoderName() + tr(" directory in the preferences"));
-    mExecName=QString();
-  }
-  RGSettings::setVideoEncExec(mExecName);
-  updateFromSettings();
+        QMessageBox::warning (nullptr, tr("No video encoder found"), encoderName() + tr(" has not been found, therefore video generation will be unavailable.") +
+                              tr("\nYou can set ") + encoderName() + tr(" directory in the preferences"));
+        mExecName=QString();
+    }
+    RGSettings::setVideoEncExec(mExecName);
+    updateFromSettings();
 #ifdef Q_OS_WIN
-  mUi.codecExecLocLE->setText(mExecName);
-  mUi.codecExecLocLabel->setText(encoderName());
-  mUi.codecExecLocBrowsePB->setVisible(true);
-  mUi.codecExecLocLabel->setVisible(true);
-  mUi.codecExecLocLE->setVisible(true);
-  QObject::connect(mUi.codecExecLocBrowsePB, SIGNAL(clicked(bool)), this, SLOT(browseClicked()));
+    mUi.codecExecLocLE->setText(mExecName);
+    mUi.codecExecLocLabel->setText(encoderName());
+    mUi.codecExecLocBrowsePB->setVisible(true);
+    mUi.codecExecLocLabel->setVisible(true);
+    mUi.codecExecLocLE->setVisible(true);
+    QObject::connect(mUi.codecExecLocBrowsePB, SIGNAL(clicked(bool)), this, SLOT(browseClicked()));
 #endif
 
 	return mExists;
@@ -248,8 +249,13 @@ void RGEncVideo::browseClicked()
 
 bool RGEncVideo::checkForCodecExecutable(const QString &execName)
 {
-  QFile codecExec(execName);
-  if (codecExec.exists() == false) return false;
-  if (!codecExec.fileName().contains(encoderName())) return false;
+#ifdef __linux__
+    //On Linux it should be found in the PATH
+    return !QStandardPaths::findExecutable(execName).isEmpty();
+#else
+    QFile codecExec(execName);
+    if (codecExec.exists() == false) return false;
+    if (!codecExec.fileName().contains(encoderName())) return false;
+#endif
   return true;
 }

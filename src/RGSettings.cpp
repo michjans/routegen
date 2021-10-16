@@ -37,7 +37,8 @@ QString RGSettings::getVideoEncExec()
 {
   QSettings settings;
 #ifdef __linux__
-  return settings.value("videoEncExec", "/usr/bin/ffmpeg").toString();
+  //Always use ffmpeg (assume it's in the PATH)
+  return QString("ffmpeg");
 #else
   return settings.value("videoEncExec", QDir::currentPath() + "/ffmpeg/bin/ffmpeg.exe").toString();
 #endif

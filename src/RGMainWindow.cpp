@@ -658,14 +658,14 @@ void RGMainWindow::initVideoEncoderFromSettings()
 		QMessageBox::critical (this, "Error", tr("Unknown video encoder:") + vidEnc);
 	}
 #else
-  mVideoEncoder = new RGEncFFmpeg();
+    mVideoEncoder = new RGEncFFmpeg();
 #endif
 
-	mVideoEncoder->initCodecExecutable();
-  if(mVideoEncoder->exists())
-	{
-    qDebug()<<"encoder found !";
-  }
+    mVideoEncoder->initCodecExecutable();
+    if(mVideoEncoder->exists())
+    {
+        qDebug()<<"encoder found !";
+    }
 }
 
 void RGMainWindow::updateStatusMessage()

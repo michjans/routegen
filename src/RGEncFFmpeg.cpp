@@ -27,7 +27,6 @@ RGEncFFmpeg::RGEncFFmpeg(QWidget *parent) :
   mBitRate(100)
 {
   mCompressDefault=QString("mpeg4");
-  updateFromSettings();
   qDebug()<<"FFMpeg encoder class";
 
   mUi.bitRateLabel->setVisible(true);

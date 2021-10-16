@@ -90,10 +90,9 @@
  *          More options after importing route from GPX file
  *          Prevent zoomlevels with decimal numbers in Google map URL's
  *          Google maps dialog geometry saved and restored
- *  v1.10.0 TODO:Zooming
- *          TODO:Improved bitrate settings ffmpeg (always -b 1500, and in case of h.264 this setting had no effect)
+ *  v1.10.0 Zooming and pan of map
  *          TODO:Create new empty folder when files detected, instead of deleting all files
- *          TODP:Fix default location of ffmpeg on linux (make configurable or remove /usr/bin)
+ *          Fixed default location of ffmpeg on linux (removed /usr/bin)
  */
 
 extern const QString applicationName("Route Generator version 1.10.0-rc1");
