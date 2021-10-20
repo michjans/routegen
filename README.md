@@ -97,12 +97,19 @@ After your Qt build environment is setup correctly, all you need to do is:
   - More options after importing route from GPX file
   - Prevent zoomlevels with decimal numbers in Google map URL's
   - Google maps dialog geometry saved and restored
+- 1.10.0 release
+  - Panning and zooming of map using mouse (and wheel)
+  - Always create new empty foler when files are detected (to prevent that
+    files are lost coincidentally)
+  - Fixed default location of ffmpeg on linux (removed /usr/bin); assume it
+    can always be found in the PATH
+
  
 ## Technical details
 
-Route Generator is developed using the GPL version of Qt 5.12
-(Copyright (C) 2008-2019  The Qt Company Ltd. All rights reserved).
-Qt can be [downloaded](https://www.qt.io/download) from the Qt Company website.
+Route Generator is developed using the GPL version of Qt 5.15
+(Copyright (C) 2008-2021  The Qt Company Ltd. All rights reserved).
+Qt can be [downloaded](https://www.qt.io/download) from The Qt Company website.
 
 
 On Linux, Route Generator makes use of a 3rdparty tool:
@@ -127,12 +134,10 @@ Bmp2Avi can freely be re-distributed as long as you provide the documentation
 with it (also located in the bmp2avi sub-directory).
 
 ## Availability
-I've only build the executable version of Route Generator for Windows, because
-I'm using Pinnacle Studio as video editing software, which is only available
-for windows.
+Route Generator is build for Windows and Linux by default.
 However, it's developed using the cross-platform GUI toolkit, Qt,
-which is also available for other OS's, like Linux. So it is also possible
-to build and run Route Generator on Linux as well, but you have to build it
+which is also available for other Mac. So it is also possible
+to build and run Route Generator on Mac as well, but you have to build it
 yourself from the source code (see building instructions below).
 NOTE: Route Generator makes use of a video encoder (Bmp2Avi on Windows and 
 ffmpeg on linux)! However, the video encoder is not required to run Route

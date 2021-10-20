@@ -95,7 +95,7 @@
  *          Fixed default location of ffmpeg on linux (removed /usr/bin)
  */
 
-extern const QString applicationName("Route Generator version 1.10.0-rc1");
+extern const QString applicationName("Route Generator version 1.10.0");
 
 int main(int argc, char *argv[])
 {
