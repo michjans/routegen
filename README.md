@@ -103,6 +103,7 @@ After your Qt build environment is setup correctly, all you need to do is:
     files are lost coincidentally)
   - Fixed default location of ffmpeg on linux (removed /usr/bin); assume it
     can always be found in the PATH
+  - Added more default (animated) vehicles (source: gifsanimes.com)
 
  
 ## Technical details

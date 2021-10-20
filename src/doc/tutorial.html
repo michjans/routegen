@@ -34,6 +34,22 @@ Now click "Go" to start loading the map (this might take a while). You can still
 in Route Generator.
 </p>
 
+<h3>Import GPX route</h3>
+<p>
+It is also possible to import a route from a GPX file from your GPS device, by clicking <img src="gps.png">. After the file
+is opened, you can select the track that you want to import for your route.
+</p>
+
+<p>
+Afther the GPX file is importded successfully, you are asked to import a map from Google Maps. If you do this, the map will automatically
+load  the location where your GPX track is located. The boundary of your route is marked with a green rectangle.
+</p>
+
+<p>
+Another option is that you want to use an already imported Google Map or open the route on an already opened map. If the map
+has the correct geographic coordinates, the route of your track should be displayed on the map.
+</p>
+
 <h2>Draw route</h2>
 Activate <i>Draw mode</i> (from menu: Tools->Draw mode, or click <img src="drawmode.png">).
 Now start drawing a route, by clicking and dragging your mouse over the map. 
@@ -53,13 +69,25 @@ If you're satisfied with the route you can do some adjustments to the way the ro
 </ul>
 </p>
 
-<h4>Adding custom vehicle icons</h4>
+<h2>Adding custom vehicle icons</h2>
 <p>
-You can add custom icons for vehicles by adding your own icon files.
-The following icon formats should be accepted: *.gif, *.png, *.jpg</p>
-<p>It's recommended to add icons with a transparent background (i.e. *.gif or *.png with an alpha layer). 
-Also choose a reasonable size for the vehicle icons, e.g. 50x50 pixels.</p>
-<b>Animated vehicle icons</b>
+You can add custom icons for vehicles by adding your own icon files by clicking <img src="vehicle-settings.png">.
+</p>
+
+<p>
+This button will open the Vehicle Settings dialog, where you can add new vehicles. The following icon formats should be accepted: *.gif, *.png, *.jpg, *.svg
+</p>
+
+<p>
+It's recommended to add icons with a transparent background (i.e. *.gif or *.png with an alpha layer).
+</p>
+
+<p>
+In this dialog you can also modify the size, angle, etc. of every vehicle. Also it is possible to move
+the vehicle positions relative to the route line.
+</p>
+
+<h3>Animated vehicle icons</h3>
 <p>When the vehicle is an animated image (e.g. animated gif), Route Generator will playback the animation
 in the generated movie!
 </p>
@@ -110,30 +138,32 @@ If you still want to use Bmp2Avi as generator, you can always switch back using 
 
 <p>
 It's possible to modify the settings that Bmp2Avi or FFmpeg uses to
-convert BMP's to an AVI file. To change these settings open the preferences through Edit->Preferences.
-Here you can change these settings:
+convert BMP's to an AVI file. To change these settings open the preferences through Edit->Preferences:
+<br>
+<img src="movie-generation-preferences.png" width="800" height="350">
+<br>
+
+In this dialog you can change these settings:
 </p>
 <h3>Bmp2Avi or FFMpeg location</h3>
 <p>
 Here you can change the location of bmp2avi.exe or ffmpeg.exe (Windows only), in case you have it in a different location
 or for some reason Route Generator is unable to find it anymore.
 </p>
-<h3>Name of output AVI</h3>
-By default the name of the generated AVI is "out.avi", but here you can change this name. E.g.
+<h3>Name of output movie</h3>
+By default the name of the generated movie is "out.avi", but here you can change this name. E.g.
 when you change this to "mymovie", the generated movie will be called "mymovie.avi".
 <p>
 </p>
-<h3>Delete BMP's</h3>
+<h3>Delete image frames</h3>
 <p>
-When you check this, the BMP's will automatically be deleted after the bmp2avi conversion. The
+When you check this, the generated image frames (BMP's) will automatically be deleted after the conversion. The
 first and last frame will not be deleted, so you can still use them in your video editing software.
 </p>
 <h3>Set begin/end delay</h3>
 <p>
 You can select a delay in seconds to add before the beginning or after the end of the generated movie (this delay will
-not be visible in the preview, only in the generated movie):
-<br>
-<img src="movie-generation-preferences.png">
+not be visible in the preview, only in the generated movie)
 </p>
 <h3>FPS</h3>
 <p>
@@ -150,8 +180,24 @@ This value indicates after how many frames a key frame is created (the default i
 <h3>Codec</h3>
 <p>
 Here you can change the codec that Bmp2Avi  or FFMpeg uses to generate the movie. This can result
-in smaller movies, but it's possible that not all codecs are accepted by your video editing software.
+in smaller or higher quality movies, but it's possible that not all codecs are accepted by your video editing software.
+So, first check which codes are supported by you video editor.
 </p>
+<h3>Output file type</h3>
+<p>
+Here you can change the file type (container) that is used to store your movie in. Again, check which file types
+are supported by your video editor. Possible options are: avi, mp4, mpg, mkv
+</p>
+<h3>Manual ffmpeg arguments</h3>
+<p>
+For advanced (FFmpeg) users!
+</p>
+<p>
+Here you can tweak your custom commandline parameters that are sent to FFmpeg for generating the movie.
+Don't modify the -i map %05d argument, because the input frames will always be mapXXXXX.bmp files! Unless you know what you are doing of course.
+</p>
+
+
 <h3 id="switchgenerator">Switch between FFmpeg or Bmp2Avi as movie generator (Advanced tab)</h3>
 <p>
 In the Advanced tab it's possible to switch movie generator between ffmpeg or bmp2avi on Windows (on Linux FFmpeg this is the only option).

@@ -93,6 +93,7 @@
  *  v1.10.0 Zooming and pan of map
  *          Create new empty folder when files detected, instead of deleting all files
  *          Fixed default location of ffmpeg on linux (removed /usr/bin)
+ *          Added more default (animated) vehicles
  */
 
 extern const QString applicationName("Route Generator version 1.10.0");
