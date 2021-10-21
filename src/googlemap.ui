@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>736</width>
-    <height>633</height>
+    <width>938</width>
+    <height>620</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -100,6 +100,16 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
      <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Map type:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="mapTypeBox"/>
+     </item>
+     <item>
       <widget class="QPushButton" name="goButton">
        <property name="text">
         <string>Go</string>
@@ -118,8 +128,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>716</width>
-        <height>526</height>
+        <width>918</width>
+        <height>515</height>
        </rect>
       </property>
       <layout class="QGridLayout">

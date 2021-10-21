@@ -21,6 +21,7 @@
   <body>
     <div id="map"></div>
     <script>
+	  /*LATLON will be replaced from C++*/
       var latLonInputString = "LATLON";
       var latLonInput = latLonInputString.split(",");
       var map;
@@ -31,6 +32,8 @@
           zoom: ZOOM,
           disableDefaultUI: true
         });
+		/*MAPTYPE will be replaced from C++*/
+		map.setMapTypeId("MAPTYPE");
       }
       
       function getBounds() {
@@ -58,20 +61,17 @@
 
 		  geoRect.setMap(map);
 		  
-/*		  
-          TODO: Not working yet (bug in google maps API always results in "InvalidValueError" exception)
-          //sw = new google.maps.LatLng(rectCoordinates[3].lat, rectCoordinates[3].lon);
-		  //ne = new google.maps.LatLng(rectCoordinates[1].lat, rectCoordinates[1].lon);
-          //map.fitBounds(new google.maps.LatLngBounds(sw,ne));
-		  
-          llBounds = {north : rectCoordinates[1].lat, east : rectCoordinates[1].lon,
-                      south : rectCoordinates[3].lat, west : rectCoordinates[3].lon};
-          map.fitBounds(llBounds);
-*/
+		  sw = new google.maps.LatLng(rectCoordinates[3].lat, rectCoordinates[3].lng);
+		  ne = new google.maps.LatLng(rectCoordinates[1].lat, rectCoordinates[1].lng);
+		  map.fitBounds(new google.maps.LatLngBounds(sw, ne));
       }
 	  
 	  function deleteGeoRect() {
           geoRect.setMap(null);
+	  }
+	  
+	  function setMapType(typeTxt) {
+   	      map.setMapTypeId(typeTxt);
 	  }
 
     </script>

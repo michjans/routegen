@@ -91,6 +91,8 @@
  *          Prevent zoomlevels with decimal numbers in Google map URL's
  *          Google maps dialog geometry saved and restored
  *  v1.10.0 Zooming and pan of map
+ *          Possible to select map type during Google Maps import (roadmap, sattelite, terrain, etc.)
+ *          GPX import now automatically zooms map to boundaries of route
  *          Create new empty folder when files detected, instead of deleting all files
  *          Fixed default location of ffmpeg on linux (removed /usr/bin)
  *          Added more default (animated) vehicles

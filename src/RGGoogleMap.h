@@ -42,6 +42,7 @@ private slots:
     void continue_Accept();
     void on_goButton_clicked(bool);
     void on_fixButton_clicked(bool);
+    void on_mapTypeBox_textActivated(const QString &);
     void on_zoomBox_valueChanged(int zoom);
 
 	void on_webView_loadFinished ( bool ok );

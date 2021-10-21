@@ -99,7 +99,9 @@ After your Qt build environment is setup correctly, all you need to do is:
   - Google maps dialog geometry saved and restored
 - 1.10.0 release
   - Panning and zooming of map using mouse (and wheel)
-  - Always create new empty foler when files are detected (to prevent that
+  - Possible to select map type during Google Maps import (roadmap, sattelite, terrain, etc.)
+  - GPX import now automatically zooms map to boundaries of route
+  - Always create new empty folder when files are detected (to prevent that
     files are lost coincidentally)
   - Fixed default location of ffmpeg on linux (removed /usr/bin); assume it
     can always be found in the PATH

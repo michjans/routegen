@@ -84,6 +84,11 @@ RGGoogleMap::RGGoogleMap(QWidget *parent, const QGeoPath &geoPath)
     QObject::connect(ui.buttonBox, &QDialogButtonBox::accepted,
                         this, &RGGoogleMap::on_accept);
 
+    ui.mapTypeBox->insertItem(0, "roadmap");
+    ui.mapTypeBox->insertItem(1, "terrain");
+    ui.mapTypeBox->insertItem(2, "hybrid");
+    ui.mapTypeBox->insertItem(3, "satellite");
+
 	//Init map resolution
 	on_fixButton_clicked(true);
 
@@ -191,10 +196,8 @@ void RGGoogleMap::on_goButton_clicked(bool)
 	{
 		QMessageBox::warning(this, tr("Web Test"),
 												 tr("URL should have format similar like this:\n"
-														"http://maps.google.nl/?ie=UTF8&ll=52.36428,4.847116&spn=0.035902,0.077162&z=14\n"
-														"OR\n"
 														"https://www.google.nl/maps/@52.374716,4.898623,12z\n"
-														"Copy it from the paste link option from Google Maps in your browser."));
+                                                        "Copy it from the Google Maps URL line in your browser."));
 		return;
 	}
 
@@ -209,6 +212,12 @@ void RGGoogleMap::on_goButton_clicked(bool)
 void RGGoogleMap::on_fixButton_clicked(bool)
 {
     ui.webView->setFixedSize(QSize(ui.spinBoxX->value(), ui.spinBoxY->value()));
+}
+
+void RGGoogleMap::on_mapTypeBox_textActivated(const QString &text)
+{
+    qDebug() << "on_mapTypeBox_textActivated:" << text;
+    ui.webView->page()->runJavaScript(QString("setMapType(\"") + text + "\");");
 }
 
 void RGGoogleMap::on_zoomBox_valueChanged(int zoom)
@@ -264,6 +273,7 @@ QString RGGoogleMap::genHtml(const QString &latlon, const QString &zoom) const
 	QString html = m_html_template;
 	html.replace("LATLON", latlon);
 	html.replace("ZOOM", zoom);
+    html.replace("MAPTYPE", ui.mapTypeBox->currentText());
 
 #if 0
 	QFile file("out.html");
