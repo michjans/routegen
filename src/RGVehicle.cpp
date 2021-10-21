@@ -26,7 +26,9 @@
 
 namespace
 {
-    const double gVehicleRotRange=10.0;
+    //To prevent jerky vehicle movement, increase this number, so that the vehicle is only
+    //rotated when the path's angle difference is greater than this number.
+    const double gVehicleRotRange=20.0;
 }
 
 RGVehicle::RGVehicle(const QString &fileName,int size,bool mirror,int startAngle, bool acceptRotation,
@@ -167,7 +169,7 @@ void RGVehicle::setRotation(qreal angle)
 {
   if (!mAcceptRotation)
     return;
-  qDebug()<<"angle:"<<angle;
+
   while (angle < 0)
     angle += 360;
   while (angle > 360)

@@ -96,6 +96,7 @@
  *          Create new empty folder when files detected, instead of deleting all files
  *          Fixed default location of ffmpeg on linux (removed /usr/bin)
  *          Added more default (animated) vehicles
+ *          Vehicle rotation smoothness increased
  */
 
 extern const QString applicationName("Route Generator version 1.10.0");
