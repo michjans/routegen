@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Route Generator
+Exec=routegen
+Icon=routegen
+Comment=Route Generator is a tool to draw routes on a map and generate a movie from it.
+Terminal=false
+Categories=Video;AudioVideo;AudioVideoEditing;Qt;
