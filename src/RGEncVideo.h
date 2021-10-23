@@ -53,7 +53,7 @@ protected slots:
 	void browseClicked();
 
 protected:
-	bool checkForCodecExecutable(const QString &execName);
+    bool checkForCodecExecutable(QString &execName);
 	virtual bool initCodecs() = 0;
 
 protected:

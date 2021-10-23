@@ -247,15 +247,28 @@ void RGEncVideo::browseClicked()
   mUi.codecExecLocLE->setText(mExecName);
 }
 
-bool RGEncVideo::checkForCodecExecutable(const QString &execName)
+bool RGEncVideo::checkForCodecExecutable(QString &execName)
 {
 #ifdef __linux__
     //On Linux it should be found in the PATH
     return !QStandardPaths::findExecutable(execName).isEmpty();
 #else
     QFile codecExec(execName);
-    if (codecExec.exists() == false) return false;
-    if (!codecExec.fileName().contains(encoderName())) return false;
+    if (!codecExec.exists())
+    {
+        //First check the default location again
+        execName = QDir::currentPath() + "/ffmpeg/bin/ffmpeg.exe";
+        codecExec.setFileName(execName);
+        if (!codecExec.exists())
+        {
+            //Still not found!
+            return false;
+        }
+    }
+    if (!codecExec.fileName().contains(encoderName()))
+    {
+        return false;
+    }
 #endif
   return true;
 }

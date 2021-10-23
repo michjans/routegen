@@ -121,10 +121,10 @@ This tool is not included in the source, so you will have to install it on
 your computer before running Route Generator. Make sure it is installed if you
 want to be able to generate a movie.
 
-As of version 1.7.1 FFmpeg for Windows is also distributed with Route Generator
+FFmpeg for Windows is also distributed with Route Generator for Windows
 and will be selected as the default at installation.
-The Zeranoe FFmpeg Windows builds are provided by Kyle Schwarz from:
-http://ffmpeg.zeranoe.com/builds
+The CODEX FFmpeg Windows builds are provided by Gyan Doshi from:
+https://www.gyan.dev/ffmpeg/builds/
 
 On Windows, Route Generator can also make use of a freeware 3rdparty tool:
 Bmp2Avi (Copyright (C) Paul Roberts 1996 - 1998)

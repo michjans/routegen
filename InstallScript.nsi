@@ -9,8 +9,8 @@
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
-; MUI 1.67 compatible ------
-!include "MUI.nsh"
+!include "MUI2.nsh"
+!include "x64.nsh"
 
 ; MUI Settings
 !define MUI_ABORTWARNING
@@ -43,8 +43,13 @@ Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 OutFile "routegen-win64-${PRODUCT_VERSION}.exe"
 InstallDir "$PROGRAMFILES64\Route Generator"
 
-; Registry key to check for directory (so if you install again, it will
+; Registry key to check for current installation directory (so if you install again, it will
 ; overwrite the old one automatically)
+; !!!!!!!!!!!!!!!!!!!!!NOTE!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+; This function will read from the 32 bits registry! This is fine, because previous versions of RG were 32 bits.
+; The current installer will write to 64 bits registry (Post section)! So we can't use InstallDirRegKey, next time.
+; We probably have to read this key manually from the 64 bits registry in the .onInit function, but also still
+; take into account that 32 bits versions are still out there.
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" "Install_Dir"
 ShowInstDetails show
 ShowUnInstDetails show
@@ -103,18 +108,25 @@ Section -Post
 SectionEnd
 
 Function .onInit
-  IfFileExists $INSTDIR\Uninstall.exe alreadyInstalled theEnd
+  ${If} ${RunningX64}
+    IfFileExists $INSTDIR\Uninstall.exe alreadyInstalled theEnd
 
-alreadyInstalled:
-  MessageBox MB_YESNO "Route Generator already installed. Uninstall first? (Recommended)" IDYES unInstall IDNO noUninstall
-  unInstall:
-    ;PROBLEM: If 32 bits version is still installed INSTDIR will point to Program Files(x86)! (read from InstallDirRegKey above),
-	;         but now we install the 64 bit version which should go into Program Files! Can we somehow reset the INSTDIR variable?
-    Exec $INSTDIR\Uninstall.exe
-    Goto theEnd
-  noUnInstall:
-    DetailPrint "Old version will be overwritten"
-  theEnd:
+    alreadyInstalled:
+      MessageBox MB_YESNO "Route Generator already installed. Uninstall first? (Recommended)" IDYES unInstall IDNO noUninstall
+      unInstall:
+        Exec $INSTDIR\Uninstall.exe
+        # If 32 bits version is still installed INSTDIR will point to Program Files(x86), but for 64 bit it should point to Program Files
+        StrCpy $INSTDIR "$PROGRAMFILES64\Route Generator"
+        Goto theEnd
+      noUnInstall:
+        DetailPrint "Old version will be overwritten"
+      theEnd:
+    
+  ${Else}
+    MessageBox MB_ICONSTOP|MB_OK "Unfortunately Route Generator does not work on 32 bits Windows!"
+    Abort ; causes installer to quit.
+  ${EndIf}
+
 FunctionEnd
 
 Function un.onUninstSuccess
@@ -135,6 +147,8 @@ Section Uninstall
   Delete "$INSTDIR\README.txt"
   Delete "$INSTDIR\LICENSE"
   Delete "$INSTDIR\icudtl.dat"
+  Delete "$INSTDIR\msvcp140.dll"
+  Delete "$INSTDIR\msvcp140_1.dll"
   Delete "$INSTDIR\qtwebengine_devtools_resources.pak"
   Delete "$INSTDIR\qtwebengine_resources.pak"
   Delete "$INSTDIR\qtwebengine_resources_100p.pak"
