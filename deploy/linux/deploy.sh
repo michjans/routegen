@@ -1,5 +1,6 @@
 #!/bin/bash
-#vehicles directory and google-maps-template.html should be placed inside ./routegen/usr/bin as well
+#vehicles, doc directory and google-maps-template.html should be placed inside ./routegen/usr/bin as well
+#we should find a way so routegen can find it in usr/share/icons,doc, etc.
 
 mkdir -p ./routegen/usr/lib
 mkdir -p ./routegen/usr/bin
