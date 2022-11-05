@@ -88,6 +88,7 @@ RGGoogleMap::RGGoogleMap(QWidget *parent, const QGeoPath &geoPath)
     ui.mapTypeBox->insertItem(1, "terrain");
     ui.mapTypeBox->insertItem(2, "hybrid");
     ui.mapTypeBox->insertItem(3, "satellite");
+    ui.mapTypeBox->setCurrentIndex(0);
 
 	//Init map resolution
 	on_fixButton_clicked(true);
