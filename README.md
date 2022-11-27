@@ -13,8 +13,26 @@ On Windows use the distributed installer named routegen-winxx-x.x.exe
 On Linux and Mac OS the program has to be build from source code (see below)
 
 ## Building Route Generator from the source code
+Since version 1.xx RouteGenerator supports importing GeoTiff maps, so it requires
+libgeotiff development libraries to be installed, before it can be build.
+Libgeotiff depends on proj (dev) and sqlite3, so they have to be installed as well.
+
+### Install libgeotiff (Linux)
+sudo apt install sqlite3
+sudo apt install proj
+sudo apt install libproj-dev
+mkdir libgeotiff
+cd libgeotiff
+git clone https://github.com/OSGeo/libgeotiff.git
+git checkout 1.7.1
+cd libgeotiff
+(Follow GeoTiff installation instructions)
+
+### Install Qt
 Since version 1.8 Route Generator should be built using Qt 5.12 or higher. 
 So Qt 5.12 or higher should be downloaded and installed. 
+
+### Build Route Generator
 After your Qt build environment is setup correctly, all you need to do is:
 - unzip or clone the source code in a new directory
 - open a command shell with the Qt build environment correctly set-up
