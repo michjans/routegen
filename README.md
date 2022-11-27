@@ -33,15 +33,17 @@ Since version 1.8 Route Generator should be built using Qt 5.12 or higher.
 So Qt 5.12 or higher should be downloaded and installed. 
 
 ### Build Route Generator
+Since version 1.11 Route Generator should be built using Qt 5.15 or higher using CMake.
+So Qt 5.15 or higher should be downloaded and installed, including CMake.
 After your Qt build environment is setup correctly, all you need to do is:
 - unzip or clone the source code in a new directory
 - open a command shell with the Qt build environment correctly set-up
 - cd to the the directory where you unzipped the source code
   (e.g. cd routegen/src)
+- set your CMAKE_PREFIX_PATH environment variable to the Qt 5 installation prefix. 
 - execute the following commands:
-  - qmake routegen.pro  
-  - make/gmake (on Linux)
-  - whatever build command on other OS's
+  - cmake CMakeLists.txt
+  - make (on Linux) or whatever build command on other OS's
 
 ## Version history
 - 1.0   -Initial version
