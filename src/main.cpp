@@ -97,9 +97,10 @@
  *          Fixed default location of ffmpeg on linux (removed /usr/bin)
  *          Added more default (animated) vehicles
  *          Vehicle rotation smoothness increased
+ *  v1.11.0 GeoTiff support
  */
 
-extern const QString applicationName("Route Generator version 1.10.0");
+extern const QString applicationName("Route Generator version 1.xx.x");
 
 int main(int argc, char *argv[])
 {

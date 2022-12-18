@@ -10,6 +10,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # qt_standard_project_setup()
 set(CMAKE_AUTOMOC ON)
 include(GNUInstallDirs)
+set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Core)
@@ -52,6 +53,7 @@ add_executable(routegen WIN32 MACOSX_BUNDLE
     settings.ui
     vehicledialog.ui
     videosettings.ui
+    routegen.qrc
 )
 target_compile_definitions(routegen PRIVATE
     QT_DISABLE_DEPRECATED_BEFORE=0x060000
@@ -64,40 +66,6 @@ target_link_libraries(routegen PRIVATE
     Qt::WebEngineWidgets
     Qt::Widgets
     geotiff_library
-)
-
-
-# Resources:
-set(routegen_resource_files
-    "icons/action_filenew.svg"
-    "icons/checkmark_green.svg"
-    "icons/desktop-32.png"
-    "icons/draw-path.png"
-    "icons/exit.png"
-    "icons/fileopen.png"
-    "icons/generate.png"
-    "icons/globe.svg"
-    "icons/google-maps-logo.png"
-    "icons/gps.png"
-    "icons/map_pencil.svg"
-    "icons/map_pencil_save.svg"
-    "icons/mapgen.png"
-    "icons/media-floppy.svg"
-    "icons/new-route.png"
-    "icons/player_play.png"
-    "icons/player_stop.png"
-    "icons/redo.png"
-    "icons/reset.png"
-    "icons/save-project.png"
-    "icons/settings.png"
-    "icons/undo.png"
-)
-
-qt_add_resources(routegen "routegen"
-    PREFIX
-        "/icons"
-    FILES
-        ${routegen_resource_files}
 )
 
 set(CMAKE_EXE_LINKER_FLAGS "-fuse-ld=gold ${CMAKE_CXX_FLAGS}")
