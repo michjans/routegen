@@ -249,10 +249,7 @@ void RGEncVideo::browseClicked()
 
 bool RGEncVideo::checkForCodecExecutable(QString &execName)
 {
-#ifdef __linux__
-    //On Linux it should be found in the PATH
-    return !QStandardPaths::findExecutable(execName).isEmpty();
-#else
+#ifdef __WINDOWS__
     QFile codecExec(execName);
     if (!codecExec.exists())
     {
@@ -269,6 +266,9 @@ bool RGEncVideo::checkForCodecExecutable(QString &execName)
     {
         return false;
     }
+#else
+    //On other OS it should be found in the PATH
+    return !QStandardPaths::findExecutable(execName).isEmpty();
 #endif
   return true;
 }
