@@ -249,7 +249,7 @@ void RGEncVideo::browseClicked()
 
 bool RGEncVideo::checkForCodecExecutable(QString &execName)
 {
-#ifdef __WINDOWS__
+#ifdef Q_OS_WIN
     QFile codecExec(execName);
     if (!codecExec.exists())
     {
