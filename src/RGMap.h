@@ -43,6 +43,8 @@ private:
     //World to pixels
     QPoint worldToPixel(const QPointF &worldPoint) const;
 
+    RGMapBounds getMapBoundsFromGeoTiff(const QString &fileName);
+
 
     QPixmap mMap;
     QString mFileName;

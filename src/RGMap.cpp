@@ -3,8 +3,13 @@
 
 #include <QJsonObject>
 #include <QtMath>
-
 #include <QDebug>
+
+//GeoTiff headers
+#include "geotiff.h"
+#include "geo_normalize.h"
+#include "geovalues.h"
+#include "xtiffio.h"
 
 #include <algorithm>
 
@@ -46,8 +51,18 @@ bool RGMap::loadMap(const QString &fileName, const QPixmap &map, const RGMapBoun
             m_bounds = RGSettings::getMapGeoBounds(fileName);
         }
 
+        if (!m_bounds.isValid() && fileName.endsWith(".tif"))
+        {
+            //Check if it's a geotiff file and import boundaries from file
+            m_bounds = getMapBoundsFromGeoTiff(fileName);
+        }
+
         if (m_bounds.isValid())
         {
+            //TODO:At this point we can have a geotiff file or a google maps imported map.
+            //     Either we should transfer everything to make use of geotiff (i.e. also store the imported google map in geotiff format),
+            //     so we can use the geotiff lib coord conversion methods from now on.
+            //     Or else make a separate conversion class for either geotiff or google maps project conversions and use that from now on.
             //Calculate topleft/bottomright of the current map in pixel coordinates
             mTopLeft = worldToPixel(project(QGeoCoordinate(m_bounds.getNE().latitude(), m_bounds.getSW().longitude())));
             mBottomRight = worldToPixel(project(QGeoCoordinate(m_bounds.getSW().latitude(), m_bounds.getNE().longitude())));
@@ -55,7 +70,7 @@ bool RGMap::loadMap(const QString &fileName, const QPixmap &map, const RGMapBoun
             qDebug() << "zoom:" << m_bounds.getZoom();
             qDebug() << "pixWidth:" << mBottomRight.x() - mTopLeft.x();
             qDebug() << "pixHeigth:" << mBottomRight.y() - mTopLeft.y();
-        }
+        }            
         else
         {
             mTopLeft = QPoint();
@@ -173,4 +188,66 @@ QPoint RGMap::worldToPixel(const QPointF &worldPoint) const
     int scale = 1 << m_bounds.getZoom();
 
     return QPoint(qFloor(worldPoint.x() * scale), qFloor(worldPoint.y() * scale));
+}
+
+RGMapBounds RGMap::getMapBoundsFromGeoTiff(const QString &fileName)
+{
+    RGMapBounds mapBounds;
+    std::string fileNameStr = fileName.toStdString();
+    TIFF *tif=XTIFFOpen(fileNameStr.c_str(),"r");
+    if (!tif)
+    {
+        return mapBounds;
+    }
+
+    GTIF *gtif = GTIFNew(tif);
+    if (!gtif)
+    {
+        qDebug() << "Failed opening GTIF.";
+
+        XTIFFClose(tif);
+        return mapBounds;
+    }
+
+    GTIFPrint(gtif,0,0);
+
+    GTIFDefn	defn;
+    if( GTIFGetDefn( gtif, &defn ) )
+    {
+        GTIFPrintDefnEx( gtif, &defn, stdout );
+
+        int		xsize, ysize;
+        TIFFGetField( tif, TIFFTAG_IMAGEWIDTH, &xsize );
+        TIFFGetField( tif, TIFFTAG_IMAGELENGTH, &ysize );
+        unsigned short raster_type = RasterPixelIsArea;
+        GTIFKeyGetSHORT(gtif, GTRasterTypeGeoKey, &raster_type, 0, 1);
+        double xmin = (raster_type == RasterPixelIsArea) ? 0.0 : -0.5;
+        double ymin = xmin;
+        double ymax = ymin + ysize;
+        double xmax = xmin + xsize;
+
+
+        /*
+        GTIFReportACorner( gtif, defn, fp_out, "Lower Left", xmin, ymax,
+                           inv_flag, dec_flag );
+        GTIFReportACorner( gtif, defn, fp_out, "Upper Right", xmax, ymin,
+                           inv_flag, dec_flag );
+        GTIFReportACorner( gtif, defn, fp_out, "Lower Right", xmax, ymax,
+                           inv_flag, dec_flag );
+        GTIFReportACorner( gtif, defn, fp_out, "Center", xmin + xsize/2.0, ymin + ysize/2.0,
+                           inv_flag, dec_flag );
+        */
+
+        double lon = xmin;
+        double lat = ymax;
+        if( !GTIFImageToPCS( gtif, &lon, &lat ) )
+        {
+            qDebug() << "lat:" << lat;
+            qDebug() << "lon:" << lon;
+        }
+    }
+
+    GTIFFree(gtif);
+    XTIFFClose(tif);
+    return mapBounds;
 }
