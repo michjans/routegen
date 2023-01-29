@@ -273,11 +273,15 @@ void RGMainWindow::on_actionSave_image_triggered(bool)
             fileName += ".png";
         }
         mView->saveRenderedImage(fileName);
+
+        //TODO: Call save on mMap which should pass storing the geobounds on to the RGGoogleMapProjection
+        /*
         if (mMap->hasGeoBounds())
         {
             //If current map has geo bounds, also store geo bounds along with the saved map image
             RGSettings::setMapGeoBounds(fileName, mMap->geoBounds());
         }
+        */
 
         RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
     }

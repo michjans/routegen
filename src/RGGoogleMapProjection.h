@@ -1,0 +1,33 @@
+#ifndef RGGOOGLEMAPPROJECTION_H
+#define RGGOOGLEMAPPROJECTION_H
+
+#include "RGMapProjection.h"
+
+#include "RGMapBounds.h"
+
+#include <QPointF>
+#include <QGeoCoordinate>
+
+class RGGoogleMapProjection : public RGMapProjection
+{
+public:
+    RGGoogleMapProjection(const RGMapBounds &mapBounds);
+    virtual ~RGGoogleMapProjection() override;
+
+    bool isValid() const override;
+    QPoint convert(const QGeoCoordinate& geoPoint) const override;
+
+private:
+    //Coordinate to world coordinates
+    QPointF project(const QGeoCoordinate& geoPoint) const; //TODO: To map projection
+
+    //World to pixels
+    QPoint worldToPixel(const QPointF &worldPoint) const;
+
+    RGMapBounds m_bounds;
+    QPoint mTopLeft;
+    QPoint mBottomRight;
+    int mAntiMeredianPosX;
+};
+
+#endif // RGGOOGLEMAPPROJECTION_H
