@@ -30,9 +30,29 @@ Execute the following commands:
 - cd libgeotiff
 
 Then follow the GeoTiff installation instructions and choose for the cmake installation,
+
 so that the GeoTIFF package can be found from the CMakeLists.txt, e.g.
 - cd build_cmake
 - sudo make install
+
+### Install libtiff, proj, sqlite3 (>= 3.11) and libgeotiff (Windows)
+
+- Download libtiff from https://download.osgeo.org/libtiff/ (at least version 4.5)
+- Download Proj (dev) from https://proj.org/download.html (at least version 9.1)
+- Download sqlite3 from: https://sqlite.org/download.html (Precompiled Binaries for Windows 64-bit)
+- Unzip the downloaded zip files in a directory, e.g. C:\Users\mjans
+- Create a directory for the locally installed libraries
+- mkdir C:\Users\mjans\dev\local
+- Assuming Qt is already installed:
+- Open Qt 5.15.2 MSVC 2019 Cmd shell, then execute:
+- "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+- cd ...\tiff-4.5.0
+- cmake -DCMAKE_INSTALL_PREFIX=C:/Users/mjans/dev/local -G "NMake Makefiles"
+- cmake --build . --config Release --target install
+- TODO: proj requires sqlite3!!!!
+- cd ...\proj-9.1.0
+- cmake -DCMAKE_INSTALL_PREFIX=C:/Users/mjans/dev/local -G "NMake Makefiles"
+
 
 ### Build Route Generator
 Since version 1.11 Route Generator should be built using Qt 5.15 or higher using CMake.
@@ -44,7 +64,12 @@ After your Qt build environment is setup correctly, all you need to do is:
   (e.g. cd routegen/src)
 - set your CMAKE_PREFIX_PATH environment variable to the Qt 5 installation prefix. 
 - execute the following commands:
-  - cmake CMakeLists.txt
+  - Windows (pass path where the installed libgeotiff library etc. can be found):
+    - Open Qt 5.15.2 MSVC 2019 Cmd shell, then execute:
+    - "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+    - cmake -DCMAKE_MODULE_PATH=C:/Users/mjans/dev/local CMakeLists.txt
+  - Linux:
+    - cmake CMakeLists.txt
   - make (on Linux) or whatever build command on other OS's
 
 ## Version history
