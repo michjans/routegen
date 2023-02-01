@@ -16,6 +16,7 @@ set(CMAKE_AUTOUIC ON)
 find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Positioning WebEngineWidgets Widgets)
 find_package(GeoTIFF REQUIRED)
+find_package(TIFF REQUIRED)
 
 add_executable(routegen WIN32 MACOSX_BUNDLE
     GPXSelectionDialog.cpp GPXSelectionDialog.h

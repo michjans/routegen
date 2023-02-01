@@ -13,11 +13,15 @@ On Windows use the distributed installer named routegen-winxx-x.x.exe
 On Linux and Mac OS the program has to be build from source code (see below)
 
 ## Building Route Generator from the source code
-Since version 1.xx RouteGenerator supports importing GeoTiff maps, so it requires
+Since version x.x Route Generator should be built using Qt 5.15 or higher using CMake.
+So Qt 5.15 or higher should be downloaded and installed, including CMake.
+Also now Route Generator supports importing GeoTiff maps, so it requires
 libgeotiff development libraries to be installed, before it can be build.
-Libgeotiff depends on libproj-dev(!) and sqlite3, so they have to be installed as well.
+Libgeotiff depends on libtiff, libproj and sqlite3, so they have to be installed as well.
 
-### Install libgeotiff (Linux)
+### Install libgeotiff and dependent libraries
+
+#### Linux (Ubuntu or similar OS)
 
 Execute the following commands:
 - sudo apt install sqlite3
@@ -35,42 +39,72 @@ so that the GeoTIFF package can be found from the CMakeLists.txt, e.g.
 - cd build_cmake
 - sudo make install
 
-### Install libtiff, proj, sqlite3 (>= 3.11) and libgeotiff (Windows)
+#### Windows
 
+On Windows all dependent packages have to be build from source.
 - Download libtiff from https://download.osgeo.org/libtiff/ (at least version 4.5)
 - Download Proj (dev) from https://proj.org/download.html (at least version 9.1)
-- Download sqlite3 from: https://sqlite.org/download.html (Precompiled Binaries for Windows 64-bit)
-- Unzip the downloaded zip files in a directory, e.g. C:\Users\mjans
-- Create a directory for the locally installed libraries
+- Download sqlite3 source code from: https://sqlite.org/download.html (sqlite-amalgamation-3400100.zip)
+- Download libgeotiff source code from https://github.com/OSGeo/libgeotiff/releases/tag/1.7.1
+
+- Unzip the downloaded zip files in a development directory, e.g. C:\Users\mjans\dev
+- Create a directory to deploy the locally installed libraries to (from now on C:\Users\mjans\dev\local is used as an example)
 - mkdir C:\Users\mjans\dev\local
 - Assuming Qt is already installed:
 - Open Qt 5.15.2 MSVC 2019 Cmd shell, then execute:
 - "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+
 - cd ...\tiff-4.5.0
-- cmake -DCMAKE_INSTALL_PREFIX=C:/Users/mjans/dev/local -G "NMake Makefiles"
-- cmake --build . --config Release --target install
-- TODO: proj requires sqlite3!!!!
+- mkdir Release
+- cd Release
+- cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=C:/Users/mjans/dev/local -G "NMake Makefiles" ..
+- nmake install
+
+- cd ...\sqlite-amalgamation-3400100
+- cl -O2 -D_USRDLL /D_WINDLL /DSQLITE_ENABLE_FTS4 /DSQLITE_ENABLE_RTREE /DSQLITE_ENABLE_COLUMN_METADATA /DSQLITE_API=__declspec(dllexport)  sqlite3.c /MT /link /DLL /out:sqlite3.dll
+- cl -O2 /DSQLITE_ENABLE_FTS4 /DSQLITE_ENABLE_RTREE /DSQLITE_ENABLE_COLUMN_METADATA shell.c sqlite3.c /MT /Fesqlite3.exe
+- copy *.h files to C:/Users/mjans/dev/local/include (the local place where you want your libraries be installed)
+- copy *.lib file to C:/Users/mjans/dev/local/lib
+- copy *.dll file to C:/Users/mjans/dev/local/bin
+- copy *.exe file to C:/Users/mjans/dev/local/bin
+
 - cd ...\proj-9.1.0
-- cmake -DCMAKE_INSTALL_PREFIX=C:/Users/mjans/dev/local -G "NMake Makefiles"
+- mkdir Release
+- cd Release
+- cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DBUILD_PROJSYNC=OFF -DCMAKE_INSTALL_PREFIX=C:/Users/mjans/dev/local -DENABLE_CURL=OFF -G "NMake Makefiles" ..
+- nmake install
 
+- cd ...\libgeotiff-1.7.1
+- mkdir Release
+- cd Release
+- cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="/WX" -DCMAKE_CXX_FLAGS="/WX" -DCMAKE_INSTALL_PREFIX=C:/Users/mjans/dev/local -DPROJ_INCLUDE_DIR=C:/Users/mjans/dev/local/include -DPROJ_LIBRARY=C:/Users/mjans/dev/local/lib/proj.lib -G "NMake Makefiles" ..
+- cmake --build . --config Release --target install
 
-### Build Route Generator
-Since version 1.11 Route Generator should be built using Qt 5.15 or higher using CMake.
-So Qt 5.15 or higher should be downloaded and installed, including CMake.
-After your Qt build environment is setup correctly, all you need to do is:
-- unzip or clone the source code in a new directory
-- open a command shell with the Qt build environment correctly set-up
-- cd to the the directory where you unzipped the source code
+### Build Route Generator itself
+After everything is setup correctly, now Route Generator itself can be build.
+- unzip or clone the Route Generator source code in a new directory
+
+#### Windows
+- Open Qt 5.15.2 MSVC 2019 Cmd shell, then execute:
+- "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+- cd to the the directory where you unzipped or cloned the source code
+  (e.g. cd .../routegen/src)
+- mkdir Release
+- cd Release
+- cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=C:/Users/mjans/dev/local ..
+- nmake
+
+Note: when using QtCreator on Windows you also have to set the CMAKE_INSTALL_PREFIX key in the CMake
+      build setting to point to the "C:/Users/mjans/dev/local", directory, otherwise GeoTIFF cannot be found.
+
+#### Linux (or Mac)
+- cd to the the directory where you unzipped or cloned the source code
   (e.g. cd routegen/src)
-- set your CMAKE_PREFIX_PATH environment variable to the Qt 5 installation prefix. 
-- execute the following commands:
-  - Windows (pass path where the installed libgeotiff library etc. can be found):
-    - Open Qt 5.15.2 MSVC 2019 Cmd shell, then execute:
-    - "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-    - cmake -DCMAKE_MODULE_PATH=C:/Users/mjans/dev/local CMakeLists.txt
-  - Linux:
-    - cmake CMakeLists.txt
-  - make (on Linux) or whatever build command on other OS's
+- mkdir Release
+- cd Release
+- cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=C:/Users/mjans/dev/local ..
+- make
+
 
 ## Version history
 - 1.0   -Initial version
