@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+    <Name>Route Generator</Name>
+    <Version>1.11.0-beta1</Version>
+    <Title>Route Generator Installer</Title>
+    <Publisher>MJProductions</Publisher>
+    <ProductUrl>https://www.routegenerator.net</ProductUrl>
+    <InstallerApplicationIcon>routegen</InstallerApplicationIcon>
+    <InstallerWindowIcon>routegen.png</InstallerWindowIcon>
+    <MaintenanceToolName>uninstall</MaintenanceToolName>
+    <StartMenuDir>Route Generator</StartMenuDir>
+    <TargetDir>@HomeDir@/Route Generator</TargetDir>
+    <ControlScript>control.qs</ControlScript>
+</Installer>

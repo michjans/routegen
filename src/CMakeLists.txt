@@ -18,6 +18,11 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Positioning WebEngine
 find_package(GeoTIFF REQUIRED)
 find_package(TIFF REQUIRED)
 
+if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+  enable_language("RC")
+  set (WIN32_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/routegen.rc)
+endif()
+
 add_executable(routegen WIN32 MACOSX_BUNDLE
     GPXSelectionDialog.cpp GPXSelectionDialog.h
     RGEditPath.cpp RGEditPath.h
@@ -58,6 +63,7 @@ add_executable(routegen WIN32 MACOSX_BUNDLE
     vehicledialog.ui
     videosettings.ui
     routegen.qrc
+    ${WIN32_RESOURCES}
 )
 target_compile_definitions(routegen PRIVATE
     QT_DISABLE_DEPRECATED_BEFORE=0x060000
