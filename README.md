@@ -102,8 +102,16 @@ Note: when using QtCreator on Windows you also have to set the CMAKE_INSTALL_PRE
   (e.g. cd routegen/src)
 - mkdir Release
 - cd Release
-- cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=C:/Users/mjans/dev/local ..
+- cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. ..
+
+Builds release version of routegen executable locally
 - make
+
+Will install the release executable in the bin sub-directory
+Note that this step is required to create a release executable that has the correct
+rpath set to ${ORIGIN}/lib, to be able to distribute the Qt libraries in a lib
+sub-directory (defined in qt.conf)!
+- make install 
 
 
 ## Version history

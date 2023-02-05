@@ -100,7 +100,7 @@
  *  v1.11.0 GeoTiff support
  */
 
-extern const QString applicationName("Route Generator version 1.xx.x");
+extern const QString applicationName("Route Generator version 1.11.0-beta1");
 
 int main(int argc, char *argv[])
 {

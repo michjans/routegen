@@ -13,6 +13,11 @@ include(GNUInstallDirs)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+# Make sure that libraries can be found in ./lib sub-directory (to prevent having to set LD_LIBRARY_PATH)
+# NOTE:This variable is only processed during a 'make install'!
+set(CMAKE_MACOSX_RPATH 1)
+set(CMAKE_INSTALL_RPATH "$ORIGIN/lib")
+
 find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Positioning WebEngineWidgets Widgets)
 find_package(GeoTIFF REQUIRED)
