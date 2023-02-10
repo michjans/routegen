@@ -48,7 +48,12 @@ RGRoute::RGRoute(RGMap *map, QGraphicsItem *parent) :
 
 QRectF RGRoute::boundingRect() const
 {
-  return QRectF();//mBoundingRect;
+    return QRectF();//mBoundingRect;
+}
+
+QPointF RGRoute::currentVehiclePos() const
+{
+    return mPath->getEndPos();
 }
 
 void RGRoute::paint(QPainter * /*painter*/, const QStyleOptionGraphicsItem *, QWidget *)

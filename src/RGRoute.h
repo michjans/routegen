@@ -39,6 +39,7 @@ public:
   explicit RGRoute(RGMap *map, QGraphicsItem *parent = 0);
   QRectF boundingRect() const;
   RGVehicleList *getVehicleList() const {return mVehicleList;}
+  QPointF currentVehiclePos() const;
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget);
   void setSmoothCoef(int);
   void setEditMode(bool);
