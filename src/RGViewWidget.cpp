@@ -112,6 +112,11 @@ void RGViewWidget::wheelEvent(QWheelEvent *event)
 
 bool RGViewWidget::saveRenderedImage(const QString &filename)
 {
+  //TODO: In case the background map has a higher resolution than the target resolution of the output video (this has to become a new project setting),
+  //      we should create a QPixmap (or QImage?) in that resolution and make sure that the vehicle location is always centered.
+  //      Then we can slide/scroll the background map together, while the vehicle remains centered.
+  //      Then we can still suport the old way in case the resolution of background map is identical to output resolution, no scrolling or sliding
+  //      will happen.
   QPixmap pixmap(mScene->width(), mScene->height());
   QPainter painter(&pixmap);
   painter.setRenderHint(QPainter::Antialiasing);
