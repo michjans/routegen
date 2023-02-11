@@ -108,3 +108,8 @@ QPoint RGGeoTiffMapProjection::convert(const QGeoCoordinate &geoPoint) const
 
     return point;
 }
+
+void RGGeoTiffMapProjection::saveProjection(const QString &fileName)
+{
+    //TODO save the geotags to the TIFF file
+}

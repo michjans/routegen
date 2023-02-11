@@ -37,7 +37,15 @@ public:
   explicit RGViewWidget(RGMap *map, QWidget *parent = 0);
   QSize   sizeHint () const;
   void addRoute(RGRoute*);
-  bool saveRenderedImage(const QString &filename);
+
+  /**
+   * @brief Saves the currently rendered image
+   * @param filename of the image
+   * @param mapResolution if the map will be saved in it's full original resolution, otherwise it will
+   *                      be saved in the output resolution (sliding window)
+   * @return
+   */
+  bool saveRenderedImage(const QString &filename, bool fullMapResolution = false);
   bool generateMovie(const QString &dirName, const QString &filePrefix, const QString &frameFileType, QStringList &generatedImageFiles);
 
 signals:

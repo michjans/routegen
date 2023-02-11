@@ -110,47 +110,50 @@ void RGViewWidget::wheelEvent(QWheelEvent *event)
     mAnim->start();
 }
 
-bool RGViewWidget::saveRenderedImage(const QString &filename)
+bool RGViewWidget::saveRenderedImage(const QString &filename, bool fullMapResolution)
 {
-  //TODO: In case the background map has a higher resolution than the target resolution of the output video (this has to become a new project setting),
-  //      we should create a QPixmap (or QImage?) in that resolution and make sure that the vehicle location is always centered.
-  //      Then we can slide/scroll the background map together, while the vehicle remains centered.
-  //      Then we can still suport the old way in case the resolution of background map is identical to output resolution, no scrolling or sliding
-  //      will happen.
-  size_t resHeight = 1080;
-  size_t resWidth = 1920;
-  QRect fullMapRect(0, 0, mScene->width(), mScene->height());
-  QPoint vehPos = mRoute->currentVehiclePos().toPoint();
-  QRect outWindow(vehPos.x() - 0.5 * resWidth, vehPos.y() - 0.5 * resHeight, resWidth, resHeight);
-  if (!fullMapRect.contains(outWindow, true))
-  {
-      //Sliding window outside map, reposition inside the map
-      QRect intersectRect = outWindow.intersected(fullMapRect);
-      int moveX = outWindow.width() - intersectRect.width();
-      int moveY = outWindow.height() - intersectRect.height();
-      outWindow.translate(moveX, moveY);
-  }
-  QImage outImage(outWindow.size(), QImage::Format_ARGB32);
-  QPainter painter(&outImage);
-  mScene->render(&painter, QRectF(), outWindow);
-  bool result = outImage.save(filename);
-  painter.end();
-  if (!result){
-    QMessageBox::critical (this, "Oops", "Problems saving file " + filename);
-  }
+    size_t resHeight = 1080;
+    size_t resWidth = 1920;
+    QRect fullMapRect(0, 0, mScene->width(), mScene->height());
+    bool result = false;
+    if (fullMapResolution)
+    {
+        QImage outImage(fullMapRect.size(), QImage::Format_ARGB32);
+        QPainter painter(&outImage);
+        mScene->render(&painter);
+        result = outImage.save(filename);
+        painter.end();
+    }
+    else
+    {
+        //In case the background map has a higher resolution than the target resolution of the output video,
+        //we should create a QImage in that resolution and make sure that the vehicle location is always centered.
+        //Then we slide/scroll the background map together, while the vehicle remains centered.
+        //If the resolution of background map is identical to output resolution, no scrolling or sliding
+        //will happen.
+        QPoint vehPos = mRoute->currentVehiclePos().toPoint();
+        QRect outWindow(vehPos.x() - 0.5 * resWidth, vehPos.y() - 0.5 * resHeight, resWidth, resHeight);
+        if (!fullMapRect.contains(outWindow, true))
+        {
+            //Sliding window outside map, reposition inside the map
+            QRect intersectRect = outWindow.intersected(fullMapRect);
+            int moveX = outWindow.width() - intersectRect.width();
+            int moveY = outWindow.height() - intersectRect.height();
+            if (outWindow.bottom() > fullMapRect.bottom()) moveY = -moveY;
+            if (outWindow.right() > fullMapRect.right()) moveX = -moveX;
+            outWindow.translate(moveX, moveY);
+        }
+        QImage outImage(outWindow.size(), QImage::Format_ARGB32);
+        QPainter painter(&outImage);
+        mScene->render(&painter, QRectF(), outWindow);
+        result = outImage.save(filename);
+        painter.end();
+    }
+    if (!result){
+        QMessageBox::critical (this, "Oops", "Problems saving file " + filename);
+    }
 
-#if 0
-  QPixmap pixmap(mScene->width(), mScene->height());
-  QPainter painter(&pixmap);
-  painter.setRenderHint(QPainter::Antialiasing);
-  mScene->render(&painter);
-  bool result = pixmap.save(filename);
-  painter.end();
-  if (!result){
-    QMessageBox::critical (this, "Oops", "Problems saving file " + filename);
-  }
-#endif
-  return result;
+    return result;
 }
 
 bool RGViewWidget::generateMovie(const QString &dirName, const QString &filePrefix, const QString &frameFileType, QStringList &generatedImageFiles)

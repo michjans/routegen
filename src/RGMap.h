@@ -25,6 +25,7 @@ public:
     bool isDirty() const;
     void resetDirty();
     void clearMap();
+    void saveGeoBounds(const QString &fileName);
 
     void read (const QJsonObject &json);
     void write (QJsonObject &json);

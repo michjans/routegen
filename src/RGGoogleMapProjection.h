@@ -16,6 +16,7 @@ public:
 
     bool isValid() const override;
     QPoint convert(const QGeoCoordinate& geoPoint) const override;
+    void saveProjection(const QString &fileName) override;
 
 private:
     //Coordinate to world coordinates

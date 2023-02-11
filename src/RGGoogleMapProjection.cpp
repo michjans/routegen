@@ -1,4 +1,5 @@
 #include "RGGoogleMapProjection.h"
+#include "RGSettings.h"
 
 #include <QtMath>
 #include <QDebug>
@@ -41,6 +42,12 @@ QPoint RGGoogleMapProjection::convert(const QGeoCoordinate &geoPoint) const
     }
 
     return point - mTopLeft;
+}
+
+void RGGoogleMapProjection::saveProjection(const QString &fileName)
+{
+    //If current map has geo bounds, also store geo bounds along with the saved map image
+    RGSettings::setMapGeoBounds(fileName, m_bounds);
 }
 
 QPointF RGGoogleMapProjection::project(const QGeoCoordinate &geoPoint) const
