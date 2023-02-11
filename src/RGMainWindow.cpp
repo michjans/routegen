@@ -261,8 +261,8 @@ void RGMainWindow::on_actionSave_image_triggered(bool)
 {
     QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
 
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                                                  lastSaveDir,
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save map image as"),
+                                                  QFileInfo(lastSaveDir).absoluteDir().absolutePath(),
                                                   tr("Images (*.png *.bmp *.jpg *.tif *.gif)"));
 
 
@@ -273,7 +273,12 @@ void RGMainWindow::on_actionSave_image_triggered(bool)
             fileName += ".png";
         }
         mView->saveRenderedImage(fileName, true);
-        mMap->saveGeoBounds(fileName);
+        if (!mMap->saveGeoBoundsToNewFile(fileName) && mMap->hasGeoBounds())
+        {
+            QMessageBox::warning(this, "Cannot write geographic information", "The selected file format does not support geographic information,"
+                                                                              "so the saved file cannot be used to import GPX routes! If the current"
+                                                                              "file is a GeoTIFF file, then use *.tif as extension.");
+        }
 
         RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
     }

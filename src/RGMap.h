@@ -25,7 +25,15 @@ public:
     bool isDirty() const;
     void resetDirty();
     void clearMap();
-    void saveGeoBounds(const QString &fileName);
+
+    /**
+     * @brief Tries to save the geoBounds to a newFile, this will not succeed if the specified
+     *        file format does not support geographic boundaries.
+     *        Norally only TIFF files can support Geo information or the existing map was imported
+     *        using Google maps. In that case the geograpic information is stored outside the map.s
+     * @param fileName
+     */
+    bool saveGeoBoundsToNewFile(const QString &fileName);
 
     void read (const QJsonObject &json);
     void write (QJsonObject &json);

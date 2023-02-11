@@ -108,13 +108,13 @@ void RGMap::clearMap()
     emit mapLoaded(mMap);
 }
 
-void RGMap::saveGeoBounds(const QString &fileName)
+bool RGMap::saveGeoBoundsToNewFile(const QString &fileName)
 {
-    mFileName = fileName;
     if (mMapProjection)
     {
-        mMapProjection->saveProjection(mFileName);
+        return mMapProjection->saveProjection(fileName);
     }
+    return false;
 }
 
 void RGMap::read(const QJsonObject &json)

@@ -39,7 +39,7 @@ public:
 
 
 protected:
-	virtual bool initCodecs();
+    bool initCodecs() override;
 
 private slots:
     void handleManualCommandLineChecked(bool checked);

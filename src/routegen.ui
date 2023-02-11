@@ -164,13 +164,13 @@
      <normaloff>:/icons/icons/map_pencil_save.svg</normaloff>:/icons/icons/map_pencil_save.svg</iconset>
    </property>
    <property name="text">
-    <string>&amp;Save map image</string>
+    <string>&amp;Save map image as ...</string>
    </property>
    <property name="iconText">
-    <string>Save map image</string>
+    <string>Save map image as ...</string>
    </property>
    <property name="toolTip">
-    <string>Save the currently displayed map with route as image</string>
+    <string>Save the currently displayed map and route as image</string>
    </property>
    <property name="statusTip">
     <string>Save the currently displayed map and route as image, which can be used as start point for generating another route.</string>
