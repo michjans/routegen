@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>695</width>
+    <width>773</width>
     <height>33</height>
    </rect>
   </property>
@@ -23,7 +23,7 @@
    <property name="spacing">
     <number>4</number>
    </property>
-   <property name="margin">
+   <property name="margin" stdset="0">
     <number>1</number>
    </property>
    <item>

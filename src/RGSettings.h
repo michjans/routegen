@@ -114,6 +114,10 @@ public:
     static void setGMYResolution(int xres);
     static int  getGMYResolution();
 
+    //Video output resolution
+    static void setOutputResolution(const QSize &res);
+    static QSize getOutputResolution();
+
     /*
     * Advanced settings
     */

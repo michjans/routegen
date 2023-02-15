@@ -72,7 +72,6 @@ void RGSettings::setFps(int fps)
 {
   QSettings settings;
   settings.setValue("videoArgFps", fps);
-  //TODO: When FPS is changed, RGMapWidget should be notified somehow!!!!!
 }
 
 int RGSettings::getKeyFrameRate()
@@ -491,6 +490,18 @@ int RGSettings::getGMYResolution()
 {
   QSettings settings;
   return settings.value("gmYResolution", 576).toInt();
+}
+
+void RGSettings::setOutputResolution(const QSize &res)
+{
+    QSettings settings;
+    settings.setValue("outputResolution", res);
+}
+
+QSize RGSettings::getOutputResolution()
+{
+    QSettings settings;
+    return settings.value("outputResolution", QSize(1920, 1080)).toSize();
 }
 
 void RGSettings::setSmoothPathMode(bool enable)

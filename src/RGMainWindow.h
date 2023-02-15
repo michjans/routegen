@@ -59,7 +59,7 @@ private slots:
   void on_actionSave_project_as_triggered(bool );
   void on_actionPreferences_triggered(bool );
   void on_actionImport_Google_Map_triggered(bool );
-  void on_actionImport_GPX_triggered(bool );
+  void on_actionImport_GPX_triggered(bool ); 
   void on_actionDraw_mode_triggered(bool );
   void on_actionNew_route_triggered(bool );
   void on_actionGenerate_map_triggered(bool );
@@ -68,6 +68,7 @@ private slots:
   void on_action_Tutorial_triggered(bool );
   void on_action_About_triggered(bool );
   void on_action_Quit_triggered(bool );
+  void on_resolutionCBChanged(int index);
   void handleMapLoaded(const QPixmap& map);
   
   void blockUserInteraction(bool);
@@ -109,6 +110,7 @@ private:
   QAction *actionGenerate_map;
   QAction *actionPlayback;
   QAction *actionStop;
+  QComboBox *mResolutionCB;
 
   QStringList  mGeneratedFrames;
   QString mCurrentProjectFileName;

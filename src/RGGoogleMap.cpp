@@ -122,6 +122,7 @@ void RGGoogleMap::accept()
 	m_map = QPixmap(ui.webView->size());
 	ui.webView->render(&m_map);
 
+    //TODO: Rename to RatioX, RatioY (ratio compared to output resolution of video)
     RGSettings::setGMXResolution(ui.spinBoxX->value());
     RGSettings::setGMYResolution(ui.spinBoxY->value());
     RGSettings::setGoogleMapDialogGeometry(geometry());

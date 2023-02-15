@@ -112,8 +112,7 @@ void RGViewWidget::wheelEvent(QWheelEvent *event)
 
 bool RGViewWidget::saveRenderedImage(const QString &filename, bool fullMapResolution)
 {
-    size_t resHeight = 1080;
-    size_t resWidth = 1920;
+    QSize outputResolution = RGSettings::getOutputResolution();
     QRect fullMapRect(0, 0, mScene->width(), mScene->height());
     bool result = false;
     if (fullMapResolution)
@@ -132,7 +131,8 @@ bool RGViewWidget::saveRenderedImage(const QString &filename, bool fullMapResolu
         //If the resolution of background map is identical to output resolution, no scrolling or sliding
         //will happen.
         QPoint vehPos = mRoute->currentVehiclePos().toPoint();
-        QRect outWindow(vehPos.x() - 0.5 * resWidth, vehPos.y() - 0.5 * resHeight, resWidth, resHeight);
+        QRect outWindow(vehPos.x() - 0.5 * outputResolution.width(), vehPos.y() - 0.5 * outputResolution.height(),
+                        outputResolution.width(), outputResolution.height());
         if (!fullMapRect.contains(outWindow, true))
         {
             //Sliding window outside map, reposition inside the map

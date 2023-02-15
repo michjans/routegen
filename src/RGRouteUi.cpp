@@ -64,10 +64,6 @@ RGRouteUi::RGRouteUi(QWidget *parent) :
   ui->totalTimeCB->setChecked(RGSettings::getTotalTimeMode());
   ui->smoothPathCB->setChecked(RGSettings::getSmoothPathMode());
   ui->routeTimeSB->setValue(RGSettings::getRoutePlayTime());
-
-  //Connects signals :
-  //QObject::connect(ui->vehicleCB,SIGNAL(activated(int)),this,SIGNAL(vehicleChanged(int)));
-
 }
 
 RGRouteUi::~RGRouteUi()

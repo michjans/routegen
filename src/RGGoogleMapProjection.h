@@ -20,7 +20,7 @@ public:
 
 private:
     //Coordinate to world coordinates
-    QPointF project(const QGeoCoordinate& geoPoint) const; //TODO: To map projection
+    QPointF project(const QGeoCoordinate& geoPoint) const;
 
     //World to pixels
     QPoint worldToPixel(const QPointF &worldPoint) const;

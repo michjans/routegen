@@ -98,12 +98,21 @@
  *          Added more default (animated) vehicles
  *          Vehicle rotation smoothness increased
  *  v1.11.0 GeoTiff support
+ *          Possibility to set fixed output resolution for output video's
+ *          Background map can now be bigger than output resolution
+ *          Scrolling/sliding map with fixed resolution of output video
+ *          Reverted need to create new empty folder (so it is possible to select existing folder again)
+ *          TODO: Select output resolution (and save in project file)
+ *                Pass -framerate to ffmpeg commandline
+ *                Possibility to set different file type for generated video frames (e.g. PNG, JPG, etc.)
  */
 
 extern const QString applicationName("Route Generator version 1.11.0-beta1");
 
 int main(int argc, char *argv[])
 {
+  //TODO:qInstallMessageHandler(myMessageOutput);
+
   QApplication app(argc, argv);
 
   //For storing application settings

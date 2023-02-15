@@ -97,6 +97,24 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   action_Undo->setEnabled(false);
   action_Redo->setEnabled(false);
 
+  mResolutionCB = new QComboBox(ui.toolBar);
+  mResolutionCB->addItem("8K: 7680x4320", QVariant(QSize(7680, 4320)));
+  mResolutionCB->addItem("5K: 5120x2880", QVariant(QSize(5120, 2880)));
+  mResolutionCB->addItem("4K: 4096x2160", QVariant(QSize(4096, 2160)));
+  mResolutionCB->addItem("UHD 2160p: 3840x2160", QVariant(QSize(3840, 2160)));
+  mResolutionCB->addItem("2.5K QHD 1440p: 2560x1440", QVariant(QSize(2560, 1440)));
+  mResolutionCB->addItem("2K: 2048x1080", QVariant(QSize(2048, 1080)));
+  mResolutionCB->addItem("FHD 1080p: 1920x1080", QVariant(QSize(1920, 1080)));
+  mResolutionCB->addItem("HD 720p: 1280x720", QVariant(QSize(1280, 720)));
+  mResolutionCB->addItem("SD: 720x576", QVariant(QSize(720, 576)));
+  mResolutionCB->addItem("Custom", QVariant());
+  mResolutionCB->setToolTip("Select the output resolution of the generated video.");
+
+  int selResIdx = mResolutionCB->findData(RGSettings::getOutputResolution());
+  //TODO: If idx not found, it's the custom resolution: set in as data of the Custom item
+  mResolutionCB->setCurrentIndex(selResIdx);
+  ui.toolBar->insertWidget(actionPlayback, mResolutionCB);
+
   //Video Encoder:
   initVideoEncoderFromSettings();
 
@@ -160,6 +178,9 @@ RGMainWindow::RGMainWindow(QWidget *parent)
       QObject::connect(mMap, &RGMap::mapLoaded,
                        this, &RGMainWindow::handleMapLoaded);
   }
+
+  QObject::connect(mResolutionCB, &QComboBox::currentIndexChanged,
+                   this, &RGMainWindow::on_resolutionCBChanged);
 
   //set initial by sending signals
   mRouteUi->init();
@@ -252,6 +273,9 @@ void RGMainWindow::on_actionOpen_image_triggered(bool /*checked*/)
         else
         {
             RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
+            //TODO: Validate that resolution of image is equeal or larger than the selected output resolution,
+            //      give a warning if this is not the case!
+            //      Also do this when importing Google map!
             mMap->loadMap(fileName, pm);
         }
     }
@@ -552,7 +576,7 @@ void RGMainWindow::on_action_About_triggered(bool checked)
   QString txt = QString(
         "<html>"
         "<center>"
-        "<p><b>") + applicationName + QString(" Copyright (C) 2008-2021  Michiel Jansen </b></p>"
+        "<p><b>") + applicationName + QString(" Copyright (C) 2008-2023  Michiel Jansen </b></p>"
                                               "<p>This program comes with ABSOLUTELY NO WARRANTY</p>"
                                               "This is free software, and you are welcome to redistribute it "
                                               "under certain conditions; see LICENSE file for details.</p>"
@@ -577,6 +601,11 @@ void RGMainWindow::on_action_Quit_triggered(bool checked)
 {
     Q_UNUSED(checked);
     close();
+}
+
+void RGMainWindow::on_resolutionCBChanged(int index)
+{
+    RGSettings::setOutputResolution(mResolutionCB->itemData(index).toSize());
 }
 
 void RGMainWindow::handleMapLoaded(const QPixmap &map)
