@@ -41,7 +41,7 @@ private slots:
     void on_accept();
     void continue_Accept();
     void on_goButton_clicked(bool);
-    void on_fixButton_clicked(bool);
+    void handleScaleSpinboxChanged(double);
     void on_mapTypeBox_textActivated(const QString &);
     void on_zoomBox_valueChanged(int zoom);
 

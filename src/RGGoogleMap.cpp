@@ -74,12 +74,19 @@ RGGoogleMap::RGGoogleMap(QWidget *parent, const QGeoPath &geoPath)
 
 	ui.progressBar->hide();
 	ui.progressBar->setRange(0, 100);
-    ui.spinBoxX->setValue(RGSettings::getGMXResolution());
-    ui.spinBoxY->setValue(RGSettings::getGMYResolution());
+    ui.widthScaleSB->setValue(RGSettings::getGMXFactor());
+    ui.heightScaleSB->setValue(RGSettings::getGMYFactor());
 
     qDebug() << "Datapath:" << QLibraryInfo::location(QLibraryInfo::DataPath);
 
     ui.webView->setPage(new QWebEnginePage(ui.webView));
+
+    //We connect both scale spinboxes to the same slot! So we can't use
+    //the passed value, because we don't know the source.
+    QObject::connect(ui.widthScaleSB, &QDoubleSpinBox::valueChanged,
+                     this, &RGGoogleMap::handleScaleSpinboxChanged);
+    QObject::connect(ui.heightScaleSB, &QDoubleSpinBox::valueChanged,
+                     this, &RGGoogleMap::handleScaleSpinboxChanged);
 
     QObject::connect(ui.buttonBox, &QDialogButtonBox::accepted,
                         this, &RGGoogleMap::on_accept);
@@ -90,8 +97,8 @@ RGGoogleMap::RGGoogleMap(QWidget *parent, const QGeoPath &geoPath)
     ui.mapTypeBox->insertItem(3, "satellite");
     ui.mapTypeBox->setCurrentIndex(0);
 
-	//Init map resolution
-	on_fixButton_clicked(true);
+	//Init map resolution    
+    handleScaleSpinboxChanged(true);
 
     if (geoPath.size() > 1)
     {
@@ -122,9 +129,8 @@ void RGGoogleMap::accept()
 	m_map = QPixmap(ui.webView->size());
 	ui.webView->render(&m_map);
 
-    //TODO: Rename to RatioX, RatioY (ratio compared to output resolution of video)
-    RGSettings::setGMXResolution(ui.spinBoxX->value());
-    RGSettings::setGMYResolution(ui.spinBoxY->value());
+    RGSettings::setGMXFactor(ui.widthScaleSB->value());
+    RGSettings::setGMYFactor(ui.heightScaleSB->value());
     RGSettings::setGoogleMapDialogGeometry(geometry());
 
     QDialog::accept();
@@ -211,9 +217,11 @@ void RGGoogleMap::on_goButton_clicked(bool)
     ui.webView->reload();
 }
 
-void RGGoogleMap::on_fixButton_clicked(bool)
+void RGGoogleMap::handleScaleSpinboxChanged(double)
 {
-    ui.webView->setFixedSize(QSize(ui.spinBoxX->value(), ui.spinBoxY->value()));
+    //multiply scale factors by current output resolution width/height
+    auto res = RGSettings::getOutputResolution();
+    ui.webView->setFixedSize(QSize(ui.widthScaleSB->value() * res.width(), ui.heightScaleSB->value() * res.height()));
 }
 
 void RGGoogleMap::on_mapTypeBox_textActivated(const QString &text)

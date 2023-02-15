@@ -109,10 +109,10 @@ public:
     static int  getRoutePlayTime();
 
     //Google maps resolution
-    static void setGMXResolution(int xres);
-    static int  getGMXResolution();
-    static void setGMYResolution(int xres);
-    static int  getGMYResolution();
+    static void setGMXFactor(float xfactor);
+    static float getGMXFactor();
+    static void setGMYFactor(float yfactor);
+    static float  getGMYFactor();
 
     //Video output resolution
     static void setOutputResolution(const QSize &res);

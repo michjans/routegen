@@ -241,7 +241,7 @@ QRect RGSettings::getGoogleMapDialogGeometry()
 {
     QSettings settings;
 
-    QVariant geoVariant = settings.value("googleMapDialogGeom", QVariant(QRect(10, 10, 1024, 768)));
+    QVariant geoVariant = settings.value("googleMapDialogGeom", QVariant(QRect(50, 50, 1024, 768)));
 
     return geoVariant.toRect();
 }
@@ -468,28 +468,28 @@ int RGSettings::getRoutePlayTime()
   return settings.value("routePlayTime", 5).toInt();
 }
 
-void RGSettings::setGMXResolution(int xres)
+void RGSettings::setGMXFactor(float xfactor)
 {
   QSettings settings;
-  settings.setValue("gmXResolution", xres);
+  settings.setValue("gmXFactor", xfactor);
 }
 
-int RGSettings::getGMXResolution()
+float RGSettings::getGMXFactor()
 {
   QSettings settings;
-  return settings.value("gmXResolution", 768).toInt();
+  return settings.value("gmXFactor", 1.0).toFloat();
 }
 
-void RGSettings::setGMYResolution(int yres)
+void RGSettings::setGMYFactor(float yfactor)
 {
   QSettings settings;
-  settings.setValue("gmYResolution", yres);
+  settings.setValue("gmYFactor", yfactor);
 }
 
-int RGSettings::getGMYResolution()
+float RGSettings::getGMYFactor()
 {
   QSettings settings;
-  return settings.value("gmYResolution", 576).toInt();
+  return settings.value("gmYFActor", 1.0).toFloat();
 }
 
 void RGSettings::setOutputResolution(const QSize &res)
