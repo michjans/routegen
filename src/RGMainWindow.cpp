@@ -150,7 +150,7 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mRouteLoadedStatus->setEnabled(false);
   mRouteGeoStatus->setEnabled(false);
   mMapLoadedStatus->setToolTip("Enabled if a map is loaded");
-  mMapGeoStatus->setToolTip("If the globe is enabled, the map is imported from google maps and has geographic coordinates");
+  mMapGeoStatus->setToolTip("If the globe is enabled, the map has geographic (lat/lon) coordinates, so can be used to import a GPX route");
   mRouteLoadedStatus->setToolTip("Enabled if a route is loaded");
   mRouteGeoStatus->setToolTip("If the globe is enabled, the route is generated from (gpx) geographic coordinates");
 
@@ -299,9 +299,9 @@ void RGMainWindow::on_actionSave_image_triggered(bool)
         mView->saveRenderedImage(fileName, true);
         if (!mMap->saveGeoBoundsToNewFile(fileName) && mMap->hasGeoBounds())
         {
-            QMessageBox::warning(this, "Cannot write geographic information", "The selected file format does not support geographic information,"
+            QMessageBox::warning(this, "Cannot write geographic information", "Unable to save geographic (lat/lon) projection information,"
                                                                               "so the saved file cannot be used to import GPX routes! If the current"
-                                                                              "file is a GeoTIFF file, then use *.tif as extension.");
+                                                                              "loaded file is a GeoTIFF file, then use *.tif as extension.");
         }
 
         RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
