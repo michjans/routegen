@@ -345,7 +345,7 @@ void RGMainWindow::on_actionSave_project_as_triggered(bool)
     QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_PROJECT_LOCATION);
 
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                                                    QFileInfo(lastSaveDir).absoluteDir().absolutePath(),
+                                                    lastSaveDir,
                                                     tr("Projects (*.rgp)"));
 
     if (!fileName.isNull())
