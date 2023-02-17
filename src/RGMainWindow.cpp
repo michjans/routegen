@@ -108,10 +108,19 @@ RGMainWindow::RGMainWindow(QWidget *parent)
   mResolutionCB->addItem("HD 720p: 1280x720", QVariant(QSize(1280, 720)));
   mResolutionCB->addItem("SD: 720x576", QVariant(QSize(720, 576)));
   mResolutionCB->addItem("Custom", QVariant());
+  mCustomResolutionItemIdx = 9;
   mResolutionCB->setToolTip("Select the output resolution of the generated video.");
 
-  int selResIdx = mResolutionCB->findData(RGSettings::getOutputResolution());
-  //TODO: If idx not found, it's the custom resolution: set in as data of the Custom item
+  QSize selRes = RGSettings::getOutputResolution();
+  int selResIdx = mResolutionCB->findData(selRes);
+  if (selResIdx < 0)
+  {
+    //If idx not found, it's the custom resolution: set in as data of the Custom item
+    mResolutionCB->setItemData(mCustomResolutionItemIdx, RGSettings::getOutputResolution());
+    mResolutionCB->setItemText(mCustomResolutionItemIdx, QString("Custom: " ) +
+                               QString::number(selRes.width()) + "x" + QString::number(selRes.height()));
+    selResIdx = mCustomResolutionItemIdx;
+  }
   mResolutionCB->setCurrentIndex(selResIdx);
   ui.toolBar->insertWidget(actionPlayback, mResolutionCB);
 
@@ -605,6 +614,46 @@ void RGMainWindow::on_action_Quit_triggered(bool checked)
 
 void RGMainWindow::on_resolutionCBChanged(int index)
 {
+    if (index == mCustomResolutionItemIdx)
+    {
+        bool ok;
+        QVariant customRes = mResolutionCB->itemData(index);
+        QString defaultText = "1024x768";
+        if (customRes.isValid())
+        {
+            QSize curRes = customRes.toSize();
+            defaultText = QString::number(curRes.width()) + "x" + QString::number(curRes.height());
+        }
+        QString resTextLabel = tr("Enter custom resolution in format like: 1024x786");
+        QString customResolutionText = QInputDialog::getText(this, tr("Enter custom resolution"),
+                                               resTextLabel, QLineEdit::Normal,
+                                               defaultText, &ok);
+        if (ok && !customResolutionText.isEmpty())
+        {
+            QStringList resText = customResolutionText.split('x');
+            ok = false;
+            if (resText.length() == 2)
+            {
+                int xRes, yRes;
+                xRes = resText[0].toInt(&ok);
+                if (ok)
+                {
+                    yRes = resText[1].toInt(&ok);
+                }
+                if (ok)
+                {
+                    QSize customRes(xRes, yRes);
+                    mResolutionCB->setItemData(mCustomResolutionItemIdx, customRes);
+                    mResolutionCB->setItemText(mCustomResolutionItemIdx, QString("Custom: " ) + customResolutionText);
+                }
+            }
+            if (!ok)
+            {
+                QMessageBox::warning(this, "Wrong resolution text", resTextLabel);
+            }
+        }
+    }
+
     RGSettings::setOutputResolution(mResolutionCB->itemData(index).toSize());
 }
 

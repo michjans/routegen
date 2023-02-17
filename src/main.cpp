@@ -99,11 +99,11 @@
  *          Vehicle rotation smoothness increased
  *  v1.11.0 GeoTiff support
  *          Possibility to set fixed output resolution for output video's
- *          Background map can now be bigger than output resolution
+ *          Background map can now be bigger than output resolution, so in the Google maps importer
+ *          you can now specify a ratio in relation to the selected output resolution.
  *          Scrolling/sliding map with fixed resolution of output video
  *          Reverted need to create new empty folder (so it is possible to select existing folder again)
- *          TODO: Select output resolution (and save in project file)
- *                Pass -framerate to ffmpeg commandline
+ *          TODO: Pass -framerate to ffmpeg commandline
  *                Possibility to set different file type for generated video frames (e.g. PNG, JPG, etc.)
  */
 

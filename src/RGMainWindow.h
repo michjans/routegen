@@ -114,7 +114,7 @@ private:
 
   QStringList  mGeneratedFrames;
   QString mCurrentProjectFileName;
-
+  int mCustomResolutionItemIdx;
 };
 
 #endif //MAIN_GUI_H
