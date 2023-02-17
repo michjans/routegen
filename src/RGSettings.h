@@ -56,6 +56,8 @@ public:
     static void setBitRate(const int);
     static QString getAviCompression();
     static void setAviCompression(const QString &);
+    static QString getFrameFileType();
+    static void setFrameFileType(const QString &fileType);
     static QString getFFMpegOutputFileType();
     static void setFFMpegOutputFileType(const QString &fileType);
     static bool getManualCommandLineChecked();

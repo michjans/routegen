@@ -104,7 +104,7 @@
  *          now specify a ratio in relation to the selected output resolution in the Google maps importer.
  *          Make it possible to select existing folder again.
  *          FPS setting now passed correctly to the ffmpeg commandline.
- *          TODO: Possibility to set different file type for generated video frames (e.g. PNG, JPG, etc.)
+ *          Possibility to set different file type for generated video frames (e.g. PNG, JPG, etc.)
  */
 
 extern const QString applicationName("Route Generator version 1.11.0");

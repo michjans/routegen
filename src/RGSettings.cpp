@@ -110,10 +110,22 @@ void RGSettings::setAviCompression(const QString &comp)
   settings.setValue("videoArgCompression", comp);
 }
 
+QString RGSettings::getFrameFileType()
+{
+    QSettings settings;
+    return settings.value("frameFileType",QString("bmp")).toString();
+}
+
+void RGSettings::setFrameFileType(const QString &fileType)
+{
+    QSettings settings;
+    settings.setValue("frameFileType", fileType);
+}
+
 QString RGSettings::getFFMpegOutputFileType()
 {
     QSettings settings;
-    return settings.value("ffmpegOutputFileType",QString("avi")).toString();
+    return settings.value("ffmpegOutputFileType",QString("mp4")).toString();
 }
 
 void RGSettings::setFFMpegOutputFileType(const QString &fileType)

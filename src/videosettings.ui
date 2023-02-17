@@ -116,6 +116,27 @@
       <string>Movie encoder settings</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
+      <item row="1" column="0">
+       <widget class="QLabel" name="bitRateLabel">
+        <property name="text">
+         <string>Bitrate</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="fpsLabel">
+        <property name="text">
+         <string>FPS</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="outputFileLabel">
+        <property name="text">
+         <string>Output file type</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="1">
        <widget class="QSpinBox" name="bitRateSB">
         <property name="minimum">
@@ -129,78 +150,6 @@
         </property>
         <property name="value">
          <number>8000</number>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QLabel" name="bitRateLabel2">
-        <property name="text">
-         <string>kb/s</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="bitRateLabel">
-        <property name="text">
-         <string>Bitrate</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="codecLabel">
-        <property name="text">
-         <string>Codec</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QComboBox" name="outputFileCB">
-        <property name="toolTip">
-         <string>Select type of movie output file</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="keyFrLabel">
-        <property name="text">
-         <string>Key frame rate</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0">
-       <widget class="QCheckBox" name="mCommandLineCB">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="toolTip">
-         <string>Manually enter ffmpeg commandline arguments</string>
-        </property>
-        <property name="text">
-         <string>Manual ffmpeg arguments</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QSpinBox" name="keyFrSB">
-        <property name="toolTip">
-         <string>Select key frame rate of output AVI</string>
-        </property>
-        <property name="maximum">
-         <number>50</number>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1">
-       <widget class="QLineEdit" name="mCommandLineLE">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QComboBox" name="codecCB">
-        <property name="toolTip">
-         <string>Select codec used for output AVI</string>
         </property>
        </widget>
       </item>
@@ -220,17 +169,82 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="fpsLabel">
+      <item row="3" column="0">
+       <widget class="QLabel" name="codecLabel">
         <property name="text">
-         <string>FPS</string>
+         <string>Codec</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QComboBox" name="outputFileCB">
+        <property name="toolTip">
+         <string>Select type of movie output file</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QLineEdit" name="mCommandLineLE">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="keyFrLabel">
+        <property name="text">
+         <string>Key frame rate</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSpinBox" name="keyFrSB">
+        <property name="toolTip">
+         <string>Select key frame rate of output AVI</string>
+        </property>
+        <property name="maximum">
+         <number>50</number>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QCheckBox" name="mCommandLineCB">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="toolTip">
+         <string>Manually enter ffmpeg commandline arguments</string>
+        </property>
+        <property name="text">
+         <string>Manual ffmpeg arguments</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="bitRateLabel2">
+        <property name="text">
+         <string>kb/s</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="codecCB">
+        <property name="toolTip">
+         <string>Select codec used for output video</string>
         </property>
        </widget>
       </item>
       <item row="4" column="0">
-       <widget class="QLabel" name="outputFileLabel">
+       <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>Output file type</string>
+         <string>Frame/image file type</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QComboBox" name="frameFileCB">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select file type to be used for the generated frames.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Note&lt;/span&gt; that when using compressed file types, like jpg, png, movie generation will take longer, but this will reduce disk space usage.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>

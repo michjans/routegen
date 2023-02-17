@@ -35,6 +35,7 @@ void RGEncBmp2avi::updateFromSettings()
   //For bmp2avi we don't support the custom commandline and output file selection
   mUi.mCommandLineCB->setEnabled(false);
   mUi.outputFileCB->setEnabled(false);
+  mUi.frameFileCB->setEnabled(false);
 }
 
 void RGEncBmp2avi::saveInSettings()

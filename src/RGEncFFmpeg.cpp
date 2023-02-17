@@ -26,17 +26,24 @@ RGEncFFmpeg::RGEncFFmpeg(QWidget *parent) :
   RGEncVideo(parent),
   mBitRate(100)
 {
-  mCompressDefault=QString("mpeg4");
+  mCompressDefault=QString("h264");
   qDebug()<<"FFMpeg encoder class";
 
   mUi.bitRateLabel->setVisible(true);
   mUi.bitRateLabel2->setVisible(true);
   mUi.bitRateSB->setVisible(true);
 
+  mUi.frameFileCB->addItem(QString("bmp"));
+  mUi.frameFileCB->addItem(QString("gif"));
+  mUi.frameFileCB->addItem(QString("jpg"));
+  mUi.frameFileCB->addItem(QString("png"));
+
   mUi.outputFileCB->addItem(QString("avi"));
+  mUi.outputFileCB->addItem(QString("mov"));
   mUi.outputFileCB->addItem(QString("mp4"));
   mUi.outputFileCB->addItem(QString("mpg"));
   mUi.outputFileCB->addItem(QString("mkv"));
+  mUi.outputFileCB->addItem(QString("wmv"));
 
   QObject::connect(mUi.mCommandLineCB, &QAbstractButton::toggled,
                    this, &RGEncFFmpeg::handleManualCommandLineChecked);
@@ -50,10 +57,17 @@ void RGEncFFmpeg::updateFromSettings()
   mUi.bitRateSB->setValue(mBitRate);
   mUi.mCommandLineCB->setChecked(RGSettings::getManualCommandLineChecked());
 
+  QString frameFileType = RGSettings::getFrameFileType();
+  if (frameFileType.isEmpty())
+  {
+      frameFileType = "bmp";
+  }
+  mUi.frameFileCB->setCurrentText(frameFileType);
+
   QString outputFileType = RGSettings::getFFMpegOutputFileType();
   if (outputFileType.isEmpty())
   {
-      outputFileType = "avi";
+      outputFileType = "mp4";
   }
   mUi.outputFileCB->setCurrentText(outputFileType);
 
@@ -74,6 +88,7 @@ void RGEncFFmpeg::saveInSettings()
       RGSettings::setFFMpegCommandlineArgs(mUi.mCommandLineLE->text());
   }
 
+  RGSettings::setFrameFileType(mUi.frameFileCB->currentText());
   RGSettings::setFFMpegOutputFileType(mUi.outputFileCB->currentText());
 }
 
@@ -113,8 +128,7 @@ QString RGEncFFmpeg::encoderExecBaseName()
 
 QString RGEncFFmpeg::frameFileType() const
 {
-    //Saving a frame as bmp is much faster than png, so put it back to bmp again
-    return QString("bmp");
+    return RGSettings::getFrameFileType();
 }
 
 QString RGEncFFmpeg::outputFileType() const
