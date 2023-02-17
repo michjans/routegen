@@ -34,9 +34,9 @@ RGEncFFmpeg::RGEncFFmpeg(QWidget *parent) :
   mUi.bitRateSB->setVisible(true);
 
   mUi.frameFileCB->addItem(QString("bmp"));
-  mUi.frameFileCB->addItem(QString("gif"));
   mUi.frameFileCB->addItem(QString("jpg"));
   mUi.frameFileCB->addItem(QString("png"));
+  mUi.frameFileCB->addItem(QString("tif"));
 
   mUi.outputFileCB->addItem(QString("avi"));
   mUi.outputFileCB->addItem(QString("mov"));
