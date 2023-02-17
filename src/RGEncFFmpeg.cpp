@@ -88,7 +88,8 @@ void RGEncFFmpeg::generateMovie(const QString &dirName)
     }
     else
     {
-        arguments << "-report" << "-y" << "-i" << QString("map").append("%05d.").append(frameFileType()) << "-g" << QString("%1").arg(mKeyFrameRate) <<
+        arguments << "-report" << "-y" << "-framerate" << QString("%1").arg(mFps) << "-i" << QString("map").append("%05d.").append(frameFileType())
+                  << "-g" << QString("%1").arg(mKeyFrameRate) <<
                      "-r" << QString("%1").arg(mFps)<< "-b" <<QString("%1k").arg(mBitRate) <<"-vcodec"<< mCompress <<
                      QString("-pix_fmt") <<  QString("yuv420p") << QString(mOutName).append(".").append(outputFileType());
     }
@@ -196,7 +197,7 @@ void RGEncFFmpeg::handleManualCommandLineChecked(bool checked)
         QString compress = mUi.codecCB->itemData(mUi.codecCB->currentIndex()).toString();
         QString outName=mUi.nameOutputLE->text();
 
-        QString arguments = "-report -y -i ";
+        QString arguments = "-report -y -framerate " + QString("%1").arg(fps) + " -i ";
         arguments += QString("map").append("%05d.").append(frameFileType()) + " -g" + QString(" %1").arg(keyFrameRate) + " -r" + QString(" %1").arg(fps)
                   + " -b" + QString(" %1k").arg(bitRate) + " -vcodec " + compress + " -pix_fmt yuv420p " + QString(outName).append(".").append(outputFileType());
         mUi.mCommandLineLE->setText(arguments);

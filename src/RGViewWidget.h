@@ -75,6 +75,7 @@ private:
   int           mTimerCounter;
   int           mNumScheduledScalings;
   QPoint        mDragOrigin;
+  qreal         mMinTransformM11;
 };
 
 #endif // RGVIEWWIDGET_H

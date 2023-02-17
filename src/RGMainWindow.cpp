@@ -281,10 +281,21 @@ void RGMainWindow::on_actionOpen_image_triggered(bool /*checked*/)
         }
         else
         {
+            //Validate that resolution of image is equeal or larger than the selected output resolution!
+            QSize outputResolution = RGSettings::getOutputResolution();
+            if (pm.size().width() < outputResolution.width() || pm.size().height() < outputResolution.height())
+            {
+                QMessageBox::StandardButton answer = QMessageBox::question (this, tr("Resolution too small"),
+                                         tr("Resolution of background image is smaller than the selected output resolution. This will give wrong results in the generated output video!\n"""
+                                            "Continue anyway?"),
+                                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+                if (answer == QMessageBox::No)
+                {
+                    return;
+                }
+            }
+
             RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
-            //TODO: Validate that resolution of image is equeal or larger than the selected output resolution,
-            //      give a warning if this is not the case!
-            //      Also do this when importing Google map!
             mMap->loadMap(fileName, pm);
         }
     }
@@ -334,7 +345,7 @@ void RGMainWindow::on_actionSave_project_as_triggered(bool)
     QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_PROJECT_LOCATION);
 
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                                                    lastSaveDir,
+                                                    QFileInfo(lastSaveDir).absoluteDir().absolutePath(),
                                                     tr("Projects (*.rgp)"));
 
     if (!fileName.isNull())
@@ -377,7 +388,7 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
         //from the main window
         QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
         QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                                                        lastSaveDir,
+                                                        QFileInfo(lastSaveDir).absoluteDir().absolutePath(),
                                                         tr("Images (*.png *.bmp *.jpg *.tif *.gif)"));
         if (fileName.isEmpty())
         {
@@ -423,7 +434,7 @@ void RGMainWindow::on_actionImport_GPX_triggered(bool)
             {
                 //Route loaded but map already has geo boundaries
                 msgBox.setInformativeText(tr("Import new map, open other map, or draw route on current map?"));
-                msgBox.addButton(tr("Keep current map"), QMessageBox::RejectRole);
+                msgBox.addButton(tr("Draw route on current map"), QMessageBox::RejectRole);
             }
             else
             {
@@ -593,10 +604,11 @@ void RGMainWindow::on_action_About_triggered(bool checked)
                                               "(Copyright (C) 2008-2021  The Qt Company Ltd. All rights reserved),<br>"
                                               "Qt can be <a href=\"https://www.qt.io/download\"> downloaded </a>"
                                               "from the <a href=\"https://www.qt.io\">Qt</a> website. </p>"
-                                              "<p>The conversion from BMP to AVI on Windows is provided by:<br>"
-                                                                                            "<i>CODEX FFmpeg by Gyan Doshi<br>"
-                                                                                            "See: <a href=\"https://www.gyan.dev/ffmpeg/builds/\">CODEX FFmpeg Builds Page</a></i><br>"
-																							"OR<br>"
+                                              "<p>See: <a href=\"https://en.wikipedia.org/wiki/GeoTIFF\">GeoTIFF article on wikipedia</a>, to read more about GeoTIFF support</p>"
+                                              "<p>The video generation on Windows is provided by:<br>"
+                                              "<i>CODEX FFmpeg by Gyan Doshi<br>"
+                                              "See: <a href=\"https://www.gyan.dev/ffmpeg/builds/#about-these-builds\">CODEX FFmpeg About Builds Page</a></i><br>"
+                                              "OR<br>"
                                               "<i>bmp2avi Copyright (C)) Paul Roberts 1996 - 1998</i></p>"
                                               "<p>For more information or questions about Route Generator you can "
                                               "<a href=\"mailto:info@routegenerator.net\">contact</a> me by e-mail.</p>"

@@ -223,6 +223,9 @@ void RGViewWidget::loadImage(const QPixmap &pm)
   this->setFrameShape(QFrame::NoFrame);
   viewport()->setMaximumSize(pm.size());
   this->setAlignment((Qt::AlignLeft | Qt::AlignTop));
+  //setTransform(QTransform()); //Reset scale
+  fitInView(pm.rect(), Qt::KeepAspectRatioByExpanding);
+  mMinTransformM11 = transform().m11(); //Prevents zooming out further than size of image
   updateGeometry();
 }
 
@@ -257,9 +260,9 @@ bool RGViewWidget::saveFrame(int frameCounter, const QString &dirName, const QSt
 
 void RGViewWidget::scalingTime(qreal /* x */)
 {
-    //Prevent zooming out below 1.0
+    //Prevent zooming out too much
     qreal factor = 1.0+ qreal(mNumScheduledScalings) / 300.0;
-    if (factor * transform().m11() >= 1.0)
+    if (factor * transform().m11() >= mMinTransformM11)
     {
         scale(factor, factor);
     }

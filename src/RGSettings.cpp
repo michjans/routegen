@@ -89,7 +89,7 @@ void RGSettings::setKeyFrameRate(int rate)
 int RGSettings::getBitRate()
 {
   QSettings settings;
-  return settings.value("videoArgBitRate",QString("1500")).toInt();
+  return settings.value("videoArgBitRate",QString("5000")).toInt();
 }
 
 void RGSettings::setBitRate(int bitrate)
