@@ -130,17 +130,59 @@ bool RGViewWidget::saveRenderedImage(const QString &filename, bool fullMapResolu
         //Then we slide/scroll the background map together, while the vehicle remains centered.
         //If the resolution of background map is identical to output resolution, no scrolling or sliding
         //will happen.
+        //Two ways of sliding:
+        //1. always try to keep vehicle centered (will result in more sliding): use full map as outer rectangle
+        //2. prevent sliding if possible, by first determining the rectangle containing the full route and
+        //   use that window as outer rectangle, instead of the full map.
+
+        //TODO: This outerRect calculation only has to be done once, when generating multiple frames, so
+        //      do this once and pass the requested outerRect as argument with this method.
+        //We try to use method 2. if that fails go for method 1. (could make this a setting later, to always go for method 1)
+        QRect outerRect = mRoute->boundingRect().toRect();
+        //outerRect += QMargins(15, 15, 15, 15); //Add some margin to give enough space around the route
+        qDebug() << "outputResolution             :" << outputResolution;
+        qDebug() << "fullMapRect                  :" << fullMapRect;
+        qDebug() << "Route outerRect after margins:" << outerRect;
+        if (!fullMapRect.contains(outerRect, true))
+        {
+            //Go for method 1 anyway
+            outerRect = fullMapRect;
+        }
+        else
+        {
+            //Make sure the outerRect minimally is as large as the requested resolution of the outWindow,
+            //by moving the right and left sides of the outerRect until the map boundary is hit.
+            //For now the choice is made to always move the rectangle as far top/left as possible.
+            if (outerRect.width() < outputResolution.width())
+            {
+                int remainingCorrection = outputResolution.width() - outerRect.width();
+                int correctLeftWidth = fullMapRect.right() - outerRect.right();
+                remainingCorrection -= correctLeftWidth;
+                outerRect.setLeft(outerRect.left() - correctLeftWidth);
+                outerRect.setRight(outerRect.right() + remainingCorrection - correctLeftWidth);
+            }
+            if (outerRect.height() < outputResolution.height())
+            {
+                int remainingCorrection = outputResolution.height() - outerRect.height();
+                int correctTopHeigth = fullMapRect.top() - outerRect.top();
+                remainingCorrection -=correctTopHeigth;
+                outerRect.setTop(outerRect.top() - correctTopHeigth);
+                outerRect.setBottom(outerRect.bottom() + remainingCorrection - correctTopHeigth);
+            }
+        }
+        qDebug() << "final outerRect              :" << outerRect;
+
         QPoint vehPos = mRoute->currentVehiclePos().toPoint();
         QRect outWindow(vehPos.x() - 0.5 * outputResolution.width(), vehPos.y() - 0.5 * outputResolution.height(),
                         outputResolution.width(), outputResolution.height());
-        if (!fullMapRect.contains(outWindow, true))
+        if (!outerRect.contains(outWindow, true))
         {
             //Sliding window outside map, reposition inside the map
-            QRect intersectRect = outWindow.intersected(fullMapRect);
+            QRect intersectRect = outWindow.intersected(outerRect);
             int moveX = outWindow.width() - intersectRect.width();
             int moveY = outWindow.height() - intersectRect.height();
-            if (outWindow.bottom() > fullMapRect.bottom()) moveY = -moveY;
-            if (outWindow.right() > fullMapRect.right()) moveX = -moveX;
+            if (outWindow.bottom() > outerRect.bottom()) moveY = -moveY;
+            if (outWindow.right() > outerRect.right()) moveX = -moveX;
             outWindow.translate(moveX, moveY);
         }
         QImage outImage(outWindow.size(), QImage::Format_ARGB32);
