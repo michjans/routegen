@@ -12,26 +12,59 @@ This tutorial explains how to generate route movies, using Route Generator.
 </p>
 
 <h2>Open map</h2>
-You can open an image file from an existing map or import a map from Google Maps (see below) or you can
-grab a frame of a map you filmed with your camera, save it as BMP file and use that image as a map background.
-Or check the size of the screenshot and create an image yourself, with the same size.
+<p>
+Since verision 1.11.0 it is recommended to select the required output resolution of the movie on the toolbar first, before opening
+any maps:<br>
+<img src="resolution.png">.
+</p>
 
-For the best results, the size of the map should be the same as the resolution of the movie
-in which you want to place the final route movie
-(e.g. 768 x 576 for standard DVD or 1920×1080 for full HD). Route Generator can use any format and
-does not check this, so you should find out what the best format is you want to use.
+<p>
+You can open an image file from an existing map or import a map from Google Maps (see below) or you can
+grab a frame of a map you filmed with your camera, save it an image file file and use that image as a map background.
+Or check the size of the screenshot and create a map image yourself, with the same size.
+</p>
+
+<p>
+The size of the map does not need to be the same anymore as the resolution of the output movie!
+When the used map has a higher resolution than the output movie, the program will now automatically scroll the map
+while trying to keep the vehicle centered on the map.
+If you don't want scrolling, then you can still use the same resolution for the map as the output movie.
+</p>
+
+<p>
+<b>NOTE:</b> Opening a map with a lower resolution of the output video will result in strange effects. Route Generator
+will generate a warning when you open a map with a resolution that is too low.
+</p>
 
 <h3>Import map from Google Maps</h3>
 To import a map from Google Maps, go to File->Import from Google Maps or click <img src="google-maps-logo.png">.
-First set the correct resolution that you want to use for your output map.
+
 
 <p>
 Now browse to Google Maps in your browser and locate a map that you want to use. Then copy the link from your browser to the
 URL field in Route Generator: <img src="google-link-paste.png">.
 </p>
 <p>
-Now click "Go" to start loading the map (this might take a while). You can still drag the map a littlebit until you are satisfied. Then click OK to save the map (so you can re-use it later) and then use it
-in Route Generator.
+Now click "Go" to start loading the map (this might take a while). You can still drag the map a littlebit until you are satisfied.
+Then click OK to save the map (so you can re-use it later) and then use it in Route Generator.
+</p>
+
+<p>
+After (or before) the map has loaded it is possible to modify the <b>X scale, Y scale</b> factors of the map. In this way it is possible to
+select a map with a resolution that is higher than the output video resolution. E.g. if you want that the map wil scroll from north
+to south, pick a Y scale factor higher than 1.0.
+</p>
+
+<h3>Import a GeoTIFF file</h3>
+<p>
+Since verision 1.11.0 it is also possible to open a GeoTIFF file. A GeoTIFF file is a TIFF image that contains Geographic
+referencing information in the image. This way it is possible to map lat/lon coordinates to a position on the map.
+As a result it is also possible to import a GPX route on a GeoTIFF map.
+</p>
+
+<p>
+To open a GeoTIFF file, just open an image with map from the toolbar menu by clicking <img style="width:2em; height:2em;" src="map_pencil.svg">
+and then select the TIF file containing the Geographic information.
 </p>
 
 <h3>Import GPX route</h3>
@@ -41,12 +74,12 @@ is opened, you can select the track that you want to import for your route.
 </p>
 
 <p>
-Afther the GPX file is importded successfully, you are asked to import a map from Google Maps. If you do this, the map will automatically
+After the GPX file is importded successfully, you are asked to import a map from Google Maps. If you do this, the map will automatically
 load  the location where your GPX track is located. The boundary of your route is marked with a green rectangle.
 </p>
 
 <p>
-Another option is that you want to use an already imported Google Map or open the route on an already opened map. If the map
+Another option is that you want to use an already imported Google Map, a GeoTIFF file or open the route on an already opened map. If the map
 has the correct geographic coordinates, the route of your track should be displayed on the map.
 </p>
 
@@ -104,16 +137,10 @@ You can stop the preview by clicking <i>Stop</i> <img src="player_stop.png">
 Finally generate the route movie into a directory by clicking the <i>Generate route</i> button <img src="generate.png">
 (or from menu: Tools->Generate route). 
 For each frame of the movie, Route Generator will generate a *.bmp file in the selected directory. 
-Next, these frames (*.bmp files) will be converted to an AVI movie, using bmp2avi, which is 
+Next, these frames (*.bmp files) will be converted to an AVI movie, using bmp2avi or ffmpeg which are 
 by default included with Route Generator.
 </p>
-<p>
-<b>NOTE: Each BMP-file will be written in uncompressed format! E.g. one BMP-file of 768x576 uses about 1.2 MB of
-diskspace. Route Generator assumes 25fps, so for each second 25 x 1.2MB = 30MB of disk space is required for
-the BMP-files only and another 30MB for the generated AVI movie!
-</b> (Route Generator will also give a rough estimation 
-of the required diskspace, before you start generating the route)
-</p>
+
 <p>
 After the movie is generated, you can import it in you video editing software. You can optionally 
 finetune the movie by adding extra begin/end frames that you pick from the directory containing 
@@ -123,11 +150,11 @@ the generated *.BMP files.<br>
 <p>
 <h2>Modifying BMP2AVI/FFmpeg preferences</h2>
 <p>
-Since version 1.7.1 FFmpeg is distributed with the Windows version for Route Generator and will be selected as the default at installation.
-The Zeranoe FFmpeg Windows builds are provided by Kyle Schwarz from: <strong>http://ffmpeg.zeranoe.com/builds/</strong>
+FFmpeg is distributed with the Windows version for Route Generator and will be selected as the default at installation.
+The CODEX FFmpeg by Gyan Doshi is included from: <strong>https://www.gyan.dev/ffmpeg/builds/#about-these-builds</strong>
 </p>
 <p>
-FFmpeg works faster than bmp2avi and supports more different codec types (MPEG-4 is the default).
+FFmpeg works faster than bmp2avi and supports more different codec types (H.264 is the default).
 Using this generator, it's also possible to select a different bitrate for the generated output video.
 </p>
 <p>
@@ -175,7 +202,7 @@ Here  you can change the bitrate (in kb/s) of the generated movie.
 </p>
 <h3>Key frame rate</h3>
 <p>
-This value indicates after how many frames a key frame is created (the default is 25).
+This value indicates after how many frames (Group of Pictures) a key frame is created (the default is 25).
 </p>
 <h3>Codec</h3>
 <p>
@@ -183,10 +210,16 @@ Here you can change the codec that Bmp2Avi  or FFMpeg uses to generate the movie
 in smaller or higher quality movies, but it's possible that not all codecs are accepted by your video editing software.
 So, first check which codes are supported by you video editor.
 </p>
+<h3>Frame/image file type</h3>
+<p>
+Here you can change the file type of the frames (images) that are used to generate your movie. You can choose compressed
+file types like jpg, png. This will result in less diskspace usage for the genrated frames. However, frame (movie) generation
+itself will take longer.
+</p>
 <h3>Output file type</h3>
 <p>
 Here you can change the file type (container) that is used to store your movie in. Again, check which file types
-are supported by your video editor. Possible options are: avi, mp4, mpg, mkv
+are supported by your video editor. Possible options are: avi, mov, mp4, mpg, mkv, wmv
 </p>
 <h3>Manual ffmpeg arguments</h3>
 <p>

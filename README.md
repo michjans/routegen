@@ -195,7 +195,15 @@ sub-directory (defined in qt.conf)!
   - Fixed default location of ffmpeg on linux (removed /usr/bin); assume it
     can always be found in the PATH
   - Added more default (animated) vehicles (source: gifsanimes.com)
-
+- 1.11.0 release
+  - GeoTiff support.
+  - Possibility to set fixed output resolution for output video's.
+  - Scrolling/sliding map with fixed resolution of output video when generating movie.
+  - Because background map resolution can now be higher than the output resolution, you can
+    now specify a ratio in relation to the selected output resolution in the Google maps importer.
+  - Make it possible to select existing folder again.
+  - FPS setting now passed correctly to the ffmpeg commandline.
+  - Possibility to set different file type for generated video frames (e.g. PNG, JPG, etc.)
  
 ## Technical details
 

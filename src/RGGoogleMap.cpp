@@ -285,6 +285,8 @@ QString RGGoogleMap::genHtml(const QString &latlon, const QString &zoom) const
 	html.replace("ZOOM", zoom);
     html.replace("MAPTYPE", ui.mapTypeBox->currentText());
 
+    ui.zoomBox->setValue(zoom.toInt());
+
 #if 0
 	QFile file("out.html");
 	if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
