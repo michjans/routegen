@@ -117,7 +117,7 @@ bool RGViewWidget::saveRenderedImage(const QString &filename, bool fullMapResolu
     bool result = false;
     if (fullMapResolution)
     {
-        QImage outImage(fullMapRect.size(), QImage::Format_ARGB32);
+        QImage outImage(fullMapRect.size(), QImage::Format_RGB32);
         QPainter painter(&outImage);
         mScene->render(&painter);
         result = outImage.save(filename);
@@ -143,7 +143,7 @@ bool RGViewWidget::saveRenderedImage(const QString &filename, bool fullMapResolu
             if (outWindow.right() > fullMapRect.right()) moveX = -moveX;
             outWindow.translate(moveX, moveY);
         }
-        QImage outImage(outWindow.size(), QImage::Format_ARGB32);
+        QImage outImage(outWindow.size(), QImage::Format_RGB32);
         QPainter painter(&outImage);
         mScene->render(&painter, QRectF(), outWindow);
         result = outImage.save(filename);
@@ -223,8 +223,10 @@ void RGViewWidget::loadImage(const QPixmap &pm)
   this->setFrameShape(QFrame::NoFrame);
   viewport()->setMaximumSize(pm.size());
   this->setAlignment((Qt::AlignLeft | Qt::AlignTop));
-  //setTransform(QTransform()); //Reset scale
   fitInView(pm.rect(), Qt::KeepAspectRatioByExpanding);
+
+  //TODO: Somehow this does not work when loading a map while opening a project file
+  //      Then it is not possible to zoom out above the "base" tranform of the image
   mMinTransformM11 = transform().m11(); //Prevents zooming out further than size of image
   updateGeometry();
 }

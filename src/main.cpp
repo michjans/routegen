@@ -107,7 +107,7 @@
  *          Possibility to set different file type for generated video frames (e.g. PNG, JPG, etc.)
  */
 
-extern const QString applicationName("Route Generator version 1.11.0");
+extern const QString applicationName("Route Generator version 1.12.0-alpha");
 
 int main(int argc, char *argv[])
 {
