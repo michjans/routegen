@@ -8,17 +8,17 @@
 class RGGeoTiffMapProjection : public RGMapProjection
 {
 public:
-    RGGeoTiffMapProjection(const QString &fileName);
+    RGGeoTiffMapProjection(const QString& fileName);
     ~RGGeoTiffMapProjection() override;
 
     bool isValid() const override;
     QPoint convert(const QGeoCoordinate& geoPoint) const override;
-    bool saveProjection(const QString &fileName) override;
+    bool saveProjection(const QString& fileName) override;
 
 private:
     QString mFileName;
-    TIFF *mTiff;
-    GTIF *mGTif;
+    TIFF* mTiff;
+    GTIF* mGTif;
 };
 
 #endif // RGGEOTIFFMAPPROJECTION_H

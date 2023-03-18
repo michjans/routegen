@@ -4,19 +4,18 @@
 #include "RGGeoTiffMapProjection.h"
 #include "RGGoogleMapProjection.h"
 
-#include <QJsonObject>
 #include <QDebug>
+#include <QJsonObject>
 
 #include <algorithm>
 
-RGMap::RGMap(QObject *parent)
-    :QObject(parent),
-     mDirty(false)
+RGMap::RGMap(QObject* parent)
+    : QObject(parent),
+      mDirty(false)
 {
-
 }
 
-bool RGMap::loadMap(const QString &fileName, const QPixmap &map, const RGMapBounds &gmapBounds)
+bool RGMap::loadMap(const QString& fileName, const QPixmap& map, const RGMapBounds& gmapBounds)
 {
     bool success = !map.isNull();
     mFileName = fileName;
@@ -67,12 +66,12 @@ bool RGMap::hasGeoBounds() const
     return mMapProjection && mMapProjection->isValid();
 }
 
-QList<QPoint> RGMap::mapRoutePoints(const QList<QGeoCoordinate> &geoCoordinates) const
+QList<QPoint> RGMap::mapRoutePoints(const QList<QGeoCoordinate>& geoCoordinates) const
 {
     QList<QPoint> pointlist;
     if (mMapProjection)
     {
-        for (const QGeoCoordinate &coord: geoCoordinates)
+        for (const QGeoCoordinate& coord : geoCoordinates)
         {
             pointlist.append(mMapProjection->convert(coord));
         }
@@ -108,7 +107,7 @@ void RGMap::clearMap()
     emit mapLoaded(mMap);
 }
 
-bool RGMap::saveGeoBoundsToNewFile(const QString &fileName)
+bool RGMap::saveGeoBoundsToNewFile(const QString& fileName)
 {
     if (mMapProjection)
     {
@@ -117,7 +116,7 @@ bool RGMap::saveGeoBoundsToNewFile(const QString &fileName)
     return false;
 }
 
-void RGMap::read(const QJsonObject &json)
+void RGMap::read(const QJsonObject& json)
 {
     QJsonValue mapValue = json.value(QStringLiteral("map"));
     if (mapValue.isObject())
@@ -131,7 +130,7 @@ void RGMap::read(const QJsonObject &json)
     }
 }
 
-void RGMap::write(QJsonObject &json)
+void RGMap::write(QJsonObject& json)
 {
     QJsonObject mapObject;
     mapObject.insert(QStringLiteral("fileName"), mFileName);

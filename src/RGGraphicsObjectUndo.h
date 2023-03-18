@@ -26,15 +26,14 @@
 
 class RGGraphicsObjectUndo : public QGraphicsObject
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  explicit RGGraphicsObjectUndo(QGraphicsItem *parent = 0);
+    explicit RGGraphicsObjectUndo(QGraphicsItem* parent = 0);
 
 signals:
 
 public slots:
-  virtual void undoredo(QVariant=0);
-
+    virtual void undoredo(QVariant = 0);
 };
 
 #endif // RGGRAPHICSOBJECTUNDO_H

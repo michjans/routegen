@@ -17,13 +17,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #ifndef RGSETTINGS_DIALOG_H
 #define RGSETTINGS_DIALOG_H
 
-#include <QDialog>
-#include "ui_settings.h"
 #include "RGEncVideo.h"
+#include "ui_settings.h"
+#include <QDialog>
 
 class QSpinBox;
 class QPushButton;
@@ -31,27 +30,25 @@ class QCheckBox;
 
 class RGSettingsDialog : public QDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  RGSettingsDialog(RGEncVideo *videoSettings,QWidget *parent = 0);
-  ~RGSettingsDialog();
-  int getSmoothCoef();
-  bool getIconlessBeginEndFrames();
+    RGSettingsDialog(RGEncVideo* videoSettings, QWidget* parent = 0);
+    ~RGSettingsDialog();
+    int getSmoothCoef();
+    bool getIconlessBeginEndFrames();
 
 private slots:
-  void on_encoderSelectionCB_activated(const QString &text);
-  void on_mResetDefaultsPB_clicked(bool);
-  void accept();
+    void on_encoderSelectionCB_activated(const QString& text);
+    void on_mResetDefaultsPB_clicked(bool);
+    void accept();
 
 private:
-  QCheckBox *mGenerateBeginEndFramesCB;
-  QSpinBox *mSmoothLengthSB;
-  QPushButton *mResetDefaultsPB;
-	RGEncVideo *mVideoEncoder;
-  Ui::Dialog ui;
-
+    QCheckBox* mGenerateBeginEndFramesCB;
+    QSpinBox* mSmoothLengthSB;
+    QPushButton* mResetDefaultsPB;
+    RGEncVideo* mVideoEncoder;
+    Ui::Dialog ui;
 };
 
 #endif
-

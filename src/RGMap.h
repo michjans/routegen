@@ -4,22 +4,21 @@
 #include "RGMapBounds.h"
 #include "RGMapProjection.h"
 
+#include <QList>
 #include <QObject>
 #include <QPixmap>
-#include <QRectF>
-#include <QList>
 #include <QPoint>
+#include <QRectF>
 
 class RGMap : public QObject
 {
     Q_OBJECT
 public:
-    explicit RGMap(QObject *parent = 0);
+    explicit RGMap(QObject* parent = 0);
 
-    bool loadMap(const QString &fileName, const QPixmap &map = QPixmap(),
-                 const RGMapBounds &gmapBounds=RGMapBounds());
+    bool loadMap(const QString& fileName, const QPixmap& map = QPixmap(), const RGMapBounds& gmapBounds = RGMapBounds());
     bool hasGeoBounds() const;
-    QList<QPoint> mapRoutePoints(const QList<QGeoCoordinate> &geoCoordinates) const;
+    QList<QPoint> mapRoutePoints(const QList<QGeoCoordinate>& geoCoordinates) const;
     QString fileName() const;
     bool isEmpty() const;
     bool isDirty() const;
@@ -33,13 +32,13 @@ public:
      *        using Google maps. In that case the geograpic information is stored outside the map.s
      * @param fileName
      */
-    bool saveGeoBoundsToNewFile(const QString &fileName);
+    bool saveGeoBoundsToNewFile(const QString& fileName);
 
-    void read (const QJsonObject &json);
-    void write (QJsonObject &json);
+    void read(const QJsonObject& json);
+    void write(QJsonObject& json);
 
 signals:
-    void mapLoaded(const QPixmap &map);
+    void mapLoaded(const QPixmap& map);
 
 private:
     QPixmap mMap;

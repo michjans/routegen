@@ -1,12 +1,11 @@
 #include "RGProjectReader.h"
 
-RGProjectReader::RGProjectReader(RGRoute *route, RGMap *map, QWidget *parent)
+RGProjectReader::RGProjectReader(RGRoute* route, RGMap* map, QWidget* parent)
     : RGReader(route, map, parent)
 {
-
 }
 
-bool RGProjectReader::readFile(const QString &fileName)
+bool RGProjectReader::readFile(const QString& fileName)
 {
     QFile loadFile(fileName);
 

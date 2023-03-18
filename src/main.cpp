@@ -17,12 +17,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include <QApplication>
 #include <QDir>
-#include <QMessageBox>
 #include <QFile>
 #include <QFileDialog>
+#include <QMessageBox>
 
 #include "RGMainWindow.h"
 
@@ -59,7 +58,7 @@
  *  v1.6    Route editable (selected points can be moved or deleted)
  *          Redo buffer
  *          Increased maximum of duration of output movie
- *          Codec selection for video encoding under linux 
+ *          Codec selection for video encoding under linux
  *          Installation command for linux
  *          Improvements of edit dialog for vehicle settings
  *          Vehicle orientation (yes/no) is now a setting
@@ -109,20 +108,19 @@
 
 extern const QString applicationName("Route Generator version 1.12.0-alpha");
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-  //TODO:qInstallMessageHandler(myMessageOutput);
+    //TODO:qInstallMessageHandler(myMessageOutput);
 
-  QApplication app(argc, argv);
+    QApplication app(argc, argv);
 
-  //For storing application settings
-  app.setOrganizationName("MJProductions");
-  app.setApplicationName("Route Generator");
+    //For storing application settings
+    app.setOrganizationName("MJProductions");
+    app.setApplicationName("Route Generator");
 
-  RGMainWindow *mainWindow = new RGMainWindow;
-  mainWindow->setWindowTitle(applicationName);
+    RGMainWindow* mainWindow = new RGMainWindow;
+    mainWindow->setWindowTitle(applicationName);
 
-  mainWindow->show();
-  return app.exec();
-} 
-
+    mainWindow->show();
+    return app.exec();
+}

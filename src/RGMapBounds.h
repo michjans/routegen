@@ -15,7 +15,7 @@ public:
     {
     }
 
-    RGMapBounds(const QGeoCoordinate &ne, const QGeoCoordinate &sw, int zoom)
+    RGMapBounds(const QGeoCoordinate& ne, const QGeoCoordinate& sw, int zoom)
         : m_neCoord(ne),
           m_swCoord(sw),
           m_zoom(zoom)
@@ -27,12 +27,12 @@ public:
         return m_neCoord.isValid() && m_swCoord.isValid() && m_zoom > 0;
     }
 
-    void setSwCoord(const QGeoCoordinate &swCoord)
+    void setSwCoord(const QGeoCoordinate& swCoord)
     {
         m_swCoord = swCoord;
     }
 
-    void setNeCoord(const QGeoCoordinate &neCoord)
+    void setNeCoord(const QGeoCoordinate& neCoord)
     {
         m_neCoord = neCoord;
     }
@@ -57,7 +57,7 @@ public:
         return m_zoom;
     }
 
-    bool fromQVariant(const QVariant &v)
+    bool fromQVariant(const QVariant& v)
     {
         if (QMetaType::Type(v.type()) == QMetaType::QVariantMap)
         {

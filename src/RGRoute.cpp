@@ -21,34 +21,33 @@
 #include "RGRoute.h"
 #include <QDebug>
 
-RGRoute::RGRoute(RGMap *map, QGraphicsItem *parent) :
-  RGGraphicsObjectUndo(parent),
-  mMap(map),
-  mIconlessBeginEndFrames(false),
-  mPlayback(false),
-  mEditMode(false),
-  mDirty(false)
+RGRoute::RGRoute(RGMap* map, QGraphicsItem* parent)
+    : RGGraphicsObjectUndo(parent),
+      mMap(map),
+      mIconlessBeginEndFrames(false),
+      mPlayback(false),
+      mEditMode(false),
+      mDirty(false)
 {
-  mPath=new RGPath(this);
-  mEditPath=new RGEditPath(this);
-  mEditPath->setVisible(false);
-  QObject::connect(mEditPath,SIGNAL(newPointList(QList<QPoint>,bool)),this,SLOT(changePath(QList<QPoint>,bool)));
-  QObject::connect(this,SIGNAL(sceneRectChanged()),mEditPath,SLOT(on_sceneRectChanged()));
-  QObject::connect(this,SIGNAL(sceneRectChanged()),this,SLOT(clearPath()));
+    mPath = new RGPath(this);
+    mEditPath = new RGEditPath(this);
+    mEditPath->setVisible(false);
+    QObject::connect(mEditPath, SIGNAL(newPointList(QList<QPoint>, bool)), this, SLOT(changePath(QList<QPoint>, bool)));
+    QObject::connect(this, SIGNAL(sceneRectChanged()), mEditPath, SLOT(on_sceneRectChanged()));
+    QObject::connect(this, SIGNAL(sceneRectChanged()), this, SLOT(clearPath()));
 
-  if (mMap)
-  {
-      QObject::connect(map, &RGMap::mapLoaded,
-                       this, &RGRoute::handleMapLoaded);
-  }
+    if (mMap)
+    {
+        QObject::connect(map, &RGMap::mapLoaded, this, &RGRoute::handleMapLoaded);
+    }
 
-  //create and set up vehicleList
-  mVehicleList = new RGVehicleList();
+    //create and set up vehicleList
+    mVehicleList = new RGVehicleList();
 }
 
 QRectF RGRoute::boundingRect() const
 {
-    return QRectF();//mBoundingRect;
+    return QRectF(); //mBoundingRect;
 }
 
 QPointF RGRoute::currentVehiclePos() const
@@ -56,91 +55,93 @@ QPointF RGRoute::currentVehiclePos() const
     return mPath->getEndPos();
 }
 
-void RGRoute::paint(QPainter * /*painter*/, const QStyleOptionGraphicsItem *, QWidget *)
+void RGRoute::paint(QPainter* /*painter*/, const QStyleOptionGraphicsItem*, QWidget*)
 {
 }
 
 void RGRoute::setSmoothCoef(int dsmooth)
 {
-  mPath->setSmoothCoef(dsmooth);
-  setCurrentFrame(mPath->countFrames()-1);
+    mPath->setSmoothCoef(dsmooth);
+    setCurrentFrame(mPath->countFrames() - 1);
 }
 
 void RGRoute::startPlayback(bool play)
 {
-  mPlayback=play;
+    mPlayback = play;
 }
 
-void RGRoute::changePen(const QPen & pen)
+void RGRoute::changePen(const QPen& pen)
 {
-  mPath->setPen(pen);
+    mPath->setPen(pen);
 }
 
 void RGRoute::activateTotalTime(bool checked)
 {
-  if (checked)
-    mPath->setPlayMode(1);
-  else
-    mPath->setPlayMode(0);
+    if (checked)
+        mPath->setPlayMode(1);
+    else
+        mPath->setPlayMode(0);
 }
 
 void RGRoute::activateSmoothPath(bool checked)
 {
-  mPath->setSmoothPath(checked);
-  //if playback is on, update to the current frame else to the last :
-  if(mPlayback)
-    setCurrentFrame(mPath->getCurrentFrame());
-  else
-    setCurrentFrame(mPath->countFrames()-1);
+    mPath->setSmoothPath(checked);
+    //if playback is on, update to the current frame else to the last :
+    if (mPlayback)
+        setCurrentFrame(mPath->getCurrentFrame());
+    else
+        setCurrentFrame(mPath->countFrames() - 1);
 }
 
 void RGRoute::setRouteTime(int time)
 {
-  mPath->setTotalTime(time);
+    mPath->setTotalTime(time);
 }
 
 void RGRoute::handleVehicleChange()
 {
-  mVehicleList->getCurrentVehicle()->setParentItem(this);
-  updateVehicle();
+    mVehicleList->getCurrentVehicle()->setParentItem(this);
+    updateVehicle();
 }
 
-void RGRoute::changePath(const QList<QPoint> &pointlist,bool canUndo)
+void RGRoute::changePath(const QList<QPoint>& pointlist, bool canUndo)
 {
-  qDebug() << "RGRoute::changePath: pointlist.size():" << pointlist.size();
+    qDebug() << "RGRoute::changePath: pointlist.size():" << pointlist.size();
 
-  mPath->newPointList(pointlist);
-  updateVehicle();
+    mPath->newPointList(pointlist);
+    updateVehicle();
 
-  if(pointlist.size()>=2)
-    emit canGenerate(true);
-  if(pointlist.size()<2)
-    emit canGenerate(false);
+    if (pointlist.size() >= 2)
+        emit canGenerate(true);
+    if (pointlist.size() < 2)
+        emit canGenerate(false);
 
-  //send Undo data
-  if(canUndo){
-    QList<QVariant> vlist;
-    for(int i=0;i<pointlist.size();i++){
-      vlist.append(QVariant(pointlist.at(i)));
+    //send Undo data
+    if (canUndo)
+    {
+        QList<QVariant> vlist;
+        for (int i = 0; i < pointlist.size(); i++)
+        {
+            vlist.append(QVariant(pointlist.at(i)));
+        }
+        QVariant data(vlist);
+        emit newUndoable(this, data);
     }
-    QVariant data(vlist);
-    emit newUndoable(this,data);
-  }
 
-  mDirty = true;
+    mDirty = true;
 }
 
-void RGRoute::handleMapLoaded(const QPixmap &/*map*/)
+void RGRoute::handleMapLoaded(const QPixmap& /*map*/)
 {
     processMapUpdate();
 }
 
-void RGRoute::setNewPoints(const QList<QPoint> &pointlist)
+void RGRoute::setNewPoints(const QList<QPoint>& pointlist)
 {
     mEditPath->setNewPoints(pointlist);
 }
 
-void RGRoute::setGeoCoordinates(const QList<QGeoCoordinate> &geoCoordinates)
+void RGRoute::setGeoCoordinates(const QList<QGeoCoordinate>& geoCoordinates)
 {
     mGeoPath.setPath(geoCoordinates);
     processMapUpdate();
@@ -178,15 +179,16 @@ void RGRoute::resetDirty()
 
 void RGRoute::undoredo(QVariant data)
 {
-  QList<QVariant> vlist=data.toList();
-  QList<QPoint> pointlist;
-  for(int i=0;i<vlist.size();i++){
-    pointlist.append(vlist.at(i).toPoint());
-  }
-  setNewPoints(pointlist);
+    QList<QVariant> vlist = data.toList();
+    QList<QPoint> pointlist;
+    for (int i = 0; i < vlist.size(); i++)
+    {
+        pointlist.append(vlist.at(i).toPoint());
+    }
+    setNewPoints(pointlist);
 }
 
-void RGRoute::read(const QJsonObject &json)
+void RGRoute::read(const QJsonObject& json)
 {
     QJsonValue routeValue = json.value(QStringLiteral("route"));
     if (routeValue.isObject())
@@ -199,7 +201,7 @@ void RGRoute::read(const QJsonObject &json)
         {
             QJsonArray jsonGeoCoords = routeObject.value(QStringLiteral("geoCoordinates")).toArray();
             QList<QGeoCoordinate> geoCoordinates;
-            for (const QJsonValue &geoValue: jsonGeoCoords)
+            for (const QJsonValue& geoValue : jsonGeoCoords)
             {
                 QJsonObject geoObject = geoValue.toObject();
                 geoCoordinates.append(QGeoCoordinate(geoObject["latitude"].toDouble(), geoObject["longitude"].toDouble()));
@@ -215,7 +217,7 @@ void RGRoute::read(const QJsonObject &json)
         {
             QJsonArray jsonCoords = routeObject.value(QStringLiteral("wndCoordinates")).toArray();
             QList<QPoint> pointlist;
-            for (const QJsonValue &coordValue: jsonCoords)
+            for (const QJsonValue& coordValue : jsonCoords)
             {
                 QJsonObject coordObject = coordValue.toObject();
                 pointlist.append(QPoint(coordObject["x"].toInt(), coordObject["y"].toInt()));
@@ -225,12 +227,12 @@ void RGRoute::read(const QJsonObject &json)
     }
 }
 
-void RGRoute::write(QJsonObject &json)
+void RGRoute::write(QJsonObject& json)
 {
     QJsonObject routeObject;
 
     QJsonArray jsonGeoCoords;
-    for (const QGeoCoordinate &coord: mGeoPath.path())
+    for (const QGeoCoordinate& coord : mGeoPath.path())
     {
         QJsonObject jsonCoord;
         jsonCoord.insert(QStringLiteral("longitude"), coord.longitude());
@@ -240,7 +242,7 @@ void RGRoute::write(QJsonObject &json)
     routeObject.insert(QStringLiteral("geoCoordinates"), jsonGeoCoords);
 
     QJsonArray jsonCoords;
-    for (const RGEditPathPoint*point: mEditPath->path())
+    for (const RGEditPathPoint* point : mEditPath->path())
     {
         QJsonObject jsonCoord;
         jsonCoord.insert(QStringLiteral("x"), point->x());
@@ -254,11 +256,11 @@ void RGRoute::write(QJsonObject &json)
 
 void RGRoute::setEditMode(bool checked)
 {
-  mEditMode=checked;
-  mEditPath->setVisible(checked);
-  setCurrentFrame(mPath->countFrames()-1);
-  //gives Edit path the keyboard grab :
-  mEditPath->grabKeyboard();
+    mEditMode = checked;
+    mEditPath->setVisible(checked);
+    setCurrentFrame(mPath->countFrames() - 1);
+    //gives Edit path the keyboard grab :
+    mEditPath->grabKeyboard();
 }
 
 void RGRoute::clearPath(bool clearGeoPath)
@@ -274,41 +276,43 @@ void RGRoute::clearPath(bool clearGeoPath)
 
 int RGRoute::countFrames()
 {
-  return mPath->countFrames();
+    return mPath->countFrames();
 }
 
 void RGRoute::setCurrentFrame(int frame)
 {
-  mPath->setCurrentFrame(frame);
-  updateVehicle();
+    mPath->setCurrentFrame(frame);
+    updateVehicle();
 }
 
 void RGRoute::setIconlessBeginEndFrames(bool val)
 {
-  mIconlessBeginEndFrames=val;
-  updateVehicle();
+    mIconlessBeginEndFrames = val;
+    updateVehicle();
 }
 
 void RGRoute::updateVehicle()
 {
-  //if in edit mode
-  if(mEditMode){
-    mVehicleList->getCurrentVehicle()->setVisible(false);
-    return;
-  }
-  int frame=mPath->getCurrentFrame();
-  //if just one point
-  if(countFrames()<2){
-    mVehicleList->getCurrentVehicle()->setVisible(false);
-    return;
-  }
-  mVehicleList->getCurrentVehicle()->setTime(mPath->getCurrentTime());
-  mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
-  mVehicleList->getCurrentVehicle()->setRotation(mPath->getAngle());
-  if(mIconlessBeginEndFrames && (frame==0 || frame==countFrames()-1))
-    mVehicleList->getCurrentVehicle()->setVisible(false);
-  else
-      mVehicleList->getCurrentVehicle()->setVisible(true);
+    //if in edit mode
+    if (mEditMode)
+    {
+        mVehicleList->getCurrentVehicle()->setVisible(false);
+        return;
+    }
+    int frame = mPath->getCurrentFrame();
+    //if just one point
+    if (countFrames() < 2)
+    {
+        mVehicleList->getCurrentVehicle()->setVisible(false);
+        return;
+    }
+    mVehicleList->getCurrentVehicle()->setTime(mPath->getCurrentTime());
+    mVehicleList->getCurrentVehicle()->setPos(mPath->getEndPos());
+    mVehicleList->getCurrentVehicle()->setRotation(mPath->getAngle());
+    if (mIconlessBeginEndFrames && (frame == 0 || frame == countFrames() - 1))
+        mVehicleList->getCurrentVehicle()->setVisible(false);
+    else
+        mVehicleList->getCurrentVehicle()->setVisible(true);
 }
 
 void RGRoute::processMapUpdate()

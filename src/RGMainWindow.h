@@ -42,79 +42,79 @@ class RGUndoRedo;
 
 class RGMainWindow : public QMainWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  RGMainWindow(QWidget *parent = 0);
+    RGMainWindow(QWidget* parent = 0);
 
 protected:
-  void closeEvent(QCloseEvent *event) override;
+    void closeEvent(QCloseEvent* event) override;
 
 private slots:
-  void on_actionNew_project_triggered(bool);
-  void on_actionOpen_project_triggered(bool );
-  void on_actionOpen_image_triggered(bool );
-  void on_actionSave_image_triggered(bool );
-  void on_actionSave_project_triggered(bool );
-  void on_actionSave_project_as_triggered(bool );
-  void on_actionPreferences_triggered(bool );
-  void on_actionImport_Google_Map_triggered(bool );
-  void on_actionImport_GPX_triggered(bool ); 
-  void on_actionDraw_mode_triggered(bool );
-  void on_actionNew_route_triggered(bool );
-  void on_actionGenerate_map_triggered(bool );
-  void on_actionPlayback_triggered(bool );
-  void on_actionStop_triggered(bool );
-  void on_action_Tutorial_triggered(bool );
-  void on_action_About_triggered(bool );
-  void on_action_Quit_triggered(bool );
-  void on_resolutionCBChanged(int index);
-  void handleMapLoaded(const QPixmap& map);
-  
-  void blockUserInteraction(bool);
-  void enableGenerateActions(bool);
-  void movieGenerationFinished();
+    void on_actionNew_project_triggered(bool);
+    void on_actionOpen_project_triggered(bool);
+    void on_actionOpen_image_triggered(bool);
+    void on_actionSave_image_triggered(bool);
+    void on_actionSave_project_triggered(bool);
+    void on_actionSave_project_as_triggered(bool);
+    void on_actionPreferences_triggered(bool);
+    void on_actionImport_Google_Map_triggered(bool);
+    void on_actionImport_GPX_triggered(bool);
+    void on_actionDraw_mode_triggered(bool);
+    void on_actionNew_route_triggered(bool);
+    void on_actionGenerate_map_triggered(bool);
+    void on_actionPlayback_triggered(bool);
+    void on_actionStop_triggered(bool);
+    void on_action_Tutorial_triggered(bool);
+    void on_action_About_triggered(bool);
+    void on_action_Quit_triggered(bool);
+    void on_resolutionCBChanged(int index);
+    void handleMapLoaded(const QPixmap& map);
+
+    void blockUserInteraction(bool);
+    void enableGenerateActions(bool);
+    void movieGenerationFinished();
 
 private:
-	void initVideoEncoderFromSettings();
+    void initVideoEncoderFromSettings();
     void updateStatusMessage();
     bool checkMapSaveOrCancel();
-    void saveProjectFile(const QString &projectFileName);
+    void saveProjectFile(const QString& projectFileName);
 
-  RGViewWidget *mView;
-  RGEncVideo *mVideoEncoder;
-  RGMap *mMap;
-  RGRoute *mRoute;
-  RGRouteUi *mRouteUi;
+    RGViewWidget* mView;
+    RGEncVideo* mVideoEncoder;
+    RGMap* mMap;
+    RGRoute* mRoute;
+    RGRouteUi* mRouteUi;
 
-  RGUndoRedo  *mUndoRedo;
+    RGUndoRedo* mUndoRedo;
 
-  QLabel *mRouteGeoStatus;
-  QLabel *mRouteLoadedStatus;
-  QLabel *mMapGeoStatus;
-  QLabel *mMapLoadedStatus;
+    QLabel* mRouteGeoStatus;
+    QLabel* mRouteLoadedStatus;
+    QLabel* mMapGeoStatus;
+    QLabel* mMapLoadedStatus;
 
-  QAction *actionOpen_image;
-  QAction *action_Quit;
-  QAction *actionSave_image;
-  QAction *actionNew_project;
-  QAction *actionSave_project;
-  QAction *actionSave_project_as;
-  QAction *actionOpen_project;
-  QAction *actionImport_Google_Map;
-  QAction *actionImport_GPX;
-  QAction *actionDraw_mode;
-  QAction *actionNew_route;
-  QAction *action_Undo;
-  QAction *action_Redo;
-  QAction *actionGenerate_map;
-  QAction *actionPlayback;
-  QAction *actionStop;
-  QComboBox *mResolutionCB;
+    QAction* actionOpen_image;
+    QAction* action_Quit;
+    QAction* actionSave_image;
+    QAction* actionNew_project;
+    QAction* actionSave_project;
+    QAction* actionSave_project_as;
+    QAction* actionOpen_project;
+    QAction* actionImport_Google_Map;
+    QAction* actionImport_GPX;
+    QAction* actionDraw_mode;
+    QAction* actionNew_route;
+    QAction* action_Undo;
+    QAction* action_Redo;
+    QAction* actionGenerate_map;
+    QAction* actionPlayback;
+    QAction* actionStop;
+    QComboBox* mResolutionCB;
 
-  QStringList  mGeneratedFrames;
-  QString mCurrentProjectFileName;
-  int mCustomResolutionItemIdx;
+    QStringList mGeneratedFrames;
+    QString mCurrentProjectFileName;
+    int mCustomResolutionItemIdx;
 };
 
 #endif //MAIN_GUI_H

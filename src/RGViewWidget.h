@@ -21,61 +21,61 @@
 #ifndef RGVIEWWIDGET_H
 #define RGVIEWWIDGET_H
 
-#include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
-#include <QTimer>
+#include <QGraphicsView>
 #include <QTimeLine>
+#include <QTimer>
 
 #include "RGMap.h"
 #include "RGRoute.h"
 
 class RGViewWidget : public QGraphicsView
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  explicit RGViewWidget(RGMap *map, QWidget *parent = 0);
-  QSize   sizeHint () const;
-  void addRoute(RGRoute*);
+    explicit RGViewWidget(RGMap* map, QWidget* parent = 0);
+    QSize sizeHint() const;
+    void addRoute(RGRoute*);
 
-  /**
-   * @brief Saves the currently rendered image
-   * @param filename of the image
-   * @param mapResolution if the map will be saved in it's full original resolution, otherwise it will
-   *                      be saved in the output resolution (sliding window)
-   * @return
-   */
-  bool saveRenderedImage(const QString &filename, bool fullMapResolution = false);
-  bool generateMovie(const QString &dirName, const QString &filePrefix, const QString &frameFileType, QStringList &generatedImageFiles);
+    /**
+     * @brief Saves the currently rendered image
+     * @param filename of the image
+     * @param mapResolution if the map will be saved in it's full original resolution, otherwise it will
+     *                      be saved in the output resolution (sliding window)
+     * @return
+     */
+    bool saveRenderedImage(const QString& filename, bool fullMapResolution = false);
+    bool generateMovie(const QString& dirName, const QString& filePrefix, const QString& frameFileType, QStringList& generatedImageFiles);
 
 signals:
-  void playbackStopped(bool);
-  void sceneRectChanged();
+    void playbackStopped(bool);
+    void sceneRectChanged();
 
 public slots:
-  void loadImage(const QPixmap &pm);
-  void play();
-  void stop();
+    void loadImage(const QPixmap& pm);
+    void play();
+    void stop();
 
 protected:
-   void wheelEvent ( QWheelEvent * event ) override;
+    void wheelEvent(QWheelEvent* event) override;
 
 private slots:
-  void playTimerEvent();
-  bool saveFrame(int frameCounter, const QString &dirName, const QString &filePrefix, const QString &frameFileType, QStringList &generatedBMPs);
-  void scalingTime(qreal x);
-  void animFinished();
+    void playTimerEvent();
+    bool saveFrame(int frameCounter, const QString& dirName, const QString& filePrefix, const QString& frameFileType, QStringList& generatedBMPs);
+    void scalingTime(qreal x);
+    void animFinished();
 
 private:
-  QGraphicsScene *mScene;
-  QGraphicsTextItem *mWelcomeText;
-  RGRoute *mRoute;
-  QTimer        *mPlayTimer;
-  QTimeLine     *mAnim;
-  int           mTimerCounter;
-  int           mNumScheduledScalings;
-  QPoint        mDragOrigin;
-  qreal         mMinTransformM11;
+    QGraphicsScene* mScene;
+    QGraphicsTextItem* mWelcomeText;
+    RGRoute* mRoute;
+    QTimer* mPlayTimer;
+    QTimeLine* mAnim;
+    int mTimerCounter;
+    int mNumScheduledScalings;
+    QPoint mDragOrigin;
+    qreal mMinTransformM11;
 };
 
 #endif // RGVIEWWIDGET_H

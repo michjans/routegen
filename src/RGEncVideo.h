@@ -21,53 +21,51 @@
 #ifndef RGENCVIDEO_H
 #define RGENCVIDEO_H
 
+#include "ui_videosettings.h"
+#include <QMessageBox>
 #include <QObject>
 #include <QProcess>
-#include <QMessageBox>
-#include "ui_videosettings.h"
 
 class RGEncVideo : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  explicit RGEncVideo(QWidget *parent = 0);
-  ~RGEncVideo();
-	bool initCodecExecutable();
-	bool exists() const;
-  virtual void updateFromSettings();
-  virtual void saveInSettings();
-  virtual void generateMovie(const QString &dirName)=0;
-  virtual QString encoderName()=0;
-  virtual QString encoderExecBaseName()=0;
-  virtual QString frameFileType() const = 0;
-  virtual QString outputFileType() const = 0;
-
+    explicit RGEncVideo(QWidget* parent = 0);
+    ~RGEncVideo();
+    bool initCodecExecutable();
+    bool exists() const;
+    virtual void updateFromSettings();
+    virtual void saveInSettings();
+    virtual void generateMovie(const QString& dirName) = 0;
+    virtual QString encoderName() = 0;
+    virtual QString encoderExecBaseName() = 0;
+    virtual QString frameFileType() const = 0;
+    virtual QString outputFileType() const = 0;
 
 signals:
-  void movieGenerationFinished();
+    void movieGenerationFinished();
 
 protected slots:
-  void createEncodingProcess(const QString &dirName,const QString &videoEncExec,const QStringList &arguments);
-  void encodingProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
-  void encodingProcessError(QProcess::ProcessError error);
-	void browseClicked();
+    void createEncodingProcess(const QString& dirName, const QString& videoEncExec, const QStringList& arguments);
+    void encodingProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    void encodingProcessError(QProcess::ProcessError error);
+    void browseClicked();
 
 protected:
-    bool checkForCodecExecutable(QString &execName);
-	virtual bool initCodecs() = 0;
+    bool checkForCodecExecutable(QString& execName);
+    virtual bool initCodecs() = 0;
 
 protected:
-  QString mExecName;
-  bool mExists;
-  int mFps;
-  QString mOutName;
-  int mKeyFrameRate;
-  QMessageBox    *mProcessWaitMessage;
-  QProcess    *mVideoEncProcess;
-  QString mCompress;
-  QString mCompressDefault;
-  Ui::videoSettings mUi;
-
+    QString mExecName;
+    bool mExists;
+    int mFps;
+    QString mOutName;
+    int mKeyFrameRate;
+    QMessageBox* mProcessWaitMessage;
+    QProcess* mVideoEncProcess;
+    QString mCompress;
+    QString mCompressDefault;
+    Ui::videoSettings mUi;
 };
 
 #endif // RGENCVIDEO_H

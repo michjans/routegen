@@ -1,15 +1,15 @@
 #include "RGGoogleMapProjection.h"
 #include "RGSettings.h"
 
-#include <QtMath>
 #include <QDebug>
+#include <QtMath>
 
 namespace
 {
-    const int TILE_SIZE = 256;
+const int TILE_SIZE = 256;
 }
 
-RGGoogleMapProjection::RGGoogleMapProjection(const RGMapBounds &mapBounds)
+RGGoogleMapProjection::RGGoogleMapProjection(const RGMapBounds& mapBounds)
     : m_bounds(mapBounds)
 {
     //Calculate topleft/bottomright of the current map in pixel coordinates
@@ -23,7 +23,6 @@ RGGoogleMapProjection::RGGoogleMapProjection(const RGMapBounds &mapBounds)
 
 RGGoogleMapProjection::~RGGoogleMapProjection()
 {
-
 }
 
 bool RGGoogleMapProjection::isValid() const
@@ -31,7 +30,7 @@ bool RGGoogleMapProjection::isValid() const
     return m_bounds.isValid();
 }
 
-QPoint RGGoogleMapProjection::convert(const QGeoCoordinate &geoPoint) const
+QPoint RGGoogleMapProjection::convert(const QGeoCoordinate& geoPoint) const
 {
     QPoint point = worldToPixel(project(geoPoint));
     if (mTopLeft.x() > mBottomRight.x() && point.x() < mTopLeft.x())
@@ -44,14 +43,14 @@ QPoint RGGoogleMapProjection::convert(const QGeoCoordinate &geoPoint) const
     return point - mTopLeft;
 }
 
-bool RGGoogleMapProjection::saveProjection(const QString &fileName)
+bool RGGoogleMapProjection::saveProjection(const QString& fileName)
 {
     //If current map has geo bounds, also store geo bounds along with the saved map image
     RGSettings::setMapGeoBounds(fileName, m_bounds);
     return true;
 }
 
-QPointF RGGoogleMapProjection::project(const QGeoCoordinate &geoPoint) const
+QPointF RGGoogleMapProjection::project(const QGeoCoordinate& geoPoint) const
 {
     qreal siny = qSin(geoPoint.latitude() * M_PI / 180);
 
@@ -60,12 +59,10 @@ QPointF RGGoogleMapProjection::project(const QGeoCoordinate &geoPoint) const
     // about a third of a tile past the edge of the world tile.
     siny = std::min(std::max(siny, -0.9999), 0.9999);
 
-    return QPointF(
-        TILE_SIZE * (0.5 + geoPoint.longitude() / 360),
-        TILE_SIZE * (0.5 - std::log((1 + siny) / (1 - siny)) / (4 * M_PI)));
+    return QPointF(TILE_SIZE * (0.5 + geoPoint.longitude() / 360), TILE_SIZE * (0.5 - std::log((1 + siny) / (1 - siny)) / (4 * M_PI)));
 }
 
-QPoint RGGoogleMapProjection::worldToPixel(const QPointF &worldPoint) const
+QPoint RGGoogleMapProjection::worldToPixel(const QPointF& worldPoint) const
 {
     int scale = 1 << m_bounds.getZoom();
 

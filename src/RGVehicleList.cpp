@@ -18,168 +18,175 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <QDebug>
 #include <QDir>
 #include <QFile>
-#include <QDebug>
 #include <QStandardPaths>
-
 
 #include "RGSettings.h"
 #include "RGVehicleList.h"
 
 RGVehicleList::RGVehicleList()
 {
-  QDir vehicleDir = QDir::currentPath() + "/vehicles";
-  QStringList filters;
-  filters << "*.bmp" << "*.gif" << "*.png" << "*.jpg" << "*.svg";
-  vehicleDir.setNameFilters(filters);
-  QFileInfoList vehicles = vehicleDir.entryInfoList();
+    QDir vehicleDir = QDir::currentPath() + "/vehicles";
+    QStringList filters;
+    filters << "*.bmp"
+            << "*.gif"
+            << "*.png"
+            << "*.jpg"
+            << "*.svg";
+    vehicleDir.setNameFilters(filters);
+    QFileInfoList vehicles = vehicleDir.entryInfoList();
 
-  vehicleDir.setPath(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/vehicles");
-  if (vehicleDir.exists())
-  {
-    vehicles.append(vehicleDir.entryInfoList());
-  }
-  else
-  {
-    //Create folder for custom vehicles
-    vehicleDir.mkpath(vehicleDir.absolutePath());
-  }
+    vehicleDir.setPath(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/vehicles");
+    if (vehicleDir.exists())
+    {
+        vehicles.append(vehicleDir.entryInfoList());
+    }
+    else
+    {
+        //Create folder for custom vehicles
+        vehicleDir.mkpath(vehicleDir.absolutePath());
+    }
 
-  //Always add 'none' vehicle
-  mMap.insert(0,new RGVehicle());
-  mCurrentVehicleId=0;
-  int i=1;
-  for (QFileInfoList::iterator it = vehicles.begin(); it != vehicles.end(); it++){
-    //Add vehicle (and mark vehicles that reside in custom vehicle path as custom)
-    if (addVehicle(*it, it->absoluteFilePath().startsWith(vehicleDir.absolutePath())) == nullptr)
-      continue;
-    if(it->baseName()==RGSettings::getLastVehicleName())
-      mCurrentVehicleId=i;
-    i++;
-  }
+    //Always add 'none' vehicle
+    mMap.insert(0, new RGVehicle());
+    mCurrentVehicleId = 0;
+    int i = 1;
+    for (QFileInfoList::iterator it = vehicles.begin(); it != vehicles.end(); it++)
+    {
+        //Add vehicle (and mark vehicles that reside in custom vehicle path as custom)
+        if (addVehicle(*it, it->absoluteFilePath().startsWith(vehicleDir.absolutePath())) == nullptr)
+            continue;
+        if (it->baseName() == RGSettings::getLastVehicleName())
+            mCurrentVehicleId = i;
+        i++;
+    }
 }
 
 RGVehicleList::~RGVehicleList()
 {
-  qDebug()<<"RGVehicleList::~RGVehicleList()";
-  for (int i=1;i<mMap.count();i++){
-    delete mMap.value(i);
-  }
-  mMap.clear();
+    qDebug() << "RGVehicleList::~RGVehicleList()";
+    for (int i = 1; i < mMap.count(); i++)
+    {
+        delete mMap.value(i);
+    }
+    mMap.clear();
 }
 
-RGVehicle * RGVehicleList::getVehicle(int idx)
+RGVehicle* RGVehicleList::getVehicle(int idx)
 {
-  if(mMap.count()>idx)
-    return mMap.value(idx);
-  return new RGVehicle();
+    if (mMap.count() > idx)
+        return mMap.value(idx);
+    return new RGVehicle();
 }
 
-RGVehicle * RGVehicleList::getCurrentVehicle()
+RGVehicle* RGVehicleList::getCurrentVehicle()
 {
-  return mMap.value(mCurrentVehicleId);
+    return mMap.value(mCurrentVehicleId);
 }
 
 int RGVehicleList::getCurrentVehicleId()
 {
-  return mCurrentVehicleId;
+    return mCurrentVehicleId;
 }
 
 void RGVehicleList::setCurrentVehicleId(int idx)
 {
-  //set no parent:
-  mMap.value(mCurrentVehicleId)->setParentItem(nullptr);
-  mMap.value(mCurrentVehicleId)->setVisible(false);
+    //set no parent:
+    mMap.value(mCurrentVehicleId)->setParentItem(nullptr);
+    mMap.value(mCurrentVehicleId)->setVisible(false);
 
-  mCurrentVehicleId=idx;
-  RGSettings::setLastVehicleName(mMap.value(idx)->getName());
+    mCurrentVehicleId = idx;
+    RGSettings::setLastVehicleName(mMap.value(idx)->getName());
 }
 
 int RGVehicleList::count()
 {
-  return mMap.count();
+    return mMap.count();
 }
 
 void RGVehicleList::saveVehiclesSettings()
 {
-  for (int i=1;i<mMap.count();i++){
-    RGSettings::setVehicleAngle(mMap.value(i)->getName(),mMap.value(i)->getStartAngle());
-    RGSettings::setVehicleSize(mMap.value(i)->getName(),mMap.value(i)->getSize());
-    RGSettings::setVehicleMirrored(mMap.value(i)->getName(),mMap.value(i)->getMirror());
-    RGSettings::setVehicleOrigin(mMap.value(i)->getName(),mMap.value(i)->getOrigin());
-    RGSettings::setVehicleAcceptsRotation(mMap.value(i)->getName(),mMap.value(i)->acceptsRotation());
-  }
+    for (int i = 1; i < mMap.count(); i++)
+    {
+        RGSettings::setVehicleAngle(mMap.value(i)->getName(), mMap.value(i)->getStartAngle());
+        RGSettings::setVehicleSize(mMap.value(i)->getName(), mMap.value(i)->getSize());
+        RGSettings::setVehicleMirrored(mMap.value(i)->getName(), mMap.value(i)->getMirror());
+        RGSettings::setVehicleOrigin(mMap.value(i)->getName(), mMap.value(i)->getOrigin());
+        RGSettings::setVehicleAcceptsRotation(mMap.value(i)->getName(), mMap.value(i)->acceptsRotation());
+    }
 }
 
 void RGVehicleList::loadVehiclesSettings()
 {
-  for (int i=1;i<mMap.count();i++){
-    mMap.value(i)->setStartAngle(RGSettings::getVehicleAngle(mMap.value(i)->getName()));
-    mMap.value(i)->setSize(RGSettings::getVehicleSize(mMap.value(i)->getName()));
-    mMap.value(i)->setMirror(RGSettings::getVehicleMirrored(mMap.value(i)->getName()));
-    mMap.value(i)->setOrigin(RGSettings::getVehicleOrigin(mMap.value(i)->getName()));
-    mMap.value(i)->acceptRotation(RGSettings::getVehicleAcceptsRotation(mMap.value(i)->getName()));
-  }
-}
-
-RGVehicle* RGVehicleList::addCustomVehicle(const QString &fileName, QString &errStr)
-{
-  QDir customVehicleDir = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/vehicles";
-  if (!customVehicleDir.exists())
-  {
-    //It should have been created in constructor, so it's an error if this didn't succeed
-    errStr = "Unable to find folder for custom vehicles.";
-    return nullptr;
-  }
-
-  QFile orgFile(fileName);
-  QFileInfo destFile(customVehicleDir.absolutePath() + "/" + QFileInfo(orgFile).fileName());
-  if (!orgFile.copy(destFile.absoluteFilePath()))
-  {
-    errStr = "Unable to copy custom vehicle to folder for custom vehicles.";
-    return nullptr;
-  }
-
-  RGVehicle *vehicle = addVehicle(destFile, true);
-  if (vehicle == nullptr)
-    errStr = "Error adding vehicle (unexpected file format or error in file?)";
-
-  return vehicle;
-}
-
-RGVehicle* RGVehicleList::addVehicle(const QFileInfo &destFile, bool custom)
-{
-  RGVehicle *vehicle= new RGVehicle(destFile.absoluteFilePath(),RGSettings::getVehicleSize(destFile.baseName()),
-                           RGSettings::getVehicleMirrored(destFile.baseName()),
-                           RGSettings::getVehicleAngle(destFile.baseName()),
-                           RGSettings::getVehicleAcceptsRotation(destFile.baseName()),
-                           RGSettings::getVehicleOrigin(destFile.baseName()));
-  if (vehicle->getRawSize()==0){
-    delete vehicle;
-    return nullptr;
-  }
-  vehicle->setIsCustom(custom);
-  mMap.insert(count(),vehicle);
-  return vehicle;
-}
-
-void RGVehicleList::removeCustomVehicle(RGVehicle *vehicle)
-{
-  int idx;
-  for (idx=1;idx<mMap.count();idx++){
-    if (vehicle == mMap.value(idx))
+    for (int i = 1; i < mMap.count(); i++)
     {
-      mMap.erase(mMap.find(idx));
-      break;
+        mMap.value(i)->setStartAngle(RGSettings::getVehicleAngle(mMap.value(i)->getName()));
+        mMap.value(i)->setSize(RGSettings::getVehicleSize(mMap.value(i)->getName()));
+        mMap.value(i)->setMirror(RGSettings::getVehicleMirrored(mMap.value(i)->getName()));
+        mMap.value(i)->setOrigin(RGSettings::getVehicleOrigin(mMap.value(i)->getName()));
+        mMap.value(i)->acceptRotation(RGSettings::getVehicleAcceptsRotation(mMap.value(i)->getName()));
     }
-  }
-  QFile::remove(vehicle->getFileName());
-  delete vehicle;
+}
 
-  if (mCurrentVehicleId == idx)
-  {
-    mCurrentVehicleId--; //Make previous current 
-    RGSettings::setLastVehicleName(mMap.value(mCurrentVehicleId)->getName());
-  }
+RGVehicle* RGVehicleList::addCustomVehicle(const QString& fileName, QString& errStr)
+{
+    QDir customVehicleDir = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/vehicles";
+    if (!customVehicleDir.exists())
+    {
+        //It should have been created in constructor, so it's an error if this didn't succeed
+        errStr = "Unable to find folder for custom vehicles.";
+        return nullptr;
+    }
+
+    QFile orgFile(fileName);
+    QFileInfo destFile(customVehicleDir.absolutePath() + "/" + QFileInfo(orgFile).fileName());
+    if (!orgFile.copy(destFile.absoluteFilePath()))
+    {
+        errStr = "Unable to copy custom vehicle to folder for custom vehicles.";
+        return nullptr;
+    }
+
+    RGVehicle* vehicle = addVehicle(destFile, true);
+    if (vehicle == nullptr)
+        errStr = "Error adding vehicle (unexpected file format or error in file?)";
+
+    return vehicle;
+}
+
+RGVehicle* RGVehicleList::addVehicle(const QFileInfo& destFile, bool custom)
+{
+    RGVehicle* vehicle = new RGVehicle(destFile.absoluteFilePath(), RGSettings::getVehicleSize(destFile.baseName()),
+                                       RGSettings::getVehicleMirrored(destFile.baseName()), RGSettings::getVehicleAngle(destFile.baseName()),
+                                       RGSettings::getVehicleAcceptsRotation(destFile.baseName()), RGSettings::getVehicleOrigin(destFile.baseName()));
+    if (vehicle->getRawSize() == 0)
+    {
+        delete vehicle;
+        return nullptr;
+    }
+    vehicle->setIsCustom(custom);
+    mMap.insert(count(), vehicle);
+    return vehicle;
+}
+
+void RGVehicleList::removeCustomVehicle(RGVehicle* vehicle)
+{
+    int idx;
+    for (idx = 1; idx < mMap.count(); idx++)
+    {
+        if (vehicle == mMap.value(idx))
+        {
+            mMap.erase(mMap.find(idx));
+            break;
+        }
+    }
+    QFile::remove(vehicle->getFileName());
+    delete vehicle;
+
+    if (mCurrentVehicleId == idx)
+    {
+        mCurrentVehicleId--; //Make previous current
+        RGSettings::setLastVehicleName(mMap.value(mCurrentVehicleId)->getName());
+    }
 }

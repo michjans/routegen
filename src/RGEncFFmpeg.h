@@ -18,7 +18,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #ifndef RGENCFFMPEG_H
 #define RGENCFFMPEG_H
 
@@ -27,16 +26,15 @@
 class RGEncFFmpeg : public RGEncVideo
 {
 public:
-  RGEncFFmpeg(QWidget *parent = 0);
+    RGEncFFmpeg(QWidget* parent = 0);
 
-  void updateFromSettings() override;
-  void saveInSettings() override;
-  void generateMovie(const QString &dirName) override;
-  QString encoderName() override;
-  QString encoderExecBaseName() override;
-  QString frameFileType() const override;
-  QString outputFileType() const override;
-
+    void updateFromSettings() override;
+    void saveInSettings() override;
+    void generateMovie(const QString& dirName) override;
+    QString encoderName() override;
+    QString encoderExecBaseName() override;
+    QString frameFileType() const override;
+    QString outputFileType() const override;
 
 protected:
     bool initCodecs() override;
@@ -45,7 +43,7 @@ private slots:
     void handleManualCommandLineChecked(bool checked);
 
 private:
-  int mBitRate;
+    int mBitRate;
 };
 
 #endif // RGENCFFMPEG_H

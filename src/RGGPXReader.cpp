@@ -1,32 +1,32 @@
 #include "RGGPXReader.h"
 #include "GPXSelectionDialog.h"
 
-#include <QXmlStreamReader>
 #include <QDebug>
-#include <QString>
 #include <QFile>
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QProgressDialog>
+#include <QString>
+#include <QXmlStreamReader>
 
 namespace
 {
-    const QString rteTagName = QStringLiteral("rte");
-    const QString rteptTagName = QStringLiteral("rtept");
-    const QString trkTagName = QStringLiteral("trk");
-    const QString trkptTagName = QStringLiteral("trkpt");
-}
+const QString rteTagName = QStringLiteral("rte");
+const QString rteptTagName = QStringLiteral("rtept");
+const QString trkTagName = QStringLiteral("trk");
+const QString trkptTagName = QStringLiteral("trkpt");
+} // namespace
 
-RGGPXReader::RGGPXReader(RGRoute *route, RGMap *map, QWidget *parent)
+RGGPXReader::RGGPXReader(RGRoute* route, RGMap* map, QWidget* parent)
     : RGReader(route, map, parent)
 {
-
 }
 
-bool RGGPXReader::readFile(const QString &fileName)
+bool RGGPXReader::readFile(const QString& fileName)
 {
     QFile file(fileName);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
         qDebug() << "File open error:" << file.errorString();
         return false;
     }
@@ -34,7 +34,7 @@ bool RGGPXReader::readFile(const QString &fileName)
 
     QProgressDialog progress("Analyzig gpx...", "GPX import", 0, 100, m_parentWidget);
     progress.setWindowModality(Qt::WindowModal);
-    progress.setMinimumDuration (100);
+    progress.setMinimumDuration(100);
 
     //First collect available data from GPX file
     QStringList routeNames, trackNames;
@@ -51,7 +51,7 @@ bool RGGPXReader::readFile(const QString &fileName)
     QString routeTagName; //trk or rte
     if (trackNames.empty() && routeNames.empty())
     {
-        QMessageBox::warning (m_parentWidget, "No routes or tracks found", "No routes or tracks found in GPX file!");
+        QMessageBox::warning(m_parentWidget, "No routes or tracks found", "No routes or tracks found in GPX file!");
         return false;
     }
     else if (trackNames.empty() && routeNames.size() == 1)
@@ -109,7 +109,7 @@ bool RGGPXReader::readFile(const QString &fileName)
         if (selectionFound)
         {
             inputStream.readNext();
-            if ( inputStream.isStartElement() && inputStream.name().toString() == waypointTagName)
+            if (inputStream.isStartElement() && inputStream.name().toString() == waypointTagName)
             {
                 progress.setValue(progVal++ % 100);
                 if (progress.wasCanceled())
@@ -143,11 +143,11 @@ bool RGGPXReader::readFile(const QString &fileName)
     return selectionFound;
 }
 
-bool RGGPXReader::collectNames(QXmlStreamReader &inputStream, QProgressDialog &pd, QStringList &routeNames, QStringList &trackNames)
+bool RGGPXReader::collectNames(QXmlStreamReader& inputStream, QProgressDialog& pd, QStringList& routeNames, QStringList& trackNames)
 {
     int progVal = 10;
     pd.setValue(progVal);
-    QStringList *namesList = nullptr;
+    QStringList* namesList = nullptr;
     QString name;
     while (!inputStream.atEnd() && !inputStream.hasError())
     {
@@ -191,6 +191,3 @@ bool RGGPXReader::collectNames(QXmlStreamReader &inputStream, QProgressDialog &p
 
     return true;
 }
-
-
-

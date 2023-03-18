@@ -8,11 +8,13 @@
 class RGMapProjection
 {
 public:
-    virtual ~RGMapProjection() {}
+    virtual ~RGMapProjection()
+    {
+    }
 
     virtual bool isValid() const = 0;
     virtual QPoint convert(const QGeoCoordinate& geoPoint) const = 0;
-    virtual bool saveProjection(const QString &fileName) = 0;
+    virtual bool saveProjection(const QString& fileName) = 0;
 
 protected:
     //RGMapProjection();

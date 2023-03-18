@@ -25,22 +25,21 @@
 
 class RGEncBmp2avi : public RGEncVideo
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-
-  RGEncBmp2avi(QWidget *parent = 0);
-  void generateMovie(const QString &dirName) override;
-  QString encoderName() override;
-  QString encoderExecBaseName() override;
-  QString frameFileType() const override;
-  QString outputFileType() const override;
+    RGEncBmp2avi(QWidget* parent = 0);
+    void generateMovie(const QString& dirName) override;
+    QString encoderName() override;
+    QString encoderExecBaseName() override;
+    QString frameFileType() const override;
+    QString outputFileType() const override;
 
 protected:
- bool initCodecs();
+    bool initCodecs();
 
 private:
-  virtual void updateFromSettings();
-  virtual void saveInSettings();
+    virtual void updateFromSettings();
+    virtual void saveInSettings();
 };
 
 #endif // RGENCBMP2AVI_H

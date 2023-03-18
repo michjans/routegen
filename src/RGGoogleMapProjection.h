@@ -5,25 +5,25 @@
 
 #include "RGMapBounds.h"
 
-#include <QPointF>
 #include <QGeoCoordinate>
+#include <QPointF>
 
 class RGGoogleMapProjection : public RGMapProjection
 {
 public:
-    RGGoogleMapProjection(const RGMapBounds &mapBounds);
+    RGGoogleMapProjection(const RGMapBounds& mapBounds);
     virtual ~RGGoogleMapProjection() override;
 
     bool isValid() const override;
     QPoint convert(const QGeoCoordinate& geoPoint) const override;
-    bool saveProjection(const QString &fileName) override;
+    bool saveProjection(const QString& fileName) override;
 
 private:
     //Coordinate to world coordinates
     QPointF project(const QGeoCoordinate& geoPoint) const;
 
     //World to pixels
-    QPoint worldToPixel(const QPointF &worldPoint) const;
+    QPoint worldToPixel(const QPointF& worldPoint) const;
 
     RGMapBounds m_bounds;
     QPoint mTopLeft;

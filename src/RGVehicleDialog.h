@@ -21,49 +21,48 @@
 #ifndef RG_VEHICLELIST_H
 #define RG_VEHICLELIST_H
 
-#include "ui_vehicledialog.h"
-#include <QString>
-#include <QTimer>
-#include <QPen>
 #include "RGVehicle.h"
 #include "RGVehicleList.h"
 #include "RGVehicleOriginPt.h"
+#include "ui_vehicledialog.h"
 #include <QGraphicsScene>
+#include <QPen>
+#include <QString>
+#include <QTimer>
 
 class RGVehicleDialog : public QDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  /**
-   * Creates a new RGVehicleDialog object.
-   */
-  RGVehicleDialog(QWidget *parent,RGVehicleList *vehicleList,const QPen &pen);
-  ~RGVehicleDialog();
+    /**
+     * Creates a new RGVehicleDialog object.
+     */
+    RGVehicleDialog(QWidget* parent, RGVehicleList* vehicleList, const QPen& pen);
+    ~RGVehicleDialog();
 
 public slots:
-  void accept();
-  void reject();
+    void accept();
+    void reject();
 
-private  slots:
-  void on_addVehiclePB_clicked(bool);
-  void on_removeVehiclePB_clicked(bool);
-  void on_vehicleListWidget_currentRowChanged(int);
-  void on_sizeSB_valueChanged(int);
-  void on_angleSlider_valueChanged(int);
-  void on_resetSizePB_clicked(bool);
-  void on_mirrorCB_toggled(bool);
-  void on_rotateCB_toggled(bool);
-  void playTimerEvent();
+private slots:
+    void on_addVehiclePB_clicked(bool);
+    void on_removeVehiclePB_clicked(bool);
+    void on_vehicleListWidget_currentRowChanged(int);
+    void on_sizeSB_valueChanged(int);
+    void on_angleSlider_valueChanged(int);
+    void on_resetSizePB_clicked(bool);
+    void on_mirrorCB_toggled(bool);
+    void on_rotateCB_toggled(bool);
+    void playTimerEvent();
 
 private:
-
-  Ui_vehicleDialog ui;
-  RGVehicleList *mVehicleList;
-  RGVehicleOriginPt *mVehicleOrigin;
-  QTimer *mPlayTimer;
-  int mTimerCounter;
-  QGraphicsScene *mScene;
+    Ui_vehicleDialog ui;
+    RGVehicleList* mVehicleList;
+    RGVehicleOriginPt* mVehicleOrigin;
+    QTimer* mPlayTimer;
+    int mTimerCounter;
+    QGraphicsScene* mScene;
 };
 
 #endif

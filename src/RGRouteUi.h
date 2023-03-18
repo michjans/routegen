@@ -23,7 +23,8 @@
 
 #include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class routeUi;
 }
 class RGVehicleList;
@@ -33,42 +34,42 @@ class RGVehicleList;
  */
 class RGRouteUi : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit RGRouteUi(QWidget *parent = 0);
-  ~RGRouteUi();
-  void setVehicleList(RGVehicleList *vehicleList);
-  void init();
+    explicit RGRouteUi(QWidget* parent = 0);
+    ~RGRouteUi();
+    void setVehicleList(RGVehicleList* vehicleList);
+    void init();
 
 public slots:
-  void blockEssentialControls(bool);
+    void blockEssentialControls(bool);
 
 private slots:
-  void on_vehicleSettingsPB_clicked(bool);
-  void on_penSizeSB_valueChanged(int size);
-  void on_lineStyleCB_activated(int idx);
-  void on_totalTimeCB_toggled(bool checked);
-  void on_smoothPathCB_toggled(bool checked);
-  void on_routeTimeSB_valueChanged(int time);
-  void on_vehicleCB_currentIndexChanged(int index);
-  void on_routeColorPB_clicked(bool);
+    void on_vehicleSettingsPB_clicked(bool);
+    void on_penSizeSB_valueChanged(int size);
+    void on_lineStyleCB_activated(int idx);
+    void on_totalTimeCB_toggled(bool checked);
+    void on_smoothPathCB_toggled(bool checked);
+    void on_routeTimeSB_valueChanged(int time);
+    void on_vehicleCB_currentIndexChanged(int index);
+    void on_routeColorPB_clicked(bool);
 
 signals:
-  void penChanged(const QPen &);
-  void totalTimeChecked(bool);
-  void smoothPathChecked(bool);
-  void routeTimeChanged(int);
-  void vehicleChanged();
+    void penChanged(const QPen&);
+    void totalTimeChecked(bool);
+    void smoothPathChecked(bool);
+    void routeTimeChanged(int);
+    void vehicleChanged();
 
 private:
-  QIcon createIconForStyle(Qt::PenStyle);
-  void setPen();
-  void reFillVehicleComboFromVehicleList();
+    QIcon createIconForStyle(Qt::PenStyle);
+    void setPen();
+    void reFillVehicleComboFromVehicleList();
 
 private:
-  Ui::routeUi *ui;
-  RGVehicleList     *mVehicleList;
+    Ui::routeUi* ui;
+    RGVehicleList* mVehicleList;
 };
 
 #endif // RGROUTEUI_H

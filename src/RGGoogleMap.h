@@ -17,22 +17,28 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "ui_googlemap.h"
 #include "RGMapBounds.h"
+#include "ui_googlemap.h"
 
-#include <QString>
-#include <QPixmap>
 #include <QGeoPath>
+#include <QPixmap>
+#include <QString>
 
 class RGGoogleMap : public QDialog
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-    RGGoogleMap(QWidget *parent, const QGeoPath &geoPath = QGeoPath());
+    RGGoogleMap(QWidget* parent, const QGeoPath& geoPath = QGeoPath());
 
-	QPixmap getMap() const {return m_map;}
-    const RGMapBounds& getMapBounds() const {return m_mapBounds;}
+    QPixmap getMap() const
+    {
+        return m_map;
+    }
+    const RGMapBounds& getMapBounds() const
+    {
+        return m_mapBounds;
+    }
 
 public slots:
     void accept() override;
@@ -42,17 +48,17 @@ private slots:
     void continue_Accept();
     void on_goButton_clicked(bool);
     void handleScaleSpinboxChanged(double);
-    void on_mapTypeBox_textActivated(const QString &);
+    void on_mapTypeBox_textActivated(const QString&);
     void on_zoomBox_valueChanged(int zoom);
 
-	void on_webView_loadFinished ( bool ok );
-	void on_webView_loadProgress ( int progress );
-	void on_webView_loadStarted ();
+    void on_webView_loadFinished(bool ok);
+    void on_webView_loadProgress(int progress);
+    void on_webView_loadStarted();
 
 private:
-	QString genHtml(const QString &latlon, const QString &zoom) const;
+    QString genHtml(const QString& latlon, const QString& zoom) const;
 
-	Ui_googleMap ui;
+    Ui_googleMap ui;
     QString m_html_template;
     QPixmap m_map;
     QGeoPath m_geoPath;

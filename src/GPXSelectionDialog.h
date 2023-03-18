@@ -6,7 +6,8 @@
 
 class QTreeWidgetItem;
 
-namespace Ui {
+namespace Ui
+{
 class GPXSelectionDialog;
 }
 
@@ -22,16 +23,16 @@ public:
         ITEM_TYPE_ROUTE
     };
 
-    explicit GPXSelectionDialog(const QStringList &routeNames, const QStringList &trackNames, QWidget *parent = nullptr);
+    explicit GPXSelectionDialog(const QStringList& routeNames, const QStringList& trackNames, QWidget* parent = nullptr);
     ~GPXSelectionDialog();
 
-    int selectedItem(GPXItemType &itemType) const;
+    int selectedItem(GPXItemType& itemType) const;
 
 private:
-    Ui::GPXSelectionDialog *ui;
+    Ui::GPXSelectionDialog* ui;
 
-    QTreeWidgetItem *routeItem;
-    QTreeWidgetItem *trackItem;
+    QTreeWidgetItem* routeItem;
+    QTreeWidgetItem* trackItem;
 };
 
 #endif // GPXSELECTIONDIALOG_H

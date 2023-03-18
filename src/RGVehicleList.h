@@ -21,43 +21,42 @@
 #ifndef RGVEHICLELIST_H
 #define RGVEHICLELIST_H
 
-#include <QMap>
-#include <QFileInfo>
 #include "RGVehicle.h"
+#include <QFileInfo>
+#include <QMap>
 
 class RGVehicleList
 {
 public:
-  RGVehicleList();
-  ~RGVehicleList();
-  RGVehicle* getVehicle(int);
-  RGVehicle * getCurrentVehicle();
-  int getCurrentVehicleId();
-  void setCurrentVehicleId(int);
-  int count();
-  void saveVehiclesSettings();
-  void loadVehiclesSettings();
+    RGVehicleList();
+    ~RGVehicleList();
+    RGVehicle* getVehicle(int);
+    RGVehicle* getCurrentVehicle();
+    int getCurrentVehicleId();
+    void setCurrentVehicleId(int);
+    int count();
+    void saveVehiclesSettings();
+    void loadVehiclesSettings();
 
-  /**
-   * Adds a custom vehicle.
-   * @param  fileName the full path to the icon image to be added
-   * @param  errStr if vehicle coudn't be added, contains the error message
-   * @return the added vehicle or nullptr if failed
-   */
-  RGVehicle* addCustomVehicle(const QString &fileName, QString &errStr);
+    /**
+     * Adds a custom vehicle.
+     * @param  fileName the full path to the icon image to be added
+     * @param  errStr if vehicle coudn't be added, contains the error message
+     * @return the added vehicle or nullptr if failed
+     */
+    RGVehicle* addCustomVehicle(const QString& fileName, QString& errStr);
 
-  /**
-   * Removes and also physically deletes the custom vehicle.
-   * The vehicle object will also be deleted!
-   */
-  void       removeCustomVehicle(RGVehicle *vehicle);
-
+    /**
+     * Removes and also physically deletes the custom vehicle.
+     * The vehicle object will also be deleted!
+     */
+    void removeCustomVehicle(RGVehicle* vehicle);
 
 private:
-  RGVehicle* addVehicle(const QFileInfo &fileName, bool isCustom);
+    RGVehicle* addVehicle(const QFileInfo& fileName, bool isCustom);
 
-  QMap<int,RGVehicle*>  mMap;
-  int mCurrentVehicleId;
+    QMap<int, RGVehicle*> mMap;
+    int mCurrentVehicleId;
 };
 
 #endif // RGVEHICLELIST_H

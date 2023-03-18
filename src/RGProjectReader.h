@@ -3,14 +3,13 @@
 
 #include "RGReader.h"
 
-
 class RGProjectReader : public RGReader
 {
     Q_OBJECT
 public:
-    explicit RGProjectReader(RGRoute *route, RGMap *map, QWidget *parent = nullptr);
+    explicit RGProjectReader(RGRoute* route, RGMap* map, QWidget* parent = nullptr);
 
-    bool readFile(const QString &fileName) override;
+    bool readFile(const QString& fileName) override;
 
 signals:
 

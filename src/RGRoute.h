@@ -21,83 +21,84 @@
 #ifndef RGROUTE_H
 #define RGROUTE_H
 
+#include "RGEditPath.h"
 #include "RGGraphicsObjectUndo.h"
 #include "RGMap.h"
-#include "RGVehicleList.h"
 #include "RGPath.h"
-#include "RGEditPath.h"
+#include "RGVehicleList.h"
 
 #include <QGeoCoordinate>
 #include <QGeoPath>
 #include <QGeoRectangle>
 
-
 class RGRoute : public RGGraphicsObjectUndo
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  explicit RGRoute(RGMap *map, QGraphicsItem *parent = 0);
-  QRectF boundingRect() const;
-  RGVehicleList *getVehicleList() const {return mVehicleList;}
-  QPointF currentVehiclePos() const;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget);
-  void setSmoothCoef(int);
-  void setEditMode(bool);
-  int countFrames();
-  void setCurrentFrame(int);
-  void setIconlessBeginEndFrames(bool);
-  void setNewPoints(const QList<QPoint> &);
-  void setGeoCoordinates(const QList<QGeoCoordinate> &geoCoordinates);
-  QGeoRectangle getGeoBounds() const;
-  QGeoPath getGeoPath() const;
-  bool hasGeoBounds() const;
-  bool isEmpty() const;
-  bool isDirty() const;
-  void resetDirty();
+    explicit RGRoute(RGMap* map, QGraphicsItem* parent = 0);
+    QRectF boundingRect() const;
+    RGVehicleList* getVehicleList() const
+    {
+        return mVehicleList;
+    }
+    QPointF currentVehiclePos() const;
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
+    void setSmoothCoef(int);
+    void setEditMode(bool);
+    int countFrames();
+    void setCurrentFrame(int);
+    void setIconlessBeginEndFrames(bool);
+    void setNewPoints(const QList<QPoint>&);
+    void setGeoCoordinates(const QList<QGeoCoordinate>& geoCoordinates);
+    QGeoRectangle getGeoBounds() const;
+    QGeoPath getGeoPath() const;
+    bool hasGeoBounds() const;
+    bool isEmpty() const;
+    bool isDirty() const;
+    void resetDirty();
 
-  virtual void undoredo(QVariant=0);
+    virtual void undoredo(QVariant = 0);
 
-  void read (const QJsonObject &json);
-  void write (QJsonObject &json);
-
+    void read(const QJsonObject& json);
+    void write(QJsonObject& json);
 
 signals:
-  void canGenerate(bool);
-  void sceneRectChanged();
-  void newUndoable(RGGraphicsObjectUndo *,QVariant);
+    void canGenerate(bool);
+    void sceneRectChanged();
+    void newUndoable(RGGraphicsObjectUndo*, QVariant);
 
 public slots:
-  void startPlayback(bool);
-  void clearPath(bool clearGeoPath = false);
-  void changePen(const QPen & pen);
-  void activateTotalTime(bool);
-  void activateSmoothPath(bool);
-  void setRouteTime(int);
-  void handleVehicleChange();
-  void changePath(const QList<QPoint> &, bool);
+    void startPlayback(bool);
+    void clearPath(bool clearGeoPath = false);
+    void changePen(const QPen& pen);
+    void activateTotalTime(bool);
+    void activateSmoothPath(bool);
+    void setRouteTime(int);
+    void handleVehicleChange();
+    void changePath(const QList<QPoint>&, bool);
 
 protected slots:
-  void handleMapLoaded(const QPixmap &map);
+    void handleMapLoaded(const QPixmap& map);
 
 private:
-  void updateVehicle();
-  void processMapUpdate();
+    void updateVehicle();
+    void processMapUpdate();
 
 protected:
-  RGMap *mMap;
-  RGVehicleList *mVehicleList;
+    RGMap* mMap;
+    RGVehicleList* mVehicleList;
 
-  //The generated/interpolated path, from the mEditPath
-  RGPath  *mPath;
+    //The generated/interpolated path, from the mEditPath
+    RGPath* mPath;
 
-  //The actual points, edited by the user (or translated from the geopoints in mGeoPath)
-  RGEditPath * mEditPath;
-  QGeoPath mGeoPath;
-  int mWidth, mHeight;
-  bool mIconlessBeginEndFrames;
-  bool mPlayback;
-  bool mEditMode;
-  bool mDirty;
+    //The actual points, edited by the user (or translated from the geopoints in mGeoPath)
+    RGEditPath* mEditPath;
+    QGeoPath mGeoPath;
+    int mWidth, mHeight;
+    bool mIconlessBeginEndFrames;
+    bool mPlayback;
+    bool mEditMode;
+    bool mDirty;
 };
 
 #endif // RGROUTE_H

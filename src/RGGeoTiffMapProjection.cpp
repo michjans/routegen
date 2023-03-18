@@ -2,22 +2,22 @@
 
 #include <QDebug>
 #include <QDir>
+#include <QMessageBox>
 #include <QProcess>
 #include <QStandardPaths>
-#include <QMessageBox>
 
 //GeoTiff headers
 #include "geo_normalize.h"
 #include "geovalues.h"
 #include "xtiffio.h"
 
-RGGeoTiffMapProjection::RGGeoTiffMapProjection(const QString &fileName)
+RGGeoTiffMapProjection::RGGeoTiffMapProjection(const QString& fileName)
     : mFileName(fileName),
       mTiff(nullptr),
       mGTif(nullptr)
 {
     std::string fileNameStr = fileName.toStdString();
-    mTiff = XTIFFOpen(fileNameStr.c_str(),"r");
+    mTiff = XTIFFOpen(fileNameStr.c_str(), "r");
     if (!mTiff)
     {
         return;
@@ -33,12 +33,12 @@ RGGeoTiffMapProjection::RGGeoTiffMapProjection(const QString &fileName)
     }
 
     /* Get the GeoTIFF directory info */
-    GTIFDefn	defn;
-    if( GTIFGetDefn( mGTif, &defn ) )
+    GTIFDefn defn;
+    if (GTIFGetDefn(mGTif, &defn))
     {
-        int		xsize, ysize;
-        TIFFGetField( mTiff, TIFFTAG_IMAGEWIDTH, &xsize );
-        TIFFGetField( mTiff, TIFFTAG_IMAGELENGTH, &ysize );
+        int xsize, ysize;
+        TIFFGetField(mTiff, TIFFTAG_IMAGEWIDTH, &xsize);
+        TIFFGetField(mTiff, TIFFTAG_IMAGELENGTH, &ysize);
 
         qDebug() << "xsize=" << xsize;
         qDebug() << "ysize=" << ysize;
@@ -52,14 +52,14 @@ RGGeoTiffMapProjection::RGGeoTiffMapProjection(const QString &fileName)
 
         double lon = xmin;
         double lat = ymax;
-        if( GTIFImageToPCS( mGTif, &lon, &lat ) )
+        if (GTIFImageToPCS(mGTif, &lon, &lat))
         {
             qDebug() << "SW lat:" << lat;
             qDebug() << "SW lon:" << lon;
         }
         lon = xmax;
         lat = ymin;
-        if( GTIFImageToPCS( mGTif, &lon, &lat ) )
+        if (GTIFImageToPCS(mGTif, &lon, &lat))
         {
             qDebug() << "NE lat:" << lat;
             qDebug() << "NE lon:" << lon;
@@ -86,7 +86,7 @@ bool RGGeoTiffMapProjection::isValid() const
     return mTiff && mGTif;
 }
 
-QPoint RGGeoTiffMapProjection::convert(const QGeoCoordinate &geoPoint) const
+QPoint RGGeoTiffMapProjection::convert(const QGeoCoordinate& geoPoint) const
 {
     QPoint point;
     if (isValid())
@@ -104,7 +104,7 @@ QPoint RGGeoTiffMapProjection::convert(const QGeoCoordinate &geoPoint) const
     return point;
 }
 
-bool RGGeoTiffMapProjection::saveProjection(const QString &fileName)
+bool RGGeoTiffMapProjection::saveProjection(const QString& fileName)
 {
     //Write the projection data to the TIFF (fileName) that was already
     //created, but still without the GeoGraphic tags.
@@ -129,8 +129,7 @@ bool RGGeoTiffMapProjection::saveProjection(const QString &fileName)
     listGeoProcess->start("listgeo", arguments);
     if (!listGeoProcess->waitForFinished(5000))
     {
-        QMessageBox::critical (nullptr, "Error",
-                             QString("Unable to execute listgeo, is executable available?"));
+        QMessageBox::critical(nullptr, "Error", QString("Unable to execute listgeo, is executable available?"));
         return false;
     }
     QByteArray output = listGeoProcess->readAllStandardOutput();
@@ -139,10 +138,10 @@ bool RGGeoTiffMapProjection::saveProjection(const QString &fileName)
     {
         geoFile.write(output);
         geoFile.close();
-    } else
+    }
+    else
     {
-        QMessageBox::critical (nullptr, "Error",
-                             QString("Unable to write ") + geoFile.fileName() + "! Disk full or no permissions?");
+        QMessageBox::critical(nullptr, "Error", QString("Unable to write ") + geoFile.fileName() + "! Disk full or no permissions?");
         return false;
     }
 
@@ -152,8 +151,7 @@ bool RGGeoTiffMapProjection::saveProjection(const QString &fileName)
     applyGeoProcess->start("applygeo", arguments);
     if (!applyGeoProcess->waitForFinished())
     {
-        QMessageBox::critical (nullptr, "Error",
-                             QString("Unable to execute applygeo, is executable available?"));
+        QMessageBox::critical(nullptr, "Error", QString("Unable to execute applygeo, is executable available?"));
         return false;
     }
 
