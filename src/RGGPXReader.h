@@ -9,6 +9,7 @@ class QXmlStreamReader;
 
 class RGGPXReader : public RGReader
 {
+    Q_OBJECT
 public:
     RGGPXReader(RGRoute* route, RGMap* map, QWidget* parent = nullptr);
 

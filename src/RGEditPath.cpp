@@ -167,8 +167,8 @@ void RGEditPath::editPathPointAdd(RGEditPathPoint* point)
         newpoint = (mEditPathPointList.at(pointId)->pos().toPoint() + mEditPathPointList.at(pointId - 1)->pos().toPoint()) / 2;
     RGEditPathPoint* testpoint = new RGEditPathPoint(this, newpoint);
     mEditPathPointList.insert(pointId, testpoint);
-    QObject::connect(testpoint, SIGNAL(editMovedPoint(bool)), this, SLOT(editPathPointMoved(bool)));
-    QObject::connect(testpoint, SIGNAL(editAddPoint(RGEditPathPoint*)), this, SLOT(editPathPointAdd(RGEditPathPoint*)));
+    QObject::connect(testpoint, &RGEditPathPoint::editMovedPoint, this, &RGEditPath::editPathPointMoved);
+    QObject::connect(testpoint, &RGEditPathPoint::editAddPoint, this, &RGEditPath::editPathPointAdd);
 
     updatePointList();
 }
@@ -176,6 +176,7 @@ void RGEditPath::editPathPointAdd(RGEditPathPoint* point)
 void RGEditPath::updatePointList(bool canUndo)
 {
     QList<QPoint> pointList;
+    pointList.reserve(mEditPathPointList.size());
     for (int i = 0; i < mEditPathPointList.size(); ++i)
     {
         pointList.append(mEditPathPointList.at(i)->pos().toPoint());
@@ -188,8 +189,8 @@ void RGEditPath::addPoint(QPoint point)
 {
     RGEditPathPoint* testpoint = new RGEditPathPoint(this, point);
     mEditPathPointList.append(testpoint);
-    QObject::connect(testpoint, SIGNAL(editMovedPoint(bool)), this, SLOT(editPathPointMoved(bool)));
-    QObject::connect(testpoint, SIGNAL(editAddPoint(RGEditPathPoint*)), this, SLOT(editPathPointAdd(RGEditPathPoint*)));
+    QObject::connect(testpoint, &RGEditPathPoint::editMovedPoint, this, &RGEditPath::editPathPointMoved);
+    QObject::connect(testpoint, &RGEditPathPoint::editAddPoint, this, &RGEditPath::editPathPointAdd);
 }
 
 void RGEditPath::deleteSelectedPoints()

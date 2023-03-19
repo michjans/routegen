@@ -25,7 +25,7 @@
 RGEncBmp2avi::RGEncBmp2avi(QWidget* parent)
     : RGEncVideo(parent)
 {
-    mCompressDefault = QString("DIB");
+    mCompressDefault = QStringLiteral("DIB");
     qDebug() << "Bmp2avi encoder class";
 }
 

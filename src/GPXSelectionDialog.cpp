@@ -9,7 +9,7 @@ GPXSelectionDialog::GPXSelectionDialog(const QStringList& routeNames, const QStr
 
     if (!routeNames.empty())
     {
-        routeItem = new QTreeWidgetItem(ui->gpxTreeView, QStringList("Routes"));
+        routeItem = new QTreeWidgetItem(ui->gpxTreeView, QStringList(QStringLiteral("Routes")));
         for (const QString& routeName : routeNames)
         {
             new QTreeWidgetItem(routeItem, QStringList(routeName));
@@ -17,7 +17,7 @@ GPXSelectionDialog::GPXSelectionDialog(const QStringList& routeNames, const QStr
     }
     if (!trackNames.empty())
     {
-        trackItem = new QTreeWidgetItem(ui->gpxTreeView, QStringList("Tracks"));
+        trackItem = new QTreeWidgetItem(ui->gpxTreeView, QStringList(QStringLiteral("Tracks")));
         for (const QString& trackName : trackNames)
         {
             new QTreeWidgetItem(trackItem, QStringList(trackName));

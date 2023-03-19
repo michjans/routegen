@@ -105,9 +105,9 @@ RGMainWindow::RGMainWindow(QWidget* parent)
     mResolutionCB->addItem("FHD 1080p: 1920x1080", QVariant(QSize(1920, 1080)));
     mResolutionCB->addItem("HD 720p: 1280x720", QVariant(QSize(1280, 720)));
     mResolutionCB->addItem("SD: 720x576", QVariant(QSize(720, 576)));
-    mResolutionCB->addItem("Custom", QVariant());
+    mResolutionCB->addItem(tr("Custom"), QVariant());
     mCustomResolutionItemIdx = 9;
-    mResolutionCB->setToolTip("Select the output resolution of the generated video.");
+    mResolutionCB->setToolTip(tr("Select the output resolution of the generated video."));
 
     QSize selRes = RGSettings::getOutputResolution();
     int selResIdx = mResolutionCB->findData(selRes);
@@ -153,27 +153,27 @@ RGMainWindow::RGMainWindow(QWidget* parent)
     mMapGeoStatus->setEnabled(false);
     mRouteLoadedStatus->setEnabled(false);
     mRouteGeoStatus->setEnabled(false);
-    mMapLoadedStatus->setToolTip("Enabled if a map is loaded");
-    mMapGeoStatus->setToolTip("If the globe is enabled, the map has geographic (lat/lon) coordinates, so can be used to import a GPX route");
-    mRouteLoadedStatus->setToolTip("Enabled if a route is loaded");
-    mRouteGeoStatus->setToolTip("If the globe is enabled, the route is generated from (gpx) geographic coordinates");
+    mMapLoadedStatus->setToolTip(tr("Enabled if a map is loaded"));
+    mMapGeoStatus->setToolTip(tr("If the globe is enabled, the map has geographic (lat/lon) coordinates, so can be used to import a GPX route"));
+    mRouteLoadedStatus->setToolTip(tr("Enabled if a route is loaded"));
+    mRouteGeoStatus->setToolTip(tr("If the globe is enabled, the route is generated from (gpx) geographic coordinates"));
 
     //Route :
     mRoute = new RGRoute(mMap);
     mRoute->setZValue(1);
     mRoute->setSmoothCoef(RGSettings::getSmoothLength());
     mRoute->setIconlessBeginEndFrames(RGSettings::getIconLessBeginEndFrames());
-    QObject::connect(mRoute, SIGNAL(canGenerate(bool)), this, SLOT(enableGenerateActions(bool)));
+    QObject::connect(mRoute, &RGRoute::canGenerate, this, &RGMainWindow::enableGenerateActions);
 
     mView->addRoute(mRoute);
 
     //Route UI (Toolbar with route controls):
     mRouteUi = new RGRouteUi();
-    QObject::connect(mRouteUi, SIGNAL(penChanged(const QPen&)), mRoute, SLOT(changePen(const QPen&)));
-    QObject::connect(mRouteUi, SIGNAL(smoothPathChecked(bool)), mRoute, SLOT(activateSmoothPath(bool)));
-    QObject::connect(mRouteUi, SIGNAL(totalTimeChecked(bool)), mRoute, SLOT(activateTotalTime(bool)));
-    QObject::connect(mRouteUi, SIGNAL(routeTimeChanged(int)), mRoute, SLOT(setRouteTime(int)));
-    QObject::connect(mRouteUi, SIGNAL(vehicleChanged()), mRoute, SLOT(handleVehicleChange()));
+    QObject::connect(mRouteUi, &RGRouteUi::penChanged, mRoute, &RGRoute::changePen);
+    QObject::connect(mRouteUi, &RGRouteUi::smoothPathChecked, mRoute, &RGRoute::activateSmoothPath);
+    QObject::connect(mRouteUi, &RGRouteUi::totalTimeChecked, mRoute, &RGRoute::activateTotalTime);
+    QObject::connect(mRouteUi, &RGRouteUi::routeTimeChanged, mRoute, &RGRoute::setRouteTime);
+    QObject::connect(mRouteUi, &RGRouteUi::vehicleChanged, mRoute, &RGRoute::handleVehicleChange);
     mRouteUi->setVehicleList(mRoute->getVehicleList());
 
     if (mMap)
@@ -190,11 +190,11 @@ RGMainWindow::RGMainWindow(QWidget* parent)
 
     //Undo/Redo:
     mUndoRedo = new RGUndoRedo();
-    QObject::connect(mRoute, SIGNAL(newUndoable(RGGraphicsObjectUndo*, QVariant)), mUndoRedo, SLOT(addUndo(RGGraphicsObjectUndo*, QVariant)));
-    QObject::connect(mUndoRedo, SIGNAL(undoPossible(bool)), action_Undo, SLOT(setEnabled(bool)));
-    QObject::connect(action_Undo, SIGNAL(triggered()), mUndoRedo, SLOT(undo()));
-    QObject::connect(mUndoRedo, SIGNAL(redoPossible(bool)), action_Redo, SLOT(setEnabled(bool)));
-    QObject::connect(action_Redo, SIGNAL(triggered()), mUndoRedo, SLOT(redo()));
+    QObject::connect(mRoute, &RGRoute::newUndoable, mUndoRedo, &RGUndoRedo::addUndo);
+    QObject::connect(mUndoRedo, &RGUndoRedo::undoPossible, action_Undo, &QAction::setEnabled);
+    QObject::connect(action_Undo, &QAction::triggered, mUndoRedo, &RGUndoRedo::undo);
+    QObject::connect(mUndoRedo, &RGUndoRedo::redoPossible, action_Redo, &QAction::setEnabled);
+    QObject::connect(action_Redo, &QAction::triggered, mUndoRedo, &RGUndoRedo::redo);
 
     setGeometry(RGSettings::getMainWindowGeometry());
 }
@@ -237,7 +237,7 @@ void RGMainWindow::on_actionOpen_project_triggered(bool)
             RGProjectReader rgReader(mRoute, mMap);
             if (!rgReader.readFile(fileName))
             {
-                QMessageBox::warning(this, "Cannot read file", "Unable to open RG project file!");
+                QMessageBox::warning(this, tr("Cannot read file"), tr("Unable to open RG project file!"));
             }
             else
             {
@@ -259,7 +259,7 @@ void RGMainWindow::on_actionOpen_image_triggered(bool /*checked*/)
         QPixmap pm(fileName);
         if (pm.isNull())
         {
-            QMessageBox::critical(this, "Oops", "Could not load image");
+            QMessageBox::critical(this, tr("Oops"), tr("Could not load image"));
         }
         else
         {
@@ -301,10 +301,10 @@ void RGMainWindow::on_actionSave_image_triggered(bool)
         mView->saveRenderedImage(fileName, true);
         if (!mMap->saveGeoBoundsToNewFile(fileName) && mMap->hasGeoBounds())
         {
-            QMessageBox::warning(this, "Cannot write geographic information",
-                                 "Unable to save geographic (lat/lon) projection information,"
-                                 "so the saved file cannot be used to import GPX routes! If the current"
-                                 "loaded file is a GeoTIFF file, then use *.tif as extension.");
+            QMessageBox::warning(this, tr("Cannot write geographic information"),
+                                 tr("Unable to save geographic (lat/lon) projection information,"
+                                    "so the saved file cannot be used to import GPX routes! If the current"
+                                    "loaded file is a GeoTIFF file, then use *.tif as extension."));
         }
 
         RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
@@ -331,7 +331,7 @@ void RGMainWindow::on_actionSave_project_as_triggered(bool)
 
     if (!fileName.isNull())
     {
-        forceFileSuffix(fileName, "rgp");
+        forceFileSuffix(fileName, QStringLiteral("rgp"));
         saveProjectFile(fileName);
     }
 }
@@ -376,7 +376,7 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
             return;
         }
 
-        forceFileSuffix(fileName, "png");
+        forceFileSuffix(fileName, QStringLiteral("png"));
         if (map.save(fileName))
         {
             RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
@@ -384,7 +384,7 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
         }
         else
         {
-            QMessageBox::critical(this, "Cannot write file", "Unable to save map file!");
+            QMessageBox::critical(this, tr("Cannot write file"), "Unable to save map file!");
         }
     }
 }
@@ -403,10 +403,10 @@ void RGMainWindow::on_actionImport_GPX_triggered(bool)
             msgBox.setIcon(QMessageBox::Information);
             QPixmap icon = msgBox.iconPixmap();
             QSize icSize = icon.size();
-            icon.load(":/icons/icons/checkmark_green.svg");
+            icon.load(QStringLiteral(":/icons/icons/checkmark_green.svg"));
             msgBox.setIconPixmap(icon.scaled(icSize));
 
-            msgBox.setText("GXP route imported succesfully!");
+            msgBox.setText(tr("GXP route imported succesfully!"));
             QPushButton* importButton = msgBox.addButton(tr("Import new map (Google maps)..."), QMessageBox::ActionRole);
             QPushButton* existingButton = msgBox.addButton(tr("Open existing map..."), QMessageBox::ActionRole);
             if (mMap->hasGeoBounds())
@@ -441,7 +441,7 @@ void RGMainWindow::on_actionDraw_mode_triggered(bool checked)
     mRoute->setEditMode(checked);
     if (checked)
     {
-        this->statusBar()->showMessage("hold SHIFT to record free drawing, CTRL to select several points. Del key to delete selected points");
+        this->statusBar()->showMessage(tr("hold SHIFT to record free drawing, CTRL to select several points. Del key to delete selected points"));
     }
     else
     {
@@ -483,7 +483,7 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
     bool generateFramesOK = false;
     QString lastGenDir = RGSettings::getLastOpenDir(RGSettings::RG_MOVIE_LOCATION);
 
-    QString dirInfoText = QString("Select an empty directory where the movie should be generated.");
+    QString dirInfoText = QString(tr("Select an empty directory where the movie should be generated."));
     QString dir = QFileDialog::getExistingDirectory(this, dirInfoText, lastGenDir, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
     if (dir.isNull())
@@ -508,7 +508,7 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
     if (entries.count() > 0)
     {
         QMessageBox::StandardButton answer =
-            QMessageBox::question(this, "Folder not empty", "Folder not empty, delete all existing frame image files in this folder first?",
+            QMessageBox::question(this, tr("Folder not empty"), tr("Folder not empty, delete all existing frame image files in this folder first?"),
                                   QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::No);
         if (answer == QMessageBox::Yes)
         {
@@ -546,7 +546,7 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
         }
         else
         {
-            QMessageBox::warning(this, "Encoder unavailable", "No encoder available, only image frames have been generated!");
+            QMessageBox::warning(this, tr("Encoder unavailable"), tr("No encoder available, only image frames have been generated!"));
         }
     }
 }
@@ -555,7 +555,7 @@ void RGMainWindow::on_action_Tutorial_triggered(bool checked)
 {
     Q_UNUSED(checked);
     QTextBrowser* te = new QTextBrowser();
-    te->setWindowTitle("Route Generator Tutorial");
+    te->setWindowTitle(tr("Route Generator Tutorial"));
     te->setWindowIcon(QIcon(":/icons/icons/mapgen.png"));
     te->setAttribute(Qt::WA_DeleteOnClose);
     te->setSearchPaths(QStringList(QDir::currentPath()));
@@ -589,7 +589,7 @@ void RGMainWindow::on_action_About_triggered(bool checked)
                           "<a href=\"mailto:info@routegenerator.net\">contact</a> me by e-mail.</p>"
                           "</center>"
                           "</html>");
-    QMessageBox::about(this, "About Route Generator", txt);
+    QMessageBox::about(this, tr("About Route Generator"), txt);
 }
 
 void RGMainWindow::on_action_Quit_triggered(bool checked)
@@ -628,12 +628,12 @@ void RGMainWindow::on_resolutionCBChanged(int index)
                 {
                     QSize customRes(xRes, yRes);
                     mResolutionCB->setItemData(mCustomResolutionItemIdx, customRes);
-                    mResolutionCB->setItemText(mCustomResolutionItemIdx, QString("Custom: ") + customResolutionText);
+                    mResolutionCB->setItemText(mCustomResolutionItemIdx, QString(tr("Custom: ")) + customResolutionText);
                 }
             }
             if (!ok)
             {
-                QMessageBox::warning(this, "Wrong resolution text", resTextLabel);
+                QMessageBox::warning(this, tr("Wrong resolution text"), resTextLabel);
             }
         }
     }
@@ -701,7 +701,7 @@ void RGMainWindow::movieGenerationFinished()
         {
             if (!QFile::remove(mGeneratedFrames[i]))
             {
-                QMessageBox::critical(this, "Error", "Unable to delete generated image frames! No permissions?");
+                QMessageBox::critical(this, tr("Error"), tr("Unable to delete generated image frames! No permissions?"));
                 break;
             }
         }
@@ -787,6 +787,6 @@ void RGMainWindow::saveProjectFile(const QString& projectFileName)
     }
     else
     {
-        QMessageBox::critical(this, "Cannot write file", "Unable to write RG project file!");
+        QMessageBox::critical(this, tr("Cannot write file"), tr("Unable to write RG project file!"));
     }
 }

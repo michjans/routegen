@@ -32,7 +32,7 @@ bool RGGPXReader::readFile(const QString& fileName)
     }
     QXmlStreamReader inputStream(&file);
 
-    QProgressDialog progress("Analyzig gpx...", "GPX import", 0, 100, m_parentWidget);
+    QProgressDialog progress(tr("Analyzig gpx..."), tr("GPX import"), 0, 100, m_parentWidget);
     progress.setWindowModality(Qt::WindowModal);
     progress.setMinimumDuration(100);
 

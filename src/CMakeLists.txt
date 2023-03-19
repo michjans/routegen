@@ -85,6 +85,10 @@ target_link_libraries(routegen PRIVATE
 
 set(CMAKE_EXE_LINKER_FLAGS "-fuse-ld=gold ${CMAKE_CXX_FLAGS}")
 
+# Qt5LinguistTools
+#find_package(Qt5LinguistTools)
+#qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} routegen_en.ts routegen_nl.ts)
+
 if(CMAKE_BUILD_TYPE STREQUAL Release)
     target_compile_definitions(routegen PRIVATE
         QT_NO_DEBUG_OUTPUT
