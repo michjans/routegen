@@ -22,6 +22,7 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QTranslator>
 
 #include "RGMainWindow.h"
 
@@ -113,6 +114,13 @@ int main(int argc, char* argv[])
     //TODO:qInstallMessageHandler(myMessageOutput);
 
     QApplication app(argc, argv);
+
+    QTranslator translator;
+    //if (translator.load(QLocale(), QLatin1String("routegen"), QLatin1String("_"), QLatin1String(":/i18n")))
+    if (translator.load(QLatin1String("routegen_nl"), QLatin1String(":/i18n/i18n")))
+    {
+        app.installTranslator(&translator);
+    }
 
     //For storing application settings
     app.setOrganizationName("MJProductions");

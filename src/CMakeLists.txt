@@ -19,9 +19,12 @@ set(CMAKE_MACOSX_RPATH 1)
 set(CMAKE_INSTALL_RPATH "$ORIGIN/lib")
 
 find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Positioning WebEngineWidgets Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Positioning WebEngineWidgets Widgets LinguistTools)
 find_package(GeoTIFF REQUIRED)
 find_package(TIFF REQUIRED)
+
+qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} i18n/routegen_en.ts i18n/routegen_nl.ts)
+#(${QM_FILES} ${CMAKE_SOURCE_DIR} COPYONLY)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   enable_language("RC")
@@ -69,6 +72,7 @@ add_executable(routegen WIN32 MACOSX_BUNDLE
     videosettings.ui
     routegen.qrc
     ${WIN32_RESOURCES}
+    ${QM_FILES}
 )
 target_compile_definitions(routegen PRIVATE
     QT_DISABLE_DEPRECATED_BEFORE=0x060000
