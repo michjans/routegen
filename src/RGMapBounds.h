@@ -62,9 +62,9 @@ public:
         if (QMetaType::Type(v.type()) == QMetaType::QVariantMap)
         {
             QMap<QString, QVariant> bounds = v.toMap();
-            setNeCoord(QGeoCoordinate(bounds["neLat"].toDouble(), bounds["neLng"].toDouble()));
-            setSwCoord(QGeoCoordinate(bounds["swLat"].toDouble(), bounds["swLng"].toDouble()));
-            setZoom(bounds["zoom"].toInt());
+            setNeCoord(QGeoCoordinate(bounds[QStringLiteral("neLat")].toDouble(), bounds[QStringLiteral("neLng")].toDouble()));
+            setSwCoord(QGeoCoordinate(bounds[QStringLiteral("swLat")].toDouble(), bounds[QStringLiteral("swLng")].toDouble()));
+            setZoom(bounds[QStringLiteral("zoom")].toInt());
             return isValid();
         }
         else
@@ -76,11 +76,11 @@ public:
     QVariant toQVariant() const
     {
         QMap<QString, QVariant> bounds;
-        bounds["neLat"] = m_neCoord.latitude();
-        bounds["neLng"] = m_neCoord.longitude();
-        bounds["swLat"] = m_swCoord.latitude();
-        bounds["swLng"] = m_swCoord.longitude();
-        bounds["zoom"] = m_zoom;
+        bounds[QStringLiteral("neLat")] = m_neCoord.latitude();
+        bounds[QStringLiteral("neLng")] = m_neCoord.longitude();
+        bounds[QStringLiteral("swLat")] = m_swCoord.latitude();
+        bounds[QStringLiteral("swLng")] = m_swCoord.longitude();
+        bounds[QStringLiteral("zoom")] = m_zoom;
         return QVariant(bounds);
     }
 

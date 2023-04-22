@@ -24,7 +24,7 @@ public:
     };
 
     explicit GPXSelectionDialog(const QStringList& routeNames, const QStringList& trackNames, QWidget* parent = nullptr);
-    ~GPXSelectionDialog();
+    ~GPXSelectionDialog() override;
 
     int selectedItem(GPXItemType& itemType) const;
 

@@ -46,33 +46,34 @@ void RGEncBmp2avi::saveInSettings()
 void RGEncBmp2avi::generateMovie(const QString& dirName)
 {
     QStringList arguments;
-    arguments << "-f" << QString("%1").arg(mFps) << "-k" << QString("%1").arg(mKeyFrameRate) << "-o" << QString(mOutName) << "-c" << mCompress;
+    arguments << QStringLiteral("-f") << QStringLiteral("%1").arg(mFps) << QStringLiteral("-k") << QStringLiteral("%1").arg(mKeyFrameRate)
+              << QStringLiteral("-o") << QString(mOutName) << QStringLiteral("-c") << mCompress;
 
     this->createEncodingProcess(dirName, mExecName, arguments);
 }
 
 QString RGEncBmp2avi::encoderName()
 {
-    return QString("bmp2avi");
+    return QStringLiteral("bmp2avi");
 }
 
 QString RGEncBmp2avi::encoderExecBaseName()
 {
 #ifdef Q_OS_WIN
-    return QString("bmp2avi.exe");
+    return QStringLiteral("bmp2avi.exe");
 #else
-    return QString("bmp2avi");
+    return QStringLiteral("bmp2avi");
 #endif
 }
 
 QString RGEncBmp2avi::frameFileType() const
 {
-    return QString("bmp");
+    return QStringLiteral("bmp");
 }
 
 QString RGEncBmp2avi::outputFileType() const
 {
-    return QString("avi");
+    return QStringLiteral("avi");
 }
 
 bool RGEncBmp2avi::initCodecs()
@@ -82,13 +83,13 @@ bool RGEncBmp2avi::initCodecs()
     QProcess* codecExecProcess = new QProcess(this);
     QStringList arguments;
     //List codecs
-    arguments << "-l";
+    arguments << QStringLiteral("-l");
     codecExecProcess->start(mExecName, arguments);
     if (codecExecProcess->waitForFinished())
     {
         int currentIndex = 0;
         //First add "Uncompressed" codec to combobox
-        mUi.codecCB->addItem("Uncompressed", "DIB");
+        mUi.codecCB->addItem(QStringLiteral("Uncompressed"), QStringLiteral("DIB"));
         QByteArray output = codecExecProcess->readAllStandardOutput();
         QList<QByteArray> lines = output.split('\n');
         bool inHeader = true;
@@ -98,14 +99,14 @@ bool RGEncBmp2avi::initCodecs()
             if (inHeader)
             {
                 //Skip header
-                if (!line.startsWith("------"))
+                if (!line.startsWith(QLatin1String("------")))
                     continue;
                 else
                     inHeader = false;
             }
             else
             {
-                if (!line.contains("|"))
+                if (!line.contains(QLatin1String("|")))
                     continue;
                 //List of codecs starts
                 QStringList codec = line.split('|');
@@ -126,7 +127,7 @@ bool RGEncBmp2avi::initCodecs()
     }
     else
     {
-        QMessageBox::critical(this, "Error", "Could not run bmp2avi to collect codec selection!");
+        QMessageBox::critical(this, tr("Error"), tr("Could not run bmp2avi to collect codec selection!"));
         return false;
     }
 

@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
     //if (translator.load(QLocale(), QLatin1String("routegen"), QLatin1String("_"), QLatin1String(":/i18n")))
     if (translator.load(QLatin1String("routegen_nl"), QLatin1String(":/i18n/i18n")))
     {
-        app.installTranslator(&translator);
+        QApplication::installTranslator(&translator);
     }
 
     //For storing application settings

@@ -235,30 +235,109 @@
     </message>
 </context>
 <context>
+    <name>RGEncBmp2avi</name>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not run bmp2avi to collect codec selection!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RGEncFFmpeg</name>
+    <message>
+        <source>No video encoder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FFmpeg has not been found, video generation will be unavailable.
+Please install FFmpeg and restart the application.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;----Default codec for Routegen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not run ffmpeg to collect codec selection!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RGEncVideo</name>
     <message>
         <source>No video encoder found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> has not been found, therefore video generation will be unavailable.</source>
+        <source>Select the directory where %1 is located.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>
-You can set </source>
+        <source>Executables (*.exe)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> directory in the preferences</source>
+        <source>%1 has not been found, therefore video generation will be unavailable.
+You can set the %2 directory in the preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select </source>
+        <source>&lt;html&gt;&lt;p&gt;Your route has been generated in the selected directory. Each frame is generated as a *.%1 file in that directory. &lt;/p&gt;&lt;p&gt;&lt;b&gt;NOTE: Since no video encoder is available, no video file is generated!&lt;/b&gt;&lt;/p&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> location</source>
+        <source>Map Generation Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>One moment please...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Executing </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to convert image files to video file, one moment please...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to write</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disk full or no permissions?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;center&gt;&lt;p&gt;Your route has been generated in the selected directory. Each frame is generated as a *.%1 file in that directory. The name of the generated movie is &lt;b&gt;%2.%3&lt;/b&gt;.&lt;/p&gt;&lt;/center&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 did not finish successfully! See file %2 in output directory for details.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 execution failed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to kill %1, check your processes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select %1 location</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -270,6 +349,14 @@ You can set </source>
     </message>
     <message>
         <source>GPX import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No routes or tracks found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No routes or tracks found in GPX file!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

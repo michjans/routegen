@@ -51,7 +51,7 @@ bool RGGPXReader::readFile(const QString& fileName)
     QString routeTagName; //trk or rte
     if (trackNames.empty() && routeNames.empty())
     {
-        QMessageBox::warning(m_parentWidget, "No routes or tracks found", "No routes or tracks found in GPX file!");
+        QMessageBox::warning(m_parentWidget, tr("No routes or tracks found"), tr("No routes or tracks found in GPX file!"));
         return false;
     }
     else if (trackNames.empty() && routeNames.size() == 1)
