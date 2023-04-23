@@ -38,7 +38,11 @@ RGVehicleList::RGVehicleList()
     vehicleDir.setNameFilters(filters);
     QFileInfoList vehicles = vehicleDir.entryInfoList();
 
-    vehicleDir.setPath(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/vehicles");
+    //TODO: Check on Windows if this really is the correct location or should we use AppLocalDataLocation?
+#ifdef Q_OS_WIN
+    Force compiler error so we can check this !
+#endif
+        vehicleDir.setPath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/vehicles");
     if (vehicleDir.exists())
     {
         vehicles.append(vehicleDir.entryInfoList());
@@ -132,7 +136,11 @@ void RGVehicleList::loadVehiclesSettings()
 
 RGVehicle* RGVehicleList::addCustomVehicle(const QString& fileName, QString& errStr)
 {
-    QDir customVehicleDir = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/vehicles";
+    //TODO: Check on Windows if this really is the correct location or should we use AppLocalDataLocation?
+#ifdef Q_OS_WIN
+    Force compiler error so we can check this !
+#endif
+        QDir customVehicleDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/vehicles";
     if (!customVehicleDir.exists())
     {
         //It should have been created in constructor, so it's an error if this didn't succeed

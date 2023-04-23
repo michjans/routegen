@@ -33,27 +33,37 @@
 //Debug only
 class myWebPage : public QWebEnginePage
 {
+public:
+    myWebPage(QObject* parent)
+        : QWebEnginePage(parent)
+    {
+    }
+
+    ~myWebPage() override
+    {
+    }
+
 protected:
-        void javaScriptConsoleMessage(QWebEnginePage::JavaScriptConsoleMessageLevel level, const QString &message, int lineNumber, const QString &sourceID)
+    void javaScriptConsoleMessage(QWebEnginePage::JavaScriptConsoleMessageLevel level, const QString& message, int lineNumber, const QString& sourceID) override
+    {
+        QString levelString;
+        switch (level)
         {
-            QString levelString;
-            switch (level)
-            {
-            case QWebEnginePage::InfoMessageLevel:
-                levelString = "info";
-                break;
-            case QWebEnginePage::WarningMessageLevel:
-                levelString = "warning";
-                break;
-            case QWebEnginePage::ErrorMessageLevel:
-                levelString = "error";
-                break;
-            default:
-                levelString = "unknown";
-                break;
-            }
-            qDebug() << "Javascript " << levelString << ": " << sourceID << ":" << lineNumber << ":" << message;
+        case QWebEnginePage::InfoMessageLevel:
+            levelString = "info";
+            break;
+        case QWebEnginePage::WarningMessageLevel:
+            levelString = "warning";
+            break;
+        case QWebEnginePage::ErrorMessageLevel:
+            levelString = "error";
+            break;
+        default:
+            levelString = "unknown";
+            break;
         }
+        qDebug() << "Javascript " << levelString << ": " << sourceID << ":" << lineNumber << ":" << message;
+    }
 };
 #endif
 
@@ -78,9 +88,8 @@ RGGoogleMap::RGGoogleMap(QWidget* parent, const QGeoPath& geoPath)
     ui.widthScaleSB->setValue(RGSettings::getGMXFactor());
     ui.heightScaleSB->setValue(RGSettings::getGMYFactor());
 
-    qDebug() << "Datapath:" << QLibraryInfo::location(QLibraryInfo::DataPath);
-
     ui.webView->setPage(new QWebEnginePage(ui.webView));
+    //DEBUG:ui.webView->setPage(new myWebPage(ui.webView));
 
     //We connect both scale spinboxes to the same slot! So we can't use
     //the passed value, because we don't know the source.
@@ -272,11 +281,12 @@ QString RGGoogleMap::genHtml(const QString& latlon, const QString& zoom) const
     ui.zoomBox->setValue(zoom.toInt());
 
 #if 0
-	QFile file("out.html");
-	if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
-		QTextStream out(&file);
-		out << html;
-	}
+    QFile file("out.html");
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QTextStream out(&file);
+        out << html;
+    }
 #endif
 
     return html;

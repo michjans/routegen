@@ -21,7 +21,6 @@
 #ifndef RG_VEHICLELIST_H
 #define RG_VEHICLELIST_H
 
-#include "RGVehicle.h"
 #include "RGVehicleList.h"
 #include "RGVehicleOriginPt.h"
 #include "ui_vehicledialog.h"

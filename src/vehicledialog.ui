@@ -101,26 +101,13 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0">
-          <widget class="QLabel" name="sizeLabel">
+         <item row="3" column="0">
+          <widget class="QLabel" name="rotationLabel">
            <property name="text">
-            <string>Size :</string>
+            <string>Automatic orientation:</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QSpinBox" name="sizeSB">
-           <property name="minimum">
-            <number>1</number>
-           </property>
-           <property name="maximum">
-            <number>400</number>
-           </property>
-           <property name="singleStep">
-            <number>10</number>
            </property>
           </widget>
          </item>
@@ -132,39 +119,6 @@
            <property name="icon">
             <iconset resource="routegen.qrc">
              <normaloff>:/icons/icons/reset.png</normaloff>:/icons/icons/reset.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3" colspan="3">
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="angleLabel">
-           <property name="text">
-            <string>Angle :</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1" colspan="2">
-          <widget class="QSlider" name="angleSlider">
-           <property name="maximum">
-            <number>360</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
@@ -185,20 +139,23 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QCheckBox" name="mirrorCB">
-           <property name="toolTip">
-            <string>Mirrors the vehicle</string>
+         <item row="0" column="1">
+          <widget class="QSpinBox" name="sizeSB">
+           <property name="minimum">
+            <number>1</number>
            </property>
-           <property name="text">
-            <string/>
+           <property name="maximum">
+            <number>400</number>
+           </property>
+           <property name="singleStep">
+            <number>10</number>
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="rotationLabel">
+         <item row="1" column="0">
+          <widget class="QLabel" name="angleLabel">
            <property name="text">
-            <string>Automatic orientation:</string>
+            <string>Angle :</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -212,6 +169,49 @@
            </property>
            <property name="text">
             <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QCheckBox" name="mirrorCB">
+           <property name="toolTip">
+            <string>Mirrors the vehicle</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="sizeLabel">
+           <property name="text">
+            <string>Size :</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3" colspan="3">
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="1" colspan="2">
+          <widget class="QSlider" name="angleSlider">
+           <property name="maximum">
+            <number>360</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
@@ -257,8 +257,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>364</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -273,28 +273,12 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>364</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
      <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>angleSlider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>angleValueLabel</receiver>
-   <slot>setNum(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>348</x>
-     <y>277</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>447</x>
-     <y>277</y>
     </hint>
    </hints>
   </connection>

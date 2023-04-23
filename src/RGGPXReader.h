@@ -4,7 +4,6 @@
 #include "RGReader.h"
 
 class QProgressDialog;
-class QStringList;
 class QXmlStreamReader;
 
 class RGGPXReader : public RGReader

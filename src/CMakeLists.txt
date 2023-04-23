@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(routegen VERSION 1.11 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+#set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -23,7 +23,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Positioning WebEngine
 find_package(GeoTIFF REQUIRED)
 find_package(TIFF REQUIRED)
 
-qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} i18n/routegen_en.ts i18n/routegen_nl.ts)
+qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} i18n/routegen_en.ts i18n/routegen_nl.ts)
 #(${QM_FILES} ${CMAKE_SOURCE_DIR} COPYONLY)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
@@ -91,7 +91,7 @@ set(CMAKE_EXE_LINKER_FLAGS "-fuse-ld=gold ${CMAKE_CXX_FLAGS}")
 
 # Qt5LinguistTools
 #find_package(Qt5LinguistTools)
-#qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} routegen_en.ts routegen_nl.ts)
+#qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} routegen_en.ts routegen_nl.ts)
 
 if(CMAKE_BUILD_TYPE STREQUAL Release)
     target_compile_definitions(routegen PRIVATE

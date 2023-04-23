@@ -18,14 +18,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "RGVehicleDialog.h"
+
 #include <QDebug>
 #include <QFileDialog>
 #include <QIcon>
+#include <QLabel>
 #include <QMessageBox>
 #include <QPainter>
 #include <QStandardPaths>
-
-#include "RGVehicleDialog.h"
 
 RGVehicleDialog::RGVehicleDialog(QWidget* parent, RGVehicleList* vehicleList, const QPen& pen)
     : QDialog(parent),
@@ -35,6 +36,10 @@ RGVehicleDialog::RGVehicleDialog(QWidget* parent, RGVehicleList* vehicleList, co
       mTimerCounter(0)
 {
     ui.setupUi(this);
+
+    //Manual connection, because somehow the generated connect code from the ui file dit not produce the "qOverload...", function, which is required here
+    connect(ui.angleSlider, &QSlider::valueChanged, ui.angleValueLabel, qOverload<int>(&QLabel::setNum));
+
     for (int i = 0; i < vehicleList->count(); i++)
     {
         QListWidgetItem* item = new QListWidgetItem(QIcon(mVehicleList->getVehicle(i)->getPixmapAtSize(40)),

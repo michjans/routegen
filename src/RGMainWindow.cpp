@@ -81,8 +81,8 @@ RGMainWindow::RGMainWindow(QWidget* parent)
     actionPlayback = ui.actionPlayback;
     actionStop = ui.actionStop;
 
-    action_Undo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
-    action_Redo->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y));
+    action_Undo->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Z));
+    action_Redo->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Y));
 
     actionStop->setEnabled(false);
     actionGenerate_map->setEnabled(false);
