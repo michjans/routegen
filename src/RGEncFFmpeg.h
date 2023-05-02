@@ -25,6 +25,7 @@
 
 class RGEncFFmpeg : public RGEncVideo
 {
+    Q_OBJECT
 public:
     RGEncFFmpeg(QWidget* parent = 0);
 

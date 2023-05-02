@@ -19,11 +19,14 @@
 */
 
 #include "RGPath.h"
-#include <math.h>
+
+#include <cmath>
+#include <deque>
 
 namespace
 {
 const int gVehicleLookBack = 1;
+const size_t gAvgAngleWindowSize = 5;
 }
 
 RGPath::RGPath(QGraphicsItem* parent)
@@ -150,39 +153,8 @@ QPointF RGPath::getEndPos()
 
 float RGPath::getAngle()
 {
-    qreal angle = 0;
-    if (mPlayMode == 0)
-    {
-        //NOTE: Non-interpolation mode! (rarely used)
-        if (mPath.elementCount() <= 1)
-            return 0;
-        int step = mCurrentFrame;
-        //for the first frame :
-        if (step == 0)
-        {
-            angle = QLineF(mPath.elementAt(0).x, mPath.elementAt(0).y, mPath.elementAt(1).x, mPath.elementAt(1).y).angle();
-        }
-        else if (step > gVehicleLookBack)
-        {
-            //Smooth movement of vehicle rotation
-            angle =
-                QLineF(mPath.elementAt(step - gVehicleLookBack).x, mPath.elementAt(step - gVehicleLookBack).y, mPath.elementAt(step).x, mPath.elementAt(step).y)
-                    .angle();
-        }
-        else
-        {
-            angle = QLineF(mPath.elementAt(0).x, mPath.elementAt(0).y, mPath.elementAt(step).x, mPath.elementAt(step).y).angle();
-        }
-    }
-    if (mPlayMode == 1)
-    {
-        //NOTE: Interpolation mode! (most commonly used)
-        qreal percent = (double)(mCurrentFrame * (1.0 / (double)mFPS)) / ((double)mTotalTime); //mTotalTime should never be null;
-        if (percent > 1)
-            percent = 1;
-        angle = mPath.angleAtPercent(percent);
-    }
-    return (360 - angle);
+    //To smooth out the vehicle rotations, we return the average angle over a period of gAvgAngleWindowSize frames
+    return (360.0f - mAvgAngles.at(mCurrentFrame));
 }
 
 void RGPath::newPointList(const QList<QPoint>& pointList)
@@ -260,6 +232,34 @@ void RGPath::createPath()
         {
             mPath.lineTo(mRawPath.at(i));
         }
+    }
+
+    //Fill a sliding window of 10 angles from the route in a deque and calculate the average angle over that period
+    mAvgAngles.clear();
+    std::deque<double> slidingAngleWindow;
+    int frameCount = countFrames();
+    for (int frameIdx = 0; frameIdx < frameCount; ++frameIdx)
+    {
+        slidingAngleWindow.push_back(getAngleAtFrame(frameIdx) * M_PI / 180.0);
+        if (slidingAngleWindow.size() > gAvgAngleWindowSize)
+        {
+            slidingAngleWindow.pop_front();
+        }
+
+        // calculate sums of sine and cosine of all angles
+        double sum_sin = 0.0;
+        double sum_cos = 0.0;
+        for (double angle_rad : slidingAngleWindow)
+        {
+            sum_sin += std::sin(angle_rad);
+            sum_cos += std::cos(angle_rad);
+        }
+
+        // calculate average angle in radians
+        double avg_angle_rad = std::atan2(sum_sin, sum_cos);
+
+        // convert average angle to degrees
+        mAvgAngles.emplace_back(avg_angle_rad * 180.0 / M_PI);
     }
 }
 
@@ -359,6 +359,44 @@ QPoint RGPath::getPointAtLength(QPoint start, QPoint end, int length)
     QPoint dv = end - start;
     double totlength = sqrt(pow(double((end - start).x()), 2) + pow(double((end - start).y()), 2));
     return QPoint(start + length / totlength * dv);
+}
+
+double RGPath::getAngleAtFrame(int frameIdx)
+{
+    qreal angle = 0;
+    if (mPlayMode == 0)
+    {
+        //NOTE: Non-interpolation mode! (rarely used, could probably be removed completely)
+        if (mPath.elementCount() <= 1)
+            return 0;
+        int step = frameIdx;
+        //for the first frame :
+        if (step == 0)
+        {
+            angle = QLineF(mPath.elementAt(0).x, mPath.elementAt(0).y, mPath.elementAt(1).x, mPath.elementAt(1).y).angle();
+        }
+        else if (step > gVehicleLookBack)
+        {
+            //Smooth movement of vehicle rotation
+            angle =
+                QLineF(mPath.elementAt(step - gVehicleLookBack).x, mPath.elementAt(step - gVehicleLookBack).y, mPath.elementAt(step).x, mPath.elementAt(step).y)
+                    .angle();
+        }
+        else
+        {
+            angle = QLineF(mPath.elementAt(0).x, mPath.elementAt(0).y, mPath.elementAt(step).x, mPath.elementAt(step).y).angle();
+        }
+    }
+    if (mPlayMode == 1)
+    {
+        //NOTE: Interpolation mode! (most commonly used)
+        qreal percent = (double)(frameIdx * (1.0 / (double)mFPS)) / ((double)mTotalTime); //mTotalTime should never be null;
+        if (percent > 1)
+            percent = 1;
+        angle = mPath.angleAtPercent(percent);
+    }
+
+    return angle;
 }
 
 QPainterPath RGPath::pathLineQuad(QPoint start, QPoint coef, QPoint end)

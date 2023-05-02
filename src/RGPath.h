@@ -59,8 +59,7 @@ private:
     QPainterPath pathLineQuad(QPoint start, QPoint coef, QPoint end);
     QPainterPath pathLineCubic(QPoint start, QPoint coef1, QPoint coef2, QPoint end);
     QPoint getPointAtLength(QPoint start, QPoint end, int length);
-    float getAngleAtTime(int time);
-    float getAngleAtStep(int step);
+    double getAngleAtFrame(int frameIdx);
 
 private:
     QList<QPoint> mRawPath;
@@ -75,6 +74,9 @@ private:
     QPen mPen;
     int mCurrentFrame;
     QPointF mEndPos;
+
+    //Used for storing the average angles over period of route segments
+    std::vector<float> mAvgAngles;
 };
 
 #endif // RGPATH_H
