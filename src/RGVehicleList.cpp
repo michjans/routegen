@@ -144,7 +144,7 @@ RGVehicle* RGVehicleList::addCustomVehicle(const QString& fileName, QString& err
     if (!customVehicleDir.exists())
     {
         //It should have been created in constructor, so it's an error if this didn't succeed
-        errStr = "Unable to find folder for custom vehicles.";
+        errStr = QObject::tr("Unable to find folder for custom vehicles.");
         return nullptr;
     }
 
@@ -152,13 +152,13 @@ RGVehicle* RGVehicleList::addCustomVehicle(const QString& fileName, QString& err
     QFileInfo destFile(customVehicleDir.absolutePath() + "/" + QFileInfo(orgFile).fileName());
     if (!orgFile.copy(destFile.absoluteFilePath()))
     {
-        errStr = "Unable to copy custom vehicle to folder for custom vehicles.";
+        errStr = QObject::tr("Unable to copy custom vehicle to folder for custom vehicles.");
         return nullptr;
     }
 
     RGVehicle* vehicle = addVehicle(destFile, true);
     if (vehicle == nullptr)
-        errStr = "Error adding vehicle (unexpected file format or error in file?)";
+        errStr = QObject::tr("Error adding vehicle (unexpected file format or error in file?)");
 
     return vehicle;
 }

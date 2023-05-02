@@ -347,6 +347,24 @@
     </message>
 </context>
 <context>
+    <name>QObject</name>
+    <message>
+        <location filename="../RGVehicleList.cpp" line="147"/>
+        <source>Unable to find folder for custom vehicles.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGVehicleList.cpp" line="155"/>
+        <source>Unable to copy custom vehicle to folder for custom vehicles.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGVehicleList.cpp" line="161"/>
+        <source>Error adding vehicle (unexpected file format or error in file?)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RGEncBmp2avi</name>
     <message>
         <location filename="../RGEncBmp2avi.cpp" line="130"/>
