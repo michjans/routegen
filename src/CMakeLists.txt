@@ -23,7 +23,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Positioning WebEngine
 find_package(GeoTIFF REQUIRED)
 find_package(TIFF REQUIRED)
 
-qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} i18n/routegen_en.ts i18n/routegen_nl.ts)
+qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} i18n/routegen_en.ts i18n/routegen_it.ts i18n/routegen_nl.ts OPTIONS -noobsolete)
 #(${QM_FILES} ${CMAKE_SOURCE_DIR} COPYONLY)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")

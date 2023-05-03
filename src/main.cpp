@@ -105,6 +105,8 @@
  *          Make it possible to select existing folder again.
  *          FPS setting now passed correctly to the ffmpeg commandline.
  *          Possibility to set different file type for generated video frames (e.g. PNG, JPG, etc.)
+ *  v1.12.0 Translations.
+ *          Smoother vehicle rotation (using average angles)
  */
 
 extern const QString applicationName(QStringLiteral("Route Generator version 1.12.0-alpha"));

@@ -1,79 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="nl_NL">
+<TS version="2.1" language="it_IT">
 <context>
     <name>Dialog</name>
     <message>
         <location filename="../settings.ui" line="14"/>
         <location filename="../Release/routegen_autogen/include/ui_settings.h" line="159"/>
         <source>Route Generator Preferences</source>
-        <translation>Route Generator Voorkeuren</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="24"/>
         <location filename="../Release/routegen_autogen/include/ui_settings.h" line="174"/>
         <source>Advanced</source>
-        <translation>Geavanceerd</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="27"/>
         <location filename="../Release/routegen_autogen/include/ui_settings.h" line="176"/>
         <source>Change advanced settings</source>
-        <translation>Wijzig geavanceerde instellingen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="33"/>
         <location filename="../Release/routegen_autogen/include/ui_settings.h" line="160"/>
         <source>Generator</source>
-        <translation>Generator</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="39"/>
         <location filename="../Release/routegen_autogen/include/ui_settings.h" line="161"/>
         <source>Generator selection</source>
-        <translation>Generator selectie</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="65"/>
         <location filename="../Release/routegen_autogen/include/ui_settings.h" line="162"/>
         <source>Route generation setting</source>
-        <translation>Route generator instelling</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="71"/>
         <location filename="../Release/routegen_autogen/include/ui_settings.h" line="163"/>
         <source>The smoothing coefficient</source>
-        <translation>De afrondings coefficient</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="91"/>
         <location filename="../Release/routegen_autogen/include/ui_settings.h" line="164"/>
         <source>(between 10 and 25 should give better results)</source>
-        <translation>(tussen 10 en 25 geeft de beste resultaten)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="111"/>
         <location filename="../Release/routegen_autogen/include/ui_settings.h" line="165"/>
         <source>Show vehicle in begin/end frames</source>
-        <translation>Toon voertuig in begin/eind frames</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="118"/>
         <location filename="../Release/routegen_autogen/include/ui_settings.h" line="167"/>
         <source>Check if first and last frame should contain the vehicle icon</source>
-        <translation>Vink aan als het voertuig op het eerste en laatste frame getoond moet worden</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="131"/>
         <location filename="../Release/routegen_autogen/include/ui_settings.h" line="171"/>
         <source>Reset to original settings</source>
-        <translation>Herstel oorspronkelijke instellingen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="134"/>
         <location filename="../Release/routegen_autogen/include/ui_settings.h" line="173"/>
         <source>Reset to defaults</source>
-        <translation>Herstel naar standaard waardes</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -82,13 +82,13 @@
         <location filename="../gpxselectiondialog.ui" line="14"/>
         <location filename="../Release/routegen_autogen/include/ui_gpxselectiondialog.h" line="73"/>
         <source>Dialog</source>
-        <translation>Dialoog</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gpxselectiondialog.ui" line="45"/>
         <location filename="../Release/routegen_autogen/include/ui_gpxselectiondialog.h" line="74"/>
         <source>Select a route or track from the list below:</source>
-        <translation>Selecteer een route of track uit de lijst beneden:</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -97,252 +97,273 @@
         <location filename="../routegen.ui" line="14"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="241"/>
         <source>Route Generator</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="54"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="310"/>
         <source>&amp;Tools</source>
-        <translation>&amp;Gereedschappen</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="63"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="311"/>
         <source>&amp;Help</source>
-        <translation></translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="70"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="312"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Bewerken</translation>
-    </message>
-    <message>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="313"/>
-        <source>Route Generator v0.1</source>
-        <translation>Route Generator v1.11</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="79"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="314"/>
         <source>&amp;File</source>
-        <translation>&amp;Bestand</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="101"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="315"/>
         <source>toolBar</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="140"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="245"/>
         <source>&amp;Open map image</source>
-        <translation>&amp;Open kaart</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="143"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="247"/>
         <source>Open image with map</source>
-        <translation>Open afbeelding met kaart</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="152"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="249"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Sluit</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="155"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="251"/>
         <source>Quit the application</source>
-        <translation>Sluit applcatie</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="164"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="253"/>
         <source>&amp;Save map image as ...</source>
-        <translation>&amp;Sla kaart afbeelding op als ...</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="167"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="254"/>
         <source>Save map image as ...</source>
-        <translation>Sla kaart afbeelding op als ...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="170"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="256"/>
         <source>Save the currently displayed map and route as image</source>
-        <translation>Sla huidig afgebeelde kaart met route op als afbeelding</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="173"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="259"/>
         <source>Save the currently displayed map and route as image, which can be used as start point for generating another route.</source>
-        <translation>Sla de huidige kaart en route op als afbeelding, die gebruikt kan worden als beginpunt voor het genereren van een andere route.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="185"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="261"/>
         <source>&amp;Draw mode</source>
-        <translation>&amp;Teken mode</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="188"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="263"/>
         <source>(De)Activate route draw mode</source>
-        <translation>(De)activeer route teken mode</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="197"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="265"/>
         <source>&amp;Generate route</source>
-        <translation>&amp;Genereer route</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="200"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="267"/>
         <source>Generate the route into a selected directory</source>
-        <translation>Genereer de route in een geselecteerde directory</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="209"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="269"/>
         <source>&amp;Playback</source>
-        <translation>&amp;Afspelen</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="212"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="271"/>
         <source>Playback the currently drawn route (preview)</source>
-        <translation>Speel de huidge afgebeelde route af (voorbeeld)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="217"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="273"/>
         <source>&amp;About</source>
-        <translation>&amp;Over</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="222"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="274"/>
         <source>&amp;Tutorial</source>
-        <translation></translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="231"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="275"/>
         <source>S&amp;top</source>
-        <translation></translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="234"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="277"/>
         <source>Stops playback</source>
-        <translation>Stopt afspelen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="243"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="279"/>
         <source>&amp;Undo</source>
-        <translation>&amp;Ongedaan maken</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="252"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="280"/>
         <source>&amp;Redo</source>
-        <translation>&amp;Opnieuw</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="257"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="281"/>
         <source>&amp;Preferences</source>
-        <translation>&amp;Voorkeuren</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="266"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="282"/>
         <source>&amp;Import from Google Maps</source>
-        <translation>&amp;Importeer van Google Maps</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="269"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="284"/>
         <source>Import map from Google Maps</source>
-        <translation>Importeer kaart van Google Maps</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="278"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="286"/>
         <source>Import route from GP&amp;X</source>
-        <translation>Importeer route van GP&amp;X</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="281"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="288"/>
         <source>Import route points from GPX file</source>
-        <translation>Importeer routepunten vanuit GPX bestand</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="290"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="290"/>
         <source>&amp;New Route</source>
-        <translation>&amp;Nieuwe Route</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="293"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="292"/>
         <source>Start New Route</source>
-        <translation>Start nieuwe route</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="302"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="294"/>
         <source>Save &amp;project</source>
-        <translation>Sla &amp;project op</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="305"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="296"/>
         <source>Save project (map and route)</source>
-        <translation>Sla project op (kaart en route)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="314"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="298"/>
         <source>&amp;New project</source>
-        <translation>&amp;Nieuw project</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="317"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="300"/>
         <source>Start new project</source>
-        <translation>Start nieuw project</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="326"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="302"/>
         <source>Open p&amp;roject</source>
-        <translation>Open p&amp;roject</translation>
+        <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="329"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="304"/>
         <source>Open a route generator project</source>
-        <translation>Open ee route generator project</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="338"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="306"/>
         <source>Save project as...</source>
-        <translation>Sla project op als ...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="341"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="308"/>
         <source>Save current project in another file</source>
-        <translation>Sla huidige project op in een nieuw bestand</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="313"/>
+        <source>Route Generator v0.1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -350,17 +371,17 @@
     <message>
         <location filename="../RGVehicleList.cpp" line="143"/>
         <source>Unable to find folder for custom vehicles.</source>
-        <translation>Kan  map  voor zelf toegevoegde voertuigen niet vinden.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGVehicleList.cpp" line="151"/>
         <source>Unable to copy custom vehicle to folder for custom vehicles.</source>
-        <translation>Kan voertuig niet kopieren naar map voor zelf toegevoegde voertuigen.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGVehicleList.cpp" line="157"/>
         <source>Error adding vehicle (unexpected file format or error in file?)</source>
-        <translation>Kon voertuig niet toevoegden (onverwacht bestandsformaat of fout in het bestand?)</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -368,12 +389,12 @@
     <message>
         <location filename="../RGEncBmp2avi.cpp" line="130"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncBmp2avi.cpp" line="130"/>
         <source>Could not run bmp2avi to collect codec selection!</source>
-        <translation>Kon bmp2avi niet uitvoeren om codec selectie op te vragen!</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -381,75 +402,74 @@
     <message>
         <location filename="../RGEncFFmpeg.cpp" line="149"/>
         <source>No video encoder</source>
-        <translation>Geen video encoder</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncFFmpeg.cpp" line="150"/>
         <source>FFmpeg has not been found, video generation will be unavailable.
 Please install FFmpeg and restart the application.</source>
-        <translation>FFmpeg is niet gevonden; video generatie zal niet beschikbaar zijn.
-Installeer FFmpeg en herstart de applicatie.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncFFmpeg.cpp" line="199"/>
         <source>&lt;----Default codec for Routegen</source>
-        <translation>&lt;----Standaard codec voor Routegen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncFFmpeg.cpp" line="210"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncFFmpeg.cpp" line="210"/>
         <source>Could not run ffmpeg to collect codec selection!</source>
-        <translation>Kon ffmpeg niet uitvoeren om de codecs te verzamelen!</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RGEncVideo</name>
     <message>
-        <location filename="../RGEncVideo.cpp" line="74"/>
-        <source>No video encoder found</source>
-        <translation>Geen video encoder gevonden</translation>
-    </message>
-    <message>
         <location filename="../RGEncVideo.cpp" line="63"/>
         <source>Select the directory where %1 is located.</source>
-        <translation>Selecteer de directory waar %1 is gelokaliseerd.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncVideo.cpp" line="64"/>
         <source>Executables (*.exe)</source>
-        <translation>Uitvoerbaar (*.exe)</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGEncVideo.cpp" line="74"/>
+        <source>No video encoder found</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncVideo.cpp" line="75"/>
         <source>%1 has not been found, therefore video generation will be unavailable.
 You can set the %2 directory in the preferences</source>
-        <translation>%1 is niet gevonden, daarom is video generatie niet beschikbaar. U kunt de %2 directory instellen in de voorkeuren</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncVideo.cpp" line="141"/>
         <source>&lt;html&gt;&lt;p&gt;Your route has been generated in the selected directory. Each frame is generated as a *.%1 file in that directory. &lt;/p&gt;&lt;p&gt;&lt;b&gt;NOTE: Since no video encoder is available, no video file is generated!&lt;/b&gt;&lt;/p&gt;&lt;/html&gt;</source>
-        <translatorcomment>Pleas leave the html formatting in tact!</translatorcomment>
-        <translation>&lt;html&gt;&lt;p&gt;De route is gegenereerd in de geselecteerde directory. Elk &quot;frame&quot; is genereerd als een *.%1 bestand in die directory. &lt;/p&gt;&lt;p&gt;&lt;b&gt;NB: Omdat er geen video encoder beschikbaar is, is er geen video bestand gegenereerd!&lt;/b&gt;&lt;/p&gt;&lt;/html&gt;</translation>
+        <translatorcomment>Leave the HTML tags, html, center, p, etc. intact. They will be used for HTML formatting of the text.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncVideo.cpp" line="150"/>
         <location filename="../RGEncVideo.cpp" line="202"/>
         <source>Map Generation Finished</source>
-        <translation>Kaart generatie klaar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncVideo.cpp" line="161"/>
         <source>One moment please...</source>
-        <translation>Een moment alstublieft...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncVideo.cpp" line="162"/>
         <source>Executing %1 to convert image files to video file, one moment please...</source>
-        <translation>%1 uitvoeren om afbeeldingen te converteren naar een video, een moment alstublieft...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncVideo.cpp" line="186"/>
@@ -457,32 +477,33 @@ You can set the %2 directory in the preferences</source>
         <location filename="../RGEncVideo.cpp" line="220"/>
         <location filename="../RGEncVideo.cpp" line="225"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncVideo.cpp" line="186"/>
         <source>Unable to write</source>
-        <translation>Kan niet schrijven</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncVideo.cpp" line="186"/>
         <source>Disk full or no permissions?</source>
-        <translation>Schijf vol of geen permissies?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncVideo.cpp" line="192"/>
         <source>&lt;html&gt;&lt;center&gt;&lt;p&gt;Your route has been generated in the selected directory. Each frame is generated as a *.%1 file in that directory. The name of the generated movie is &lt;b&gt;%2.%3&lt;/b&gt;.&lt;/p&gt;&lt;/center&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;center&gt;&lt;p&gt;De route is gegenereerd in de geselecteerde directory. Elk &quot;frame&quot; is genereerd als een *.%1 bestand in die directory. De naam van de gegenereerde video is &lt;b&gt;%2.%3&lt;/b&gt;.&lt;/p&gt;&lt;/center&gt;&lt;/html&gt;</translation>
+        <translatorcomment>Leave the HTML tags, html, center, p, etc. intact. They will be used for HTML formatting of the text.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncVideo.cpp" line="207"/>
         <source>%1 did not finish successfully! See file %2 in output directory for details.</source>
-        <translation>%1 is niet succesvol afgerond! Voor meer details, zie bestand %2 in de uitvoer directory.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncVideo.cpp" line="220"/>
         <source>%1 execution failed!</source>
-        <translation>%1 uitvoering afgebroken!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGEncVideo.cpp" line="225"/>
@@ -525,7 +546,7 @@ You can set the %2 directory in the preferences</source>
         <location filename="../RGGeoTiffMapProjection.cpp" line="145"/>
         <location filename="../RGGeoTiffMapProjection.cpp" line="155"/>
         <source>Error</source>
-        <translation type="unfinished">Fout</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGGeoTiffMapProjection.cpp" line="133"/>
@@ -793,7 +814,7 @@ Continue anyway?</source>
     <message>
         <location filename="../RGMainWindow.cpp" line="704"/>
         <source>Error</source>
-        <translation type="unfinished">Fout</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="704"/>
@@ -896,6 +917,7 @@ Continue anyway?</source>
         <location filename="../googlemap.ui" line="14"/>
         <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="175"/>
         <source>Google Maps Import</source>
+        <translatorcomment>Leave the HTML tags, html, center, p, etc. intact. They will be used for HTML formatting of the text.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -908,6 +930,7 @@ Continue anyway?</source>
         <location filename="../googlemap.ui" line="33"/>
         <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="178"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s X resolution in relation to the X resolution of the output video (will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translatorcomment>Leave the HTML tags, html, center, p, etc. intact. They will be used for HTML formatting of the text.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -920,6 +943,7 @@ Continue anyway?</source>
         <location filename="../googlemap.ui" line="56"/>
         <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="182"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translatorcomment>Leave the HTML tags, html, center, p, etc. intact. They will be used for HTML formatting of the text.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -931,6 +955,7 @@ Continue anyway?</source>
     <message>
         <location filename="../googlemap.ui" line="79"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;Paste link from google maps, e.g. http://maps.google.nl/?ie=UTF8&amp;amp;ll=52.469397,5.509644&amp;amp;spn=4.766159,9.876709&amp;amp;z=7&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;and click &apos;Go&apos;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translatorcomment>Leave the HTML tags, html, center, p, etc. intact. They will be used for HTML formatting of the text.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -941,6 +966,7 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Paste link from google maps, e.g. http://maps.google.nl/?ie=UTF8&amp;amp;ll=52.469397,5.509644&amp;amp;spn=4.766159,9.876709&amp;amp;z=7&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;and click &apos;Go&apos;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translatorcomment>Leave the HTML tags, html, center, p, etc. intact. They will be used for HTML formatting of the text.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1063,21 +1089,15 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../vehicledialog.ui" line="188"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="223"/>
-        <source>Size :</source>
+        <location filename="../vehicledialog.ui" line="107"/>
+        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="234"/>
+        <source>Automatic orientation:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="117"/>
         <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="225"/>
         <source>Reset the size of the vehicle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../vehicledialog.ui" line="158"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="227"/>
-        <source>Angle :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1093,21 +1113,27 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../vehicledialog.ui" line="178"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="231"/>
-        <source>Mirrors the vehicle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../vehicledialog.ui" line="107"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="234"/>
-        <source>Automatic orientation:</source>
+        <location filename="../vehicledialog.ui" line="158"/>
+        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="227"/>
+        <source>Angle :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="168"/>
         <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="236"/>
         <source>Vehicle&apos;s orientation will automatically change depending on route heading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../vehicledialog.ui" line="178"/>
+        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="231"/>
+        <source>Mirrors the vehicle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../vehicledialog.ui" line="188"/>
+        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="223"/>
+        <source>Size :</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1273,6 +1299,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../videosettings.ui" line="247"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="281"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select file type to be used for the generated frames.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Note&lt;/span&gt; that when using compressed file types, like jpg, png, movie generation will take longer, but this will reduce disk space usage.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translatorcomment>Leave the HTML tags, html, center, p, etc. intact. They will be used for HTML formatting of the text.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

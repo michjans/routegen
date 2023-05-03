@@ -159,7 +159,7 @@ void RGEncVideo::createEncodingProcess(const QString& dirName, const QString& vi
 
     mProcessWaitMessage = new QMessageBox(nullptr);
     mProcessWaitMessage->setWindowTitle(tr("One moment please..."));
-    mProcessWaitMessage->setText(tr("Executing ") + encoderName() + " " + tr("to convert image files to video file, one moment please..."));
+    mProcessWaitMessage->setText(tr("Executing %1 to convert image files to video file, one moment please...").arg(encoderName()));
     mProcessWaitMessage->setStandardButtons(QMessageBox::NoButton);
     mProcessWaitMessage->setCursor(Qt::WaitCursor);
     mProcessWaitMessage->show();

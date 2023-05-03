@@ -446,12 +446,7 @@ You can set the %2 directory in the preferences</source>
     </message>
     <message>
         <location filename="../RGEncVideo.cpp" line="162"/>
-        <source>Executing </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../RGEncVideo.cpp" line="162"/>
-        <source>to convert image files to video file, one moment please...</source>
+        <source>Executing %1 to convert image files to video file, one moment please...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -933,6 +928,10 @@ Continue anyway?</source>
     </message>
     <message>
         <location filename="../googlemap.ui" line="79"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;Paste link from google maps, e.g. http://maps.google.nl/?ie=UTF8&amp;amp;ll=52.469397,5.509644&amp;amp;spn=4.766159,9.876709&amp;amp;z=7&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt;&quot;&gt;and click &apos;Go&apos;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="186"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -943,25 +942,25 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../googlemap.ui" line="91"/>
+        <location filename="../googlemap.ui" line="86"/>
         <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="193"/>
         <source>Zoom:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../googlemap.ui" line="111"/>
+        <location filename="../googlemap.ui" line="106"/>
         <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="194"/>
         <source>Map type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../googlemap.ui" line="121"/>
+        <location filename="../googlemap.ui" line="116"/>
         <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="195"/>
         <source>Go</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../googlemap.ui" line="146"/>
+        <location filename="../googlemap.ui" line="141"/>
         <source>about:blank</source>
         <translation type="unfinished"></translation>
     </message>
