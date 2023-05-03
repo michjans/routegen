@@ -7,8 +7,9 @@
 
 class RGGeoTiffMapProjection : public RGMapProjection
 {
+    Q_OBJECT
 public:
-    RGGeoTiffMapProjection(const QString& fileName);
+    RGGeoTiffMapProjection(const QString& fileName, QObject* parent = nullptr);
     ~RGGeoTiffMapProjection() override;
 
     bool isValid() const override;

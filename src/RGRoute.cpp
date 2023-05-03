@@ -204,7 +204,7 @@ void RGRoute::read(const QJsonObject& json)
             for (const QJsonValue& geoValue : jsonGeoCoords)
             {
                 QJsonObject geoObject = geoValue.toObject();
-                geoCoordinates.append(QGeoCoordinate(geoObject["latitude"].toDouble(), geoObject["longitude"].toDouble()));
+                geoCoordinates.append(QGeoCoordinate(geoObject[QStringLiteral("latitude")].toDouble(), geoObject[QStringLiteral("longitude")].toDouble()));
             }
             if (!geoCoordinates.isEmpty())
             {
@@ -220,7 +220,7 @@ void RGRoute::read(const QJsonObject& json)
             for (const QJsonValue& coordValue : jsonCoords)
             {
                 QJsonObject coordObject = coordValue.toObject();
-                pointlist.append(QPoint(coordObject["x"].toInt(), coordObject["y"].toInt()));
+                pointlist.append(QPoint(coordObject[QStringLiteral("x")].toInt(), coordObject[QStringLiteral("y")].toInt()));
             }
             setNewPoints(pointlist);
         }

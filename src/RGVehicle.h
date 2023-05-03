@@ -30,7 +30,7 @@
 class RGVehicle : public QGraphicsItem
 {
 public:
-    RGVehicle(const QString& filename = "None", int size = 0, bool mirror = false, int startAngle = 0, bool acceptRotation = true,
+    RGVehicle(const QString& filename = QStringLiteral("None"), int size = 0, bool mirror = false, int startAngle = 0, bool acceptRotation = true,
               QPointF originPoint = QPointF(-1, -1), int frameDelay = 80);
     ~RGVehicle();
     QRectF boundingRect() const;

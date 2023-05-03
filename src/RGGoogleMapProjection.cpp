@@ -9,8 +9,9 @@ namespace
 const int TILE_SIZE = 256;
 }
 
-RGGoogleMapProjection::RGGoogleMapProjection(const RGMapBounds& mapBounds)
-    : m_bounds(mapBounds)
+RGGoogleMapProjection::RGGoogleMapProjection(const RGMapBounds& mapBounds, QObject* parent)
+    : RGMapProjection(parent),
+      m_bounds(mapBounds)
 {
     //Calculate topleft/bottomright of the current map in pixel coordinates
     mTopLeft = worldToPixel(project(QGeoCoordinate(m_bounds.getNE().latitude(), m_bounds.getSW().longitude())));

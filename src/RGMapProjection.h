@@ -2,13 +2,20 @@
 #define RGMAPPROJECTION_H
 
 #include <QGeoCoordinate>
+#include <QObject>
 #include <QPoint>
 #include <QString>
 
-class RGMapProjection
+class RGMapProjection : public QObject
 {
+    Q_OBJECT
 public:
-    virtual ~RGMapProjection()
+    RGMapProjection(QObject* parent = nullptr);
+    RGMapProjection(const RGMapProjection&) = delete;
+    RGMapProjection(RGMapProjection&&) = delete;
+    RGMapProjection& operator=(const RGMapProjection&) = delete;
+    RGMapProjection& operator=(RGMapProjection&&) = delete;
+    ~RGMapProjection() override
     {
     }
 

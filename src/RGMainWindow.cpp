@@ -96,15 +96,15 @@ RGMainWindow::RGMainWindow(QWidget* parent)
     action_Redo->setEnabled(false);
 
     mResolutionCB = new QComboBox(ui.toolBar);
-    mResolutionCB->addItem("8K: 7680x4320", QVariant(QSize(7680, 4320)));
-    mResolutionCB->addItem("5K: 5120x2880", QVariant(QSize(5120, 2880)));
-    mResolutionCB->addItem("4K: 4096x2160", QVariant(QSize(4096, 2160)));
-    mResolutionCB->addItem("UHD 2160p: 3840x2160", QVariant(QSize(3840, 2160)));
-    mResolutionCB->addItem("2.5K QHD 1440p: 2560x1440", QVariant(QSize(2560, 1440)));
-    mResolutionCB->addItem("2K: 2048x1080", QVariant(QSize(2048, 1080)));
-    mResolutionCB->addItem("FHD 1080p: 1920x1080", QVariant(QSize(1920, 1080)));
-    mResolutionCB->addItem("HD 720p: 1280x720", QVariant(QSize(1280, 720)));
-    mResolutionCB->addItem("SD: 720x576", QVariant(QSize(720, 576)));
+    mResolutionCB->addItem(QStringLiteral("8K: 7680x4320"), QVariant(QSize(7680, 4320)));
+    mResolutionCB->addItem(QStringLiteral("5K: 5120x2880"), QVariant(QSize(5120, 2880)));
+    mResolutionCB->addItem(QStringLiteral("4K: 4096x2160"), QVariant(QSize(4096, 2160)));
+    mResolutionCB->addItem(QStringLiteral("UHD 2160p: 3840x2160"), QVariant(QSize(3840, 2160)));
+    mResolutionCB->addItem(QStringLiteral("2.5K QHD 1440p: 2560x1440"), QVariant(QSize(2560, 1440)));
+    mResolutionCB->addItem(QStringLiteral("2K: 2048x1080"), QVariant(QSize(2048, 1080)));
+    mResolutionCB->addItem(QStringLiteral("FHD 1080p: 1920x1080"), QVariant(QSize(1920, 1080)));
+    mResolutionCB->addItem(QStringLiteral("HD 720p: 1280x720"), QVariant(QSize(1280, 720)));
+    mResolutionCB->addItem(QStringLiteral("SD: 720x576"), QVariant(QSize(720, 576)));
     mResolutionCB->addItem(tr("Custom"), QVariant());
     mCustomResolutionItemIdx = 9;
     mResolutionCB->setToolTip(tr("Select the output resolution of the generated video."));
@@ -115,7 +115,7 @@ RGMainWindow::RGMainWindow(QWidget* parent)
     {
         //If idx not found, it's the custom resolution: set in as data of the Custom item
         mResolutionCB->setItemData(mCustomResolutionItemIdx, RGSettings::getOutputResolution());
-        mResolutionCB->setItemText(mCustomResolutionItemIdx, QString("Custom: ") + QString::number(selRes.width()) + "x" + QString::number(selRes.height()));
+        mResolutionCB->setItemText(mCustomResolutionItemIdx, tr("Custom: %1x%2").arg(QString::number(selRes.width()), QString::number(selRes.height())));
         selResIdx = mCustomResolutionItemIdx;
     }
     mResolutionCB->setCurrentIndex(selResIdx);
@@ -133,8 +133,8 @@ RGMainWindow::RGMainWindow(QWidget* parent)
     QObject::connect(mView, SIGNAL(playbackStopped(bool)), this, SLOT(enableGenerateActions(bool)));
 
     //Prepare status icons in status bar
-    QPixmap checkPM(":/icons/icons/checkmark_green.svg");
-    QPixmap globePM(":/icons/icons/globe.svg");
+    QPixmap checkPM(QStringLiteral(":/icons/icons/checkmark_green.svg"));
+    QPixmap globePM(QStringLiteral(":/icons/icons/globe.svg"));
     mMapLoadedStatus = new QLabel();
     mMapGeoStatus = new QLabel();
     mRouteLoadedStatus = new QLabel();
@@ -296,7 +296,7 @@ void RGMainWindow::on_actionSave_image_triggered(bool)
     {
         if (QFileInfo(fileName).suffix().isEmpty())
         {
-            fileName += ".png";
+            fileName += QLatin1String(".png");
         }
         mView->saveRenderedImage(fileName, true);
         if (!mMap->saveGeoBoundsToNewFile(fileName) && mMap->hasGeoBounds())
@@ -384,7 +384,7 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
         }
         else
         {
-            QMessageBox::critical(this, tr("Cannot write file"), "Unable to save map file!");
+            QMessageBox::critical(this, tr("Cannot write file"), tr("Unable to save map file!"));
         }
     }
 }
@@ -491,8 +491,8 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
         return;
     }
 
-    QString frameFilePrefix("map");
-    QString frameFileType = "png";
+    QString frameFilePrefix(QStringLiteral("map"));
+    QString frameFileType = QStringLiteral("png");
     if (mVideoEncoder != nullptr && mVideoEncoder->exists())
     {
         frameFileType = mVideoEncoder->frameFileType();
@@ -559,7 +559,7 @@ void RGMainWindow::on_action_Tutorial_triggered(bool checked)
     te->setWindowIcon(QIcon(":/icons/icons/mapgen.png"));
     te->setAttribute(Qt::WA_DeleteOnClose);
     te->setSearchPaths(QStringList(QDir::currentPath()));
-    te->setSource(QUrl("doc/tutorial.html"));
+    te->setSource(QUrl(QStringLiteral("doc/tutorial.html")));
     te->resize(800, 700);
     te->show();
 }
@@ -604,7 +604,7 @@ void RGMainWindow::on_resolutionCBChanged(int index)
     {
         bool ok;
         QVariant customRes = mResolutionCB->itemData(index);
-        QString defaultText = "1024x768";
+        QString defaultText = QStringLiteral("1024x768");
         if (customRes.isValid())
         {
             QSize curRes = customRes.toSize();

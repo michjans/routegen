@@ -118,229 +118,228 @@
         <translation>&amp;Bewerken</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="79"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="313"/>
         <source>Route Generator v0.1</source>
-        <translation type="unfinished"></translation>
+        <translation>Route Generator v1.11</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="82"/>
+        <location filename="../routegen.ui" line="79"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="314"/>
         <source>&amp;File</source>
         <translation>&amp;Bestand</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="104"/>
+        <location filename="../routegen.ui" line="101"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="315"/>
         <source>toolBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="143"/>
+        <location filename="../routegen.ui" line="140"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="245"/>
         <source>&amp;Open map image</source>
         <translation>&amp;Open kaart</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="146"/>
+        <location filename="../routegen.ui" line="143"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="247"/>
         <source>Open image with map</source>
         <translation>Open afbeelding met kaart</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="155"/>
+        <location filename="../routegen.ui" line="152"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="249"/>
         <source>&amp;Quit</source>
         <translation>&amp;Sluit</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="158"/>
+        <location filename="../routegen.ui" line="155"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="251"/>
         <source>Quit the application</source>
         <translation>Sluit applcatie</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="167"/>
+        <location filename="../routegen.ui" line="164"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="253"/>
         <source>&amp;Save map image as ...</source>
         <translation>&amp;Sla kaart afbeelding op als ...</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="170"/>
+        <location filename="../routegen.ui" line="167"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="254"/>
         <source>Save map image as ...</source>
         <translation>Sla kaart afbeelding op als ...</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="173"/>
+        <location filename="../routegen.ui" line="170"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="256"/>
         <source>Save the currently displayed map and route as image</source>
         <translation>Sla huidig afgebeelde kaart met route op als afbeelding</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="176"/>
+        <location filename="../routegen.ui" line="173"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="259"/>
         <source>Save the currently displayed map and route as image, which can be used as start point for generating another route.</source>
-        <translation>Sla de huidige kaart en route op als afbeelding, die gebruikt kan worden als beginpunt voor het genereren van een andere route</translation>
+        <translation>Sla de huidige kaart en route op als afbeelding, die gebruikt kan worden als beginpunt voor het genereren van een andere route.</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="188"/>
+        <location filename="../routegen.ui" line="185"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="261"/>
         <source>&amp;Draw mode</source>
         <translation>&amp;Teken mode</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="191"/>
+        <location filename="../routegen.ui" line="188"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="263"/>
         <source>(De)Activate route draw mode</source>
         <translation>(De)activeer route teken mode</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="200"/>
+        <location filename="../routegen.ui" line="197"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="265"/>
         <source>&amp;Generate route</source>
         <translation>&amp;Genereer route</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="203"/>
+        <location filename="../routegen.ui" line="200"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="267"/>
         <source>Generate the route into a selected directory</source>
         <translation>Genereer de route in een geselecteerde directory</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="212"/>
+        <location filename="../routegen.ui" line="209"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="269"/>
         <source>&amp;Playback</source>
         <translation>&amp;Afspelen</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="215"/>
+        <location filename="../routegen.ui" line="212"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="271"/>
         <source>Playback the currently drawn route (preview)</source>
         <translation>Speel de huidge afgebeelde route af (voorbeeld)</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="220"/>
+        <location filename="../routegen.ui" line="217"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="273"/>
         <source>&amp;About</source>
         <translation>&amp;Over</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="225"/>
+        <location filename="../routegen.ui" line="222"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="274"/>
         <source>&amp;Tutorial</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="234"/>
+        <location filename="../routegen.ui" line="231"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="275"/>
         <source>S&amp;top</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="237"/>
+        <location filename="../routegen.ui" line="234"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="277"/>
         <source>Stops playback</source>
         <translation>Stopt afspelen</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="246"/>
+        <location filename="../routegen.ui" line="243"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="279"/>
         <source>&amp;Undo</source>
         <translation>&amp;Ongedaan maken</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="255"/>
+        <location filename="../routegen.ui" line="252"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="280"/>
         <source>&amp;Redo</source>
         <translation>&amp;Opnieuw</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="260"/>
+        <location filename="../routegen.ui" line="257"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="281"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Voorkeuren</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="269"/>
+        <location filename="../routegen.ui" line="266"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="282"/>
         <source>&amp;Import from Google Maps</source>
         <translation>&amp;Importeer van Google Maps</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="272"/>
+        <location filename="../routegen.ui" line="269"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="284"/>
         <source>Import map from Google Maps</source>
         <translation>Importeer kaart van Google Maps</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="281"/>
+        <location filename="../routegen.ui" line="278"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="286"/>
         <source>Import route from GP&amp;X</source>
         <translation>Importeer route van GP&amp;X</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="284"/>
+        <location filename="../routegen.ui" line="281"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="288"/>
         <source>Import route points from GPX file</source>
         <translation>Importeer routepunten vanuit GPX bestand</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="293"/>
+        <location filename="../routegen.ui" line="290"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="290"/>
         <source>&amp;New Route</source>
         <translation>&amp;Nieuwe Route</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="296"/>
+        <location filename="../routegen.ui" line="293"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="292"/>
         <source>Start New Route</source>
         <translation>Start nieuwe route</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="305"/>
+        <location filename="../routegen.ui" line="302"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="294"/>
         <source>Save &amp;project</source>
         <translation>Sla &amp;project op</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="308"/>
+        <location filename="../routegen.ui" line="305"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="296"/>
         <source>Save project (map and route)</source>
         <translation>Sla project op (kaart en route)</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="317"/>
+        <location filename="../routegen.ui" line="314"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="298"/>
         <source>&amp;New project</source>
         <translation>&amp;Nieuw project</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="320"/>
+        <location filename="../routegen.ui" line="317"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="300"/>
         <source>Start new project</source>
         <translation>Start nieuw project</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="329"/>
+        <location filename="../routegen.ui" line="326"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="302"/>
         <source>Open p&amp;roject</source>
         <translation>Open p&amp;roject</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="332"/>
+        <location filename="../routegen.ui" line="329"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="304"/>
         <source>Open a route generator project</source>
         <translation>Open ee route generator project</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="341"/>
+        <location filename="../routegen.ui" line="338"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="306"/>
         <source>Save project as...</source>
         <translation>Sla project op als ...</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="344"/>
+        <location filename="../routegen.ui" line="341"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="308"/>
         <source>Save current project in another file</source>
         <translation>Sla huidige project op in een nieuw bestand</translation>
@@ -349,17 +348,17 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../RGVehicleList.cpp" line="147"/>
+        <location filename="../RGVehicleList.cpp" line="143"/>
         <source>Unable to find folder for custom vehicles.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGVehicleList.cpp" line="155"/>
+        <location filename="../RGVehicleList.cpp" line="151"/>
         <source>Unable to copy custom vehicle to folder for custom vehicles.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGVehicleList.cpp" line="161"/>
+        <location filename="../RGVehicleList.cpp" line="157"/>
         <source>Error adding vehicle (unexpected file format or error in file?)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -524,6 +523,31 @@ You can set the %2 directory in the preferences</source>
     </message>
 </context>
 <context>
+    <name>RGGeoTiffMapProjection</name>
+    <message>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="133"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="145"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="155"/>
+        <source>Error</source>
+        <translation type="unfinished">Fout</translation>
+    </message>
+    <message>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="133"/>
+        <source>Unable to execute listgeo, is executable available?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="145"/>
+        <source>Unable to write %1! Disk full or no permissions?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="155"/>
+        <source>Unable to execute applygeo, is executable available?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RGGoogleMap</name>
     <message>
         <location filename="../RGGoogleMap.cpp" line="207"/>
@@ -548,6 +572,11 @@ Copy it from the Google Maps URL line in your browser.</source>
     <message>
         <location filename="../RGMainWindow.cpp" line="110"/>
         <source>Select the output resolution of the generated video.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="118"/>
+        <source>Custom: %1x%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -653,6 +682,11 @@ Continue anyway?</source>
         <location filename="../RGMainWindow.cpp" line="387"/>
         <location filename="../RGMainWindow.cpp" line="790"/>
         <source>Cannot write file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="387"/>
+        <source>Unable to save map file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -792,6 +826,24 @@ Continue anyway?</source>
     </message>
 </context>
 <context>
+    <name>RGSettingsDialog</name>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="50"/>
+        <source>Movie Generation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="84"/>
+        <source>Encoder changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="84"/>
+        <source>Changing the encoder will reset the movie generation codec settings. Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RGVehicleDialog</name>
     <message>
         <location filename="../RGVehicleDialog.cpp" line="91"/>
@@ -801,6 +853,44 @@ Continue anyway?</source>
     <message>
         <location filename="../RGVehicleDialog.cpp" line="92"/>
         <source>Images (*.png *.jpg *.gif *.svg)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGVehicleDialog.cpp" line="104"/>
+        <source>Unable to add custom vehicle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGVehicleDialog.cpp" line="111"/>
+        <source>Remove custom vehicle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGVehicleDialog.cpp" line="111"/>
+        <source>Are you sure you want to remove this custom vehicle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RGViewWidget</name>
+    <message>
+        <location filename="../RGViewWidget.cpp" line="156"/>
+        <source>Oops</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGViewWidget.cpp" line="156"/>
+        <source>Problems saving file </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGViewWidget.cpp" line="171"/>
+        <source>Generating files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGViewWidget.cpp" line="171"/>
+        <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

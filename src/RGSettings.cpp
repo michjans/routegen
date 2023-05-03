@@ -40,7 +40,7 @@ QString RGSettings::getVideoEncExec()
     return settings.value("videoEncExec", QDir::currentPath() + "/ffmpeg/bin/ffmpeg.exe").toString();
 #else
     //Always use ffmpeg (assume it's in the PATH)
-    return QString("ffmpeg");
+    return QStringLiteral("ffmpeg");
 #endif
 }
 
@@ -53,7 +53,7 @@ void RGSettings::setVideoEncExec(const QString& exec)
 QString RGSettings::getAviOutName()
 {
     QSettings settings;
-    return settings.value("videoArgOutname", QString("out")).toString();
+    return settings.value("videoArgOutname", QStringLiteral("out")).toString();
 }
 
 void RGSettings::setAviOutName(const QString& outname)
@@ -65,7 +65,7 @@ void RGSettings::setAviOutName(const QString& outname)
 int RGSettings::getFps()
 {
     QSettings settings;
-    return settings.value("videoArgFps", QString("25")).toInt();
+    return settings.value("videoArgFps", QStringLiteral("25")).toInt();
 }
 
 void RGSettings::setFps(int fps)
@@ -77,7 +77,7 @@ void RGSettings::setFps(int fps)
 int RGSettings::getKeyFrameRate()
 {
     QSettings settings;
-    return settings.value("videoArgKeyFrameRate", QString("25")).toInt();
+    return settings.value("videoArgKeyFrameRate", QStringLiteral("25")).toInt();
 }
 
 void RGSettings::setKeyFrameRate(int rate)
@@ -89,7 +89,7 @@ void RGSettings::setKeyFrameRate(int rate)
 int RGSettings::getBitRate()
 {
     QSettings settings;
-    return settings.value("videoArgBitRate", QString("5000")).toInt();
+    return settings.value("videoArgBitRate", QStringLiteral("5000")).toInt();
 }
 
 void RGSettings::setBitRate(int bitrate)
@@ -101,7 +101,7 @@ void RGSettings::setBitRate(int bitrate)
 QString RGSettings::getAviCompression()
 {
     QSettings settings;
-    return settings.value("videoArgCompression", QString("")).toString();
+    return settings.value("videoArgCompression", QStringLiteral("")).toString();
 }
 
 void RGSettings::setAviCompression(const QString& comp)
@@ -113,7 +113,7 @@ void RGSettings::setAviCompression(const QString& comp)
 QString RGSettings::getFrameFileType()
 {
     QSettings settings;
-    return settings.value("frameFileType", QString("bmp")).toString();
+    return settings.value("frameFileType", QStringLiteral("bmp")).toString();
 }
 
 void RGSettings::setFrameFileType(const QString& fileType)
@@ -125,7 +125,7 @@ void RGSettings::setFrameFileType(const QString& fileType)
 QString RGSettings::getFFMpegOutputFileType()
 {
     QSettings settings;
-    return settings.value("ffmpegOutputFileType", QString("mp4")).toString();
+    return settings.value("ffmpegOutputFileType", QStringLiteral("mp4")).toString();
 }
 
 void RGSettings::setFFMpegOutputFileType(const QString& fileType)
@@ -149,7 +149,7 @@ void RGSettings::setManualCommandLineChecked(bool val)
 QString RGSettings::getFFMpegCommandlineArgs()
 {
     QSettings settings;
-    return settings.value("ffMpegCommandlineArgs", QString("")).toString();
+    return settings.value("ffMpegCommandlineArgs", QStringLiteral("")).toString();
 }
 
 void RGSettings::setFFMpegCommandlineArgs(const QString& args)
@@ -185,7 +185,7 @@ void RGSettings::setIconLessBeginEndFrames(bool val)
 int RGSettings::getBeginDelaySeconds()
 {
     QSettings settings;
-    return settings.value("beginDelaySeconds", QString("0")).toInt();
+    return settings.value("beginDelaySeconds", QStringLiteral("0")).toInt();
 }
 
 void RGSettings::setBeginDelaySeconds(int val)
@@ -197,7 +197,7 @@ void RGSettings::setBeginDelaySeconds(int val)
 int RGSettings::getEndDelaySeconds()
 {
     QSettings settings;
-    return settings.value("endDelaySeconds", QString("0")).toInt();
+    return settings.value("endDelaySeconds", QStringLiteral("0")).toInt();
 }
 
 void RGSettings::setEndDelaySeconds(int val)

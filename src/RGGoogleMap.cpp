@@ -73,7 +73,7 @@ RGGoogleMap::RGGoogleMap(QWidget* parent, const QGeoPath& geoPath)
 {
     ui.setupUi(this);
 
-    QFile file("google-maps-template.html");
+    QFile file(QStringLiteral("google-maps-template.html"));
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
 
@@ -98,10 +98,10 @@ RGGoogleMap::RGGoogleMap(QWidget* parent, const QGeoPath& geoPath)
 
     QObject::connect(ui.buttonBox, &QDialogButtonBox::accepted, this, &RGGoogleMap::on_accept);
 
-    ui.mapTypeBox->insertItem(0, "roadmap");
-    ui.mapTypeBox->insertItem(1, "terrain");
-    ui.mapTypeBox->insertItem(2, "hybrid");
-    ui.mapTypeBox->insertItem(3, "satellite");
+    ui.mapTypeBox->insertItem(0, QStringLiteral("roadmap"));
+    ui.mapTypeBox->insertItem(1, QStringLiteral("terrain"));
+    ui.mapTypeBox->insertItem(2, QStringLiteral("hybrid"));
+    ui.mapTypeBox->insertItem(3, QStringLiteral("satellite"));
     ui.mapTypeBox->setCurrentIndex(0);
 
     //Init map resolution
@@ -119,7 +119,7 @@ RGGoogleMap::RGGoogleMap(QWidget* parent, const QGeoPath& geoPath)
         ui.goButton->setEnabled(false);
 
         QString latlon = QString::number(startGeoRect.center().latitude()) + "," + QString::number(startGeoRect.center().longitude());
-        ui.webView->setHtml(genHtml(latlon, "10"));
+        ui.webView->setHtml(genHtml(latlon, QStringLiteral("10")));
         ui.webView->reload();
     }
 
@@ -143,7 +143,7 @@ void RGGoogleMap::on_accept()
     if (m_geoPath.size() > 1)
     {
         //First delete the drawn rectangle
-        ui.webView->page()->runJavaScript("deleteGeoRect();");
+        ui.webView->page()->runJavaScript(QStringLiteral("deleteGeoRect();"));
 
         //We need to wait until the georect is deleted
         QTimer::singleShot(1000, this, &RGGoogleMap::continue_Accept);
@@ -159,7 +159,7 @@ void RGGoogleMap::on_accept()
 void RGGoogleMap::continue_Accept()
 {
     //Now retrieve the map boundaries from google's map
-    ui.webView->page()->runJavaScript("getBounds();", QWebEngineScript::MainWorld,
+    ui.webView->page()->runJavaScript(QStringLiteral("getBounds();"), QWebEngineScript::MainWorld,
                                       [this](const QVariant& v)
                                       {
                                           qDebug() << "Result of getBounds():" << v.typeName();
@@ -182,15 +182,15 @@ void RGGoogleMap::on_goButton_clicked(bool)
     QUrlQuery urlQuery(url);
     QString latlon;
     QString zoom;
-    if (url.hasFragment() || url.host().contains("google"))
+    if (url.hasFragment() || url.host().contains(QLatin1String("google")))
     {
-        latlon = urlQuery.queryItemValue("ll");
-        zoom = urlQuery.queryItemValue("z");
+        latlon = urlQuery.queryItemValue(QStringLiteral("ll"));
+        zoom = urlQuery.queryItemValue(QStringLiteral("z"));
         if (latlon.isEmpty() || zoom.isEmpty())
         {
             //Now try the new google maps URL format (the construction is not supported by QUrl, so parse the URL manually
             //https://www.google.nl/maps/@52.374716,4.898623,12z
-            QStringList part1 = manUrl.split("/@");
+            QStringList part1 = manUrl.split(QStringLiteral("/@"));
             if (part1.size() == 2)
             {
                 QStringList locItems = part1[1].split(',');
@@ -229,7 +229,7 @@ void RGGoogleMap::handleScaleSpinboxChanged(double)
 void RGGoogleMap::on_mapTypeBox_textActivated(const QString& text)
 {
     qDebug() << "on_mapTypeBox_textActivated:" << text;
-    ui.webView->page()->runJavaScript(QString("setMapType(\"") + text + "\");");
+    ui.webView->page()->runJavaScript(QStringLiteral("setMapType(\"") + text + "\");");
 }
 
 void RGGoogleMap::on_zoomBox_valueChanged(int zoom)
@@ -244,7 +244,7 @@ void RGGoogleMap::on_webView_loadFinished(bool)
     {
         QGeoRectangle geoRect = m_geoPath.boundingGeoRectangle();
 
-        QString javaRect = "[";
+        QString javaRect = QStringLiteral("[");
         javaRect += "{lat: " + QString::number(geoRect.topLeft().latitude()) + ", lng: " + QString::number(geoRect.topLeft().longitude()) + "},";
         javaRect += "{lat: " + QString::number(geoRect.topRight().latitude()) + ", lng: " + QString::number(geoRect.topRight().longitude()) + "},";
         javaRect += "{lat: " + QString::number(geoRect.bottomRight().latitude()) + ", lng: " + QString::number(geoRect.bottomRight().longitude()) + "},";
@@ -274,9 +274,9 @@ QString RGGoogleMap::genHtml(const QString& latlon, const QString& zoom) const
 {
     qDebug() << "Replace: LATLON = " << latlon << "; zoom = " << zoom;
     QString html = m_html_template;
-    html.replace("LATLON", latlon);
-    html.replace("ZOOM", zoom);
-    html.replace("MAPTYPE", ui.mapTypeBox->currentText());
+    html.replace(QLatin1String("LATLON"), latlon);
+    html.replace(QLatin1String("ZOOM"), zoom);
+    html.replace(QLatin1String("MAPTYPE"), ui.mapTypeBox->currentText());
 
     ui.zoomBox->setValue(zoom.toInt());
 

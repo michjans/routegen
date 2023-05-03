@@ -30,11 +30,7 @@ RGVehicleList::RGVehicleList()
 {
     QDir vehicleDir = QDir::currentPath() + "/vehicles";
     QStringList filters;
-    filters << "*.bmp"
-            << "*.gif"
-            << "*.png"
-            << "*.jpg"
-            << "*.svg";
+    filters << QStringLiteral("*.bmp") << QStringLiteral("*.gif") << QStringLiteral("*.png") << QStringLiteral("*.jpg") << QStringLiteral("*.svg");
     vehicleDir.setNameFilters(filters);
     QFileInfoList vehicles = vehicleDir.entryInfoList();
 

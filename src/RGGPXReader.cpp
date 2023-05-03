@@ -117,8 +117,10 @@ bool RGGPXReader::readFile(const QString& fileName)
                     return false;
                 }
 
-                geoCoordinates.append(QGeoCoordinate(inputStream.attributes().value("lat").toFloat(), inputStream.attributes().value("lon").toFloat()));
-                qDebug() << "lon:" << inputStream.attributes().value("lon").toFloat() << "lat:" << inputStream.attributes().value("lat").toFloat();
+                geoCoordinates.append(QGeoCoordinate(inputStream.attributes().value(QStringLiteral("lat")).toFloat(),
+                                                     inputStream.attributes().value(QStringLiteral("lon")).toFloat()));
+                qDebug() << "lon:" << inputStream.attributes().value(QStringLiteral("lon")).toFloat()
+                         << "lat:" << inputStream.attributes().value(QStringLiteral("lat")).toFloat();
             }
             else if (inputStream.isEndElement() && inputStream.name().toString() == routeTagName)
             {
@@ -162,7 +164,7 @@ bool RGGPXReader::collectNames(QXmlStreamReader& inputStream, QProgressDialog& p
             {
                 namesList = &trackNames;
             }
-            else if (namesList && inputStream.name().toString() == "name")
+            else if (namesList && inputStream.name().toString() == QLatin1String("name"))
             {
                 name = inputStream.readElementText();
             }

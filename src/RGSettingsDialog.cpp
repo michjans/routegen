@@ -34,7 +34,7 @@ RGSettingsDialog::RGSettingsDialog(RGEncVideo* videoSettings, QWidget* parent)
     ui.encoderSelectionCB->addItem("ffmpeg");
 #else
     //No bmp2avi on Linux, so nu use to display this option
-    ui.encoderSelectionCB->addItem("ffmpeg");
+    ui.encoderSelectionCB->addItem(QStringLiteral("ffmpeg"));
     ui.encoderSelectionCB->setEnabled(false);
 #endif
 
@@ -47,7 +47,7 @@ RGSettingsDialog::RGSettingsDialog(RGEncVideo* videoSettings, QWidget* parent)
     mGenerateBeginEndFramesCB->setChecked(!RGSettings::getIconLessBeginEndFrames());
     ui.encoderSelectionCB->setCurrentIndex(ui.encoderSelectionCB->findText(RGSettings::getVideoEncoder()));
 
-    ui.tabWidget->insertTab(0, videoSettings, QString("Movie Generation"));
+    ui.tabWidget->insertTab(0, videoSettings, tr("Movie Generation"));
     ui.tabWidget->setCurrentIndex(0);
 }
 
@@ -81,7 +81,7 @@ void RGSettingsDialog::accept()
     if (mVideoEncoder->encoderName() != ui.encoderSelectionCB->currentText())
     {
         QMessageBox::StandardButton answer =
-            QMessageBox::question(this, "Encoder changed", "Changing the encoder will reset the movie generation codec settings. Continue?",
+            QMessageBox::question(this, tr("Encoder changed"), tr("Changing the encoder will reset the movie generation codec settings. Continue?"),
                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
         if (answer == QMessageBox::Yes)
         {

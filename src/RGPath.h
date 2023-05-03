@@ -56,6 +56,7 @@ private:
     QPainterPath getPathAtTime(int time);
     void createPath();
     void createSmoothPath();
+    void createAverageRouteAngles();
     QPainterPath pathLineQuad(QPoint start, QPoint coef, QPoint end);
     QPainterPath pathLineCubic(QPoint start, QPoint coef1, QPoint coef2, QPoint end);
     QPoint getPointAtLength(QPoint start, QPoint end, int length);

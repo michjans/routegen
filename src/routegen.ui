@@ -75,9 +75,6 @@
     <addaction name="actionPreferences"/>
    </widget>
    <widget class="QMenu" name="menu_File">
-    <property name="windowTitle">
-     <string>Route Generator v0.1</string>
-    </property>
     <property name="title">
      <string>&amp;File</string>
     </property>

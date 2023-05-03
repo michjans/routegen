@@ -47,7 +47,7 @@ bool RGMap::loadMap(const QString& fileName, const QPixmap& map, const RGMapBoun
         {
             mMapProjection = std::make_unique<RGGoogleMapProjection>(googleBounds);
         }
-        else if (fileName.endsWith(".tif"))
+        else if (fileName.endsWith(QLatin1String(".tif")))
         {
             //This is potentially a geotiff file
             mMapProjection = std::make_unique<RGGeoTiffMapProjection>(fileName);

@@ -10,8 +10,9 @@
 
 class RGGoogleMapProjection : public RGMapProjection
 {
+    Q_OBJECT
 public:
-    RGGoogleMapProjection(const RGMapBounds& mapBounds);
+    RGGoogleMapProjection(const RGMapBounds& mapBounds, QObject* parent = nullptr);
     virtual ~RGGoogleMapProjection() override;
 
     bool isValid() const override;

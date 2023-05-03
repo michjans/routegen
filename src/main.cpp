@@ -107,7 +107,7 @@
  *          Possibility to set different file type for generated video frames (e.g. PNG, JPG, etc.)
  */
 
-extern const QString applicationName("Route Generator version 1.12.0-alpha");
+extern const QString applicationName(QStringLiteral("Route Generator version 1.12.0-alpha"));
 
 int main(int argc, char* argv[])
 {
@@ -123,8 +123,8 @@ int main(int argc, char* argv[])
     }
 
     //For storing application settings
-    app.setOrganizationName("MJProductions");
-    app.setApplicationName("Route Generator");
+    app.setOrganizationName(QStringLiteral("MJProductions"));
+    app.setApplicationName(QStringLiteral("Route Generator"));
 
     RGMainWindow* mainWindow = new RGMainWindow;
     mainWindow->setWindowTitle(applicationName);

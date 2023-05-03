@@ -1,8 +1,7 @@
 #include "RGMapProjection.h"
 
-/*
-RGMapProjection::RGMapProjection()
+RGMapProjection::RGMapProjection(QObject* parent)
+    : QObject(parent)
 {
 
 }
-*/

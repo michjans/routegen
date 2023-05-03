@@ -42,7 +42,7 @@ RGViewWidget::RGViewWidget(RGMap* map, QWidget* parent)
     this->setDragMode(QGraphicsView::ScrollHandDrag);
 
     //init text
-    mWelcomeText = mScene->addText(applicationName, QFont("Arial", 30));
+    mWelcomeText = mScene->addText(applicationName, QFont(QStringLiteral("Arial"), 30));
     mWelcomeText->setDefaultTextColor(Qt::blue);
 
     //timer
@@ -153,7 +153,7 @@ bool RGViewWidget::saveRenderedImage(const QString& filename, bool fullMapResolu
     }
     if (!result)
     {
-        QMessageBox::critical(this, "Oops", "Problems saving file " + filename);
+        QMessageBox::critical(this, tr("Oops"), tr("Problems saving file ") + filename);
     }
 
     return result;
@@ -168,7 +168,7 @@ bool RGViewWidget::generateMovie(const QString& dirName, const QString& filePref
     int secsAfter = RGSettings::getEndDelaySeconds();
     int framesAfter = secsAfter * RGSettings::getFps();
 
-    QProgressDialog progress("Generating files...", "Abort", 0, mRoute->countFrames() + framesBefore + framesAfter, this);
+    QProgressDialog progress(tr("Generating files..."), tr("Abort"), 0, mRoute->countFrames() + framesBefore + framesAfter, this);
     progress.setWindowModality(Qt::WindowModal);
     progress.setMinimumDuration(100);
 
@@ -255,7 +255,7 @@ void RGViewWidget::playTimerEvent()
 bool RGViewWidget::saveFrame(int frameCounter, const QString& dirName, const QString& filePrefix, const QString& frameFileType, QStringList& generatedImages)
 {
     QString fileName;
-    QString postFix = QString("%1.%2").arg(frameCounter, FILE_NUMBER_FIELD_WIDTH, 10, QChar('0')).arg(frameFileType);
+    QString postFix = QStringLiteral("%1.%2").arg(frameCounter, FILE_NUMBER_FIELD_WIDTH, 10, QChar('0')).arg(frameFileType);
     fileName = dirName + "/" + filePrefix + postFix;
     if (!saveRenderedImage(fileName))
     {

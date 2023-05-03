@@ -11,8 +11,9 @@
 #include "geovalues.h"
 #include "xtiffio.h"
 
-RGGeoTiffMapProjection::RGGeoTiffMapProjection(const QString& fileName)
-    : mFileName(fileName),
+RGGeoTiffMapProjection::RGGeoTiffMapProjection(const QString& fileName, QObject* parent)
+    : RGMapProjection(parent),
+      mFileName(fileName),
       mTiff(nullptr),
       mGTif(nullptr)
 {
@@ -117,7 +118,7 @@ bool RGGeoTiffMapProjection::saveProjection(const QString& fileName)
         return false;
     }
 
-    if (QFileInfo(fileName).suffix() != "tif")
+    if (QFileInfo(fileName).suffix() != QLatin1String("tif"))
     {
         qDebug() << "GeoTIFF only supported by tif files";
         return false;
@@ -126,10 +127,10 @@ bool RGGeoTiffMapProjection::saveProjection(const QString& fileName)
     std::unique_ptr<QProcess> listGeoProcess = std::make_unique<QProcess>();
     QStringList arguments;
     arguments << mFileName;
-    listGeoProcess->start("listgeo", arguments);
+    listGeoProcess->start(QStringLiteral("listgeo"), arguments);
     if (!listGeoProcess->waitForFinished(5000))
     {
-        QMessageBox::critical(nullptr, "Error", QString("Unable to execute listgeo, is executable available?"));
+        QMessageBox::critical(nullptr, tr("Error"), tr("Unable to execute listgeo, is executable available?"));
         return false;
     }
     QByteArray output = listGeoProcess->readAllStandardOutput();
@@ -141,17 +142,17 @@ bool RGGeoTiffMapProjection::saveProjection(const QString& fileName)
     }
     else
     {
-        QMessageBox::critical(nullptr, "Error", QString("Unable to write ") + geoFile.fileName() + "! Disk full or no permissions?");
+        QMessageBox::critical(nullptr, tr("Error"), tr("Unable to write %1! Disk full or no permissions?").arg(geoFile.fileName()));
         return false;
     }
 
     std::unique_ptr<QProcess> applyGeoProcess = std::make_unique<QProcess>();
     arguments.clear();
     arguments << geoFile.fileName() << fileName;
-    applyGeoProcess->start("applygeo", arguments);
+    applyGeoProcess->start(QStringLiteral("applygeo"), arguments);
     if (!applyGeoProcess->waitForFinished())
     {
-        QMessageBox::critical(nullptr, "Error", QString("Unable to execute applygeo, is executable available?"));
+        QMessageBox::critical(nullptr, tr("Error"), QString(tr("Unable to execute applygeo, is executable available?")));
         return false;
     }
 

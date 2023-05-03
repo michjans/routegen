@@ -234,33 +234,7 @@ void RGPath::createPath()
         }
     }
 
-    //Fill a sliding window of 10 angles from the route in a deque and calculate the average angle over that period
-    mAvgAngles.clear();
-    std::deque<double> slidingAngleWindow;
-    int frameCount = countFrames();
-    for (int frameIdx = 0; frameIdx < frameCount; ++frameIdx)
-    {
-        slidingAngleWindow.push_back(getAngleAtFrame(frameIdx) * M_PI / 180.0);
-        if (slidingAngleWindow.size() > gAvgAngleWindowSize)
-        {
-            slidingAngleWindow.pop_front();
-        }
-
-        // calculate sums of sine and cosine of all angles
-        double sum_sin = 0.0;
-        double sum_cos = 0.0;
-        for (double angle_rad : slidingAngleWindow)
-        {
-            sum_sin += std::sin(angle_rad);
-            sum_cos += std::cos(angle_rad);
-        }
-
-        // calculate average angle in radians
-        double avg_angle_rad = std::atan2(sum_sin, sum_cos);
-
-        // convert average angle to degrees
-        mAvgAngles.emplace_back(avg_angle_rad * 180.0 / M_PI);
-    }
+    createAverageRouteAngles();
 }
 
 void RGPath::createSmoothPath()
@@ -352,6 +326,37 @@ void RGPath::createSmoothPath()
     else
         newPath.connectPath(pathLineCubic(p1, (c1 - p1) / 4 + p1, (A - B) / 4 + B, B));
     mPath = newPath;
+}
+
+void RGPath::createAverageRouteAngles()
+{
+    //Fill a sliding window of 10 angles from the route in a deque and calculate the average angle over that period
+    mAvgAngles.clear();
+    std::deque<double> slidingAngleWindow;
+    int frameCount = countFrames();
+    for (int frameIdx = 0; frameIdx < frameCount; ++frameIdx)
+    {
+        slidingAngleWindow.push_back(getAngleAtFrame(frameIdx) * M_PI / 180.0);
+        if (slidingAngleWindow.size() > gAvgAngleWindowSize)
+        {
+            slidingAngleWindow.pop_front();
+        }
+
+        // calculate sums of sine and cosine of all angles
+        double sum_sin = 0.0;
+        double sum_cos = 0.0;
+        for (double angle_rad : slidingAngleWindow)
+        {
+            sum_sin += std::sin(angle_rad);
+            sum_cos += std::cos(angle_rad);
+        }
+
+        // calculate average angle in radians
+        double avg_angle_rad = std::atan2(sum_sin, sum_cos);
+
+        // convert average angle to degrees
+        mAvgAngles.emplace_back(avg_angle_rad * 180.0 / M_PI);
+    }
 }
 
 QPoint RGPath::getPointAtLength(QPoint start, QPoint end, int length)

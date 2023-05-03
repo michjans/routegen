@@ -101,14 +101,14 @@ void RGVehicleDialog::on_addVehiclePB_clicked(bool)
         }
         else
         {
-            QMessageBox::warning(this, "Unable to add custom vehicle", errStr);
+            QMessageBox::warning(this, tr("Unable to add custom vehicle"), errStr);
         }
     }
 }
 
 void RGVehicleDialog::on_removeVehiclePB_clicked(bool)
 {
-    QMessageBox::StandardButton answer = QMessageBox::question(this, "Remove custom vehicle", "Are you sure you want to remove this custom vehicle?",
+    QMessageBox::StandardButton answer = QMessageBox::question(this, tr("Remove custom vehicle"), tr("Are you sure you want to remove this custom vehicle?"),
                                                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
     if (answer == QMessageBox::No)
         return;
