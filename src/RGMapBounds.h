@@ -59,7 +59,11 @@ public:
 
     bool fromQVariant(const QVariant& v)
     {
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
         if (QMetaType::Type(v.typeId()) == QMetaType::QVariantMap)
+#else
+        if (QMetaType::Type(v.type()) == QMetaType::QVariantMap)
+#endif
         {
             QMap<QString, QVariant> bounds = v.toMap();
             setNeCoord(QGeoCoordinate(bounds[QStringLiteral("neLat")].toDouble(), bounds[QStringLiteral("neLng")].toDouble()));

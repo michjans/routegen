@@ -23,7 +23,9 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Positioning WebEngine
 find_package(GeoTIFF REQUIRED)
 find_package(TIFF REQUIRED)
 
-qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} i18n/routegen_en.ts i18n/routegen_it.ts i18n/routegen_nl.ts OPTIONS -noobsolete)
+#WARNING: This call deletes the ts files when doing make clean!!! (this is a known bug, should have been fixed),
+#         so we just manually execute lupdate/lrelease of the ts files
+#qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} i18n/routegen_en.ts i18n/routegen_it.ts i18n/routegen_nl.ts OPTIONS -noobsolete)
 #(${QM_FILES} ${CMAKE_SOURCE_DIR} COPYONLY)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
@@ -88,10 +90,6 @@ target_link_libraries(routegen PRIVATE
 )
 
 set(CMAKE_EXE_LINKER_FLAGS "-fuse-ld=gold ${CMAKE_CXX_FLAGS}")
-
-# Qt5LinguistTools
-#find_package(Qt5LinguistTools)
-#qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} routegen_en.ts routegen_nl.ts)
 
 if(CMAKE_BUILD_TYPE STREQUAL Release)
     target_compile_definitions(routegen PRIVATE
