@@ -406,7 +406,7 @@ void RGMainWindow::on_actionImport_GPX_triggered(bool)
             icon.load(QStringLiteral(":/icons/icons/checkmark_green.svg"));
             msgBox.setIconPixmap(icon.scaled(icSize));
 
-            msgBox.setText(tr("GXP route imported succesfully!"));
+            msgBox.setText(tr("GPX route imported succesfully!"));
             QPushButton* importButton = msgBox.addButton(tr("Import new map (Google maps)..."), QMessageBox::ActionRole);
             QPushButton* existingButton = msgBox.addButton(tr("Open existing map..."), QMessageBox::ActionRole);
             if (mMap->hasGeoBounds())

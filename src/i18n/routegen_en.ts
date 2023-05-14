@@ -695,7 +695,7 @@ Continue anyway?</source>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="409"/>
-        <source>GXP route imported succesfully!</source>
+        <source>GPX route imported succesfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
