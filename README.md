@@ -113,6 +113,18 @@ rpath set to ${ORIGIN}/lib, to be able to distribute the Qt libraries in a lib
 sub-directory (defined in qt.conf)!
 - make install 
 
+## Translation
+Some information regarding translation of Route Generator (up to now only, EN, NL and IT supported)
+
+To generate or update the translation source files:
+
+- cd src
+- lupdate *.cpp *.ui -ts i18n/routegen_en.ts i18n/routegen_nl.ts i18n/routegen_it.ts
+
+WARNING: Somehow last time I executed this command, all translations were removed!
+
+After this the ts files can be opened in linguist and translations can be added.
+Then using lrelease i18n/routegen_nl.ts the qm file can be generated which is used runtime.
 
 ## Version history
 - 1.0   -Initial version

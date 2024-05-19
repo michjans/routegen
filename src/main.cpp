@@ -18,9 +18,11 @@
 */
 
 #include <QApplication>
+#include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QFileDialog>
+#include <QLibraryInfo>
 #include <QMessageBox>
 #include <QTranslator>
 
@@ -117,11 +119,37 @@ int main(int argc, char* argv[])
 
     QApplication app(argc, argv);
 
-    QTranslator translator;
-    //if (translator.load(QLocale(), QLatin1String("routegen"), QLatin1String("_"), QLatin1String(":/i18n")))
-    if (translator.load(QLatin1String("routegen_nl"), QLatin1String(":/i18n/i18n")))
-    {
-        QApplication::installTranslator(&translator);
+    qDebug() << "Current locale:" << QLocale::system().name();
+    QTranslator qtTranslator;
+    if (qtTranslator.load(QStringLiteral("it"),
+                          QStringLiteral("qt"),
+                          QStringLiteral("_"),
+                          QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+        app.installTranslator(&qtTranslator);
+        qDebug() << "Translations loaded OK";
+    } else {
+        qWarning() << "Failed loading translations from"
+                   << QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+    }
+
+    QTranslator qtBaseTranslator;
+    if (qtBaseTranslator.load(QStringLiteral("qtbase_it"),
+                              QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+        app.installTranslator(&qtBaseTranslator);
+        qDebug() << "Base translations loaded OK";
+    } else {
+        qWarning() << "Failed loading base translations from"
+                   << QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+    }
+
+    //Generate or update ts file: lupdate *.cpp *.ui -ts routegen_en.ts routegen_nl.ts
+    QTranslator rgTranslator;
+    //if (translator.load(QLocale(), QStringLiteral("routegen"), QStringLiteral("_"), QStringLiteral(":/i18n")))
+    if (rgTranslator.load(QStringLiteral("routegen_it"), QStringLiteral(":/i18n/i18n"))) {
+        QApplication::installTranslator(&rgTranslator);
+        qDebug() << "Translations loaded OK";
+    } else {
+        qWarning() << "Failed loading translations";
     }
 
     //For storing application settings
