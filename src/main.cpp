@@ -121,7 +121,7 @@ int main(int argc, char* argv[])
 
     qDebug() << "Current locale:" << QLocale::system().name();
     QTranslator qtTranslator;
-    if (qtTranslator.load(QStringLiteral("it"),
+    if (qtTranslator.load(QStringLiteral("en"),
                           QStringLiteral("qt"),
                           QStringLiteral("_"),
                           QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
@@ -133,7 +133,7 @@ int main(int argc, char* argv[])
     }
 
     QTranslator qtBaseTranslator;
-    if (qtBaseTranslator.load(QStringLiteral("qtbase_it"),
+    if (qtBaseTranslator.load(QStringLiteral("qtbase_en"),
                               QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
         app.installTranslator(&qtBaseTranslator);
         qDebug() << "Base translations loaded OK";
@@ -145,7 +145,7 @@ int main(int argc, char* argv[])
     //Generate or update ts file: lupdate *.cpp *.ui -ts routegen_en.ts routegen_nl.ts
     QTranslator rgTranslator;
     //if (translator.load(QLocale(), QStringLiteral("routegen"), QStringLiteral("_"), QStringLiteral(":/i18n")))
-    if (rgTranslator.load(QStringLiteral("routegen_it"), QStringLiteral(":/i18n/i18n"))) {
+    if (rgTranslator.load(QStringLiteral("routegen_en"), QStringLiteral(":/i18n/i18n"))) {
         QApplication::installTranslator(&rgTranslator);
         qDebug() << "Translations loaded OK";
     } else {
