@@ -26,5 +26,6 @@
     <qresource prefix="/i18n">
         <file>i18n/routegen_nl.qm</file>
         <file>i18n/routegen_it.qm</file>
+        <file>i18n/qtbase_it.qm</file>
     </qresource>
 </RCC>

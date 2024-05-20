@@ -113,18 +113,29 @@ rpath set to ${ORIGIN}/lib, to be able to distribute the Qt libraries in a lib
 sub-directory (defined in qt.conf)!
 - make install 
 
-## Translation
+## Managing the translations
 Some information regarding translation of Route Generator (up to now only, EN, NL and IT supported)
 
-To generate or update the translation source files:
+To generate or update the translation source files, I now manually execute lupdate/lrelease, because
+doing this automatic during the build process has some disadvantages. Also it is not required to re-update
+the ts files each time. This is only required when new dialogs or (translatable) texts are added.
+To regenerate the ts files (i.e. parse the source code to search for new translatable strings:
 
 - cd src
 - lupdate *.cpp *.ui -ts i18n/routegen_en.ts i18n/routegen_nl.ts i18n/routegen_it.ts
 
-WARNING: Somehow last time I executed this command, all translations were removed!
+After this step the ts files can be opened in Qt linguist and translations can be added.
 
-After this the ts files can be opened in linguist and translations can be added.
-Then using lrelease i18n/routegen_nl.ts the qm file can be generated which is used runtime.
+Then to generate the qm files that are used runtime (and should also be deployed):
+- lrelease i18n/routegen_nl.ts i18n/routegen_it.ts
+
+Additionally the default Qt translations (e.g. default Ok, Cancel, Yes, No buttons) should
+also be available (if available for the translated language), so we (at least) need to deploy
+a single translation file for the used Qt base packages.
+
+- cp /home/mjansen/Qt/5.15.2/gcc_64/translations/qtbase_it.qm i18n.qtbase_it.qm
+
+Finally we embed all required qm files in the routegen.qrc file and reference them from there.
 
 ## Version history
 - 1.0   -Initial version

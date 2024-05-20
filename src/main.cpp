@@ -115,41 +115,37 @@ extern const QString applicationName(QStringLiteral("Route Generator version 1.1
 
 int main(int argc, char* argv[])
 {
-    //TODO:qInstallMessageHandler(myMessageOutput);
-
     QApplication app(argc, argv);
 
+    //Translations are qurrently loaded automatically determined from the current locale of the system.
+    //However, it is possible to force an alternative language, e.g. by adding a language setting to the
+    //prefences dialog. Then we should call it like this:
+    //if (qtTranslator.load(QStringLiteral("qtbase_it"), QStringLiteral(":/i18n/i18n")))
+    //if (rgTranslator.load(QStringLiteral("routegen_it"), QStringLiteral(":/i18n/i18n")))
     qDebug() << "Current locale:" << QLocale::system().name();
+
+    //Default Qt base translation file (is copied from the Qt installation, see README.md)
     QTranslator qtTranslator;
-    if (qtTranslator.load(QStringLiteral("en"),
-                          QStringLiteral("qt"),
-                          QStringLiteral("_"),
-                          QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
-        app.installTranslator(&qtTranslator);
+    if (qtTranslator.load(QLocale(), QStringLiteral("qtbase"), QStringLiteral("_"), QStringLiteral(":/i18n")))
+    {
+        QApplication::installTranslator(&qtTranslator);
         qDebug() << "Translations loaded OK";
-    } else {
-        qWarning() << "Failed loading translations from"
-                   << QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+    }
+    else
+    {
+        qWarning() << "Failed loading Qt translations";
     }
 
-    QTranslator qtBaseTranslator;
-    if (qtBaseTranslator.load(QStringLiteral("qtbase_en"),
-                              QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
-        app.installTranslator(&qtBaseTranslator);
-        qDebug() << "Base translations loaded OK";
-    } else {
-        qWarning() << "Failed loading base translations from"
-                   << QLibraryInfo::location(QLibraryInfo::TranslationsPath);
-    }
-
-    //Generate or update ts file: lupdate *.cpp *.ui -ts routegen_en.ts routegen_nl.ts
+    //Generate or update qm file regularly when updating code (see README.md)
     QTranslator rgTranslator;
-    //if (translator.load(QLocale(), QStringLiteral("routegen"), QStringLiteral("_"), QStringLiteral(":/i18n")))
-    if (rgTranslator.load(QStringLiteral("routegen_en"), QStringLiteral(":/i18n/i18n"))) {
+    if (rgTranslator.load(QLocale(), QStringLiteral("routegen"), QStringLiteral("_"), QStringLiteral(":/i18n")))
+    {
         QApplication::installTranslator(&rgTranslator);
         qDebug() << "Translations loaded OK";
-    } else {
-        qWarning() << "Failed loading translations";
+    }
+    else
+    {
+        qWarning() << "Failed loading routegen translations";
     }
 
     //For storing application settings

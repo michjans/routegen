@@ -23,9 +23,11 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Positioning WebEngine
 find_package(GeoTIFF REQUIRED)
 find_package(TIFF REQUIRED)
 
-#WARNING: This call deletes the ts files when doing make clean!!! (this is a known bug, should have been fixed),
-#         so we just manually execute lupdate/lrelease of the ts files
-#qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} i18n/routegen_en.ts i18n/routegen_it.ts i18n/routegen_nl.ts OPTIONS -noobsolete)
+#WARNING: This call regenerates the ts files, but also deletes the ts files when doing make clean!!!
+#         (this is a known bug, should have been fixed).
+#         We just manually execute lupdate/lrelease of the ts files, because then we have better control as well,
+#         i.e. running lupdate also regenerates the source file locations in the ts files, which we don´t always want.
+#qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} i18n/routegen_en.ts i18n/routegen_it.ts i18n/routegen_nl.ts OPTIONS -noobsolete)
 #(${QM_FILES} ${CMAKE_SOURCE_DIR} COPYONLY)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
