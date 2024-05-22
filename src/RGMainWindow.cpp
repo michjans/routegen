@@ -588,6 +588,8 @@ void RGMainWindow::on_action_About_triggered(bool checked)
                           "See: <a href=\"https://www.gyan.dev/ffmpeg/builds/#about-these-builds\">CODEX FFmpeg About Builds Page</a></i><br>"
                           "OR<br>"
                           "<i>bmp2avi Copyright (C)) Paul Roberts 1996 - 1998</i></p>"
+                          "<p>If you like this program or encourage the development, please consider making a donation:</p>"
+                          "<p><a href=\"https://www.routegenerator.net/download.html\"><img src=\"btn_donateCC_LG.gif\"></a></p>"
                           "<p>For more information or questions about Route Generator you can "
                           "<a href=\"mailto:info@routegenerator.net\">contact</a> me by e-mail.</p>"
                           "</center>"
