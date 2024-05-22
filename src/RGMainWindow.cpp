@@ -21,6 +21,9 @@
 #include <QtWidgets>
 
 #include "RGEncFFmpeg.h"
+#ifdef Q_OS_WIN
+#include "RGEncBmp2avi.h"
+#endif
 #include "RGEncVideo.h"
 #include "RGGPXReader.h"
 #include "RGGoogleMap.h"
