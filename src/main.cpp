@@ -107,7 +107,8 @@
  *          Make it possible to select existing folder again.
  *          FPS setting now passed correctly to the ffmpeg commandline.
  *          Possibility to set different file type for generated video frames (e.g. PNG, JPG, etc.)
- *  v1.12.0 Translations.
+ *  v1.12.0 Clang/Tidy fixes and ready for Qt6 API
+ *          Translations (Italian, Dutch).
  *          Smoother vehicle rotation (using average angles)
  */
 
@@ -122,23 +123,24 @@ int main(int argc, char* argv[])
     //prefences dialog. Then we should call it like this:
     //if (qtTranslator.load(QStringLiteral("qtbase_it"), QStringLiteral(":/i18n/i18n")))
     //if (rgTranslator.load(QStringLiteral("routegen_it"), QStringLiteral(":/i18n/i18n")))
-    qDebug() << "Current locale:" << QLocale::system().name();
 
     //Default Qt base translation file (is copied from the Qt installation, see README.md)
     QTranslator qtTranslator;
-    if (qtTranslator.load(QLocale(), QStringLiteral("qtbase"), QStringLiteral("_"), QStringLiteral(":/i18n")))
+    QLocale defaultLocale = QLocale::system();
+    qDebug() << "Current locale languages:" << defaultLocale.uiLanguages();
+    if (qtTranslator.load(defaultLocale, QStringLiteral("qtbase"), QStringLiteral("_"), QStringLiteral(":/i18n/i18n")))
     {
         QApplication::installTranslator(&qtTranslator);
         qDebug() << "Translations loaded OK";
     }
     else
     {
-        qWarning() << "Failed loading Qt translations";
+        qWarning() << "Failed loading qtbase translations";
     }
 
     //Generate or update qm file regularly when updating code (see README.md)
     QTranslator rgTranslator;
-    if (rgTranslator.load(QLocale(), QStringLiteral("routegen"), QStringLiteral("_"), QStringLiteral(":/i18n")))
+    if (rgTranslator.load(QLocale(), QStringLiteral("routegen"), QStringLiteral("_"), QStringLiteral(":/i18n/i18n")))
     {
         QApplication::installTranslator(&rgTranslator);
         qDebug() << "Translations loaded OK";
@@ -147,6 +149,17 @@ int main(int argc, char* argv[])
     {
         qWarning() << "Failed loading routegen translations";
     }
+
+#ifdef DEBUG_LOCALE
+    //DEBUG:LOCALE
+    auto uiLanguages = defaultLocale.uiLanguages();
+    QString uiLanguagesStr = "Languages:";
+    for (const auto &uiLanguage : uiLanguages)
+    {
+        uiLanguagesStr += uiLanguage;
+    }
+    QMessageBox::information(nullptr, "Current locale languages:", uiLanguagesStr);
+#endif
 
     //For storing application settings
     app.setOrganizationName(QStringLiteral("MJProductions"));
