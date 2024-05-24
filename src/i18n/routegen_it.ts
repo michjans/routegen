@@ -188,7 +188,7 @@
         <location filename="../routegen.ui" line="185"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="261"/>
         <source>&amp;Draw mode</source>
-        <translation>Modalità &amp;Disegno</translation>
+        <translation>Modalità &amp;Disegna</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="188"/>
@@ -207,7 +207,7 @@
         <location filename="../routegen.ui" line="200"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="267"/>
         <source>Generate the route into a selected directory</source>
-        <translation>Grea il percorso in una cartella selezionata</translation>
+        <translation>Genera il percorso in una cartella selezionata</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="209"/>
@@ -346,7 +346,7 @@
         <location filename="../routegen.ui" line="329"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="304"/>
         <source>Open a route generator project</source>
-        <translation>Apri un progetto Route Generator</translation>
+        <translation>Apre un progetto Route Generator</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="338"/>
@@ -414,7 +414,7 @@ Installa FFmpeg e riavvia l&apos;applicazione.</translation>
     <message>
         <location filename="../RGEncFFmpeg.cpp" line="199"/>
         <source>&lt;----Default codec for Routegen</source>
-        <translation>&lt;----Default codec per Routegen</translation>
+        <translation>&lt;----Codec predefinito per Routegen</translation>
     </message>
     <message>
         <location filename="../RGEncFFmpeg.cpp" line="210"/>
@@ -760,7 +760,7 @@ Continuare comunque?</translation>
     <message>
         <location filename="../RGMainWindow.cpp" line="444"/>
         <source>hold SHIFT to record free drawing, CTRL to select several points. Del key to delete selected points</source>
-        <translation>tieni premuto MAIUSC per registrare liberamente il disegno, CTRL per selezionare più punti,  CANC per eliminare i punti selezionati</translation>
+        <translation>tieni premuto MAIUSC per registrare liberamente il disegno, CTRL per selezionare più punti, CANC per eliminare i punti selezionati</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="486"/>
@@ -795,7 +795,7 @@ Continuare comunque?</translation>
     <message>
         <location filename="../RGMainWindow.cpp" line="592"/>
         <source>About Route Generator</source>
-        <translation>Info su Route Generator</translation>
+        <translation>Informazioni su Route Generator</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="613"/>
@@ -886,7 +886,7 @@ Continuare comunque?</translation>
     <message>
         <location filename="../RGVehicleDialog.cpp" line="111"/>
         <source>Remove custom vehicle</source>
-        <translation>Rmuovi veicolo personalizzato</translation>
+        <translation>Rimuovi veicolo personalizzato</translation>
     </message>
     <message>
         <location filename="../RGVehicleDialog.cpp" line="111"/>
