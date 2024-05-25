@@ -122,7 +122,7 @@ the ts files each time. This is only required when new dialogs or (translatable)
 To regenerate the ts files (i.e. parse the source code to search for new translatable strings:
 
 - cd src
-- lupdate *.cpp *.ui -ts i18n/routegen_en.ts i18n/routegen_nl.ts i18n/routegen_it.ts
+- lupdate *.cpp *.ui -locations absolute -ts i18n/routegen_en.ts i18n/routegen_nl.ts i18n/routegen_it.ts
 
 After this step the ts files can be opened in Qt linguist and translations can be added.
 
