@@ -186,163 +186,163 @@
         <location filename="../routegen.ui" line="185"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="261"/>
         <source>&amp;Draw mode</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Modo de dibujo</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="188"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="263"/>
         <source>(De)Activate route draw mode</source>
-        <translation type="unfinished"></translation>
+        <translation>(Des)Activar modo de dibujo de rutas</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="197"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="265"/>
         <source>&amp;Generate route</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Generar ruta</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="200"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="267"/>
         <source>Generate the route into a selected directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Generar la ruta en un directorio seleccionado</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="209"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="269"/>
         <source>&amp;Playback</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Reproducción</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="212"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="271"/>
         <source>Playback the currently drawn route (preview)</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproducir la ruta dibujada actualmente (vista previa)</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="217"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="273"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Acerca de</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="222"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="274"/>
         <source>&amp;Tutorial</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tutorial</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="231"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="275"/>
         <source>S&amp;top</source>
-        <translation type="unfinished"></translation>
+        <translation>D&amp;etener</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="234"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="277"/>
         <source>Stops playback</source>
-        <translation type="unfinished"></translation>
+        <translation>Detener reproducción</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="243"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="279"/>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Deshacer</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="252"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="280"/>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rehacer</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="257"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="281"/>
         <source>&amp;Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Preferencias</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="266"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="282"/>
         <source>&amp;Import from Google Maps</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Importar desde Google Maps</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="269"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="284"/>
         <source>Import map from Google Maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar mapa desde Google Maps</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="278"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="286"/>
         <source>Import route from GP&amp;X</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar ruta desde GP&amp;X</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="281"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="288"/>
         <source>Import route points from GPX file</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar puntos de ruta desde archivo GPX</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="290"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="290"/>
         <source>&amp;New Route</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nueva Ruta</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="293"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="292"/>
         <source>Start New Route</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar nueva ruta</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="302"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="294"/>
         <source>Save &amp;project</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar &amp;proyecto</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="305"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="296"/>
         <source>Save project (map and route)</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar proyecto (mapa y ruta)</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="314"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="298"/>
         <source>&amp;New project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nuevo proyecto</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="317"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="300"/>
         <source>Start new project</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar nuevo proyecto</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="326"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="302"/>
         <source>Open p&amp;roject</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir p&amp;royecto</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="329"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="304"/>
         <source>Open a route generator project</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir un proyecto de generador de rutas</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="338"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="306"/>
         <source>Save project as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar proyecto como...</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="341"/>
         <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="308"/>
         <source>Save current project in another file</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar proyecto actual en otro archivo</translation>
     </message>
 </context>
 <context>
@@ -955,13 +955,13 @@ p, li { white-space: pre-wrap; }
         <location filename="../googlemap.ui" line="86"/>
         <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="193"/>
         <source>Zoom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom:</translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="106"/>
         <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="194"/>
         <source>Map type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de mapa:</translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="116"/>
@@ -972,7 +972,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../googlemap.ui" line="141"/>
         <source>about:blank</source>
-        <translation type="unfinished"></translation>
+        <translation>about:blank</translation>
     </message>
 </context>
 <context>
@@ -981,61 +981,61 @@ p, li { white-space: pre-wrap; }
         <location filename="../routeui.ui" line="20"/>
         <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="151"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulario</translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="32"/>
         <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="153"/>
         <source>Modify the width of the drawn route line</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificar el ancho de la línea de la ruta dibujada</translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="51"/>
         <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="156"/>
         <source>Select line style of route</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar el estilo de línea de la ruta</translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="64"/>
         <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="159"/>
         <source>Select route color</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar el color de la ruta</translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="81"/>
         <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="163"/>
         <source>Select vehicle for the route</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar el vehículo para la ruta</translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="94"/>
         <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="166"/>
         <source>Vehicle Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración del vehículo</translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="115"/>
         <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="170"/>
         <source>Turns on/off automatic route interpolation</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar/desactivar la interpolación automática de rutas</translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="118"/>
         <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="172"/>
         <source>Set total time (s) :</source>
-        <translation type="unfinished"></translation>
+        <translation>Establecer el tiempo total (s):</translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="128"/>
         <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="174"/>
         <source>Length of generated route in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Duración de la ruta generada en segundos</translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="148"/>
         <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="176"/>
         <source>Smooth route</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruta suave</translation>
     </message>
 </context>
 <context>
@@ -1044,79 +1044,79 @@ p, li { white-space: pre-wrap; }
         <location filename="../vehicledialog.ui" line="14"/>
         <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="214"/>
         <source>Vehicle Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración del vehículo</translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="76"/>
         <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="216"/>
         <source>Remove selected vehicle (only custom vehicles can be removed)</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar vehículo seleccionado (solo se pueden eliminar vehículos personalizados)</translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="79"/>
         <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="218"/>
         <source>Remove vehicle</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar vehículo</translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="86"/>
         <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="220"/>
         <source>Add your own custom vehicle icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Agregar tu propio ícono de vehículo personalizado</translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="89"/>
         <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="222"/>
         <source>Add vehicle</source>
-        <translation type="unfinished"></translation>
+        <translation>Agregar vehículo</translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="188"/>
         <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="223"/>
         <source>Size :</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño:</translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="117"/>
         <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="225"/>
         <source>Reset the size of the vehicle</source>
-        <translation type="unfinished"></translation>
+        <translation>Restablecer el tamaño del vehículo</translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="158"/>
         <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="227"/>
         <source>Angle :</source>
-        <translation type="unfinished"></translation>
+        <translation>Ángulo:</translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="128"/>
         <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="228"/>
         <source>0</source>
-        <translation type="unfinished"></translation>
+        <translation>0</translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="135"/>
         <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="229"/>
         <source>Mirror :</source>
-        <translation type="unfinished"></translation>
+        <translation>Reflejar:</translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="178"/>
         <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="231"/>
         <source>Mirrors the vehicle</source>
-        <translation type="unfinished"></translation>
+        <translation>Refleja el vehículo</translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="107"/>
         <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="234"/>
         <source>Automatic orientation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientación automática:</translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="168"/>
         <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="236"/>
-        <source>Vehicle&apos;s orientation will automatically change depending on route heading</source>
-        <translation type="unfinished"></translation>
+        <source>Vehicle's orientation will automatically change depending on route heading</source>
+        <translation>La orientación del vehículo cambiará automáticamente según la dirección de la ruta</translation>
     </message>
 </context>
 <context>
@@ -1125,163 +1125,163 @@ p, li { white-space: pre-wrap; }
         <location filename="../videosettings.ui" line="14"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="233"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulario</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="20"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="235"/>
         <source>Delete generated image frames after movie generation</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar los fotogramas generados después de la creación de la película</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="30"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="239"/>
         <source>Number of seconds delay before the route animation starts</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de segundos de retraso antes de que comience la animación de la ruta</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="37"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="242"/>
         <source>Enter location of bmp2avi executable.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingrese la ubicación del ejecutable bmp2avi.</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="44"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="245"/>
         <source>Enter name of ouptut AVI (without .avi extension!)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingrese el nombre del AVI de salida (¡sin la extensión .avi!)</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="54"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="247"/>
         <source>Bmp2Avi location</source>
-        <translation type="unfinished"></translation>
+        <translation>Ubicación de Bmp2Avi</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="61"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="249"/>
         <source>Number of seconds delay after end of the route animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de segundos de retraso después del final de la animación de la ruta</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="68"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="251"/>
         <source>Name output movie</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de la película de salida</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="75"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="252"/>
         <source>End delay (seconds)</source>
-        <translation type="unfinished"></translation>
+        <translation>Retraso al final (segundos)</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="82"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="253"/>
         <source>Begin delay (seconds)</source>
-        <translation type="unfinished"></translation>
+        <translation>Retraso al inicio (segundos)</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="89"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="254"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Examinar...</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="96"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="255"/>
         <source>Delete image frames</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar fotogramas</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="116"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="256"/>
         <source>Movie encoder settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración del codificador de películas</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="122"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="257"/>
         <source>Bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Tasa de bits</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="129"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="258"/>
         <source>FPS</source>
-        <translation type="unfinished"></translation>
+        <translation>FPS</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="136"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="259"/>
         <source>Output file type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de archivo de salida</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="159"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="261"/>
         <source>Select frame rate of output AVI</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione la tasa de fotogramas del AVI de salida</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="175"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="263"/>
         <source>Codec</source>
-        <translation type="unfinished"></translation>
+        <translation>Códec</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="182"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="265"/>
         <source>Select type of movie output file</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione el tipo de archivo de salida de la película</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="196"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="267"/>
         <source>Key frame rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Tasa de fotogramas clave</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="203"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="269"/>
         <source>Select key frame rate of output AVI</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione la tasa de fotogramas clave del AVI de salida</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="216"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="272"/>
         <source>Manually enter ffmpeg commandline arguments</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingrese manualmente los argumentos de línea de comandos de ffmpeg</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="219"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="274"/>
         <source>Manual ffmpeg arguments</source>
-        <translation type="unfinished"></translation>
+        <translation>Argumentos manuales de ffmpeg</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="226"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="275"/>
         <source>kb/s</source>
-        <translation type="unfinished"></translation>
+        <translation>kb/s</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="233"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="277"/>
         <source>Select codec used for output video</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione el códec utilizado para el video de salida</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="240"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="279"/>
         <source>Frame/image file type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de archivo de fotograma/imagen</translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="247"/>
         <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="281"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select file type to be used for the generated frames.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Note&lt;/span&gt; that when using compressed file types, like jpg, png, movie generation will take longer, but this will reduce disk space usage.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seleccione el tipo de archivo que se utilizará para los fotogramas generados.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Nota&lt;/span&gt; que al usar tipos de archivos comprimidos, como jpg, png, la generación de películas tomará más tiempo, pero esto reducirá el uso del espacio en disco.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 </TS>
