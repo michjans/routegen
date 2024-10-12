@@ -28,8 +28,10 @@
         <file>i18n/routegen_it.qm</file>
         <file>i18n/routegen_de.qm</file>
         <file>i18n/routegen_es.qm</file>
+        <file>i18n/routegen_fr.qm</file>
         <file>i18n/qtbase_it.qm</file>
         <file>i18n/qtbase_de.qm</file>
         <file>i18n/qtbase_es.qm</file>
+        <file>i18n/qtbase_fr.qm</file>
     </qresource>
 </RCC>
