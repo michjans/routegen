@@ -108,11 +108,12 @@
  *          FPS setting now passed correctly to the ffmpeg commandline.
  *          Possibility to set different file type for generated video frames (e.g. PNG, JPG, etc.)
  *  v1.12.0 Clang/Tidy fixes and ready for Qt6 API
- *          Translations (Italian, Dutch).
+ *          Translations (Italian, Dutch, German, French, Spanish).
  *          Smoother vehicle rotation (using average angles)
+ *          Donation button on About dialog
  */
 
-extern const QString applicationName(QStringLiteral("Route Generator version 1.12.0-alpha"));
+extern const QString applicationName(QStringLiteral("Route Generator version 1.12.0-beta"));
 
 int main(int argc, char* argv[])
 {
@@ -128,8 +129,8 @@ int main(int argc, char* argv[])
     QTranslator qtTranslator;
     QLocale defaultLocale = QLocale::system();
     qDebug() << "Current locale languages:" << defaultLocale.uiLanguages();
-    if (qtTranslator.load(QStringLiteral("qtbase_fr"), QStringLiteral(":/i18n/i18n")))
-    //if (qtTranslator.load(defaultLocale, QStringLiteral("qtbase"), QStringLiteral("_"), QStringLiteral(":/i18n/i18n")))
+    //if (qtTranslator.load(QStringLiteral("qtbase_fr"), QStringLiteral(":/i18n/i18n")))
+    if (qtTranslator.load(defaultLocale, QStringLiteral("qtbase"), QStringLiteral("_"), QStringLiteral(":/i18n/i18n")))
     {
         QApplication::installTranslator(&qtTranslator);
         qDebug() << "Translations loaded OK";
@@ -141,8 +142,8 @@ int main(int argc, char* argv[])
 
     //Generate or update qm file regularly when updating code (see README.md)
     QTranslator rgTranslator;
-    if (rgTranslator.load(QStringLiteral("routegen_fr"), QStringLiteral(":/i18n/i18n")))
-    //if (rgTranslator.load(QLocale(), QStringLiteral("routegen"), QStringLiteral("_"), QStringLiteral(":/i18n/i18n")))
+    //if (rgTranslator.load(QStringLiteral("routegen_fr"), QStringLiteral(":/i18n/i18n")))
+    if (rgTranslator.load(QLocale(), QStringLiteral("routegen"), QStringLiteral("_"), QStringLiteral(":/i18n/i18n")))
     {
         QApplication::installTranslator(&rgTranslator);
         qDebug() << "Translations loaded OK";
