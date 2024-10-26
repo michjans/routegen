@@ -35,7 +35,7 @@ class RGViewWidget : public QGraphicsView
     Q_OBJECT
 public:
     explicit RGViewWidget(RGMap* map, QWidget* parent = 0);
-    QSize sizeHint() const;
+    QSize sizeHint() const override;
     void addRoute(RGRoute*);
 
     /**

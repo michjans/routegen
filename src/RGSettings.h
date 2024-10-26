@@ -118,6 +118,8 @@ public:
     //Video output resolution
     static void setOutputResolution(const QSize& res);
     static QSize getOutputResolution();
+    static void setUseMapResolution(bool val);
+    static bool getUseMapResolution();
 
     /*
      * Advanced settings

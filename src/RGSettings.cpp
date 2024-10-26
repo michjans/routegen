@@ -512,6 +512,18 @@ QSize RGSettings::getOutputResolution()
     return settings.value("outputResolution", QSize(1920, 1080)).toSize();
 }
 
+void RGSettings::setUseMapResolution(bool val)
+{
+    QSettings settings;
+    settings.setValue("useMapResolution", val);
+}
+
+bool RGSettings::getUseMapResolution()
+{
+    QSettings settings;
+    return settings.value("useMapResolution", false).toBool();
+}
+
 void RGSettings::setSmoothPathMode(bool enable)
 {
     QSettings settings;

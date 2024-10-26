@@ -112,10 +112,9 @@ void RGViewWidget::wheelEvent(QWheelEvent* event)
 
 bool RGViewWidget::saveRenderedImage(const QString& filename, bool fullMapResolution)
 {
-    QSize outputResolution = RGSettings::getOutputResolution();
     QRect fullMapRect(0, 0, mScene->width(), mScene->height());
     bool result = false;
-    if (fullMapResolution)
+    if (fullMapResolution || RGSettings::getUseMapResolution())
     {
         QImage outImage(fullMapRect.size(), QImage::Format_RGB32);
         QPainter painter(&outImage);
@@ -130,6 +129,7 @@ bool RGViewWidget::saveRenderedImage(const QString& filename, bool fullMapResolu
         //Then we slide/scroll the background map together, while the vehicle remains centered.
         //If the resolution of background map is identical to output resolution, no scrolling or sliding
         //will happen.
+        QSize outputResolution = RGSettings::getOutputResolution();
         QPoint vehPos = mRoute->currentVehiclePos().toPoint();
         QRect outWindow(vehPos.x() - 0.5 * outputResolution.width(), vehPos.y() - 0.5 * outputResolution.height(), outputResolution.width(),
                         outputResolution.height());

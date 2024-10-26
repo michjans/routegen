@@ -99,6 +99,7 @@ RGMainWindow::RGMainWindow(QWidget* parent)
     action_Redo->setEnabled(false);
 
     mResolutionCB = new QComboBox(ui.toolBar);
+    mResolutionCB->addItem(tr("Use map resolution"), QVariant());
     mResolutionCB->addItem(QStringLiteral("8K: 7680x4320"), QVariant(QSize(7680, 4320)));
     mResolutionCB->addItem(QStringLiteral("5K: 5120x2880"), QVariant(QSize(5120, 2880)));
     mResolutionCB->addItem(QStringLiteral("4K: 4096x2160"), QVariant(QSize(4096, 2160)));
@@ -109,19 +110,27 @@ RGMainWindow::RGMainWindow(QWidget* parent)
     mResolutionCB->addItem(QStringLiteral("HD 720p: 1280x720"), QVariant(QSize(1280, 720)));
     mResolutionCB->addItem(QStringLiteral("SD: 720x576"), QVariant(QSize(720, 576)));
     mResolutionCB->addItem(tr("Custom"), QVariant());
-    mCustomResolutionItemIdx = 9;
-    mResolutionCB->setToolTip(tr("Select the output resolution of the generated video."));
+    mCustomResolutionItemIdx = 10;
+    mResolutionCB->setToolTip(tr("Select the preferred output resolution of the video or use map resolution as output resolution to prevent a sliding map.\n"
+                                 "If background map has a higher resolution than the preferred output resolution, the map will slide."));
 
-    QSize selRes = RGSettings::getOutputResolution();
-    int selResIdx = mResolutionCB->findData(selRes);
-    if (selResIdx < 0)
+    if (RGSettings::getUseMapResolution())
     {
-        //If idx not found, it's the custom resolution: set in as data of the Custom item
-        mResolutionCB->setItemData(mCustomResolutionItemIdx, RGSettings::getOutputResolution());
-        mResolutionCB->setItemText(mCustomResolutionItemIdx, tr("Custom: %1x%2").arg(QString::number(selRes.width()), QString::number(selRes.height())));
-        selResIdx = mCustomResolutionItemIdx;
+        mResolutionCB->setCurrentIndex(0);
     }
-    mResolutionCB->setCurrentIndex(selResIdx);
+    else
+    {
+        QSize selRes = RGSettings::getOutputResolution();
+        int selResIdx = mResolutionCB->findData(selRes);
+        if (selResIdx < 0)
+        {
+            //If idx not found, it's the custom resolution: set in as data of the Custom item
+            mResolutionCB->setItemData(mCustomResolutionItemIdx, RGSettings::getOutputResolution());
+            mResolutionCB->setItemText(mCustomResolutionItemIdx, tr("Custom: %1x%2").arg(QString::number(selRes.width()), QString::number(selRes.height())));
+            selResIdx = mCustomResolutionItemIdx;
+        }
+        mResolutionCB->setCurrentIndex(selResIdx);
+    }
     ui.toolBar->insertWidget(actionPlayback, mResolutionCB);
 
     //Video Encoder:
@@ -273,6 +282,20 @@ void RGMainWindow::on_actionOpen_image_triggered(bool /*checked*/)
                 QMessageBox::StandardButton answer = QMessageBox::question(this, tr("Resolution too small"),
                                                                            tr("Resolution of background image is smaller than the selected output resolution. "
                                                                               "This will give wrong results in the generated output video!\n"
+                                                                              ""
+                                                                              "Continue anyway? (you can select a higher output resolution later)"),
+                                                                           QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+                if (answer == QMessageBox::No)
+                {
+                    return;
+                }
+            }
+            //Also check for odd resolution, because codec h.264 (and maybe other codecs) don´t support this!
+            if (pm.size().width() % 2 > 0 || pm.size().height() % 2 > 0)
+            {
+                QMessageBox::StandardButton answer = QMessageBox::question(this, tr("Resolution size should be even"),
+                                                                           tr("Resolution of background image cannot be divided by 2. "
+                                                                              "Some codecs (like h.264) do not support this, so video generation will fail!\n"
                                                                               ""
                                                                               "Continue anyway?"),
                                                                            QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
@@ -605,45 +628,53 @@ void RGMainWindow::on_action_Quit_triggered(bool checked)
 
 void RGMainWindow::on_resolutionCBChanged(int index)
 {
-    if (index == mCustomResolutionItemIdx)
+    if (index == 0)
     {
-        bool ok;
-        QVariant customRes = mResolutionCB->itemData(index);
-        QString defaultText = QStringLiteral("1024x768");
-        if (customRes.isValid())
-        {
-            QSize curRes = customRes.toSize();
-            defaultText = QString::number(curRes.width()) + "x" + QString::number(curRes.height());
-        }
-        QString resTextLabel = tr("Enter custom resolution in format like: 1024x786");
-        QString customResolutionText = QInputDialog::getText(this, tr("Enter custom resolution"), resTextLabel, QLineEdit::Normal, defaultText, &ok);
-        if (ok && !customResolutionText.isEmpty())
-        {
-            QStringList resText = customResolutionText.split('x');
-            ok = false;
-            if (resText.length() == 2)
-            {
-                int xRes, yRes;
-                xRes = resText[0].toInt(&ok);
-                if (ok)
-                {
-                    yRes = resText[1].toInt(&ok);
-                }
-                if (ok)
-                {
-                    QSize customRes(xRes, yRes);
-                    mResolutionCB->setItemData(mCustomResolutionItemIdx, customRes);
-                    mResolutionCB->setItemText(mCustomResolutionItemIdx, QString(tr("Custom: ")) + customResolutionText);
-                }
-            }
-            if (!ok)
-            {
-                QMessageBox::warning(this, tr("Wrong resolution text"), resTextLabel);
-            }
-        }
+        //Index 0 means...
+        RGSettings::setUseMapResolution(true);
     }
-
-    RGSettings::setOutputResolution(mResolutionCB->itemData(index).toSize());
+    else
+    {
+        if (index == mCustomResolutionItemIdx)
+        {
+            QVariant customRes = mResolutionCB->itemData(index);
+            QString defaultText = QStringLiteral("1024x768");
+            if (customRes.isValid())
+            {
+                QSize curRes = customRes.toSize();
+                defaultText = QString::number(curRes.width()) + "x" + QString::number(curRes.height());
+            }
+            QString resTextLabel = tr("Enter custom resolution in format like: 1024x786");
+            bool ok;
+            QString customResolutionText = QInputDialog::getText(this, tr("Enter custom resolution"), resTextLabel, QLineEdit::Normal, defaultText, &ok);
+            if (ok && !customResolutionText.isEmpty())
+            {
+                QStringList resText = customResolutionText.split('x');
+                ok = false;
+                if (resText.length() == 2)
+                {
+                    int xRes, yRes;
+                    xRes = resText[0].toInt(&ok);
+                    if (ok)
+                    {
+                        yRes = resText[1].toInt(&ok);
+                    }
+                    if (ok)
+                    {
+                        QSize customRes(xRes, yRes);
+                        mResolutionCB->setItemData(mCustomResolutionItemIdx, customRes);
+                        mResolutionCB->setItemText(mCustomResolutionItemIdx, QString(tr("Custom: ")) + customResolutionText);
+                    }
+                }
+                if (!ok)
+                {
+                    QMessageBox::warning(this, tr("Wrong resolution text"), resTextLabel);
+                }
+            }
+        }
+        RGSettings::setUseMapResolution(false);
+        RGSettings::setOutputResolution(mResolutionCB->itemData(index).toSize());
+    }
 }
 
 void RGMainWindow::handleMapLoaded(const QPixmap& map)
