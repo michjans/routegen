@@ -80,6 +80,7 @@ private:
     void updateStatusMessage();
     bool checkMapSaveOrCancel();
     void saveProjectFile(const QString& projectFileName);
+    void determineGoogleMapImportStatus();
 
     RGViewWidget* mView;
     RGEncVideo* mVideoEncoder;

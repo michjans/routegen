@@ -26,7 +26,7 @@
       <item>
        <spacer>
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -266,7 +266,7 @@
     <string>&amp;Import from Google Maps</string>
    </property>
    <property name="toolTip">
-    <string>Import map from Google Maps</string>
+    <string>Import from Google Maps</string>
    </property>
   </action>
   <action name="actionImport_GPX">

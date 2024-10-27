@@ -99,7 +99,7 @@ RGMainWindow::RGMainWindow(QWidget* parent)
     action_Redo->setEnabled(false);
 
     mResolutionCB = new QComboBox(ui.toolBar);
-    mResolutionCB->addItem(tr("Use map resolution"), QVariant());
+    mResolutionCB->addItem(tr("Use map's resolution"), QVariant());
     mResolutionCB->addItem(QStringLiteral("8K: 7680x4320"), QVariant(QSize(7680, 4320)));
     mResolutionCB->addItem(QStringLiteral("5K: 5120x2880"), QVariant(QSize(5120, 2880)));
     mResolutionCB->addItem(QStringLiteral("4K: 4096x2160"), QVariant(QSize(4096, 2160)));
@@ -111,8 +111,10 @@ RGMainWindow::RGMainWindow(QWidget* parent)
     mResolutionCB->addItem(QStringLiteral("SD: 720x576"), QVariant(QSize(720, 576)));
     mResolutionCB->addItem(tr("Custom"), QVariant());
     mCustomResolutionItemIdx = 10;
-    mResolutionCB->setToolTip(tr("Select the preferred output resolution of the video or use map resolution as output resolution to prevent a sliding map.\n"
-                                 "If background map has a higher resolution than the preferred output resolution, the map will slide."));
+    mResolutionCB->setToolTip(
+        tr("Select the preferred resolution of the output video. If background map has a higher resolution than the preferred output "
+           "resolution, the map in the generated output video will scroll.\n"
+           "Select \"use map's resolution\" to set (or force) it to the same resolution as the current background map, which will prevent a scrolling map."));
 
     if (RGSettings::getUseMapResolution())
     {
@@ -132,6 +134,7 @@ RGMainWindow::RGMainWindow(QWidget* parent)
         mResolutionCB->setCurrentIndex(selResIdx);
     }
     ui.toolBar->insertWidget(actionPlayback, mResolutionCB);
+    determineGoogleMapImportStatus();
 
     //Video Encoder:
     initVideoEncoderFromSettings();
@@ -275,19 +278,22 @@ void RGMainWindow::on_actionOpen_image_triggered(bool /*checked*/)
         }
         else
         {
-            //Validate that resolution of image is equeal or larger than the selected output resolution!
-            QSize outputResolution = RGSettings::getOutputResolution();
-            if (pm.size().width() < outputResolution.width() || pm.size().height() < outputResolution.height())
+            if (!RGSettings::getUseMapResolution())
             {
-                QMessageBox::StandardButton answer = QMessageBox::question(this, tr("Resolution too small"),
-                                                                           tr("Resolution of background image is smaller than the selected output resolution. "
-                                                                              "This will give wrong results in the generated output video!\n"
-                                                                              ""
-                                                                              "Continue anyway? (you can select a higher output resolution later)"),
-                                                                           QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-                if (answer == QMessageBox::No)
+                //Validate that resolution of image is equeal or larger than the selected output resolution!
+                QSize outputResolution = RGSettings::getOutputResolution();
+                if (pm.size().width() < outputResolution.width() || pm.size().height() < outputResolution.height())
                 {
-                    return;
+                    QMessageBox::StandardButton answer =
+                        QMessageBox::question(this, tr("Resolution too small"),
+                                              tr("Resolution of background image is smaller than the selected output resolution. "
+                                                 "This will give wrong results in the generated output video!\n"
+                                                 "Continue anyway? (you can select a higher output resolution later)"),
+                                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+                    if (answer == QMessageBox::No)
+                    {
+                        return;
+                    }
                 }
             }
             //Also check for odd resolution, because codec h.264 (and maybe other codecs) don´t support this!
@@ -296,7 +302,6 @@ void RGMainWindow::on_actionOpen_image_triggered(bool /*checked*/)
                 QMessageBox::StandardButton answer = QMessageBox::question(this, tr("Resolution size should be even"),
                                                                            tr("Resolution of background image cannot be divided by 2. "
                                                                               "Some codecs (like h.264) do not support this, so video generation will fail!\n"
-                                                                              ""
                                                                               "Continue anyway?"),
                                                                            QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
                 if (answer == QMessageBox::No)
@@ -675,6 +680,7 @@ void RGMainWindow::on_resolutionCBChanged(int index)
         RGSettings::setUseMapResolution(false);
         RGSettings::setOutputResolution(mResolutionCB->itemData(index).toSize());
     }
+    determineGoogleMapImportStatus();
 }
 
 void RGMainWindow::handleMapLoaded(const QPixmap& map)
@@ -702,7 +708,7 @@ void RGMainWindow::blockUserInteraction(bool busy)
     actionNew_route->setEnabled(!busy);
     actionGenerate_map->setEnabled(!busy);
     actionPlayback->setEnabled(!busy);
-    actionImport_Google_Map->setEnabled(!busy);
+    actionImport_Google_Map->setEnabled(!busy && !RGSettings::getUseMapResolution());
     actionImport_GPX->setEnabled(!busy);
     mRouteUi->blockEssentialControls(busy);
     //Stop is only enabled while playing back
@@ -824,5 +830,22 @@ void RGMainWindow::saveProjectFile(const QString& projectFileName)
     else
     {
         QMessageBox::critical(this, tr("Cannot write file"), tr("Unable to write RG project file!"));
+    }
+}
+
+void RGMainWindow::determineGoogleMapImportStatus()
+{
+    //We can only import a google map, if we know which resolution to use for the map.
+    if (RGSettings::getUseMapResolution())
+    {
+        actionImport_Google_Map->setEnabled(false);
+        actionImport_Google_Map->setToolTip(tr("First select a preferred resolution before importing map from Google Maps!"));
+        //TODO: Try to create a connection fromm the action's hovered signal to install a QGraphicsEffect on the
+        //      mResolutionCB, so it is more clear why it is disabled.
+    }
+    else
+    {
+        actionImport_Google_Map->setEnabled(true);
+        actionImport_Google_Map->setToolTip(tr("Import map from Google Maps"));
     }
 }
