@@ -41,6 +41,8 @@
 
 #include "ui_routegen.h"
 
+#include <QGraphicsColorizeEffect>
+
 //Defined in main.cpp
 extern const QString applicationName;
 
@@ -57,7 +59,9 @@ void forceFileSuffix(QString& fileName, const QString& suffix)
 
 RGMainWindow::RGMainWindow(QWidget* parent)
     : QMainWindow(parent),
-      mVideoEncoder(nullptr)
+      mVideoEncoder(nullptr),
+      mUseMapResTooltip(tr("First select a preferred resolution before importing map from Google Maps!")),
+      mSelResTooltip(tr("Import map from Google Maps using currently selected output resolution"))
 {
     //Set currentPath
     QDir::setCurrent(QCoreApplication::applicationDirPath());
@@ -135,6 +139,9 @@ RGMainWindow::RGMainWindow(QWidget* parent)
     }
     ui.toolBar->insertWidget(actionPlayback, mResolutionCB);
     determineGoogleMapImportStatus();
+
+    //Used for highlighting the resolution selector in a certain color
+    QObject::connect(actionImport_Google_Map, &QAction::hovered, this, &RGMainWindow::highlightResolutionCB);
 
     //Video Encoder:
     initVideoEncoderFromSettings();
@@ -439,6 +446,19 @@ void RGMainWindow::on_actionImport_GPX_triggered(bool)
 
             msgBox.setText(tr("GPX route imported succesfully!"));
             QPushButton* importButton = msgBox.addButton(tr("Import new map (Google maps)..."), QMessageBox::ActionRole);
+
+            if (RGSettings::getUseMapResolution())
+            {
+                //Importing map only works if we know what resolution to use
+                importButton->setEnabled(false);
+                importButton->setToolTip(mUseMapResTooltip);
+            }
+            else
+            {
+                importButton->setToolTip(mSelResTooltip);
+            }
+            highlightResolutionCB(); //Hint the user that there is a relationship with the resolution selection
+
             QPushButton* existingButton = msgBox.addButton(tr("Open existing map..."), QMessageBox::ActionRole);
             if (mMap->hasGeoBounds())
             {
@@ -695,6 +715,24 @@ void RGMainWindow::handleMapLoaded(const QPixmap& map)
     updateStatusMessage();
 }
 
+void RGMainWindow::highlightResolutionCB()
+{
+    QGraphicsColorizeEffect* colorize = new QGraphicsColorizeEffect();
+
+    //Temporary highlight the resolution selector to indicate that the user has to set the correct resolution or not
+    if (RGSettings::getUseMapResolution())
+    {
+        colorize->setColor(QColorConstants::DarkRed);
+    }
+    else
+    {
+        colorize->setColor(QColorConstants::DarkGreen);
+    }
+
+    mResolutionCB->setGraphicsEffect(colorize);
+    QTimer::singleShot(5000, this, [this]() { mResolutionCB->setGraphicsEffect(nullptr); });
+}
+
 void RGMainWindow::blockUserInteraction(bool busy)
 {
     actionOpen_image->setEnabled(!busy);
@@ -839,13 +877,11 @@ void RGMainWindow::determineGoogleMapImportStatus()
     if (RGSettings::getUseMapResolution())
     {
         actionImport_Google_Map->setEnabled(false);
-        actionImport_Google_Map->setToolTip(tr("First select a preferred resolution before importing map from Google Maps!"));
-        //TODO: Try to create a connection fromm the action's hovered signal to install a QGraphicsEffect on the
-        //      mResolutionCB, so it is more clear why it is disabled.
+        actionImport_Google_Map->setToolTip(mUseMapResTooltip);
     }
     else
     {
         actionImport_Google_Map->setEnabled(true);
-        actionImport_Google_Map->setToolTip(tr("Import map from Google Maps"));
+        actionImport_Google_Map->setToolTip(mSelResTooltip);
     }
 }

@@ -70,6 +70,7 @@ private slots:
     void on_action_Quit_triggered(bool);
     void on_resolutionCBChanged(int index);
     void handleMapLoaded(const QPixmap& map);
+    void highlightResolutionCB();
 
     void blockUserInteraction(bool);
     void enableGenerateActions(bool);
@@ -116,6 +117,9 @@ private:
     QStringList mGeneratedFrames;
     QString mCurrentProjectFileName;
     int mCustomResolutionItemIdx;
+
+    QString mUseMapResTooltip;
+    QString mSelResTooltip;
 };
 
 #endif //MAIN_GUI_H
