@@ -111,6 +111,7 @@
  *          Translations (Italian, Dutch, German, French, Spanish).
  *          Smoother vehicle rotation (using average angles)
  *          Donation button on About dialog
+ *          Added possibility to select the map resolution (to prevent a scrolling map)
  */
 
 extern const QString applicationName(QStringLiteral("Route Generator version 1.12.0-beta"));

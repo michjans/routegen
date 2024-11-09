@@ -114,7 +114,7 @@ sub-directory (defined in qt.conf)!
 - make install 
 
 ## Managing the translations
-Some information regarding translation of Route Generator (up to now only, EN, NL and IT supported)
+Some information regarding translation of Route Generator (up to now only, DE, EN, NL, IT, ES, FR supported)
 
 To generate or update the translation source files, I now manually execute lupdate/lrelease, because
 doing this automatic during the build process has some disadvantages. Also it is not required to re-update
@@ -122,7 +122,8 @@ the ts files each time. This is only required when new dialogs or (translatable)
 To regenerate the ts files (i.e. parse the source code to search for new translatable strings:
 
 - cd src
-- lupdate *.cpp *.ui -locations absolute -ts i18n/routegen_en.ts i18n/routegen_nl.ts i18n/routegen_it.ts
+- lupdate *.cpp *.ui -no-obsolete -ts i18n/routegen_en.ts i18n/routegen_de.ts i18n/routegen_it.ts i18n/routegen_es.ts i18n/routegen_nl.ts  i18n/routegen_fr.ts
+
 
 After this step the ts files can be opened in Qt linguist and translations can be added.
 

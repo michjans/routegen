@@ -60,8 +60,8 @@ void forceFileSuffix(QString& fileName, const QString& suffix)
 RGMainWindow::RGMainWindow(QWidget* parent)
     : QMainWindow(parent),
       mVideoEncoder(nullptr),
-      mUseMapResTooltip(tr("First select a preferred resolution before importing map from Google Maps!")),
-      mSelResTooltip(tr("Import map from Google Maps using currently selected output resolution"))
+      mUseMapResTooltip(tr("First select a preferred video resolution before importing map from Google Maps!")),
+      mSelResTooltip(tr("Import map from Google Maps using currently selected video resolution"))
 {
     //Set currentPath
     QDir::setCurrent(QCoreApplication::applicationDirPath());
@@ -103,7 +103,7 @@ RGMainWindow::RGMainWindow(QWidget* parent)
     action_Redo->setEnabled(false);
 
     mResolutionCB = new QComboBox(ui.toolBar);
-    mResolutionCB->addItem(tr("Use map's resolution"), QVariant());
+    mResolutionCB->addItem(tr("Current map resolution"), QVariant());
     mResolutionCB->addItem(QStringLiteral("8K: 7680x4320"), QVariant(QSize(7680, 4320)));
     mResolutionCB->addItem(QStringLiteral("5K: 5120x2880"), QVariant(QSize(5120, 2880)));
     mResolutionCB->addItem(QStringLiteral("4K: 4096x2160"), QVariant(QSize(4096, 2160)));
@@ -115,10 +115,9 @@ RGMainWindow::RGMainWindow(QWidget* parent)
     mResolutionCB->addItem(QStringLiteral("SD: 720x576"), QVariant(QSize(720, 576)));
     mResolutionCB->addItem(tr("Custom"), QVariant());
     mCustomResolutionItemIdx = 10;
-    mResolutionCB->setToolTip(
-        tr("Select the preferred resolution of the output video. If background map has a higher resolution than the preferred output "
-           "resolution, the map in the generated output video will scroll.\n"
-           "Select \"use map's resolution\" to set (or force) it to the same resolution as the current background map, which will prevent a scrolling map."));
+    mResolutionCB->setToolTip(tr(
+        "Select the preferred resolution of the output video. If the resolution of the background map is higher, the map in the generated video will scroll.\n"
+        "Select \"Current map resolution\" to set it to the same resolution as the current map, which will prevent a scrolling map."));
 
     if (RGSettings::getUseMapResolution())
     {
@@ -203,7 +202,8 @@ RGMainWindow::RGMainWindow(QWidget* parent)
         QObject::connect(mMap, &RGMap::mapLoaded, this, &RGMainWindow::handleMapLoaded);
     }
 
-    QObject::connect(mResolutionCB, &QComboBox::currentIndexChanged, this, &RGMainWindow::on_resolutionCBChanged);
+    //Use activted signal on purpose, so the custom resolution dialog opens again when resolution is already set to custom
+    QObject::connect(mResolutionCB, &QComboBox::activated, this, &RGMainWindow::on_resolutionCBChanged);
 
     //set initial by sending signals
     mRouteUi->init();
