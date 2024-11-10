@@ -346,7 +346,7 @@
   <action name="action_Donate">
    <property name="icon">
     <iconset resource="routegen.qrc">
-     <normaloff>:/icons/icons/btn_donate_uk_SM.gif</normaloff>:/icons/icons/btn_donate_uk_SM.gif</iconset>
+     <normaloff>:/icons/icons/btn_donate_uk_SM.png</normaloff>:/icons/icons/btn_donate_uk_SM.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Donate</string>
