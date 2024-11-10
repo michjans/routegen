@@ -41,7 +41,9 @@
 
 #include "ui_routegen.h"
 
+#include <QDesktopServices>
 #include <QGraphicsColorizeEffect>
+#include <QUrl>
 
 //Defined in main.cpp
 extern const QString applicationName;
@@ -87,6 +89,10 @@ RGMainWindow::RGMainWindow(QWidget* parent)
     actionGenerate_map = ui.actionGenerate_map;
     actionPlayback = ui.actionPlayback;
     actionStop = ui.actionStop;
+    actionDonate = ui.action_Donate;
+
+    //The other actions are connected using the deprecated auto connection method, but we should do it this way.
+    QObject::connect(actionDonate, &QAction::triggered, this, &RGMainWindow::onActionDonate);
 
     action_Undo->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Z));
     action_Redo->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Y));
@@ -649,6 +655,16 @@ void RGMainWindow::on_action_Quit_triggered(bool checked)
 {
     Q_UNUSED(checked);
     close();
+}
+
+void RGMainWindow::onActionDonate(bool)
+{
+    auto donateLink(QStringLiteral("https://www.routegenerator.net/donate.html"));
+    QUrl qurl(donateLink);
+    if (!qurl.isValid() || !QDesktopServices::openUrl(qurl))
+    {
+        QMessageBox::warning(this, tr("Failed to open donation URL"), tr("Failed to open URL: %1").arg(donateLink));
+    }
 }
 
 void RGMainWindow::on_resolutionCBChanged(int index)

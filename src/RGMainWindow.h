@@ -68,6 +68,7 @@ private slots:
     void on_action_Tutorial_triggered(bool);
     void on_action_About_triggered(bool);
     void on_action_Quit_triggered(bool);
+    void onActionDonate(bool);
     void on_resolutionCBChanged(int index);
     void handleMapLoaded(const QPixmap& map);
     void highlightResolutionCB();
@@ -112,6 +113,7 @@ private:
     QAction* actionGenerate_map;
     QAction* actionPlayback;
     QAction* actionStop;
+    QAction* actionDonate;
     QComboBox* mResolutionCB;
 
     QStringList mGeneratedFrames;

@@ -130,6 +130,8 @@
    <addaction name="separator"/>
    <addaction name="action_Quit"/>
    <addaction name="separator"/>
+   <addaction name="action_Donate"/>
+   <addaction name="separator"/>
   </widget>
   <action name="actionOpen_image">
    <property name="icon">
@@ -339,6 +341,21 @@
    </property>
    <property name="toolTip">
     <string>Save current project in another file</string>
+   </property>
+  </action>
+  <action name="action_Donate">
+   <property name="icon">
+    <iconset resource="routegen.qrc">
+     <normaloff>:/icons/icons/btn_donate_uk_SM.gif</normaloff>:/icons/icons/btn_donate_uk_SM.gif</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Donate</string>
+   </property>
+   <property name="toolTip">
+    <string>Click here if you would like to make a donation</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::TextHeuristicRole</enum>
    </property>
   </action>
  </widget>
