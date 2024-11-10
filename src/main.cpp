@@ -130,7 +130,7 @@ int main(int argc, char* argv[])
     QTranslator qtTranslator;
     QLocale defaultLocale = QLocale::system();
     qDebug() << "Current locale languages:" << defaultLocale.uiLanguages();
-    if (qtTranslator.load(QStringLiteral("qtbase_it"), QStringLiteral(":/i18n/i18n")))
+    if (qtTranslator.load(QStringLiteral("qtbase_de"), QStringLiteral(":/i18n/i18n")))
     //if (qtTranslator.load(defaultLocale, QStringLiteral("qtbase"), QStringLiteral("_"), QStringLiteral(":/i18n/i18n")))
     {
         QApplication::installTranslator(&qtTranslator);
@@ -143,7 +143,7 @@ int main(int argc, char* argv[])
 
     //Generate or update qm file regularly when updating code (see README.md)
     QTranslator rgTranslator;
-    if (rgTranslator.load(QStringLiteral("routegen_it"), QStringLiteral(":/i18n/i18n")))
+    if (rgTranslator.load(QStringLiteral("routegen_de"), QStringLiteral(":/i18n/i18n")))
     //if (rgTranslator.load(QLocale(), QStringLiteral("routegen"), QStringLiteral("_"), QStringLiteral(":/i18n/i18n")))
     {
         QApplication::installTranslator(&rgTranslator);

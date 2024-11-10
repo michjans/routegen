@@ -112,7 +112,7 @@
     <message>
         <location filename="../routegen.ui" line="140"/>
         <source>&amp;Open map image</source>
-        <translation>Karte öffnen</translation>
+        <translation>&amp;Karte öffnen</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="143"/>
@@ -132,7 +132,7 @@
     <message>
         <location filename="../routegen.ui" line="164"/>
         <source>&amp;Save map image as ...</source>
-        <translation>Kartenbild speichern unter...</translation>
+        <translation>Kartenbild &amp;speichern unter...</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="167"/>
@@ -162,7 +162,7 @@
     <message>
         <location filename="../routegen.ui" line="197"/>
         <source>&amp;Generate route</source>
-        <translation>Route generieren</translation>
+        <translation>Route &amp;generieren</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="200"/>
@@ -182,7 +182,7 @@
     <message>
         <location filename="../routegen.ui" line="217"/>
         <source>&amp;About</source>
-        <translation>Über</translation>
+        <translation>Ü&amp;ber</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="222"/>
@@ -217,12 +217,12 @@
     <message>
         <location filename="../routegen.ui" line="266"/>
         <source>&amp;Import from Google Maps</source>
-        <translation>Von Google Maps importieren</translation>
+        <translation>Von Google Maps &amp;importieren</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="269"/>
-        <source>Import map from Google Maps</source>
-        <translation>Karte von Google Maps importieren</translation>
+        <source>Import from Google Maps</source>
+        <translation>Import aus Google Maps</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="278"/>
@@ -237,7 +237,7 @@
     <message>
         <location filename="../routegen.ui" line="290"/>
         <source>&amp;New Route</source>
-        <translation>Neue Route</translation>
+        <translation>&amp;Neue Route</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="293"/>
@@ -247,7 +247,7 @@
     <message>
         <location filename="../routegen.ui" line="302"/>
         <source>Save &amp;project</source>
-        <translation>Projekt speichern</translation>
+        <translation>&amp;Projekt speichern</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="305"/>
@@ -257,7 +257,7 @@
     <message>
         <location filename="../routegen.ui" line="314"/>
         <source>&amp;New project</source>
-        <translation>Neues Projekt</translation>
+        <translation>&amp;Neues Projekt</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="317"/>
@@ -267,7 +267,7 @@
     <message>
         <location filename="../routegen.ui" line="326"/>
         <source>Open p&amp;roject</source>
-        <translation>Projekt öffnen</translation>
+        <translation>P&amp;rojekt öffnen</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="329"/>
@@ -439,13 +439,13 @@ Sie können das %2-Verzeichnis in den Einstellungen festlegen</translation>
     <name>RGGPXReader</name>
     <message>
         <location filename="../RGGPXReader.cpp" line="35"/>
-        <source>Analyzing gpx...</source>
-        <translation>GPX wird analysiert...</translation>
+        <source>GPX import</source>
+        <translation>GPX-Import</translation>
     </message>
     <message>
         <location filename="../RGGPXReader.cpp" line="35"/>
-        <source>GPX import</source>
-        <translation>GPX-Import</translation>
+        <source>Analyzig gpx...</source>
+        <translation>GPX analysieren...</translation>
     </message>
     <message>
         <location filename="../RGGPXReader.cpp" line="54"/>
@@ -503,263 +503,292 @@ Kopieren Sie sie aus der Google Maps URL-Zeile in Ihrem Browser.</translation>
 <context>
     <name>RGMainWindow</name>
     <message>
-        <location filename="../RGMainWindow.cpp" line="111"/>
+        <location filename="../RGMainWindow.cpp" line="116"/>
         <source>Custom</source>
         <translation>Benutzerdefiniert</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="113"/>
-        <source>Select the output resolution of the generated video.</source>
-        <translation>Wählen Sie die Ausgabauflösung des erzeugten Videos.</translation>
-    </message>
-    <message>
-        <location filename="../RGMainWindow.cpp" line="121"/>
+        <location filename="../RGMainWindow.cpp" line="134"/>
         <source>Custom: %1x%2</source>
         <translation>Benutzerdefiniert: %1x%2</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="159"/>
+        <location filename="../RGMainWindow.cpp" line="177"/>
         <source>Enabled if a map is loaded</source>
         <translation>Aktiviert, wenn eine Karte geladen ist</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="160"/>
+        <location filename="../RGMainWindow.cpp" line="178"/>
         <source>If the globe is enabled, the map has geographic (lat/lon) coordinates, so can be used to import a GPX route</source>
         <translation>Wenn der Globus aktiviert ist, hat die Karte geografische (Lat/Lon) Koordinaten und kann daher zum Import einer GPX-Route verwendet werden</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="161"/>
+        <location filename="../RGMainWindow.cpp" line="179"/>
         <source>Enabled if a route is loaded</source>
         <translation>Aktiviert, wenn eine Route geladen ist</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="162"/>
+        <location filename="../RGMainWindow.cpp" line="180"/>
         <source>If the globe is enabled, the route is generated from (gpx) geographic coordinates</source>
         <translation>Wenn der Globus aktiviert ist, wird die Route aus (gpx) geografischen Koordinaten generiert</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="234"/>
+        <location filename="../RGMainWindow.cpp" line="253"/>
         <source>Open RG project file</source>
         <translation>RG-Projektdatei öffnen</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="234"/>
+        <location filename="../RGMainWindow.cpp" line="253"/>
         <source>Project files (*.rgp)</source>
         <translation>Projektdaten (*.rgp)</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="243"/>
+        <location filename="../RGMainWindow.cpp" line="262"/>
         <source>Cannot read file</source>
         <translation>Datei kann nicht gelesen werden</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="243"/>
+        <location filename="../RGMainWindow.cpp" line="262"/>
         <source>Unable to open RG project file!</source>
         <translation>RG-Projektdatei konnte nicht geöffnet werden!</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="259"/>
+        <location filename="../RGMainWindow.cpp" line="278"/>
         <source>Open File</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="259"/>
-        <location filename="../RGMainWindow.cpp" line="296"/>
-        <location filename="../RGMainWindow.cpp" line="376"/>
+        <location filename="../RGMainWindow.cpp" line="278"/>
+        <location filename="../RGMainWindow.cpp" line="331"/>
+        <location filename="../RGMainWindow.cpp" line="411"/>
         <source>Images (*.png *.bmp *.jpg *.tif *.gif)</source>
         <translation>Bilder (*.png *.bmp *.jpg *.tif *.gif)</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="265"/>
+        <location filename="../RGMainWindow.cpp" line="284"/>
         <source>Oops</source>
         <translation>Hoppla</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="265"/>
+        <location filename="../RGMainWindow.cpp" line="284"/>
         <source>Could not load image</source>
         <translation>Bild konnte nicht geladen werden</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="273"/>
+        <location filename="../RGMainWindow.cpp" line="295"/>
         <source>Resolution too small</source>
         <translation>Auflösung zu klein</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="274"/>
-        <source>Resolution of background image is smaller than the selected output resolution. This will give wrong results in the generated output video!
-Continue anyway?</source>
-        <translation>Die Auflösung des Hintergrundbildes ist kleiner als die ausgewählte Ausgabauflösung. Dies wird falsche Ergebnisse im erzeugten Video geben!
-Trotzdem fortfahren?</translation>
+        <location filename="../RGMainWindow.cpp" line="63"/>
+        <source>First select a preferred video resolution before importing map from Google Maps!</source>
+        <translation>Wählen Sie zunächst eine bevorzugte Videoauflösung aus, bevor Sie eine Karte aus Google Maps importieren!</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="295"/>
+        <location filename="../RGMainWindow.cpp" line="64"/>
+        <source>Import map from Google Maps using currently selected video resolution</source>
+        <translation>Importieren Sie eine Karte aus Google Maps mit der aktuell ausgewählten Videoauflösung</translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="106"/>
+        <source>Current map resolution</source>
+        <translation>Aktuelle Kartenauflösung</translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="118"/>
+        <source>Select the preferred resolution of the output video. If the resolution of the background map is higher, the map in the generated video will scroll.
+Select &quot;Current map resolution&quot; to set it to the same resolution as the current map, which will prevent a scrolling map.</source>
+        <translation>Wählen Sie die bevorzugte Auflösung des Ausgabevideos. Wenn die Auflösung der Hintergrundkarte höher ist, wird die Karte im generierten Video gescrollt.
+Wählen Sie „Aktuelle Kartenauflösung“, um die gleiche Auflösung wie die aktuelle Karte einzustellen und so ein Scrollen der Karte zu verhindern.</translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="296"/>
+        <source>Resolution of background image is smaller than the selected output resolution. This will give wrong results in the generated output video!
+Continue anyway? (you can select a higher output resolution later)</source>
+        <translation>Die Auflösung des Hintergrundbilds ist kleiner als die ausgewählte Ausgabeauflösung. Dies führt zu falschen Ergebnissen im generierten Ausgabevideo!
+Trotzdem weitermachen? (Sie können später eine höhere Ausgabeauflösung wählen)</translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="309"/>
+        <source>Resolution size should be even</source>
+        <translation>Die Auflösungsgröße sollte gerade sein</translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="310"/>
+        <source>Resolution of background image cannot be divided by 2. Some codecs (like h.264) do not support this, so video generation will fail!
+Continue anyway?</source>
+        <translation>Die Kartenauflösung kann nicht durch 2 geteilt werden. Einige Codecs (wie h.264) unterstützen dies nicht, sodass die Videogenerierung fehlschlägt!
+Trotzdem weitermachen?</translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="330"/>
         <source>Save map image as</source>
         <translation>Kartenbild speichern unter</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="307"/>
+        <location filename="../RGMainWindow.cpp" line="342"/>
         <source>Cannot write geographic information</source>
         <translation>Geografische Informationen können nicht geschrieben werden</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="308"/>
+        <location filename="../RGMainWindow.cpp" line="343"/>
         <source>Unable to save geographic (lat/lon) projection information,so the saved file cannot be used to import GPX routes! If the currentloaded file is a GeoTIFF file, then use *.tif as extension.</source>
         <translation>Geografische (Lat/Lon) Projektionsinformationen können nicht gespeichert werden, sodass die gespeicherte Datei nicht zum Import von GPX-Routen verwendet werden kann! Wenn die aktuell geladene Datei eine GeoTIFF-Datei ist, verwenden Sie *.tif als Erweiterung.</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="333"/>
-        <location filename="../RGMainWindow.cpp" line="375"/>
+        <location filename="../RGMainWindow.cpp" line="368"/>
+        <location filename="../RGMainWindow.cpp" line="410"/>
         <source>Save File</source>
         <translation>Datei speichern</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="333"/>
+        <location filename="../RGMainWindow.cpp" line="368"/>
         <source>Projects (*.rgp)</source>
         <translation>Projekte (*.rgp)</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="390"/>
-        <location filename="../RGMainWindow.cpp" line="795"/>
+        <location filename="../RGMainWindow.cpp" line="425"/>
+        <location filename="../RGMainWindow.cpp" line="870"/>
         <source>Cannot write file</source>
         <translation>Datei kann nicht geschrieben werden</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="390"/>
+        <location filename="../RGMainWindow.cpp" line="425"/>
         <source>Unable to save map file!</source>
         <translation>Kartendatei konnte nicht gespeichert werden!</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="398"/>
+        <location filename="../RGMainWindow.cpp" line="433"/>
         <source>Open GPX File</source>
         <translation>GPX-Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="398"/>
+        <location filename="../RGMainWindow.cpp" line="433"/>
         <source>GPX files (*.gpx)</source>
         <translation>GPX-Dateien (*.gpx)</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="412"/>
+        <location filename="../RGMainWindow.cpp" line="447"/>
         <source>GPX route imported succesfully!</source>
         <translation>GPX-Route erfolgreich importiert!</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="413"/>
+        <location filename="../RGMainWindow.cpp" line="448"/>
         <source>Import new map (Google maps)...</source>
         <translation>Neue Karte importieren (Google Maps)...</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="414"/>
+        <location filename="../RGMainWindow.cpp" line="462"/>
         <source>Open existing map...</source>
         <translation>Vorhandene Karte öffnen...</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="418"/>
+        <location filename="../RGMainWindow.cpp" line="466"/>
         <source>Import new map, open other map, or draw route on current map?</source>
         <translation>Neue Karte importieren, andere Karte öffnen oder Route auf aktueller Karte zeichnen?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="419"/>
+        <location filename="../RGMainWindow.cpp" line="467"/>
         <source>Draw route on current map</source>
         <translation>Route auf aktueller Karte zeichnen</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="424"/>
+        <location filename="../RGMainWindow.cpp" line="472"/>
         <source>Unable to draw route on current map: import new (Google) map or open existing map?</source>
         <translation>Route auf aktueller Karte kann nicht gezeichnet werden: neue (Google) Karte importieren oder vorhandene Karte öffnen?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="425"/>
+        <location filename="../RGMainWindow.cpp" line="473"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="447"/>
+        <location filename="../RGMainWindow.cpp" line="495"/>
         <source>hold SHIFT to record free drawing, CTRL to select several points. Del key to delete selected points</source>
         <translation>Halten Sie die Umschalttaste gedrückt, um freies Zeichnen aufzuzeichnen, STRG, um mehrere Punkte auszuwählen. Löschen-Taste, um ausgewählte Punkte zu löschen</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="489"/>
+        <location filename="../RGMainWindow.cpp" line="537"/>
         <source>Select an empty directory where the movie should be generated.</source>
         <translation>Wählen Sie ein leeres Verzeichnis, in dem der Film erzeugt werden soll.</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="514"/>
+        <location filename="../RGMainWindow.cpp" line="562"/>
         <source>Folder not empty</source>
         <translation>Ordner nicht leer</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="514"/>
+        <location filename="../RGMainWindow.cpp" line="562"/>
         <source>Folder not empty, delete all existing frame image files in this folder first?</source>
         <translation>Ordner nicht leer, zuerst alle vorhandenen Frame-Bilddateien in diesem Ordner löschen?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="552"/>
+        <location filename="../RGMainWindow.cpp" line="600"/>
         <source>Encoder unavailable</source>
         <translation>Encoder nicht verfügbar</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="552"/>
+        <location filename="../RGMainWindow.cpp" line="600"/>
         <source>No encoder available, only image frames have been generated!</source>
         <translation>Kein Encoder verfügbar, es wurden nur Bild-Frames erzeugt!</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="561"/>
+        <location filename="../RGMainWindow.cpp" line="609"/>
         <source>Route Generator Tutorial</source>
         <translation>Route Generator Tutorial</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="597"/>
+        <location filename="../RGMainWindow.cpp" line="645"/>
         <source>About Route Generator</source>
         <translation>Über Route Generator</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="618"/>
+        <location filename="../RGMainWindow.cpp" line="672"/>
         <source>Enter custom resolution in format like: 1024x786</source>
         <translation>Geben Sie eine benutzerdefinierte Auflösung im Format wie: 1024x786 ein</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="619"/>
+        <location filename="../RGMainWindow.cpp" line="674"/>
         <source>Enter custom resolution</source>
         <translation>Benutzerdefinierte Auflösung eingeben</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="636"/>
+        <location filename="../RGMainWindow.cpp" line="691"/>
         <source>Custom: </source>
         <translation>Benutzerdefiniert: </translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="641"/>
+        <location filename="../RGMainWindow.cpp" line="696"/>
         <source>Wrong resolution text</source>
         <translation>Falscher Auflösungstext</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="709"/>
+        <location filename="../RGMainWindow.cpp" line="784"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="709"/>
+        <location filename="../RGMainWindow.cpp" line="784"/>
         <source>Unable to delete generated image frames! No permissions?</source>
         <translation>Kann die erstellten Bild-Frames nicht löschen! Keine Berechtigungen?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="737"/>
+        <location filename="../RGMainWindow.cpp" line="812"/>
         <source>Unknown video encoder:</source>
         <translation>Unbekannter Video-Encoder:</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="763"/>
+        <location filename="../RGMainWindow.cpp" line="838"/>
         <source>Project not saved</source>
         <translation>Projekt nicht gespeichert</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="763"/>
+        <location filename="../RGMainWindow.cpp" line="838"/>
         <source>Do you want to save the current map and route as a project?</source>
         <translation>Möchten Sie die aktuelle Karte und Route als Projekt speichern?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="795"/>
+        <location filename="../RGMainWindow.cpp" line="870"/>
         <source>Unable to write RG project file!</source>
         <translation>RG-Projektdatei kann nicht geschrieben werden!</translation>
     </message>
@@ -1151,4 +1180,3 @@ Trotzdem fortfahren?</translation>
     </message>
 </context>
 </TS>
-
