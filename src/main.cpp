@@ -114,7 +114,7 @@
  *          Added possibility to select the map resolution (to prevent a scrolling map)
  */
 
-extern const QString applicationName(QStringLiteral("Route Generator version 1.12.0-beta"));
+extern const QString applicationName(QStringLiteral("Route Generator version 1.12.0"));
 
 int main(int argc, char* argv[])
 {

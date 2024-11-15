@@ -1,7 +1,7 @@
 <html>
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Route Generator Tutorial</title>
 </head>
 
@@ -11,13 +11,7 @@
 This tutorial explains how to generate route movies, using Route Generator.
 </p>
 
-<h2>Open map</h2>
-<p>
-Since verision 1.11.0 it is recommended to select the required output resolution of the movie on the toolbar first, before opening
-any maps:<br>
-<img src="resolution.png">.
-</p>
-
+<h2>Open map</h2>    
 <p>
 You can open an image file from an existing map or import a map from Google Maps (see below) or you can
 grab a frame of a map you filmed with your camera, save it an image file file and use that image as a map background.
@@ -25,8 +19,14 @@ Or check the size of the screenshot and create a map image yourself, with the sa
 </p>
 
 <p>
+It is recommended to first select the required output resolution of the output video on the toolbar, before importing
+any maps:<br>
+<img src="resolution.png">.
+</p>
+    
+<p>
 The size of the map does not need to be the same anymore as the resolution of the output movie!
-When the used map has a higher resolution than the output movie, the program will now automatically scroll the map
+When the used map has a higher resolution than the output movie, the program will now automatically scroll/pan/slide the map
 while trying to keep the vehicle centered on the map.
 If you don't want scrolling, then you can still use the same resolution for the map as the output movie.
 </p>
@@ -36,23 +36,30 @@ If you don't want scrolling, then you can still use the same resolution for the 
 will generate a warning when you open a map with a resolution that is too low.
 </p>
 
-<h3>Import map from Google Maps</h3>
-To import a map from Google Maps, go to File->Import from Google Maps or click <img src="google-maps-logo.png">.
+<p>
+Since version 1.12.0 it is possible again to use (or force) the resolution of the current map as resolution for the output
+video, by selecting: "Current map resolution". This will prevent scrolling/panning of the map at all times.<br>
+<b>NOTE:</b> When this option is selected it will not be possible to import a new map from Google Maps, because Route Generator
+has to know the resolution to use for the map to import!
+</p>
 
+<h3>Import map from Google Maps</h3>
+To import a map from Google Maps, go to File-&gt;Import from Google Maps or click <img src="google-maps-logo.png">.
 
 <p>
 Now browse to Google Maps in your browser and locate a map that you want to use. Then copy the link from your browser to the
 URL field in Route Generator: <img src="google-link-paste.png">.
 </p>
 <p>
-Now click "Go" to start loading the map (this might take a while). You can still drag the map a littlebit until you are satisfied.
-Then click OK to save the map (so you can re-use it later) and then use it in Route Generator.
+Then click "Go" to start loading the map (this might take a while). You can still drag the map a littlebit until you are satisfied.
+Click OK to save the map (so you can re-use it later) and then use it in Route Generator.
 </p>
 
 <p>
-After (or before) the map has loaded it is possible to modify the <b>X scale, Y scale</b> factors of the map. In this way it is possible to
-select a map with a resolution that is higher than the output video resolution. E.g. if you want that the map wil scroll from north
-to south, pick a Y scale factor higher than 1.0.
+After (or before) the map has loaded it is possible to modify the <b>X scale, Y scale</b> factors of the map. In this
+way it is possible to import a map with a resolution that is higher than the selected output video resolution, which will result
+in a scrolling/panning map in the output video. E.g. if you want that the map wil scroll from north to south, pick a Y
+scale factor higher than 1.0.
 </p>
 
 <h3>Import a GeoTIFF file</h3>
