@@ -110,7 +110,7 @@
  *  v1.12.0 Clang/Tidy fixes and ready for Qt6 API
  *          Translations (Italian, Dutch, German, French, Spanish).
  *          Smoother vehicle rotation (using average angles)
- *          Donation button on About dialog
+ *          Donation button on toolbar and About dialog
  *          Added possibility to select the map resolution (to prevent a scrolling map)
  */
 

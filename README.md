@@ -119,13 +119,13 @@ Some information regarding translation of Route Generator (up to now only, DE, E
 To generate or update the translation source files, I now manually execute lupdate/lrelease, because
 doing this automatic during the build process has some disadvantages. Also it is not required to re-update
 the ts files each time. This is only required when new dialogs or (translatable) texts are added.
-To regenerate the ts files (i.e. parse the source code to search for new translatable strings:
+To regenerate the ts files (i.e. parse the source code to search for new translatable strings):
 
 - cd src
 - lupdate *.cpp *.ui -no-obsolete -ts i18n/routegen_en.ts i18n/routegen_de.ts i18n/routegen_it.ts i18n/routegen_es.ts i18n/routegen_nl.ts  i18n/routegen_fr.ts
 
-
-After this step the ts files can be opened in Qt linguist and translations can be added.
+After this step the ts files can be opened in Qt linguist and translations can be added/updated.
+- linguist i18n/routegen_de.ts
 
 Then to generate the qm files that are used runtime (and should also be deployed):
 - lrelease i18n/routegen_nl.ts i18n/routegen_it.ts
@@ -136,7 +136,7 @@ a single translation file for the used Qt base packages.
 
 - cp /home/mjansen/Qt/5.15.2/gcc_64/translations/qtbase_it.qm i18n.qtbase_it.qm
 
-Finally we embed all required qm files in the routegen.qrc file and reference them from there.
+Finally embed all required qm files in the routegen.qrc file and reference them from there.
 
 ## Version history
 - 1.0   -Initial version
@@ -228,6 +228,12 @@ Finally we embed all required qm files in the routegen.qrc file and reference th
   - Make it possible to select existing folder again.
   - FPS setting now passed correctly to the ffmpeg commandline.
   - Possibility to set different file type for generated video frames (e.g. PNG, JPG, etc.)
+- 1.12.0 release
+  - Clang/Tidy fixes and ready for Qt6 API
+  - Translations (Italian, Dutch, German, French, Spanish).
+  - Smoother vehicle rotation (using average angles)
+  - Donation button on toolbar and About dialog
+  - Added possibility to select the map resolution (to prevent a scrolling map)
  
 ## Technical details
 
