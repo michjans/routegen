@@ -102,6 +102,7 @@ RGGoogleMap::RGGoogleMap(QWidget* parent, const QGeoPath& geoPath)
     ui.mapTypeBox->insertItem(1, QStringLiteral("terrain"));
     ui.mapTypeBox->insertItem(2, QStringLiteral("hybrid"));
     ui.mapTypeBox->insertItem(3, QStringLiteral("satellite"));
+    ui.mapTypeBox->insertItem(3, QStringLiteral("OSM"));
     ui.mapTypeBox->setCurrentIndex(0);
 
     //Init map resolution
@@ -120,7 +121,7 @@ RGGoogleMap::RGGoogleMap(QWidget* parent, const QGeoPath& geoPath)
 
         QString latlon = QString::number(startGeoRect.center().latitude()) + "," + QString::number(startGeoRect.center().longitude());
         ui.webView->setHtml(genHtml(latlon, QStringLiteral("10")));
-        ui.webView->reload();
+        //ui.webView->reload();
     }
 
     setGeometry(RGSettings::getGoogleMapDialogGeometry());
@@ -216,7 +217,7 @@ void RGGoogleMap::on_goButton_clicked(bool)
     zoom = QString::number(zoomValue);
 
     ui.webView->setHtml(genHtml(latlon, zoom));
-    ui.webView->reload();
+    //ui.webView->reload();
 }
 
 void RGGoogleMap::handleScaleSpinboxChanged(double)
