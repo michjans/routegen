@@ -55,6 +55,7 @@ add_executable(routegen WIN32 MACOSX_BUNDLE
     RGOSMapProjection.cpp RGOSMapProjection.h
     RGPath.cpp RGPath.h
     RGOsmBackend.h RGOsmBackend.cpp
+    RGOsmGraphicsView.h RGOsmGraphicsView.cpp
     RGProjectReader.cpp RGProjectReader.h
     RGProjectWriter.cpp RGProjectWriter.h
     RGReader.cpp RGReader.h

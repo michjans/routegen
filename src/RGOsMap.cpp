@@ -18,16 +18,12 @@
 */
 
 #include "RGOsMap.h"
-#include "RGOSMapProjection.h"
-#include "RGOsmBackend.h"
 #include "RGSettings.h"
 
 #include <QtWidgets>
 
 #include <QGeoCoordinate>
 #include <QGeoRectangle>
-#include <QGraphicsPixmapItem>
-#include <QPixmap>
 #include <QTimer>
 
 RGOsMap::RGOsMap(QWidget* parent, const QGeoPath& geoPath)
@@ -72,12 +68,6 @@ RGOsMap::RGOsMap(QWidget* parent, const QGeoPath& geoPath)
         //ui.webView->reload();
     }
 
-    m_scene = new QGraphicsScene(this);
-    ui.osmView->setScene(m_scene);
-    ui.osmView->setRenderHint(QPainter::Antialiasing);
-    ui.osmView->setRenderHint(QPainter::SmoothPixmapTransform);
-    ui.osmView->setDragMode(QGraphicsView::ScrollHandDrag);
-
     //TODO: Stored dialog geometry
     //setGeometry(RGSettings::getGoogleMapDialogGeometry());
 }
@@ -118,29 +108,8 @@ void RGOsMap::continue_Accept()
 
 void RGOsMap::on_goButton_clicked(bool)
 {
-    //void MapDialog::loadTiles(int zoomLevel, double centerLat, double centerLon) {
     QGeoCoordinate coord(ui.latSB->value(), ui.lonSB->value());
-    int zoom = ui.zoomBox->value();
-
-    QPoint tilePos = RGOSMapProjection::latLonToTile(coord, zoom).toPoint();
-
-    RGOsmBackend osmBackEnd;
-    for (int x = tilePos.x() - 2; x <= tilePos.x() + 2; ++x)
-    {
-        for (int y = tilePos.y() - 2; y <= tilePos.y() + 2; ++y)
-        {
-            QImage tile = osmBackEnd.getTile(x, y, zoom);
-
-            // Calculate the tile's position in the scene
-            int xPos = x * RGOSMapProjection::TILE_SIZE;
-            int yPos = y * RGOSMapProjection::TILE_SIZE;
-
-            // Create a pixmap item and add it to the scene
-            QGraphicsPixmapItem* tileItem = new QGraphicsPixmapItem(QPixmap::fromImage(tile));
-            tileItem->setPos(xPos, yPos);
-            m_scene->addItem(tileItem);
-        }
-    }
+    ui.osmView->loadMap(coord, ui.zoomBox->value());
 }
 
 void RGOsMap::handleScaleSpinboxChanged(double)
@@ -157,7 +126,6 @@ void RGOsMap::on_mapTypeBox_textActivated(const QString& text)
 
 void RGOsMap::on_zoomBox_valueChanged(int zoom)
 {
-    //ui.webView->page()->runJavaScript(QString(QStringLiteral("map.setZoom(")) + QString::number(zoom) + QStringLiteral(");"));
 }
 
 void RGOsMap::on_webView_loadFinished(bool)

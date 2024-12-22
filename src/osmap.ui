@@ -14,7 +14,7 @@
    <string>Open Street Maps Import</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="routegen.qrc">
     <normaloff>:/icons/icons/OSM_logo.svg</normaloff>:/icons/icons/OSM_logo.svg</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -158,7 +158,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QGraphicsView" name="osmView"/>
+    <widget class="RGOsmGraphicsView" name="osmView"/>
    </item>
    <item>
     <widget class="QProgressBar" name="progressBar">
@@ -179,7 +179,16 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <customwidgets>
+  <customwidget>
+   <class>RGOsmGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>RGOsmGraphicsView.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="routegen.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

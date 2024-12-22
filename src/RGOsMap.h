@@ -21,7 +21,6 @@
 #include "ui_osmap.h"
 
 #include <QGeoPath>
-#include <QGraphicsScene>
 #include <QPixmap>
 #include <QString>
 
@@ -61,6 +60,5 @@ private:
     QString m_html_template;
     QPixmap m_map;
     QGeoPath m_geoPath;
-    QGraphicsScene* m_scene;
     RGMapBounds m_mapBounds;
 };
