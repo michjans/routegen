@@ -34,51 +34,8 @@ This file is part of Route Generator.
 #include <QtNetwork/QNetworkReply>
 #include <cmath>
 
-namespace
-{
-const QString cachePath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/cache/%1/%2/%3.png";
-
-QString getCachePath(int zoom, int x, int y)
-{
-    return cachePath.arg(zoom).arg(x).arg(y);
-}
-bool isTileCached(int zoom, int x, int y)
-{
-    QString path = getCachePath(zoom, x, y);
-    QFile file(path);
-    return file.exists();
-}
-QImage loadCachedTile(int zoom, int x, int y)
-{
-    QString path = getCachePath(zoom, x, y);
-    QImage tile;
-    qDebug() << "loading tile from cache: " << path;
-    if (tile.load(path))
-    {
-        return tile;
-    }
-    else
-    {
-        return QImage();
-    }
-}
-void saveTileToCache(const QImage& tile, int zoom, int x, int y)
-{
-    QString path = getCachePath(zoom, x, y);
-
-    // Ensure the directory exists
-    QDir dir;
-    dir.mkpath(QFileInfo(path).path());
-
-    // Save the tile
-    if (!tile.save(path))
-    {
-        qWarning() << "Failed to save tile to " << path;
-    }
-}
-} // namespace
-
 RGOsmBackend::RGOsmBackend()
+    : mCachePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/osmcache/%1/%2/%3.png")
 {
 }
 
@@ -216,6 +173,48 @@ void RGOsmBackend::addAttribution(QImage& image, const QString& attributionText)
     painter.drawText(x, y, attributionText);
 
     painter.end();
+}
+
+QString RGOsmBackend::getCachePath(int zoom, int x, int y)
+{
+    return mCachePath.arg(zoom).arg(x).arg(y);
+}
+
+bool RGOsmBackend::isTileCached(int zoom, int x, int y)
+{
+    QString path = getCachePath(zoom, x, y);
+    QFile file(path);
+    return file.exists();
+}
+
+QImage RGOsmBackend::loadCachedTile(int zoom, int x, int y)
+{
+    QString path = getCachePath(zoom, x, y);
+    QImage tile;
+    qDebug() << "loading tile from cache: " << path;
+    if (tile.load(path))
+    {
+        return tile;
+    }
+    else
+    {
+        return QImage();
+    }
+}
+
+void RGOsmBackend::saveTileToCache(const QImage& tile, int zoom, int x, int y)
+{
+    QString path = getCachePath(zoom, x, y);
+
+    // Ensure the directory exists
+    QDir dir;
+    dir.mkpath(QFileInfo(path).path());
+
+    // Save the tile
+    if (!tile.save(path))
+    {
+        qWarning() << "Failed to save tile to " << path;
+    }
 }
 
 /*

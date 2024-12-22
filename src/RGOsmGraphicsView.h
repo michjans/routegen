@@ -23,6 +23,7 @@
 #include <QGeoCoordinate>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QList>
 #include <QTimeLine>
 #include <QTimer>
 
@@ -45,16 +46,28 @@ public:
      */
     bool saveRenderedImage(const QString& filename);
 
+signals:
+    void zoomLevelChanged(int zoom);
+    void centerCoordChanged(const QGeoCoordinate& centerCoord);
+
 protected:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void wheelEvent(QWheelEvent* event) override;
 
 private:
+    void loadTiles();
+    void addTileToScene(const QPixmap& tile, int tileX, int tileY);
+    void clearTiles();
+
     RGOsmBackend mOsmBackEnd;
 
     QGraphicsScene* mScene;
     QPoint mDragOrigin;
+    QGeoCoordinate mCenterCoord;
+    int mZoomLevel;
+
+    QList<QGraphicsPixmapItem*> mLoadedTiles; // Tracks currently displayed tiles
 };
 
 #endif // RGVOSMGRAPHICSVIEW_H

@@ -21,27 +21,22 @@
 #include "RGOSMapProjection.h"
 #include "RGSettings.h"
 
+#include <QDebug>
 #include <QGraphicsPixmapItem>
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QPixmap>
 #include <QProgressDialog>
 
-//The number of field with of the numbers before the generated file names,
-//e.g. if 5 then always 5 digits, e.g. map00001.bmp, etc.
-#define FILE_NUMBER_FIELD_WIDTH 5
-
-extern const QString applicationName;
-
 RGOsmGraphicsView::RGOsmGraphicsView(QWidget* parent)
     : QGraphicsView(parent),
-      mScene(new QGraphicsScene(this))
+      mScene(new QGraphicsScene(this)),
+      mZoomLevel(1)
 {
     this->setScene(mScene);
     this->setRenderHint(QPainter::Antialiasing);
     this->setRenderHint(QPainter::SmoothPixmapTransform);
     this->setDragMode(QGraphicsView::ScrollHandDrag);
-
 }
 
 QSize RGOsmGraphicsView::sizeHint() const
@@ -51,24 +46,10 @@ QSize RGOsmGraphicsView::sizeHint() const
 
 void RGOsmGraphicsView::loadMap(const QGeoCoordinate& coord, int zoom)
 {
-    QPoint tilePos = RGOSMapProjection::latLonToTile(coord, zoom).toPoint();
-
-    for (int x = tilePos.x() - 2; x <= tilePos.x() + 2; ++x)
-    {
-        for (int y = tilePos.y() - 2; y <= tilePos.y() + 2; ++y)
-        {
-            QImage tile = mOsmBackEnd.getTile(x, y, zoom);
-
-            // Calculate the tile's position in the scene
-            int xPos = x * RGOSMapProjection::TILE_SIZE;
-            int yPos = y * RGOSMapProjection::TILE_SIZE;
-
-            // Create a pixmap item and add it to the scene
-            QGraphicsPixmapItem* tileItem = new QGraphicsPixmapItem(QPixmap::fromImage(tile));
-            tileItem->setPos(xPos, yPos);
-            mScene->addItem(tileItem);
-        }
-    }
+    mZoomLevel = zoom;
+    mCenterCoord = coord;
+    clearTiles();
+    loadTiles();
 }
 
 bool RGOsmGraphicsView::saveRenderedImage(const QString& filename)
@@ -97,15 +78,55 @@ void RGOsmGraphicsView::mousePressEvent(QMouseEvent* event)
 void RGOsmGraphicsView::mouseMoveEvent(QMouseEvent* event)
 {
     auto delta = event->pos() - mDragOrigin;
+    qDebug() << "delta:" << delta;
     translate(delta.x(), delta.y());
     mDragOrigin = event->pos();
 }
 
 void RGOsmGraphicsView::wheelEvent(QWheelEvent* event)
 {
-    /*
+    clearTiles();
     int zoomDelta = event->angleDelta().y() > 0 ? 1 : -1;
-    zoomLevel = qBound(minZoom, zoomLevel + zoomDelta, maxZoom);
-    loadTiles(zoomLevel, centerLat, centerLon);
-    */
+    mZoomLevel = qBound(1, mZoomLevel + zoomDelta, 20);
+    qDebug() << "zoom:" << mZoomLevel;
+    loadTiles();
+    //viewport()->update();
+}
+
+void RGOsmGraphicsView::loadTiles()
+{
+    QPoint tilePos = RGOSMapProjection::latLonToTile(mCenterCoord, mZoomLevel).toPoint();
+    for (int x = tilePos.x() - 2; x <= tilePos.x() + 2; ++x)
+    {
+        for (int y = tilePos.y() - 2; y <= tilePos.y() + 2; ++y)
+        {
+            QImage tile = mOsmBackEnd.getTile(x, y, mZoomLevel);
+            addTileToScene(QPixmap::fromImage(tile), x, y);
+        }
+    }
+}
+
+void RGOsmGraphicsView::addTileToScene(const QPixmap& tile, int tileX, int tileY)
+{
+    // Calculate the tile's position in the scene
+    int x = tileX * RGOSMapProjection::TILE_SIZE;
+    int y = tileY * RGOSMapProjection::TILE_SIZE;
+
+    // Create a pixmap item and add it to the scene
+    QGraphicsPixmapItem* tileItem = new QGraphicsPixmapItem(tile);
+    tileItem->setPos(x, y);
+    mScene->addItem(tileItem);
+
+    // Track the tile for future clearing
+    mLoadedTiles.append(tileItem);
+}
+
+void RGOsmGraphicsView::clearTiles()
+{
+    for (QGraphicsPixmapItem* tile : mLoadedTiles)
+    {
+        mScene->removeItem(tile);
+        delete tile;
+    }
+    mLoadedTiles.clear();
 }

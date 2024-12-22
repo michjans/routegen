@@ -37,8 +37,15 @@ private:
     QString getTileUrl(int x, int y, int zoom, const QStringList& subdomains);
     void addAttribution(QImage& image, const QString& attributionText);
 
+    QString getCachePath(int zoom, int x, int y);
+    bool isTileCached(int zoom, int x, int y);
+    QImage loadCachedTile(int zoom, int x, int y);
+    void saveTileToCache(const QImage& tile, int zoom, int x, int y);
+
     QNetworkAccessManager m_manager;
     QRandomGenerator m_randommizer;
+
+    const QString mCachePath;
 };
 
 #endif // RGOSMBACKEND_H
