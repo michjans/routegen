@@ -44,6 +44,7 @@ add_executable(routegen WIN32 MACOSX_BUNDLE
     RGEncVideo.cpp RGEncVideo.h
     RGGPXReader.cpp RGGPXReader.h
     RGGoogleMap.cpp RGGoogleMap.h
+    RGOsMap.cpp RGOsMap.h
     RGGraphicsObjectUndo.cpp RGGraphicsObjectUndo.h
     RGMainWindow.cpp RGMainWindow.h
     RGMap.cpp RGMap.h
@@ -51,7 +52,9 @@ add_executable(routegen WIN32 MACOSX_BUNDLE
     RGMapProjection.cpp RGMapProjection.h
     RGGoogleMapProjection.cpp RGGoogleMapProjection.h
     RGGeoTiffMapProjection.cpp RGGeoTiffMapProjection.h
+    RGOSMapProjection.cpp RGOSMapProjection.h
     RGPath.cpp RGPath.h
+    RGOsmBackend.h RGOsmBackend.cpp
     RGProjectReader.cpp RGProjectReader.h
     RGProjectWriter.cpp RGProjectWriter.h
     RGReader.cpp RGReader.h
@@ -67,6 +70,7 @@ add_executable(routegen WIN32 MACOSX_BUNDLE
     RGViewWidget.cpp RGViewWidget.h
     RGWriter.cpp RGWriter.h
     googlemap.ui
+    osmap.ui
     gpxselectiondialog.ui
     main.cpp
     routegen.ui

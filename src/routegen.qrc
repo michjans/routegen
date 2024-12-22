@@ -23,6 +23,7 @@
         <file>icons/media-floppy.svg</file>
         <file>icons/map_pencil_save.svg</file>
         <file>icons/btn_donate_uk_SM.png</file>
+        <file>icons/OSM_logo.svg</file>
     </qresource>
     <qresource prefix="/i18n">
         <file>i18n/routegen_nl.qm</file>

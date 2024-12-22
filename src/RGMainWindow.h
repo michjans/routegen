@@ -59,6 +59,7 @@ private slots:
     void on_actionSave_project_as_triggered(bool);
     void on_actionPreferences_triggered(bool);
     void on_actionImport_Google_Map_triggered(bool);
+    void on_actionImport_OSM_Map_triggered(bool);
     void on_actionImport_GPX_triggered(bool);
     void on_actionDraw_mode_triggered(bool);
     void on_actionNew_route_triggered(bool);

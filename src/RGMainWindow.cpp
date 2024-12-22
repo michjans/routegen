@@ -29,6 +29,7 @@
 #include "RGGoogleMap.h"
 #include "RGMainWindow.h"
 #include "RGMap.h"
+#include "RGOsMap.h"
 #include "RGProjectReader.h"
 #include "RGProjectWriter.h"
 #include "RGRoute.h"
@@ -36,7 +37,6 @@
 #include "RGSettings.h"
 #include "RGSettingsDialog.h"
 #include "RGUndoRedo.h"
-#include "RGVehicleList.h"
 #include "RGViewWidget.h"
 
 #include "ui_routegen.h"
@@ -430,6 +430,15 @@ void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
         {
             QMessageBox::critical(this, tr("Cannot write file"), tr("Unable to save map file!"));
         }
+    }
+}
+
+void RGMainWindow::on_actionImport_OSM_Map_triggered(bool)
+{
+    RGOsMap osm(this, mRoute->getGeoPath());
+    if (osm.exec() == QDialog::Accepted)
+    {
+        //TODO
     }
 }
 

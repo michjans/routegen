@@ -86,6 +86,7 @@
     <addaction name="actionSave_image"/>
     <addaction name="actionOpen_image"/>
     <addaction name="actionImport_Google_Map"/>
+    <addaction name="actionImport_OSM_Map"/>
     <addaction name="actionImport_GPX"/>
     <addaction name="separator"/>
     <addaction name="action_Quit"/>
@@ -116,6 +117,7 @@
    <addaction name="separator"/>
    <addaction name="actionOpen_image"/>
    <addaction name="actionImport_Google_Map"/>
+   <addaction name="actionImport_OSM_Map"/>
    <addaction name="actionImport_GPX"/>
    <addaction name="separator"/>
    <addaction name="actionDraw_mode"/>
@@ -356,6 +358,21 @@
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::TextHeuristicRole</enum>
+   </property>
+  </action>
+  <action name="actionImport_OSM_Map">
+   <property name="icon">
+    <iconset resource="routegen.qrc">
+     <normaloff>:/icons/icons/OSM_logo.svg</normaloff>:/icons/icons/OSM_logo.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Import from Open &amp;Street Maps</string>
+   </property>
+   <property name="toolTip">
+    <string>Import Open Street Map</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
    </property>
   </action>
  </widget>
