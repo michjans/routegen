@@ -41,6 +41,7 @@ RGOsmBackend::RGOsmBackend()
 
 QImage RGOsmBackend::getTile(int x, int y, int zoom)
 {
+    //TODO: Refactor method to become asynchronous, so the requested tile is delivered through a signal.
     if (isTileCached(zoom, x, y))
     {
         return loadCachedTile(zoom, x, y);
