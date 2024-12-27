@@ -34,27 +34,29 @@ This file is part of Route Generator.
 #include <QtNetwork/QNetworkReply>
 #include <cmath>
 
-RGOsmBackend::RGOsmBackend()
-    : mCachePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/osmcache/%1/%2/%3.png")
+RGOsmBackend::RGOsmBackend(QObject* parent)
+    : QObject(parent),
+      mCachePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/osmcache/%1/%2/%3.png")
 {
+}
+
+void RGOsmBackend::requestTile(int x, int y, int zoom)
+{
+    if (isTileCached(zoom, x, y))
+    {
+        //Tile already available in cache, we can emit immediately
+        emit tileAvailable(loadCachedTile(zoom, x, y), x, y);
+    }
+    else
+    {
+        downloadTileAndSaveToCache(x, y, zoom);
+    }
 }
 
 QImage RGOsmBackend::getTile(int x, int y, int zoom)
 {
-    //TODO: Refactor method to become asynchronous, so the requested tile is delivered through a signal.
-    if (isTileCached(zoom, x, y))
-    {
-        return loadCachedTile(zoom, x, y);
-    }
-    else
-    {
-        QImage tile = downloadTile(x, y, zoom);
-        if (!tile.isNull())
-        {
-            saveTileToCache(tile, zoom, x, y);
-        }
-        return tile;
-    }
+    //TODO: Refactor to make use of asyncronous requestTile, but still behave synchronously
+    return QImage{};
 }
 
 void RGOsmBackend::stitchTiles(double lat, double lon, int zoom, int width, int height, const QString& outputFile)
@@ -110,42 +112,38 @@ void RGOsmBackend::stitchTiles(double lat, double lon, int zoom, int width, int 
 }
 
 // Downloads a tile from OpenStreetMap
-QImage RGOsmBackend::downloadTile(int x, int y, int zoom)
+void RGOsmBackend::downloadTileAndSaveToCache(int x, int y, int zoom)
 {
-    QStringList subdomains = {"a", "b", "c"};
-    QString url = getTileUrl(x, y, zoom, subdomains);
+    QString url = getTileUrl(x, y, zoom);
     qDebug() << "Downloading tile " << url;
     QNetworkRequest request((QUrl(url)));
     request.setRawHeader("User-Agent", "RouteGenerator/1.13.0 (info@routegenerator.net)");
     QNetworkReply* reply = m_manager.get(request);
 
-    QEventLoop loop;
-    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-    loop.exec();
-
-    if (reply->error() == QNetworkReply::NoError)
-    {
-        QByteArray data = reply->readAll();
-        QImage tile;
-        tile.loadFromData(data);
-        reply->deleteLater();
-        return tile;
-    }
-    else
-    {
-        qWarning() << "Failed to download tile: " << reply->errorString();
-        reply->deleteLater();
-        return QImage();
-    }
+    connect(reply, &QNetworkReply::finished, this,
+            [this, reply, x, y, zoom]()
+            {
+                if (reply->error() == QNetworkReply::NoError)
+                {
+                    QByteArray data = reply->readAll();
+                    QImage tile;
+                    tile.loadFromData(data);
+                    saveTileToCache(tile, zoom, x, y);
+                    emit tileAvailable(tile, x, y);
+                }
+                else
+                {
+                    qWarning() << "Failed to download tile: " << reply->errorString();
+                }
+                reply->deleteLater(); // Clean up
+            });
 }
 
-QString RGOsmBackend::getTileUrl(int x, int y, int zoom, const QStringList& subdomains)
+QString RGOsmBackend::getTileUrl(int x, int y, int zoom)
 {
-    //QString urlTemplate = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-    QString urlTemplate = "https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png";
-
-    const QString& subdomain = subdomains[m_randommizer.bounded(0, subdomains.size())]; // Random subdomain
-    return urlTemplate.replace("{s}", subdomain).replace("{z}", QString::number(zoom)).replace("{x}", QString::number(x)).replace("{y}", QString::number(y));
+    QString url = mUrlTemplate;
+    const QString& subdomain = mSubDomains[m_randommizer.bounded(0, mSubDomains.size())]; // Random subdomain
+    return url.replace("{s}", subdomain).replace("{z}", QString::number(zoom)).replace("{x}", QString::number(x)).replace("{y}", QString::number(y));
 }
 
 void RGOsmBackend::addAttribution(QImage& image, const QString& attributionText)

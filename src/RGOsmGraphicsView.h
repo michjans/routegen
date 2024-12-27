@@ -55,9 +55,11 @@ protected:
     void mouseMoveEvent(QMouseEvent* event) override;
     void wheelEvent(QWheelEvent* event) override;
 
+private slots:
+    void addTileToScene(const QImage& tile, int tileX, int tileY);
+
 private:
     void loadTiles();
-    void addTileToScene(const QPixmap& tile, int tileX, int tileY);
     void clearTiles();
 
     RGOsmBackend mOsmBackEnd;

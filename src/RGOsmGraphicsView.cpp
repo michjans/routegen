@@ -37,6 +37,8 @@ RGOsmGraphicsView::RGOsmGraphicsView(QWidget* parent)
     this->setRenderHint(QPainter::Antialiasing);
     this->setRenderHint(QPainter::SmoothPixmapTransform);
     this->setDragMode(QGraphicsView::ScrollHandDrag);
+
+    connect(&mOsmBackEnd, &RGOsmBackend::tileAvailable, this, &RGOsmGraphicsView::addTileToScene);
 }
 
 QSize RGOsmGraphicsView::sizeHint() const
@@ -93,6 +95,24 @@ void RGOsmGraphicsView::wheelEvent(QWheelEvent* event)
     //viewport()->update();
 }
 
+void RGOsmGraphicsView::addTileToScene(const QImage& tile, int tileX, int tileY)
+{
+    // Calculate the tile's position in the scene
+    int x = tileX * RGOSMapProjection::TILE_SIZE;
+    int y = tileY * RGOSMapProjection::TILE_SIZE;
+
+    // Create a pixmap item and add it to the scene
+    qDebug() << "adding tile item:" << x << ", " << y;
+    QGraphicsPixmapItem* tileItem = new QGraphicsPixmapItem(QPixmap::fromImage(tile));
+    tileItem->setPos(x, y);
+    mScene->addItem(tileItem);
+
+    // Track the tile for future clearing
+    mLoadedTiles.append(tileItem);
+
+    qDebug() << "scene rect is now: " << mScene->sceneRect();
+}
+
 void RGOsmGraphicsView::loadTiles()
 {
     QPoint tilePos = RGOSMapProjection::latLonToTile(mCenterCoord, mZoomLevel).toPoint();
@@ -100,25 +120,9 @@ void RGOsmGraphicsView::loadTiles()
     {
         for (int y = tilePos.y() - 2; y <= tilePos.y() + 2; ++y)
         {
-            QImage tile = mOsmBackEnd.getTile(x, y, mZoomLevel);
-            addTileToScene(QPixmap::fromImage(tile), x, y);
+            mOsmBackEnd.requestTile(x, y, mZoomLevel);
         }
     }
-}
-
-void RGOsmGraphicsView::addTileToScene(const QPixmap& tile, int tileX, int tileY)
-{
-    // Calculate the tile's position in the scene
-    int x = tileX * RGOSMapProjection::TILE_SIZE;
-    int y = tileY * RGOSMapProjection::TILE_SIZE;
-
-    // Create a pixmap item and add it to the scene
-    QGraphicsPixmapItem* tileItem = new QGraphicsPixmapItem(tile);
-    tileItem->setPos(x, y);
-    mScene->addItem(tileItem);
-
-    // Track the tile for future clearing
-    mLoadedTiles.append(tileItem);
 }
 
 void RGOsmGraphicsView::clearTiles()

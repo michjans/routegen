@@ -21,20 +21,30 @@ This file is part of Route Generator.
 #define RGOSMBACKEND_H
 
 #include <QImage>
+#include <QObject>
 #include <QRandomGenerator>
 #include <QtNetwork/QNetworkAccessManager>
 
-class RGOsmBackend
+class RGOsmBackend : public QObject
 {
+    Q_OBJECT
 public:
-    RGOsmBackend();
+    RGOsmBackend(QObject* parent = nullptr);
 
+    /**
+     * @brief requestTile Asynchronous method to request a tile in the background and get signalled when the requested
+     *        tile is available @see tileAvailable
+     */
+    void requestTile(int x, int y, int zoom);
     QImage getTile(int x, int y, int zoom);
     void stitchTiles(double lat, double lon, int zoom, int width, int height, const QString& outputFile);
 
+signals:
+    void tileAvailable(const QImage& tile, int x, int y);
+
 private:
-    QImage downloadTile(int x, int y, int zoom);
-    QString getTileUrl(int x, int y, int zoom, const QStringList& subdomains);
+    void downloadTileAndSaveToCache(int x, int y, int zoom);
+    QString getTileUrl(int x, int y, int zoom);
     void addAttribution(QImage& image, const QString& attributionText);
 
     QString getCachePath(int zoom, int x, int y);
@@ -46,6 +56,9 @@ private:
     QRandomGenerator m_randommizer;
 
     const QString mCachePath;
+    QLatin1String mUrlTemplate = QLatin1String("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+    //QLatin1String mUrlTemplate = QLatin1String("https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png");
+    QStringList mSubDomains = {"a", "b", "c"};
 };
 
 #endif // RGOSMBACKEND_H
