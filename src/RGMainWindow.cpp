@@ -403,43 +403,12 @@ void RGMainWindow::on_actionPreferences_triggered(bool)
 
 void RGMainWindow::on_actionImport_Google_Map_triggered(bool)
 {
-    RGGoogleMap gm(this, mRoute->getGeoPath());
-    if (gm.exec() == QDialog::Accepted)
-    {
-        QPixmap map = gm.getMap();
-        if (map.isNull())
-            return;
-
-        //Yes, lastOpenDir, because lastSaveDir is used to save map files
-        //from the main window
-        QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QFileInfo(lastSaveDir).absoluteDir().absolutePath(),
-                                                        tr("Images (*.png *.bmp *.jpg *.tif *.gif)"));
-        if (fileName.isEmpty())
-        {
-            return;
-        }
-
-        forceFileSuffix(fileName, QStringLiteral("png"));
-        if (map.save(fileName))
-        {
-            RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
-            mMap->loadMap(fileName, map, gm.getMapBounds());
-        }
-        else
-        {
-            QMessageBox::critical(this, tr("Cannot write file"), tr("Unable to save map file!"));
-        }
-    }
+    importMap<RGGoogleMap>();
 }
 
 void RGMainWindow::on_actionImport_OSM_Map_triggered(bool)
 {
-    RGOsMap osm(this, mRoute->getGeoPath());
-    if (osm.exec() == QDialog::Accepted)
-    {
-        //TODO
-    }
+    importMap<RGOsMap>();
 }
 
 void RGMainWindow::on_actionImport_GPX_triggered(bool)
@@ -908,5 +877,37 @@ void RGMainWindow::determineGoogleMapImportStatus()
     {
         actionImport_Google_Map->setEnabled(true);
         actionImport_Google_Map->setToolTip(mSelResTooltip);
+    }
+}
+
+template <typename T> void RGMainWindow::importMap()
+{
+    T gm(this, mRoute->getGeoPath());
+    if (gm.exec() == QDialog::Accepted)
+    {
+        QPixmap map = gm.getMap();
+        if (map.isNull())
+            return;
+
+        //Yes, lastOpenDir, because lastSaveDir is used to save map files
+        //from the main window
+        QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QFileInfo(lastSaveDir).absoluteDir().absolutePath(),
+                                                        tr("Images (*.png *.bmp *.jpg *.tif *.gif)"));
+        if (fileName.isEmpty())
+        {
+            return;
+        }
+
+        forceFileSuffix(fileName, QStringLiteral("png"));
+        if (map.save(fileName))
+        {
+            RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
+            mMap->loadMap(fileName, map, gm.getMapBounds());
+        }
+        else
+        {
+            QMessageBox::critical(this, tr("Cannot write file"), tr("Unable to save map file!"));
+        }
     }
 }

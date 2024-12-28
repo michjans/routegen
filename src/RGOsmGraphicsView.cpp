@@ -66,22 +66,14 @@ void RGOsmGraphicsView::loadMap(const QGeoCoordinate& coord, int zoom, QSize siz
     loadTiles();
 }
 
-bool RGOsmGraphicsView::saveRenderedImage(const QString& filename)
+QPixmap RGOsmGraphicsView::renderMap()
 {
-    //TODO: Do we do it this way or using the OsmBackend tile stichting method?
     QRect fullMapRect(0, 0, mScene->width(), mScene->height());
     bool result = false;
-    QImage outImage(fullMapRect.size(), QImage::Format_RGB32);
+    QPixmap outImage(fullMapRect.size());
     QPainter painter(&outImage);
     mScene->render(&painter);
-    result = outImage.save(filename);
-    painter.end();
-    if (!result)
-    {
-        QMessageBox::critical(this, tr("Oops"), tr("Problems saving file ") + filename);
-    }
-
-    return result;
+    return outImage;
 }
 
 void RGOsmGraphicsView::mousePressEvent(QMouseEvent* event)

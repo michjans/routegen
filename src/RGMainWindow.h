@@ -85,6 +85,8 @@ private:
     void saveProjectFile(const QString& projectFileName);
     void determineGoogleMapImportStatus();
 
+    template <typename T> void importMap();
+
     RGViewWidget* mView;
     RGEncVideo* mVideoEncoder;
     RGMap* mMap;

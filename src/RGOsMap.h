@@ -51,10 +51,6 @@ private slots:
     void on_mapTypeBox_textActivated(const QString&);
     void on_zoomBox_valueChanged(int zoom);
 
-    void on_webView_loadFinished(bool ok);
-    void on_webView_loadProgress(int progress);
-    void on_webView_loadStarted();
-
 private:
     Ui_osMap ui;
     QString m_html_template;

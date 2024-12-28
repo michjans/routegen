@@ -41,12 +41,7 @@ public:
 
     void loadMap(const QGeoCoordinate& coord, int zoom, QSize size);
 
-    /**
-     * @brief Saves the currently rendered image
-     * @param filename of the image
-     * @return
-     */
-    bool saveRenderedImage(const QString& filename);
+    QPixmap renderMap();
 
 signals:
     void zoomLevelChanged(int zoom);

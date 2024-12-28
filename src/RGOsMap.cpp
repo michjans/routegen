@@ -44,7 +44,7 @@ RGOsMap::RGOsMap(QWidget* parent, const QGeoPath& geoPath)
 
     QObject::connect(ui.buttonBox, &QDialogButtonBox::accepted, this, &RGOsMap::on_accept);
 
-    //TODO: Differen OSMap providers
+    //TODO: Different OSMap providers
     ui.mapTypeBox->insertItem(0, QStringLiteral("osm"));
     ui.mapTypeBox->setCurrentIndex(0);
 
@@ -58,28 +58,24 @@ RGOsMap::RGOsMap(QWidget* parent, const QGeoPath& geoPath)
         qDebug() << "startGeoRect:"
                  << "  topLeft:" << startGeoRect.topLeft() << "  bottomLeft:" << startGeoRect.bottomLeft() << "  topRight:" << startGeoRect.topRight()
                  << "  bottomRight:" << startGeoRect.bottomRight() << "  center:" << startGeoRect.center();
+        //TODO: Draw rectangle above osm map
 
         ui.latSB->setEnabled(false);
         ui.lonSB->setEnabled(false);
         ui.goButton->setEnabled(false);
-
-        QString latlon = QString::number(startGeoRect.center().latitude()) + "," + QString::number(startGeoRect.center().longitude());
-        //ui.webView->setHtml(genHtml(latlon, QStringLiteral("10")));
-        //ui.webView->reload();
     }
 
-    //TODO: Stored dialog geometry
-    //setGeometry(RGSettings::getGoogleMapDialogGeometry());
+    //Shared setting for google/osm map import dialog
+    setGeometry(RGSettings::getGoogleMapDialogGeometry());
 }
 
 void RGOsMap::accept()
 {
-    //m_map = QPixmap(ui.webView->size());
-    //ui.webView->render(&m_map);
+    m_map = ui.osmView->renderMap();
 
     RGSettings::setGMXFactor(ui.widthScaleSB->value());
     RGSettings::setGMYFactor(ui.heightScaleSB->value());
-    //TODO:RGSettings::setGoogleMapDialogGeometry(geometry());
+    RGSettings::setGoogleMapDialogGeometry(geometry());
 
     QDialog::accept();
 }
@@ -108,6 +104,11 @@ void RGOsMap::continue_Accept()
 
 void RGOsMap::on_goButton_clicked(bool)
 {
+    //TODO: Monitor progress
+    // ui.progressBar->hide();
+    // ui.progressBar->setValue(progress);
+    // ui.progressBar->show();
+
     QGeoCoordinate coord(ui.latSB->value(), ui.lonSB->value());
     auto res = RGSettings::getOutputResolution();
     ui.osmView->loadMap(coord, ui.zoomBox->value(), QSize(ui.widthScaleSB->value() * res.width(), ui.heightScaleSB->value() * res.height()));
@@ -127,20 +128,6 @@ void RGOsMap::on_mapTypeBox_textActivated(const QString& text)
 
 void RGOsMap::on_zoomBox_valueChanged(int zoom)
 {
-}
-
-void RGOsMap::on_webView_loadFinished(bool)
-{
-    ui.progressBar->hide();
-}
-
-void RGOsMap::on_webView_loadProgress(int progress)
-{
-    ui.progressBar->setValue(progress);
-}
-
-void RGOsMap::on_webView_loadStarted()
-{
-    ui.progressBar->show();
+    //TODO?
 }
 
