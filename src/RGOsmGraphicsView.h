@@ -37,7 +37,9 @@ public:
 
     QSize sizeHint() const override;
 
-    void loadMap(const QGeoCoordinate& coord, int zoom);
+    void setFixedSceneResolution(const QSize& res);
+
+    void loadMap(const QGeoCoordinate& coord, int zoom, QSize size);
 
     /**
      * @brief Saves the currently rendered image
@@ -67,9 +69,8 @@ private:
     QGraphicsScene* mScene;
     QPoint mDragOrigin;
     QGeoCoordinate mCenterCoord;
+    QSize mSize;
     int mZoomLevel;
-
-    QList<QGraphicsPixmapItem*> mLoadedTiles; // Tracks currently displayed tiles
 };
 
 #endif // RGVOSMGRAPHICSVIEW_H

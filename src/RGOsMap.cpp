@@ -49,7 +49,7 @@ RGOsMap::RGOsMap(QWidget* parent, const QGeoPath& geoPath)
     ui.mapTypeBox->setCurrentIndex(0);
 
     //Init map resolution
-    handleScaleSpinboxChanged(true);
+    handleScaleSpinboxChanged(1.0);
 
     if (geoPath.size() > 1)
     {
@@ -109,14 +109,15 @@ void RGOsMap::continue_Accept()
 void RGOsMap::on_goButton_clicked(bool)
 {
     QGeoCoordinate coord(ui.latSB->value(), ui.lonSB->value());
-    ui.osmView->loadMap(coord, ui.zoomBox->value());
+    auto res = RGSettings::getOutputResolution();
+    ui.osmView->loadMap(coord, ui.zoomBox->value(), QSize(ui.widthScaleSB->value() * res.width(), ui.heightScaleSB->value() * res.height()));
 }
 
 void RGOsMap::handleScaleSpinboxChanged(double)
 {
     //multiply scale factors by current output resolution width/height
     auto res = RGSettings::getOutputResolution();
-    //ui.webView->setFixedSize(QSize(ui.widthScaleSB->value() * res.width(), ui.heightScaleSB->value() * res.height()));
+    ui.osmView->setFixedSceneResolution(QSize(ui.widthScaleSB->value() * res.width(), ui.heightScaleSB->value() * res.height()));
 }
 
 void RGOsMap::on_mapTypeBox_textActivated(const QString& text)

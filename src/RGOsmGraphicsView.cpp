@@ -46,10 +46,22 @@ QSize RGOsmGraphicsView::sizeHint() const
     return QSize(mScene->width(), mScene->height());
 }
 
-void RGOsmGraphicsView::loadMap(const QGeoCoordinate& coord, int zoom)
+void RGOsmGraphicsView::setFixedSceneResolution(const QSize& res)
+{
+    mSize = res;
+    if (mCenterCoord.isValid())
+    {
+        //A scene is loaded, re-load map
+        clearTiles();
+        loadTiles();
+    }
+}
+
+void RGOsmGraphicsView::loadMap(const QGeoCoordinate& coord, int zoom, QSize size)
 {
     mZoomLevel = zoom;
     mCenterCoord = coord;
+    mSize = size;
     clearTiles();
     loadTiles();
 }
@@ -107,30 +119,38 @@ void RGOsmGraphicsView::addTileToScene(const QImage& tile, int tileX, int tileY)
     tileItem->setPos(x, y);
     mScene->addItem(tileItem);
 
-    // Track the tile for future clearing
-    mLoadedTiles.append(tileItem);
-
     qDebug() << "scene rect is now: " << mScene->sceneRect();
 }
 
 void RGOsmGraphicsView::loadTiles()
 {
-    QPoint tilePos = RGOSMapProjection::latLonToTile(mCenterCoord, mZoomLevel).toPoint();
-    for (int x = tilePos.x() - 2; x <= tilePos.x() + 2; ++x)
+    QPointF tilePos = RGOSMapProjection::latLonToTile(mCenterCoord, mZoomLevel);
+    qDebug() << "center tilePos is:" << tilePos;
+
+    //Determine visible rectangle based on requested map resolution
+    double centerX = tilePos.x() * RGOSMapProjection::TILE_SIZE;
+    double centerY = tilePos.y() * RGOSMapProjection::TILE_SIZE;
+    QPointF topLeft(centerX - mSize.width() / 2, centerY - mSize.height() / 2);
+    QRectF fixedSceneRect(topLeft, mSize);
+    mScene->setSceneRect(fixedSceneRect);
+
+    //Determine number of tiles to download
+    int beginX = fixedSceneRect.topLeft().x() / RGOSMapProjection::TILE_SIZE;
+    int endX = fixedSceneRect.bottomRight().x() / RGOSMapProjection::TILE_SIZE;
+    int beginY = fixedSceneRect.topLeft().y() / RGOSMapProjection::TILE_SIZE;
+    int endY = fixedSceneRect.bottomRight().y() / RGOSMapProjection::TILE_SIZE;
+    for (int x = beginX; x <= endX; ++x)
     {
-        for (int y = tilePos.y() - 2; y <= tilePos.y() + 2; ++y)
+        for (int y = beginY; y <= endY; ++y)
         {
             mOsmBackEnd.requestTile(x, y, mZoomLevel);
         }
     }
+
+    centerOn(tilePos);
 }
 
 void RGOsmGraphicsView::clearTiles()
 {
-    for (QGraphicsPixmapItem* tile : mLoadedTiles)
-    {
-        mScene->removeItem(tile);
-        delete tile;
-    }
-    mLoadedTiles.clear();
+    mScene->clear();
 }
