@@ -79,7 +79,7 @@
         <string>Latitude</string>
        </property>
        <property name="decimals">
-        <number>1</number>
+        <number>4</number>
        </property>
        <property name="minimum">
         <double>1.000000000000000</double>
@@ -88,7 +88,7 @@
         <double>0.100000000000000</double>
        </property>
        <property name="value">
-        <double>48.899999999999999</double>
+        <double>52.378999999999998</double>
        </property>
       </widget>
      </item>
@@ -105,7 +105,7 @@
         <string>Longitude</string>
        </property>
        <property name="decimals">
-        <number>1</number>
+        <number>4</number>
        </property>
        <property name="minimum">
         <double>1.000000000000000</double>
@@ -114,7 +114,7 @@
         <double>0.100000000000000</double>
        </property>
        <property name="value">
-        <double>2.400000000000000</double>
+        <double>4.900500000000000</double>
        </property>
       </widget>
      </item>

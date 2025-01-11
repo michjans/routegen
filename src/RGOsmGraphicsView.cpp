@@ -79,6 +79,9 @@ QPixmap RGOsmGraphicsView::renderMap()
 void RGOsmGraphicsView::mousePressEvent(QMouseEvent* event)
 {
     mDragOrigin = event->pos();
+    qDebug() << "viewport size:" << viewport()->size();
+    //qDebug() << "transformation:" << transform();
+    qDebug() << "Viewport center after centerOn:" << mapToScene(viewport()->rect().center());
 }
 
 void RGOsmGraphicsView::mouseMoveEvent(QMouseEvent* event)
@@ -116,21 +119,26 @@ void RGOsmGraphicsView::addTileToScene(const QImage& tile, int tileX, int tileY)
 
 void RGOsmGraphicsView::loadTiles()
 {
+    //The tilePos is a floating point position, which maps to the correct tile x,y when
+    //rounding down to integers (i.e. one pixel in the tile represents 1/256 of the tile's size)
     QPointF tilePos = RGOSMapProjection::latLonToTile(mCenterCoord, mZoomLevel);
     qDebug() << "center tilePos is:" << tilePos;
 
     //Determine visible rectangle based on requested map resolution
     double centerX = tilePos.x() * RGOSMapProjection::TILE_SIZE;
     double centerY = tilePos.y() * RGOSMapProjection::TILE_SIZE;
-    QPointF topLeft(centerX - mSize.width() / 2, centerY - mSize.height() / 2);
+    QPointF topLeft(centerX - mSize.width() / 2.0, centerY - mSize.height() / 2.0);
     QRectF fixedSceneRect(topLeft, mSize);
     mScene->setSceneRect(fixedSceneRect);
 
-    //Determine number of tiles to download
-    int beginX = fixedSceneRect.topLeft().x() / RGOSMapProjection::TILE_SIZE;
-    int endX = fixedSceneRect.bottomRight().x() / RGOSMapProjection::TILE_SIZE;
-    int beginY = fixedSceneRect.topLeft().y() / RGOSMapProjection::TILE_SIZE;
-    int endY = fixedSceneRect.bottomRight().y() / RGOSMapProjection::TILE_SIZE;
+    // Calculate tile indices to load
+    int beginX = std::floor(fixedSceneRect.left() / RGOSMapProjection::TILE_SIZE);
+    int endX = std::ceil(fixedSceneRect.right() / RGOSMapProjection::TILE_SIZE) - 1;
+    int beginY = std::floor(fixedSceneRect.top() / RGOSMapProjection::TILE_SIZE);
+    int endY = std::ceil(fixedSceneRect.bottom() / RGOSMapProjection::TILE_SIZE) - 1;
+
+    qDebug() << "Tile grid bounds:" << beginX << endX << beginY << endY;
+
     for (int x = beginX; x <= endX; ++x)
     {
         for (int y = beginY; y <= endY; ++y)
@@ -139,7 +147,9 @@ void RGOsmGraphicsView::loadTiles()
         }
     }
 
-    centerOn(tilePos);
+    // Center the view on the calculated tile position
+    qDebug() << "centerOn:" << centerX << "," << centerY;
+    centerOn(centerX, centerY);
 }
 
 void RGOsmGraphicsView::clearTiles()
