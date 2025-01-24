@@ -129,7 +129,8 @@ void RGOsmGraphicsView::loadTiles()
     double centerY = tilePos.y() * RGOSMapProjection::TILE_SIZE;
     QPointF topLeft(centerX - mSize.width() / 2.0, centerY - mSize.height() / 2.0);
     QRectF fixedSceneRect(topLeft, mSize);
-    mScene->setSceneRect(fixedSceneRect);
+    mScene->setSceneRect(QRectF());
+    mScene->addRect(fixedSceneRect, QPen(Qt::red));
 
     // Calculate tile indices to load
     int beginX = std::floor(fixedSceneRect.left() / RGOSMapProjection::TILE_SIZE);
