@@ -77,5 +77,5 @@ void RGTileProviderManager::loadCustomProviders()
 void RGTileProviderManager::loadDefaultProviders()
 {
     defaultProviders.append(TileProvider(QStringLiteral("OpenStreetMap"), QStringLiteral("https://tile.openstreetmap.org/{z}/{x}/{y}.png")));
-    defaultProviders.append(TileProvider(QStringLiteral("CyclOSM"), QStringLiteral("https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png")));
+    defaultProviders.append(TileProvider(QStringLiteral("CycleOSM"), QStringLiteral("https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png")));
 }

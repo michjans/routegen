@@ -44,9 +44,18 @@ RGOsMap::RGOsMap(QWidget* parent, const QGeoPath& geoPath)
 
     QObject::connect(ui.buttonBox, &QDialogButtonBox::accepted, this, &RGOsMap::on_accept);
 
-    //TODO: Different OSMap providers
-    ui.mapTypeBox->insertItem(0, QStringLiteral("osm"));
+    RGTileProviderManager tileProviderMgr;
+    auto tileProviders = tileProviderMgr.getAllProviders();
+    std::for_each(tileProviders.begin(), tileProviders.end(),
+                  [this](const auto& tileProvider)
+                  {
+                      mTileProviders[tileProvider.name] = tileProvider;
+                      ui.mapTypeBox->insertItem(0, tileProvider.name);
+                  });
+
+    //TODO: Store and Get latest saved tile provider from RGSettings
     ui.mapTypeBox->setCurrentIndex(0);
+    ui.osmView->osmBackend().setTileProvider(mTileProviders["OpenStreetMap"]);
 
     //Init map resolution
     handleScaleSpinboxChanged(1.0);
@@ -124,10 +133,10 @@ void RGOsMap::handleScaleSpinboxChanged(double)
 void RGOsMap::on_mapTypeBox_textActivated(const QString& text)
 {
     qDebug() << "on_mapTypeBox_textActivated:" << text;
+    ui.osmView->osmBackend().setTileProvider(mTileProviders[text]);
 }
 
 void RGOsMap::on_zoomBox_valueChanged(int zoom)
 {
     //TODO?
 }
-

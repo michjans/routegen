@@ -12,6 +12,10 @@ public:
         QString name;
         QString urlTemplate;
 
+        TileProvider()
+        {
+        }
+
         TileProvider(const QString& name, const QString& urlTemplate)
             : name(name),
               urlTemplate(urlTemplate)

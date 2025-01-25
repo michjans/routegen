@@ -36,8 +36,13 @@ This file is part of Route Generator.
 
 RGOsmBackend::RGOsmBackend(QObject* parent)
     : QObject(parent),
-      mCachePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/osmcache/%1/%2/%3.png")
+      mCachePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/osmcache/")
 {
+}
+
+void RGOsmBackend::setTileProvider(const RGTileProviderManager::TileProvider& provider)
+{
+    mTileProvider = provider;
 }
 
 void RGOsmBackend::requestTile(int x, int y, int zoom)
@@ -141,7 +146,7 @@ void RGOsmBackend::downloadTileAndSaveToCache(int x, int y, int zoom)
 
 QString RGOsmBackend::getTileUrl(int x, int y, int zoom)
 {
-    QString url = mUrlTemplate;
+    QString url = mTileProvider.urlTemplate;
     const QString& subdomain = mSubDomains[m_randommizer.bounded(0, mSubDomains.size())]; // Random subdomain
     return url.replace("{s}", subdomain).replace("{z}", QString::number(zoom)).replace("{x}", QString::number(x)).replace("{y}", QString::number(y));
 }
@@ -176,7 +181,7 @@ void RGOsmBackend::addAttribution(QImage& image, const QString& attributionText)
 
 QString RGOsmBackend::getCachePath(int zoom, int x, int y)
 {
-    return mCachePath.arg(zoom).arg(x).arg(y);
+    return (mCachePath + mTileProvider.name + "/%1/%2/%3.png").arg(zoom).arg(x).arg(y);
 }
 
 bool RGOsmBackend::isTileCached(int zoom, int x, int y)

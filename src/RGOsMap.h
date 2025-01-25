@@ -18,6 +18,8 @@
 */
 
 #include "RGMapBounds.h"
+#include "RGOSMTileProviderManager.h"
+
 #include "ui_osmap.h"
 
 #include <QGeoPath>
@@ -57,4 +59,5 @@ private:
     QPixmap m_map;
     QGeoPath m_geoPath;
     RGMapBounds m_mapBounds;
+    std::map<QString, RGTileProviderManager::TileProvider> mTileProviders;
 };

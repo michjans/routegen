@@ -140,26 +140,36 @@
        </item>
        <item row="2" column="0" colspan="2">
         <widget class="QGroupBox" name="groupBox_3">
+         <property name="toolTip">
+          <string>Here you can add custom URL's to other OSM tile providers</string>
+         </property>
          <property name="title">
-          <string>OpenStreetMap tile providers</string>
+          <string>OpenStreetMap custom tile providers</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="1" column="0">
-           <widget class="QPushButton" name="pushButton">
+          <item row="0" column="0" rowspan="3">
+           <widget class="QListView" name="osmProviderList"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="addOsmProviderPB">
             <property name="text">
              <string>Add</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="editOsmProviderPB">
+            <property name="text">
+             <string>Edit</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QPushButton" name="removeOsmProviderPB">
             <property name="text">
              <string>Remove</string>
             </property>
            </widget>
-          </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QListView" name="listView"/>
           </item>
          </layout>
         </widget>

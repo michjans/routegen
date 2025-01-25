@@ -20,6 +20,8 @@ This file is part of Route Generator.
 #ifndef RGOSMBACKEND_H
 #define RGOSMBACKEND_H
 
+#include "RGOSMTileProviderManager.h"
+
 #include <QImage>
 #include <QObject>
 #include <QRandomGenerator>
@@ -31,6 +33,7 @@ class RGOsmBackend : public QObject
 public:
     RGOsmBackend(QObject* parent = nullptr);
 
+    void setTileProvider(const RGTileProviderManager::TileProvider& provider);
     /**
      * @brief requestTile Asynchronous method to request a tile in the background and get signalled when the requested
      *        tile is available @see tileAvailable
@@ -56,8 +59,7 @@ private:
     QRandomGenerator m_randommizer;
 
     const QString mCachePath;
-    QLatin1String mUrlTemplate = QLatin1String("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
-    //QLatin1String mUrlTemplate = QLatin1String("https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png");
+    RGTileProviderManager::TileProvider mTileProvider;
     QStringList mSubDomains = {"a", "b", "c"};
 };
 

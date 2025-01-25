@@ -41,6 +41,11 @@ public:
 
     void loadMap(const QGeoCoordinate& coord, int zoom, QSize size);
 
+    RGOsmBackend& osmBackend()
+    {
+        return mOsmBackEnd;
+    }
+
     QPixmap renderMap();
 
 signals:
