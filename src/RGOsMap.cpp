@@ -53,9 +53,9 @@ RGOsMap::RGOsMap(QWidget* parent, const QGeoPath& geoPath)
                       ui.mapTypeBox->insertItem(0, tileProvider.name);
                   });
 
-    //TODO: Store and Get latest saved tile provider from RGSettings
-    ui.mapTypeBox->setCurrentIndex(0);
-    ui.osmView->osmBackend().setTileProvider(mTileProviders["OpenStreetMap"]);
+    QString activeOsmProvider = RGSettings::getActiveOsmProvider();
+    ui.mapTypeBox->setCurrentText(activeOsmProvider);
+    ui.osmView->osmBackend().setTileProvider(mTileProviders[activeOsmProvider]);
 
     //Init map resolution
     handleScaleSpinboxChanged(1.0);
@@ -67,11 +67,14 @@ RGOsMap::RGOsMap(QWidget* parent, const QGeoPath& geoPath)
         qDebug() << "startGeoRect:"
                  << "  topLeft:" << startGeoRect.topLeft() << "  bottomLeft:" << startGeoRect.bottomLeft() << "  topRight:" << startGeoRect.topRight()
                  << "  bottomRight:" << startGeoRect.bottomRight() << "  center:" << startGeoRect.center();
-        //TODO: Draw rectangle above osm map
+
+        QGeoCoordinate center = startGeoRect.center();
+        ui.latSB->setValue(center.latitude());
+        ui.lonSB->setValue(center.longitude());
+        ui.osmView->setGeoRect(startGeoRect);
 
         ui.latSB->setEnabled(false);
         ui.lonSB->setEnabled(false);
-        ui.goButton->setEnabled(false);
     }
 
     //Shared setting for google/osm map import dialog
@@ -133,6 +136,7 @@ void RGOsMap::handleScaleSpinboxChanged(double)
 void RGOsMap::on_mapTypeBox_textActivated(const QString& text)
 {
     qDebug() << "on_mapTypeBox_textActivated:" << text;
+    RGSettings::setActiveOsmProvider(text);
     ui.osmView->osmBackend().setTileProvider(mTileProviders[text]);
 }
 

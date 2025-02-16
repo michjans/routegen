@@ -524,6 +524,18 @@ bool RGSettings::getUseMapResolution()
     return settings.value("useMapResolution", false).toBool();
 }
 
+QString RGSettings::getActiveOsmProvider()
+{
+    QSettings settings;
+    return settings.value("activeOsmProvider", QVariant("OpenStreetMap")).toString();
+}
+
+void RGSettings::setActiveOsmProvider(const QString& provider)
+{
+    QSettings settings;
+    settings.setValue("activeOsmProvider", provider);
+}
+
 void RGSettings::setSmoothPathMode(bool enable)
 {
     QSettings settings;

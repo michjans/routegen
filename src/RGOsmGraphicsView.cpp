@@ -19,7 +19,6 @@
 
 #include "RGOsmGraphicsView.h"
 #include "RGOSMapProjection.h"
-#include "RGSettings.h"
 
 #include <QDebug>
 #include <QGraphicsPixmapItem>
@@ -147,6 +146,8 @@ void RGOsmGraphicsView::loadTiles()
             mOsmBackEnd.requestTile(x, y, mZoomLevel);
         }
     }
+
+    //TODO: Draw mGeoRect on top if all tiles have been loaded
 
     // Center the view on the calculated tile position
     qDebug() << "centerOn:" << centerX << "," << centerY;

@@ -121,6 +121,10 @@ public:
     static void setUseMapResolution(bool val);
     static bool getUseMapResolution();
 
+    //OSM settings
+    static QString getActiveOsmProvider();
+    static void setActiveOsmProvider(const QString& name);
+
     /*
      * Advanced settings
      */

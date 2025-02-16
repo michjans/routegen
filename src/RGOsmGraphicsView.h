@@ -21,6 +21,7 @@
 #define RGVOSMGRAPHICSVIEW_H
 
 #include <QGeoCoordinate>
+#include <QGeoRectangle>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QList>
@@ -40,6 +41,11 @@ public:
     void setFixedSceneResolution(const QSize& res);
 
     void loadMap(const QGeoCoordinate& coord, int zoom, QSize size);
+
+    void setGeoRect(const QGeoRectangle& rect)
+    {
+        mGeoRect = rect;
+    }
 
     RGOsmBackend& osmBackend()
     {
@@ -69,6 +75,7 @@ private:
     QGraphicsScene* mScene;
     QPoint mDragOrigin;
     QGeoCoordinate mCenterCoord;
+    QGeoRectangle mGeoRect;
     QSize mSize;
     int mZoomLevel;
 };
