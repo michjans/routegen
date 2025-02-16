@@ -2,6 +2,7 @@
 #define RGOSMapProjection_H
 
 #include "RGMapProjection.h"
+#include "RGOsMapBounds.h"
 
 #include <QGeoCoordinate>
 #include <QPointF>
@@ -12,7 +13,7 @@ class RGOSMapProjection : public RGMapProjection
 public:
     static const int TILE_SIZE = 256;
 
-    RGOSMapProjection(const QGeoCoordinate& centerPoint, int zoom, int mapWidth, int mapHeight, QObject* parent = nullptr);
+    RGOSMapProjection(const RGOsMapBounds& osmBoumds, int mapWidth, int mapHeight, QObject* parent = nullptr);
     ~RGOSMapProjection() override;
 
     bool isValid() const override;
@@ -22,9 +23,7 @@ public:
     static QGeoCoordinate tileToLatLon(const QPointF& tileXY, int zoom);
 
 private:
-
-    QGeoCoordinate m_centerPoint;
-    int m_zoom;
+    RGOsMapBounds m_osmBoumds;
     int m_mapWidth;
     int m_mapHeight;
 };

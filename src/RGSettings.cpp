@@ -206,11 +206,11 @@ void RGSettings::setEndDelaySeconds(int val)
     settings.setValue("endDelaySeconds", val);
 }
 
-RGMapBounds RGSettings::getMapGeoBounds(const QString& fileName)
+RGGoogleMapBounds RGSettings::getMapGeoBounds(const QString& fileName)
 {
     QSettings settings;
 
-    RGMapBounds bounds;
+    RGGoogleMapBounds bounds;
     QHash<QString, QVariant> geoBoundMap = settings.value("geoBounds", QHash<QString, QVariant>()).toHash();
     if (geoBoundMap.contains(fileName))
     {

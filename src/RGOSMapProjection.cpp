@@ -4,10 +4,9 @@
 #include <QDebug>
 #include <QtMath>
 
-RGOSMapProjection::RGOSMapProjection(const QGeoCoordinate& centerPoint, int zoom, int mapWidth, int mapHeight, QObject* parent)
+RGOSMapProjection::RGOSMapProjection(const RGOsMapBounds& osmBoumds, int mapWidth, int mapHeight, QObject* parent)
     : RGMapProjection(parent),
-      m_centerPoint(centerPoint),
-      m_zoom(zoom),
+      m_osmBoumds(osmBoumds),
       m_mapWidth(mapWidth),
       m_mapHeight(mapHeight)
 {
@@ -26,10 +25,10 @@ bool RGOSMapProjection::isValid() const
 QPoint RGOSMapProjection::convert(const QGeoCoordinate& geoPoint) const
 {
     // Convert center latitude/longitude to tile coordinates
-    QPointF centerTile = latLonToTile(m_centerPoint, m_zoom);
+    QPointF centerTile = latLonToTile(m_osmBoumds.getCenterCoord(), m_osmBoumds.getZoom());
 
     // Convert current latitude/longitude to tile coordinates
-    QPointF tile = latLonToTile(geoPoint, m_zoom);
+    QPointF tile = latLonToTile(geoPoint, m_osmBoumds.getZoom());
 
     // Calculate pixel offsets relative to the center of the map
     double pixelX = (tile.x() - centerTile.x()) * TILE_SIZE + m_mapWidth / 2.0;

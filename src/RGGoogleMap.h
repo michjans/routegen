@@ -17,7 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "RGMapBounds.h"
+#include "RGGoogleMapBounds.h"
 #include "ui_googlemap.h"
 
 #include <QGeoPath>
@@ -35,7 +35,7 @@ public:
     {
         return m_map;
     }
-    const RGMapBounds& getMapBounds() const
+    const RGGoogleMapBounds& getMapBounds() const
     {
         return m_mapBounds;
     }
@@ -62,5 +62,5 @@ private:
     QString m_html_template;
     QPixmap m_map;
     QGeoPath m_geoPath;
-    RGMapBounds m_mapBounds;
+    RGGoogleMapBounds m_mapBounds;
 };

@@ -89,6 +89,8 @@ void RGOsmGraphicsView::mouseMoveEvent(QMouseEvent* event)
     qDebug() << "delta:" << delta;
     translate(delta.x(), delta.y());
     mDragOrigin = event->pos();
+    //TODO: Here we need to recalculate the new center coordinate and loadTiles using the
+    //      new center coordinate and  also emit the centerCoordChanged signal.
 }
 
 void RGOsmGraphicsView::wheelEvent(QWheelEvent* event)
@@ -97,6 +99,7 @@ void RGOsmGraphicsView::wheelEvent(QWheelEvent* event)
     int zoomDelta = event->angleDelta().y() > 0 ? 1 : -1;
     mZoomLevel = qBound(1, mZoomLevel + zoomDelta, 20);
     qDebug() << "zoom:" << mZoomLevel;
+    emit zoomLevelChanged(mZoomLevel);
     loadTiles();
     //viewport()->update();
 }

@@ -3,7 +3,7 @@
 
 #include "RGMapProjection.h"
 
-#include "RGMapBounds.h"
+#include "RGGoogleMapBounds.h"
 
 #include <QGeoCoordinate>
 #include <QPointF>
@@ -12,7 +12,7 @@ class RGGoogleMapProjection : public RGMapProjection
 {
     Q_OBJECT
 public:
-    RGGoogleMapProjection(const RGMapBounds& mapBounds, QObject* parent = nullptr);
+    RGGoogleMapProjection(const RGGoogleMapBounds& mapBounds, QObject* parent = nullptr);
     virtual ~RGGoogleMapProjection() override;
 
     bool isValid() const override;
@@ -26,7 +26,7 @@ private:
     //World to pixels
     QPoint worldToPixel(const QPointF& worldPoint) const;
 
-    RGMapBounds m_bounds;
+    RGGoogleMapBounds m_bounds;
     QPoint mTopLeft;
     QPoint mBottomRight;
     int mAntiMeredianPosX;

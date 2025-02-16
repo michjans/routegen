@@ -3,11 +3,10 @@
 
 #include "RGGeoTiffMapProjection.h"
 #include "RGGoogleMapProjection.h"
+#include "RGOSMapProjection.h"
 
 #include <QDebug>
 #include <QJsonObject>
-
-#include <algorithm>
 
 RGMap::RGMap(QObject* parent)
     : QObject(parent),
@@ -15,33 +14,18 @@ RGMap::RGMap(QObject* parent)
 {
 }
 
-bool RGMap::loadMap(const QString& fileName, const QPixmap& map, const RGMapBounds& gmapBounds)
+bool RGMap::loadMap(const QString& fileName)
 {
-    bool success = !map.isNull();
     mFileName = fileName;
-    if (map.isNull())
-    {
-        success = mMap.load(fileName);
-    }
-    else
-    {
-        mMap = map;
-    }
+    bool success = mMap.load(fileName);
 
     if (success)
     {
+        //TODO: It coulds also be a map imported from OSM?
+        //      Store tags in image file, instead of separately in RGSettings?
+        //      Then we can determine which kind of map bounds to load.
         //Store or retrieve google map's geo boundaries
-        RGMapBounds googleBounds;
-        if (gmapBounds.isValid())
-        {
-            //If gmapBounds is passed, we know it's an imported Google map
-            googleBounds = gmapBounds;
-            RGSettings::setMapGeoBounds(fileName, gmapBounds);
-        }
-        else
-        {
-            googleBounds = RGSettings::getMapGeoBounds(fileName);
-        }
+        RGGoogleMapBounds googleBounds = RGSettings::getMapGeoBounds(fileName);
 
         if (googleBounds.isValid())
         {
@@ -51,6 +35,85 @@ bool RGMap::loadMap(const QString& fileName, const QPixmap& map, const RGMapBoun
         {
             //This is potentially a geotiff file
             mMapProjection = std::make_unique<RGGeoTiffMapProjection>(fileName);
+        }
+
+        emit mapLoaded(mMap);
+    }
+
+    mDirty = true;
+
+    return success;
+}
+
+bool RGMap::loadMap(const QString& fileName, const QPixmap& map)
+{
+    bool success = !map.isNull();
+    mFileName = fileName;
+    mMap = map;
+
+    //TODO: The block below is identical as in method above, so put in commont function!
+    if (success)
+    {
+        //TODO: It coulds also be a map imported from OSM?
+        //      Store tags in image file, instead of separately in RGSettings?
+        //      Then we can determine which kind of map bounds to load.
+        //Store or retrieve google map's geo boundaries
+        RGGoogleMapBounds googleBounds = RGSettings::getMapGeoBounds(fileName);
+
+        if (googleBounds.isValid())
+        {
+            mMapProjection = std::make_unique<RGGoogleMapProjection>(googleBounds);
+        }
+        else if (fileName.endsWith(QLatin1String(".tif")))
+        {
+            //This is potentially a geotiff file
+            mMapProjection = std::make_unique<RGGeoTiffMapProjection>(fileName);
+        }
+
+        emit mapLoaded(mMap);
+    }
+
+    mDirty = true;
+
+    return success;
+}
+
+bool RGMap::loadMap(const QString& fileName, const QPixmap& map, const RGGoogleMapBounds& gmapBounds)
+{
+    bool success = !map.isNull();
+    mFileName = fileName;
+    mMap = map;
+
+    if (success)
+    {
+        if (gmapBounds.isValid())
+        {
+            //Store google map's geo boundaries
+            RGSettings::setMapGeoBounds(fileName, gmapBounds);
+            mMapProjection = std::make_unique<RGGoogleMapProjection>(gmapBounds);
+        }
+
+        emit mapLoaded(mMap);
+    }
+
+    mDirty = true;
+
+    return success;
+}
+
+bool RGMap::loadMap(const QString& fileName, const QPixmap& map, const RGOsMapBounds& osmBounds)
+{
+    bool success = !map.isNull();
+    mFileName = fileName;
+    mMap = map;
+
+    if (success)
+    {
+        if (osmBounds.isValid())
+        {
+            //TODO: Find a way to store OSM map's geo boundaries, e.g. as meta tags in file
+            //RGSettings::setMapGeoBounds(fileName, gmapBounds);
+            mMapProjection = std::make_unique<RGOSMapProjection>(osmBounds, mMap.width(), mMap.height());
         }
 
         emit mapLoaded(mMap);

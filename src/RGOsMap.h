@@ -17,8 +17,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "RGMapBounds.h"
 #include "RGOSMTileProviderManager.h"
+#include "RGOsMapBounds.h"
 
 #include "ui_osmap.h"
 
@@ -37,7 +37,7 @@ public:
     {
         return m_map;
     }
-    const RGMapBounds& getMapBounds() const
+    const RGOsMapBounds& getMapBounds() const
     {
         return m_mapBounds;
     }
@@ -51,13 +51,13 @@ private slots:
     void on_goButton_clicked(bool);
     void handleScaleSpinboxChanged(double);
     void on_mapTypeBox_textActivated(const QString&);
-    void on_zoomBox_valueChanged(int zoom);
+    void on_zoomLevelChangedChanged(int zoom);
 
 private:
     Ui_osMap ui;
     QString m_html_template;
     QPixmap m_map;
     QGeoPath m_geoPath;
-    RGMapBounds m_mapBounds;
+    RGOsMapBounds m_mapBounds;
     std::map<QString, RGTileProviderManager::TileProvider> mTileProviders;
 };

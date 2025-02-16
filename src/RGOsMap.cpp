@@ -57,6 +57,9 @@ RGOsMap::RGOsMap(QWidget* parent, const QGeoPath& geoPath)
     ui.mapTypeBox->setCurrentText(activeOsmProvider);
     ui.osmView->osmBackend().setTileProvider(mTileProviders[activeOsmProvider]);
 
+    //Make sure the zoom spinbox is synced with the view's zoom level (i.e. map zooming with scroll wheel)
+    QObject::connect(ui.osmView, &RGOsmGraphicsView::zoomLevelChanged, this, &RGOsMap::on_zoomLevelChangedChanged);
+
     //Init map resolution
     handleScaleSpinboxChanged(1.0);
 
@@ -122,6 +125,8 @@ void RGOsMap::on_goButton_clicked(bool)
     // ui.progressBar->show();
 
     QGeoCoordinate coord(ui.latSB->value(), ui.lonSB->value());
+    m_mapBounds.setZoom(ui.zoomBox->value());
+    m_mapBounds.setCenterCoord(coord);
     auto res = RGSettings::getOutputResolution();
     ui.osmView->loadMap(coord, ui.zoomBox->value(), QSize(ui.widthScaleSB->value() * res.width(), ui.heightScaleSB->value() * res.height()));
 }
@@ -140,7 +145,8 @@ void RGOsMap::on_mapTypeBox_textActivated(const QString& text)
     ui.osmView->osmBackend().setTileProvider(mTileProviders[text]);
 }
 
-void RGOsMap::on_zoomBox_valueChanged(int zoom)
+void RGOsMap::on_zoomLevelChangedChanged(int zoom)
 {
-    //TODO?
+    ui.zoomBox->setValue(zoom);
+    m_mapBounds.setZoom(zoom);
 }

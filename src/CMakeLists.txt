@@ -49,6 +49,8 @@ add_executable(routegen WIN32 MACOSX_BUNDLE
     RGMainWindow.cpp RGMainWindow.h
     RGMap.cpp RGMap.h
     RGMapBounds.h
+    RGGoogleMapBounds.h
+    RGOsMapBounds.h
     RGMapProjection.cpp RGMapProjection.h
     RGGoogleMapProjection.cpp RGGoogleMapProjection.h
     RGGeoTiffMapProjection.cpp RGGeoTiffMapProjection.h
