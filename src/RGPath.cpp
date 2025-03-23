@@ -362,8 +362,14 @@ void RGPath::createAverageRouteAngles()
 QPoint RGPath::getPointAtLength(QPoint start, QPoint end, int length)
 {
     QPoint dv = end - start;
-    double totlength = sqrt(pow(double((end - start).x()), 2) + pow(double((end - start).y()), 2));
-    return QPoint(start + length / totlength * dv);
+    double totlength = sqrt(pow(double(dv.x()), 2) + pow(double(dv.y()), 2));
+
+    if (totlength == 0)
+    {
+        return start; // Prevent division by zero
+    }
+
+    return start + (length / totlength) * dv;
 }
 
 double RGPath::getAngleAtFrame(int frameIdx)
