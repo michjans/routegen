@@ -195,7 +195,7 @@ QImage RGOsmBackend::loadCachedTile(int zoom, int x, int y)
 {
     QString path = getCachePath(zoom, x, y);
     QImage tile;
-    qDebug() << "loading tile from cache: " << path;
+    //qDebug() << "loading tile from cache: " << path;
     if (tile.load(path))
     {
         return tile;

@@ -62,8 +62,8 @@ void forceFileSuffix(QString& fileName, const QString& suffix)
 RGMainWindow::RGMainWindow(QWidget* parent)
     : QMainWindow(parent),
       mVideoEncoder(nullptr),
-      mUseMapResTooltip(tr("First select a preferred video resolution before importing map from Google Maps!")),
-      mSelResTooltip(tr("Import map from Google Maps using currently selected video resolution"))
+      mUseMapResTooltip(tr("First select a preferred video resolution before importing map from %1!")),
+      mSelResTooltip(tr("Import map from %1 using currently selected video resolution"))
 {
     //Set currentPath
     QDir::setCurrent(QCoreApplication::applicationDirPath());
@@ -81,6 +81,7 @@ RGMainWindow::RGMainWindow(QWidget* parent)
     actionSave_project_as = ui.actionSave_project_as;
     actionOpen_project = ui.actionOpen_project;
     actionImport_Google_Map = ui.actionImport_Google_Map;
+    actionImport_OSM_Map = ui.actionImport_OSM_Map;
     actionImport_GPX = ui.actionImport_GPX;
     actionDraw_mode = ui.actionDraw_mode;
     actionNew_route = ui.actionNew_route;
@@ -147,6 +148,7 @@ RGMainWindow::RGMainWindow(QWidget* parent)
 
     //Used for highlighting the resolution selector in a certain color
     QObject::connect(actionImport_Google_Map, &QAction::hovered, this, &RGMainWindow::highlightResolutionCB);
+    QObject::connect(actionImport_OSM_Map, &QAction::hovered, this, &RGMainWindow::highlightResolutionCB);
 
     //Video Encoder:
     initVideoEncoderFromSettings();
@@ -429,17 +431,21 @@ void RGMainWindow::on_actionImport_GPX_triggered(bool)
             msgBox.setIconPixmap(icon.scaled(icSize));
 
             msgBox.setText(tr("GPX route imported succesfully!"));
-            QPushButton* importButton = msgBox.addButton(tr("Import new map (Google maps)..."), QMessageBox::ActionRole);
+            QPushButton* importGMButton = msgBox.addButton(tr("Import new Google map..."), QMessageBox::ActionRole);
+            QPushButton* importOSMButton = msgBox.addButton(tr("Import new OSM map..."), QMessageBox::ActionRole);
 
             if (RGSettings::getUseMapResolution())
             {
                 //Importing map only works if we know what resolution to use
-                importButton->setEnabled(false);
-                importButton->setToolTip(mUseMapResTooltip);
+                importGMButton->setEnabled(false);
+                importGMButton->setToolTip(mUseMapResTooltip.arg(QStringLiteral("Google Maps")));
+                importOSMButton->setEnabled(false);
+                importOSMButton->setToolTip(mUseMapResTooltip.arg(QStringLiteral("Open Street Maps")));
             }
             else
             {
-                importButton->setToolTip(mSelResTooltip);
+                importGMButton->setToolTip(mSelResTooltip.arg(QStringLiteral("Google Maps")));
+                importOSMButton->setToolTip(mSelResTooltip.arg(QStringLiteral("Open Street Maps")));
             }
             highlightResolutionCB(); //Hint the user that there is a relationship with the resolution selection
 
@@ -453,13 +459,17 @@ void RGMainWindow::on_actionImport_GPX_triggered(bool)
             else
             {
                 //Route loaded but map has no geo boundaries
-                msgBox.setInformativeText(tr("Unable to draw route on current map: import new (Google) map or open existing map?"));
+                msgBox.setInformativeText(tr("Unable to draw route on current map: import new map or open existing map?"));
                 msgBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
             }
             msgBox.exec();
-            if (msgBox.clickedButton() == importButton)
+            if (msgBox.clickedButton() == importGMButton)
             {
                 on_actionImport_Google_Map_triggered(true);
+            }
+            else if (msgBox.clickedButton() == importOSMButton)
+            {
+                on_actionImport_OSM_Map_triggered(true);
             }
             else if (msgBox.clickedButton() == existingButton)
             {
@@ -741,6 +751,7 @@ void RGMainWindow::blockUserInteraction(bool busy)
     actionGenerate_map->setEnabled(!busy);
     actionPlayback->setEnabled(!busy);
     actionImport_Google_Map->setEnabled(!busy && !RGSettings::getUseMapResolution());
+    actionImport_OSM_Map->setEnabled(!busy && !RGSettings::getUseMapResolution());
     actionImport_GPX->setEnabled(!busy);
     mRouteUi->blockEssentialControls(busy);
     //Stop is only enabled while playing back
@@ -871,12 +882,16 @@ void RGMainWindow::determineGoogleMapImportStatus()
     if (RGSettings::getUseMapResolution())
     {
         actionImport_Google_Map->setEnabled(false);
-        actionImport_Google_Map->setToolTip(mUseMapResTooltip);
+        actionImport_Google_Map->setToolTip(mUseMapResTooltip.arg(QStringLiteral("Google Maps")));
+        actionImport_OSM_Map->setEnabled(false);
+        actionImport_OSM_Map->setToolTip(mUseMapResTooltip.arg(QStringLiteral("Open Street Maps")));
     }
     else
     {
         actionImport_Google_Map->setEnabled(true);
-        actionImport_Google_Map->setToolTip(mSelResTooltip);
+        actionImport_Google_Map->setToolTip(mSelResTooltip.arg(QStringLiteral("Google Maps")));
+        actionImport_OSM_Map->setEnabled(true);
+        actionImport_OSM_Map->setToolTip(mSelResTooltip.arg(QStringLiteral("Open Street Maps")));
     }
 }
 

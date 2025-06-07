@@ -32,10 +32,23 @@ RGOsmGraphicsView::RGOsmGraphicsView(QWidget* parent)
       mScene(new QGraphicsScene(this)),
       mZoomLevel(1)
 {
-    this->setScene(mScene);
-    this->setRenderHint(QPainter::Antialiasing);
-    this->setRenderHint(QPainter::SmoothPixmapTransform);
-    this->setDragMode(QGraphicsView::ScrollHandDrag);
+    setScene(mScene);
+    //setRenderHint(QPainter::Antialiasing);
+    //setRenderHint(QPainter::SmoothPixmapTransform);
+    //setDragMode(QGraphicsView::ScrollHandDrag);
+    //setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    //setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+
+    setTransformationAnchor(QGraphicsView::NoAnchor);
+    setResizeAnchor(QGraphicsView::NoAnchor);
+    setRenderHint(QPainter::SmoothPixmapTransform, false);
+    setRenderHint(QPainter::Antialiasing, false);
+    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    setInteractive(false);
+    setDragMode(QGraphicsView::NoDrag);
+    setCursor(Qt::OpenHandCursor);
 
     connect(&mOsmBackEnd, &RGOsmBackend::tileAvailable, this, &RGOsmGraphicsView::addTileToScene);
 }
@@ -77,20 +90,48 @@ QPixmap RGOsmGraphicsView::renderMap()
 
 void RGOsmGraphicsView::mousePressEvent(QMouseEvent* event)
 {
-    mDragOrigin = event->pos();
-    qDebug() << "viewport size:" << viewport()->size();
-    //qDebug() << "transformation:" << transform();
-    qDebug() << "Viewport center after centerOn:" << mapToScene(viewport()->rect().center());
+    if (event->button() == Qt::LeftButton)
+    {
+        mDragOrigin = event->pos();
+        //qDebug() << "viewport size:" << viewport()->size();
+        //qDebug() << "transformation:" << transform();
+        //qDebug() << "Viewport center after centerOn:" << mapToScene(viewport()->rect().center());
+        qDebug() << "mDragOrigin = " << mDragOrigin;
+        setCursor(Qt::ClosedHandCursor); // Optional: better UX
+    }
 }
 
 void RGOsmGraphicsView::mouseMoveEvent(QMouseEvent* event)
 {
     auto delta = event->pos() - mDragOrigin;
+
     qDebug() << "delta:" << delta;
-    translate(delta.x(), delta.y());
+    qDebug() << "delta.x() / 256.0 = " << delta.x() / 256.0;
+
     mDragOrigin = event->pos();
-    //TODO: Here we need to recalculate the new center coordinate and loadTiles using the
-    //      new center coordinate and  also emit the centerCoordChanged signal.
+
+    // Convert pixel movement to change in lat/lon
+    qDebug() << "original mCenterCoord = " << mCenterCoord;
+
+    QPointF centerTile = RGOSMapProjection::latLonToTile(mCenterCoord, mZoomLevel);
+    centerTile.setX(centerTile.x() - delta.x() / RGOSMapProjection::TILE_SIZE);
+    centerTile.setY(centerTile.y() - delta.y() / RGOSMapProjection::TILE_SIZE);
+    mCenterCoord = RGOSMapProjection::tileToLatLon(centerTile, mZoomLevel);
+    qDebug() << "shifted mCenterCoord = " << mCenterCoord;
+    emit centerCoordChanged(mCenterCoord);
+
+    event->accept();
+
+    clearTiles();
+    loadTiles();
+}
+
+void RGOsmGraphicsView::mouseReleaseEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        setCursor(Qt::OpenHandCursor);
+    }
 }
 
 void RGOsmGraphicsView::wheelEvent(QWheelEvent* event)
@@ -101,7 +142,7 @@ void RGOsmGraphicsView::wheelEvent(QWheelEvent* event)
     qDebug() << "zoom:" << mZoomLevel;
     emit zoomLevelChanged(mZoomLevel);
     loadTiles();
-    //viewport()->update();
+    viewport()->update();
 }
 
 void RGOsmGraphicsView::addTileToScene(const QImage& tile, int tileX, int tileY)
@@ -111,12 +152,12 @@ void RGOsmGraphicsView::addTileToScene(const QImage& tile, int tileX, int tileY)
     int y = tileY * RGOSMapProjection::TILE_SIZE;
 
     // Create a pixmap item and add it to the scene
-    qDebug() << "adding tile item:" << x << ", " << y;
+    //qDebug() << "adding tile item:" << x << ", " << y;
     QGraphicsPixmapItem* tileItem = new QGraphicsPixmapItem(QPixmap::fromImage(tile));
     tileItem->setPos(x, y);
     mScene->addItem(tileItem);
 
-    qDebug() << "scene rect is now: " << mScene->sceneRect();
+    //qDebug() << "scene rect is now: " << mScene->sceneRect();
 }
 
 void RGOsmGraphicsView::loadTiles()
@@ -131,8 +172,9 @@ void RGOsmGraphicsView::loadTiles()
     double centerY = tilePos.y() * RGOSMapProjection::TILE_SIZE;
     QPointF topLeft(centerX - mSize.width() / 2.0, centerY - mSize.height() / 2.0);
     QRectF fixedSceneRect(topLeft, mSize);
-    mScene->setSceneRect(QRectF());
-    mScene->addRect(fixedSceneRect, QPen(Qt::red));
+    mScene->setSceneRect(fixedSceneRect);
+    //mScene->setSceneRect(QRectF());
+    //mScene->addRect(fixedSceneRect, QPen(Qt::red));
 
     // Calculate tile indices to load
     int beginX = std::floor(fixedSceneRect.left() / RGOSMapProjection::TILE_SIZE);
@@ -153,7 +195,7 @@ void RGOsmGraphicsView::loadTiles()
     //TODO: Draw mGeoRect on top if all tiles have been loaded
 
     // Center the view on the calculated tile position
-    qDebug() << "centerOn:" << centerX << "," << centerY;
+    //qDebug() << "centerOn:" << centerX << "," << centerY;
     centerOn(centerX, centerY);
 }
 

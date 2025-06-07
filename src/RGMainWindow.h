@@ -108,6 +108,7 @@ private:
     QAction* actionSave_project_as;
     QAction* actionOpen_project;
     QAction* actionImport_Google_Map;
+    QAction* actionImport_OSM_Map;
     QAction* actionImport_GPX;
     QAction* actionDraw_mode;
     QAction* actionNew_route;

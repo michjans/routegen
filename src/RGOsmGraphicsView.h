@@ -61,6 +61,7 @@ signals:
 protected:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
     void wheelEvent(QWheelEvent* event) override;
 
 private slots:
@@ -73,7 +74,7 @@ private:
     RGOsmBackend mOsmBackEnd;
 
     QGraphicsScene* mScene;
-    QPoint mDragOrigin;
+    QPointF mDragOrigin;
     QGeoCoordinate mCenterCoord;
     QGeoRectangle mGeoRect;
     QSize mSize;

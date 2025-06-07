@@ -52,6 +52,7 @@ private slots:
     void handleScaleSpinboxChanged(double);
     void on_mapTypeBox_textActivated(const QString&);
     void on_zoomLevelChangedChanged(int zoom);
+    void on_centerCoordChanged(const QGeoCoordinate& centerCoord);
 
 private:
     Ui_osMap ui;
