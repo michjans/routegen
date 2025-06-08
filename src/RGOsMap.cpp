@@ -64,9 +64,9 @@ RGOsMap::RGOsMap(QWidget* parent, const QGeoPath& geoPath)
     //Init map resolution
     handleScaleSpinboxChanged(1.0);
 
-    if (geoPath.size() > 1)
+    if (m_geoPath.size() > 1)
     {
-        QGeoRectangle startGeoRect = geoPath.boundingGeoRectangle();
+        QGeoRectangle startGeoRect = m_geoPath.boundingGeoRectangle();
         //Load initial map location from incoming geo rectangle
         qDebug() << "startGeoRect:"
                  << "  topLeft:" << startGeoRect.topLeft() << "  bottomLeft:" << startGeoRect.bottomLeft() << "  topRight:" << startGeoRect.topRight()
@@ -77,8 +77,8 @@ RGOsMap::RGOsMap(QWidget* parent, const QGeoPath& geoPath)
         ui.lonSB->setValue(center.longitude());
         ui.osmView->setGeoRect(startGeoRect);
 
-        ui.latSB->setEnabled(false);
-        ui.lonSB->setEnabled(false);
+        //Immediately load the map in case a route is passed
+        on_goButton_clicked(true);
     }
 
     //Shared setting for google/osm map import dialog

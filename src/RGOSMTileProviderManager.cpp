@@ -15,11 +15,11 @@ QVector<RGTileProviderManager::TileProvider> RGTileProviderManager::getAllProvid
     return allProviders;
 }
 
-void RGTileProviderManager::addCustomProvider(const QString& name, const QString& urlTemplate)
+void RGTileProviderManager::addCustomProvider(const QString& name, const QString& urlTemplate, const QString& attribution)
 {
     if (!providerExists(name))
     {
-        customProviders.append(TileProvider(name, urlTemplate));
+        customProviders.append(TileProvider(name, urlTemplate, attribution));
     }
 }
 
@@ -69,13 +69,15 @@ void RGTileProviderManager::loadCustomProviders()
     settings.beginGroup("CustomProviders");
     for (const auto& key : settings.childKeys())
     {
-        addCustomProvider(key, settings.value(key).toString());
+        addCustomProvider(key, settings.value(key).toString(), "TODO");
     }
     settings.endGroup();
 }
 
 void RGTileProviderManager::loadDefaultProviders()
 {
-    defaultProviders.append(TileProvider(QStringLiteral("OpenStreetMap"), QStringLiteral("https://tile.openstreetmap.org/{z}/{x}/{y}.png")));
-    defaultProviders.append(TileProvider(QStringLiteral("CycleOSM"), QStringLiteral("https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png")));
+    defaultProviders.append(TileProvider(QStringLiteral("OpenStreetMap"), QStringLiteral("https://tile.openstreetmap.org/{z}/{x}/{y}.png"),
+                                         QStringLiteral("© OpenStreetMap contributors")));
+    defaultProviders.append(TileProvider(QStringLiteral("CycleOSM"), QStringLiteral("https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png"),
+                                         QStringLiteral("© OpenStreetMap contributors | Tiles courtesy of CycleOSM")));
 }

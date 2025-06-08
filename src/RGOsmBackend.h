@@ -41,6 +41,7 @@ public:
     void requestTile(int x, int y, int zoom);
     QImage getTile(int x, int y, int zoom);
     void stitchTiles(double lat, double lon, int zoom, int width, int height, const QString& outputFile);
+    void addAttribution(QPaintDevice& image);
 
 signals:
     void tileAvailable(const QImage& tile, int x, int y);
@@ -48,7 +49,6 @@ signals:
 private:
     void downloadTileAndSaveToCache(int x, int y, int zoom);
     QString getTileUrl(int x, int y, int zoom);
-    void addAttribution(QImage& image, const QString& attributionText);
 
     QString getCachePath(int zoom, int x, int y);
     bool isTileCached(int zoom, int x, int y);

@@ -11,14 +11,16 @@ public:
     {
         QString name;
         QString urlTemplate;
+        QString attribution;
 
         TileProvider()
         {
         }
 
-        TileProvider(const QString& name, const QString& urlTemplate)
+        TileProvider(const QString& name, const QString& urlTemplate, const QString& attribution)
             : name(name),
-              urlTemplate(urlTemplate)
+              urlTemplate(urlTemplate),
+              attribution(attribution)
         {
         }
     };
@@ -29,7 +31,7 @@ public:
     QVector<TileProvider> getAllProviders() const;
 
     // Add a custom provider
-    void addCustomProvider(const QString& name, const QString& urlTemplate);
+    void addCustomProvider(const QString& name, const QString& urlTemplate, const QString& attribution);
 
     // Remove a custom provider by name
     bool removeCustomProvider(const QString& name);

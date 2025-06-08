@@ -33,14 +33,11 @@ RGOsmGraphicsView::RGOsmGraphicsView(QWidget* parent)
       mZoomLevel(1)
 {
     setScene(mScene);
-    //setRenderHint(QPainter::Antialiasing);
-    //setRenderHint(QPainter::SmoothPixmapTransform);
-    //setDragMode(QGraphicsView::ScrollHandDrag);
-    //setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    //setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
+    //We want the map to drag and zoom by actually loading the new OSM tiles, so we don't want to make
+    //use of the default transformations provided by QGraphicsView and scene
     setTransformationAnchor(QGraphicsView::NoAnchor);
     setResizeAnchor(QGraphicsView::NoAnchor);
     setRenderHint(QPainter::SmoothPixmapTransform, false);
@@ -73,7 +70,6 @@ void RGOsmGraphicsView::loadMap(const QGeoCoordinate& coord, int zoom, QSize siz
 {
     mZoomLevel = zoom;
     mCenterCoord = coord;
-    mSize = size;
     clearTiles();
     loadTiles();
 }
@@ -85,6 +81,8 @@ QPixmap RGOsmGraphicsView::renderMap()
     QPixmap outImage(fullMapRect.size());
     QPainter painter(&outImage);
     mScene->render(&painter);
+    painter.end();
+    mOsmBackEnd.addAttribution(outImage);
     return outImage;
 }
 
@@ -173,8 +171,6 @@ void RGOsmGraphicsView::loadTiles()
     QPointF topLeft(centerX - mSize.width() / 2.0, centerY - mSize.height() / 2.0);
     QRectF fixedSceneRect(topLeft, mSize);
     mScene->setSceneRect(fixedSceneRect);
-    //mScene->setSceneRect(QRectF());
-    //mScene->addRect(fixedSceneRect, QPen(Qt::red));
 
     // Calculate tile indices to load
     int beginX = std::floor(fixedSceneRect.left() / RGOSMapProjection::TILE_SIZE);
@@ -183,7 +179,6 @@ void RGOsmGraphicsView::loadTiles()
     int endY = std::ceil(fixedSceneRect.bottom() / RGOSMapProjection::TILE_SIZE) - 1;
 
     qDebug() << "Tile grid bounds:" << beginX << endX << beginY << endY;
-
     for (int x = beginX; x <= endX; ++x)
     {
         for (int y = beginY; y <= endY; ++y)

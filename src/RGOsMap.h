@@ -56,7 +56,6 @@ private slots:
 
 private:
     Ui_osMap ui;
-    QString m_html_template;
     QPixmap m_map;
     QGeoPath m_geoPath;
     RGOsMapBounds m_mapBounds;

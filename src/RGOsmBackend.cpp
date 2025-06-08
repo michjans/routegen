@@ -64,6 +64,8 @@ QImage RGOsmBackend::getTile(int x, int y, int zoom)
     return QImage{};
 }
 
+//Add the moment we are not using this method to generate the map, because we render the map's
+//pixmap directly from the RGOsmGraphicsView. However, maybe this is the better approach.
 void RGOsmBackend::stitchTiles(double lat, double lon, int zoom, int width, int height, const QString& outputFile)
 {
     // Calculate the number of tiles needed to cover the desired area
@@ -103,7 +105,7 @@ void RGOsmBackend::stitchTiles(double lat, double lon, int zoom, int width, int 
     painter.end();
 
     // Add attribution
-    addAttribution(stitchedImage, QStringLiteral(u"© OpenStreetMap contributors"));
+    addAttribution(stitchedImage);
 
     // Save the result
     if (stitchedImage.save(outputFile))
@@ -114,6 +116,34 @@ void RGOsmBackend::stitchTiles(double lat, double lon, int zoom, int width, int 
     {
         qWarning() << "Failed to save map to " << outputFile;
     }
+}
+
+void RGOsmBackend::addAttribution(QPaintDevice& image)
+{
+    QPainter painter(&image);
+
+    // Set font and color
+    QFont font("Arial", 12); // Adjust font size as needed
+    painter.setFont(font);
+    painter.setPen(QColor(0, 0, 0, 200)); // Semi-transparent black
+
+    // Calculate position
+    QFontMetrics metrics(font);
+    int textWidth = metrics.horizontalAdvance(mTileProvider.attribution);
+    int textHeight = metrics.height();
+
+    int padding = 10;                            // Space from the edges
+    int x = image.width() - textWidth - padding; // Right-align text
+    int y = image.height() - padding;            // Bottom of the image
+
+    // Add background rectangle for better readability
+    QRect backgroundRect(x - padding / 2, y - textHeight - padding / 2, textWidth + padding, textHeight + padding);
+    painter.fillRect(backgroundRect, QColor(255, 255, 255, 150)); // Semi-transparent white background
+
+    // Draw text
+    painter.drawText(x, y, mTileProvider.attribution);
+
+    painter.end();
 }
 
 // Downloads a tile from OpenStreetMap
@@ -149,34 +179,6 @@ QString RGOsmBackend::getTileUrl(int x, int y, int zoom)
     QString url = mTileProvider.urlTemplate;
     const QString& subdomain = mSubDomains[m_randommizer.bounded(0, mSubDomains.size())]; // Random subdomain
     return url.replace("{s}", subdomain).replace("{z}", QString::number(zoom)).replace("{x}", QString::number(x)).replace("{y}", QString::number(y));
-}
-
-void RGOsmBackend::addAttribution(QImage& image, const QString& attributionText)
-{
-    QPainter painter(&image);
-
-    // Set font and color
-    QFont font("Arial", 12); // Adjust font size as needed
-    painter.setFont(font);
-    painter.setPen(QColor(0, 0, 0, 200)); // Semi-transparent black
-
-    // Calculate position
-    QFontMetrics metrics(font);
-    int textWidth = metrics.horizontalAdvance(attributionText);
-    int textHeight = metrics.height();
-
-    int padding = 10;                            // Space from the edges
-    int x = image.width() - textWidth - padding; // Right-align text
-    int y = image.height() - padding;            // Bottom of the image
-
-    // Add background rectangle for better readability
-    QRect backgroundRect(x - padding / 2, y - textHeight - padding / 2, textWidth + padding, textHeight + padding);
-    painter.fillRect(backgroundRect, QColor(255, 255, 255, 150)); // Semi-transparent white background
-
-    // Draw text
-    painter.drawText(x, y, attributionText);
-
-    painter.end();
 }
 
 QString RGOsmBackend::getCachePath(int zoom, int x, int y)
