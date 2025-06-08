@@ -20,6 +20,7 @@
 #include <QDebug>
 #include <QtGui>
 
+#include "RGOSMTileProviderEditor.h"
 #include "RGSettings.h"
 #include "RGSettingsDialog.h"
 
@@ -49,6 +50,14 @@ RGSettingsDialog::RGSettingsDialog(RGEncVideo* videoSettings, QWidget* parent)
 
     ui.tabWidget->insertTab(0, videoSettings, tr("Movie Generation"));
     ui.tabWidget->setCurrentIndex(0);
+
+    auto customProviders = mTileProviderManager.getCustomProviders();
+    for (const auto& tileProvider : customProviders)
+    {
+        ui.osmProviderList->addItem(tileProvider.name);
+    }
+
+    QObject::connect(ui.addOsmProviderPB, &QPushButton::clicked, this, &RGSettingsDialog::addTileProviderClicked);
 }
 
 RGSettingsDialog::~RGSettingsDialog()
@@ -69,6 +78,17 @@ bool RGSettingsDialog::getIconlessBeginEndFrames()
 void RGSettingsDialog::on_mResetDefaultsPB_clicked(bool)
 {
     mSmoothLengthSB->setValue(RGSettings::getSmoothLength(true));
+}
+
+void RGSettingsDialog::addTileProviderClicked(bool)
+{
+    RGOSMTileProviderEditor tileProviderDialog(this);
+    if (tileProviderDialog.exec() == QDialog::Accepted)
+    {
+        auto tileProvider = tileProviderDialog.tileProvider();
+        mTileProviderManager.addCustomProvider(tileProvider);
+        ui.osmProviderList->addItem(tileProvider.name); //TODO add signal to mTileProviderManagaer that provider was added
+    }
 }
 
 void RGSettingsDialog::on_encoderSelectionCB_activated(const QString& /*text*/)
@@ -98,6 +118,7 @@ void RGSettingsDialog::accept()
     RGSettings::setVideoEncoder(ui.encoderSelectionCB->currentText());
     RGSettings::setSmoothLength(mSmoothLengthSB->value());
     RGSettings::setIconLessBeginEndFrames(!mGenerateBeginEndFramesCB->isChecked());
+    mTileProviderManager.saveCustomProviders();
 
     QDialog::accept();
 }

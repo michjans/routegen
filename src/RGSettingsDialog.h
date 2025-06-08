@@ -21,6 +21,7 @@
 #define RGSETTINGS_DIALOG_H
 
 #include "RGEncVideo.h"
+#include "RGOSMTileProviderManager.h"
 #include "ui_settings.h"
 #include <QDialog>
 
@@ -41,6 +42,7 @@ public:
 private slots:
     void on_encoderSelectionCB_activated(const QString& text);
     void on_mResetDefaultsPB_clicked(bool);
+    void addTileProviderClicked(bool);
     void accept();
 
 private:
@@ -48,6 +50,7 @@ private:
     QSpinBox* mSmoothLengthSB;
     QPushButton* mResetDefaultsPB;
     RGEncVideo* mVideoEncoder;
+    RGTileProviderManager mTileProviderManager;
     Ui::Dialog ui;
 };
 

@@ -30,8 +30,11 @@ public:
     // Get all tile providers (default + custom)
     QVector<TileProvider> getAllProviders() const;
 
+    // Get only the custom providers
+    QVector<TileProvider> getCustomProviders() const;
+
     // Add a custom provider
-    void addCustomProvider(const QString& name, const QString& urlTemplate, const QString& attribution);
+    void addCustomProvider(const TileProvider& tileProvider);
 
     // Remove a custom provider by name
     bool removeCustomProvider(const QString& name);

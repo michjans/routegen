@@ -1,5 +1,7 @@
 #include "RGOSMTileProviderManager.h"
 
+#include <QHash>
+#include <QMap>
 #include <QSettings>
 
 RGTileProviderManager::RGTileProviderManager()
@@ -15,11 +17,16 @@ QVector<RGTileProviderManager::TileProvider> RGTileProviderManager::getAllProvid
     return allProviders;
 }
 
-void RGTileProviderManager::addCustomProvider(const QString& name, const QString& urlTemplate, const QString& attribution)
+QVector<RGTileProviderManager::TileProvider> RGTileProviderManager::getCustomProviders() const
 {
-    if (!providerExists(name))
+    return customProviders;
+}
+
+void RGTileProviderManager::addCustomProvider(const TileProvider& tileProvider)
+{
+    if (!providerExists(tileProvider.name))
     {
-        customProviders.append(TileProvider(name, urlTemplate, attribution));
+        customProviders.append(tileProvider);
     }
 }
 
@@ -54,24 +61,33 @@ bool RGTileProviderManager::providerExists(const QString& name) const
 void RGTileProviderManager::saveCustomProviders() const
 {
     QSettings settings;
-    settings.beginGroup("CustomProviders");
-    settings.remove(""); // Clear existing entries
+    QMap<QString, QVariant> osmTileProviderMap = settings.value("customOsmTileProviders", QMap<QString, QVariant>()).toMap();
     for (const auto& provider : customProviders)
     {
-        settings.setValue(provider.name, provider.urlTemplate);
+        QHash<QString, QVariant> cpMap;
+        cpMap[QStringLiteral("urlTemplate")] = provider.urlTemplate;
+        cpMap[QStringLiteral("attribution")] = provider.attribution;
+
+        osmTileProviderMap[provider.name] = QVariant(cpMap);
     }
-    settings.endGroup();
+    settings.setValue("customOsmTileProviders", osmTileProviderMap);
 }
 
 void RGTileProviderManager::loadCustomProviders()
 {
     QSettings settings;
-    settings.beginGroup("CustomProviders");
-    for (const auto& key : settings.childKeys())
+    QMap<QString, QVariant> osmTileProviderMap = settings.value("customOsmTileProviders", QMap<QString, QVariant>()).toMap();
+    QMapIterator<QString, QVariant> it(osmTileProviderMap);
+    while (it.hasNext())
     {
-        addCustomProvider(key, settings.value(key).toString(), "TODO");
+        it.next();
+        QHash<QString, QVariant> cpMap = it.value().toHash();
+        TileProvider tileProvider;
+        tileProvider.name = it.key();
+        tileProvider.urlTemplate = cpMap[QStringLiteral("urlTemplate")].toString();
+        tileProvider.attribution = cpMap[QStringLiteral("attribution")].toString();
+        addCustomProvider(tileProvider);
     }
-    settings.endGroup();
 }
 
 void RGTileProviderManager::loadDefaultProviders()

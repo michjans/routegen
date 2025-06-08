@@ -55,6 +55,7 @@ add_executable(routegen WIN32 MACOSX_BUNDLE
     RGGoogleMapProjection.cpp RGGoogleMapProjection.h
     RGGeoTiffMapProjection.cpp RGGeoTiffMapProjection.h
     RGOSMapProjection.cpp RGOSMapProjection.h
+    RGOSMTileProviderEditor.h RGOSMTileProviderEditor.cpp
     RGOSMTileProviderManager.cpp RGOSMTileProviderManager.h
     RGPath.cpp RGPath.h
     RGOsmBackend.h RGOsmBackend.cpp
@@ -75,6 +76,7 @@ add_executable(routegen WIN32 MACOSX_BUNDLE
     RGWriter.cpp RGWriter.h
     googlemap.ui
     osmap.ui
+    osmtileprovidereditor.ui
     gpxselectiondialog.ui
     main.cpp
     routegen.ui
