@@ -36,6 +36,12 @@ public:
     // Add a custom provider
     void addCustomProvider(const TileProvider& tileProvider);
 
+    // Returns TileProvider by name (return nullptr if not found)
+    const TileProvider* getCustomProviderByName(const QString& name);
+
+    // Replace exiting custom provider (name is key)
+    void replaceCustomProvider(const TileProvider& tileProvider);
+
     // Remove a custom provider by name
     bool removeCustomProvider(const QString& name);
 

@@ -36,6 +36,7 @@ This file is part of Route Generator.
 
 RGOsmBackend::RGOsmBackend(QObject* parent)
     : QObject(parent),
+      //TODO: Or should we use QStandardPaths::CacheLocation?
       mCachePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/osmcache/")
 {
 }

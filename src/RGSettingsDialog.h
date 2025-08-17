@@ -43,6 +43,8 @@ private slots:
     void on_encoderSelectionCB_activated(const QString& text);
     void on_mResetDefaultsPB_clicked(bool);
     void addTileProviderClicked(bool);
+    void editTileProviderClicked(bool);
+    void removeTileProviderClicked(bool);
     void accept();
 
 private:

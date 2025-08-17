@@ -6,14 +6,17 @@ RGOSMTileProviderEditor::RGOSMTileProviderEditor(QWidget* parent)
       ui(new Ui::OsmProviderEditor)
 {
     ui->setupUi(this);
+    ui->tileProviderEdit->setFocus();
 }
 
 RGOSMTileProviderEditor::RGOSMTileProviderEditor(const RGTileProviderManager::TileProvider& tileProvider, QWidget* parent)
     : RGOSMTileProviderEditor(parent)
 {
+    ui->tileProviderEdit->setEnabled(false);
     ui->tileProviderEdit->setText(tileProvider.name);
     ui->tileProviderURL->setText(tileProvider.urlTemplate);
     ui->tileProviderAttribution->setText(tileProvider.attribution);
+    ui->tileProviderURL->setFocus();
 }
 
 RGOSMTileProviderEditor::~RGOSMTileProviderEditor()

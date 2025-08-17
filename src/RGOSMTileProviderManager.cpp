@@ -30,6 +30,30 @@ void RGTileProviderManager::addCustomProvider(const TileProvider& tileProvider)
     }
 }
 
+const RGTileProviderManager::TileProvider* RGTileProviderManager::getCustomProviderByName(const QString& name)
+{
+    for (auto& provider : customProviders)
+    {
+        if (provider.name == name)
+        {
+            return &provider;
+        }
+    }
+    return nullptr;
+}
+
+void RGTileProviderManager::replaceCustomProvider(const TileProvider& tileProvider)
+{
+    for (auto& provider : customProviders)
+    {
+        if (provider.name == tileProvider.name)
+        {
+            provider.urlTemplate = tileProvider.urlTemplate;
+            provider.attribution = tileProvider.attribution;
+        }
+    }
+}
+
 bool RGTileProviderManager::removeCustomProvider(const QString& name)
 {
     for (int i = 0; i < customProviders.size(); ++i)

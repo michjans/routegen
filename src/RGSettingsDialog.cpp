@@ -58,6 +58,8 @@ RGSettingsDialog::RGSettingsDialog(RGEncVideo* videoSettings, QWidget* parent)
     }
 
     QObject::connect(ui.addOsmProviderPB, &QPushButton::clicked, this, &RGSettingsDialog::addTileProviderClicked);
+    QObject::connect(ui.editOsmProviderPB, &QPushButton::clicked, this, &RGSettingsDialog::editTileProviderClicked);
+    QObject::connect(ui.removeOsmProviderPB, &QPushButton::clicked, this, &RGSettingsDialog::removeTileProviderClicked);
 }
 
 RGSettingsDialog::~RGSettingsDialog()
@@ -88,6 +90,36 @@ void RGSettingsDialog::addTileProviderClicked(bool)
         auto tileProvider = tileProviderDialog.tileProvider();
         mTileProviderManager.addCustomProvider(tileProvider);
         ui.osmProviderList->addItem(tileProvider.name); //TODO add signal to mTileProviderManagaer that provider was added
+    }
+}
+
+void RGSettingsDialog::editTileProviderClicked(bool)
+{
+    auto currentItem = ui.osmProviderList->currentItem();
+    if (currentItem)
+    {
+        auto existingTileProvider = mTileProviderManager.getCustomProviderByName(currentItem->text());
+        if (!existingTileProvider)
+        {
+            return;
+        }
+        RGOSMTileProviderEditor tileProviderDialog(*existingTileProvider, this);
+        if (tileProviderDialog.exec() == QDialog::Accepted)
+        {
+            auto tileProvider = tileProviderDialog.tileProvider();
+            mTileProviderManager.replaceCustomProvider(tileProvider);
+        }
+    }
+}
+
+void RGSettingsDialog::removeTileProviderClicked(bool)
+{
+    auto currentItem = ui.osmProviderList->currentItem();
+    if (currentItem)
+    {
+        mTileProviderManager.removeCustomProvider(currentItem->text());
+        //Assueme it's removed correctly, so delete the item as well
+        delete currentItem;
     }
 }
 
