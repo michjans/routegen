@@ -13,9 +13,17 @@ On Windows use the distributed installer named routegen-winxx-x.x.exe
 On Linux and Mac OS the program has to be build from source code (see below)
 
 ## Building Route Generator from the source code
-Since version x.x Route Generator should be built using Qt 5.15 or higher using CMake.
-So Qt 5.15 or higher should be downloaded and installed, including CMake.
-Also now Route Generator supports importing GeoTiff maps, so it requires
+Since version 1.13 Route Generator has been build using Qt 6.9 using CMake, although
+the code itself still still compiles against Qt 5.12, but it's not guaranteed to fully
+function as expected.
+
+So Qt 6.9 (or higher) should be downloaded and installed, including CMake with at least
+the following packages:
+-Qt WebChannel
+-Qt Positioning
+-Extensions: Qt WebEngine
+
+Also Route Generator supports importing GeoTiff maps, so it requires
 libgeotiff development libraries to be installed, before it can be build.
 Libgeotiff depends on libtiff, libproj and sqlite3, so they have to be installed as well.
 
@@ -41,40 +49,53 @@ so that the GeoTIFF package can be found from the CMakeLists.txt, e.g.
 
 #### Windows
 
+Note that since Qt 6.9, the MSVS 2022 development environment has to be installed and used to compile everything.
+
 On Windows all dependent packages have to be build from source.
-- Download libtiff from https://download.osgeo.org/libtiff/ (at least version 4.5)
-- Download Proj (dev) from https://proj.org/download.html (at least version 9.1)
-- Download sqlite3 source code from: https://sqlite.org/download.html (sqlite-amalgamation-3400100.zip)
-- Download libgeotiff source code from https://github.com/OSGeo/libgeotiff/releases/tag/1.7.1
+- Download libtiff from https://download.osgeo.org/libtiff/ (at least version 4.7.0)
+- Download sqlite3 source code from: https://sqlite.org/download.html (sqlite-amalgamation-3500400.zip)
+- Download Proj (dev) from https://proj.org/download.html (at least version 9.6.1)
+- Download libgeotiff source code from https://github.com/OSGeo/libgeotiff/releases/tag/1.7.4
 
 - Unzip the downloaded zip files in a development directory, e.g. C:\Users\mjans\dev
 - Create a directory to deploy the locally installed libraries to (from now on C:\Users\mjans\dev\local is used as an example)
 - mkdir C:\Users\mjans\dev\local
 - Assuming Qt is already installed:
-- Open Qt 5.15.2 MSVC 2019 Cmd shell, then execute:
-- "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+- Open the "x64 Native Tools Command Prompt for VS 2022" (NOTE: The default Command prompt runs the 32 bit environment!)
+- Set-up Qt environemnt:
+  C:\Qt\6.9.1\msvc2022_64\bin\qtenv2.bat
+- Make sure CMake is in your path (check with command "where cmake"):
+  set PATH=C:\Qt\Tools\CMake_64\bin;%PATH%
 
-- cd ...\tiff-4.5.0
+- cd ...\tiff-4.7.0
 - mkdir Release
 - cd Release
 - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=C:/Users/mjans/dev/local -G "NMake Makefiles" ..
 - nmake install
 
-- cd ...\sqlite-amalgamation-3400100
-- cl -O2 -D_USRDLL /D_WINDLL /DSQLITE_ENABLE_FTS4 /DSQLITE_ENABLE_RTREE /DSQLITE_ENABLE_COLUMN_METADATA /DSQLITE_API=__declspec(dllexport)  sqlite3.c /MT /link /DLL /out:sqlite3.dll
-- cl -O2 /DSQLITE_ENABLE_FTS4 /DSQLITE_ENABLE_RTREE /DSQLITE_ENABLE_COLUMN_METADATA shell.c sqlite3.c /MT /Fesqlite3.exe
+- cd ...\sqlite-amalgamation-3500400
+- release:
+  cl -O2 -D_USRDLL /D_WINDLL /DSQLITE_ENABLE_FTS4 /DSQLITE_ENABLE_RTREE /DSQLITE_ENABLE_COLUMN_METADATA /DSQLITE_API=__declspec(dllexport)  sqlite3.c /MT /link /DLL /out:sqlite3.dll
+  cl -O2 /DSQLITE_ENABLE_FTS4 /DSQLITE_ENABLE_RTREE /DSQLITE_ENABLE_COLUMN_METADATA shell.c sqlite3.c /MT /Fesqlite3.exe
+- debug:
+  cl /Zi /Od /D_DEBUG -D_USRDLL /D_WINDLL /DSQLITE_ENABLE_FTS4 /DSQLITE_ENABLE_RTREE /DSQLITE_ENABLE_COLUMN_METADATA /DSQLITE_API=__declspec(dllexport)  sqlite3.c /MDd /link /DLL /out:sqlite3d.dll
+  cl /Zi /Od /D_DEBUG /DSQLITE_ENABLE_FTS4 /DSQLITE_ENABLE_RTREE /DSQLITE_ENABLE_COLUMN_METADATA shell.c sqlite3.c /MDd /Fesqlite3.exe
 - copy *.h files to C:/Users/mjans/dev/local/include (the local place where you want your libraries be installed)
 - copy *.lib file to C:/Users/mjans/dev/local/lib
 - copy *.dll file to C:/Users/mjans/dev/local/bin
 - copy *.exe file to C:/Users/mjans/dev/local/bin
 
-- cd ...\proj-9.1.0
+- cd ...\proj-9.6.1
 - mkdir Release
 - cd Release
-- cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DBUILD_PROJSYNC=OFF -DCMAKE_INSTALL_PREFIX=C:/Users/mjans/dev/local -DENABLE_CURL=OFF -G "NMake Makefiles" ..
+- Note: Proj can uptionally use a proj-data database file (proj.db). This file can be found by setting the PROJ_DATA environment variable to point to this file,
+        but by setting EMBED_PROJ_DATA_PATH=OFF the location could also be set from the routegen cpp code by using API call: proj_context_set_search_paths(...);
+        However, this is currently not implemented, so the user currently will have to set the PROJ_DATA environment variable herself!
+- cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DBUILD_PROJSYNC=OFF -DEMBED_PROJ_DATA_PATH=ON -DCMAKE_INSTALL_PREFIX=C:/Users/mjans/dev/local -DENABLE_CURL=OFF -G "NMake Makefiles" ..
 - nmake install
 
-- cd ...\libgeotiff-1.7.1
+
+- cd ...\libgeotiff-1.7.4
 - mkdir Release
 - cd Release
 - cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="/WX" -DCMAKE_CXX_FLAGS="/WX" -DCMAKE_INSTALL_PREFIX=C:/Users/mjans/dev/local -DPROJ_INCLUDE_DIR=C:/Users/mjans/dev/local/include -DPROJ_LIBRARY=C:/Users/mjans/dev/local/lib/proj.lib -G "NMake Makefiles" ..
@@ -85,8 +106,7 @@ After everything is setup correctly, now Route Generator itself can be build.
 - unzip or clone the Route Generator source code in a new directory
 
 #### Windows
-- Open Qt 5.15.2 MSVC 2019 Cmd shell, then execute:
-- "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+
 - cd to the the directory where you unzipped or cloned the source code
   (e.g. cd .../routegen/src)
 - mkdir Release

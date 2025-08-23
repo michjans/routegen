@@ -1,27 +1,29 @@
 cmake_minimum_required(VERSION 3.16)
-project(routegen VERSION 1.13 LANGUAGES CXX)
+project(routegen VERSION 1.13.0 LANGUAGES CXX)
 
-#set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Set up AUTOMOC and some sensible defaults for runtime execution
 # When using Qt 6.3, you can replace the code block below with
 # qt_standard_project_setup()
-set(CMAKE_AUTOMOC ON)
-include(GNUInstallDirs)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
+#set(CMAKE_AUTOMOC ON)
+#include(GNUInstallDirs)
+#set(CMAKE_AUTORCC ON)
+#set(CMAKE_AUTOUIC ON)
 
 # Make sure that libraries can be found in ./lib sub-directory (to prevent having to set LD_LIBRARY_PATH)
 # NOTE:This variable is only processed during a 'make install'!
 set(CMAKE_MACOSX_RPATH 1)
 set(CMAKE_INSTALL_RPATH "$ORIGIN/lib")
+set(QT_MIN_VERSION "6.2.0")
 
-find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Positioning WebEngineWidgets Widgets LinguistTools)
+find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS Core Gui Positioning WebEngineWidgets Widgets LinguistTools)
 find_package(GeoTIFF REQUIRED)
 find_package(TIFF REQUIRED)
+
+qt_standard_project_setup()
 
 #WARNING: This call regenerates the ts files, but also deletes the ts files when doing make clean!!!
 #         (this is a known bug, should have been fixed).
@@ -34,6 +36,10 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   enable_language("RC")
   set (WIN32_RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/routegen.rc)
 endif()
+
+qt_add_resources(ROUTEGEN_RESOURCES
+    "routegen.qrc"
+)
 
 add_executable(routegen WIN32 MACOSX_BUNDLE
     GPXSelectionDialog.cpp GPXSelectionDialog.h
@@ -84,20 +90,21 @@ add_executable(routegen WIN32 MACOSX_BUNDLE
     settings.ui
     vehicledialog.ui
     videosettings.ui
-    routegen.qrc
+    ${ROUTEGEN_RESOURCES}
     ${WIN32_RESOURCES}
     ${QM_FILES}
 )
+
 target_compile_definitions(routegen PRIVATE
     QT_DISABLE_DEPRECATED_BEFORE=0x060000
 )
 
 target_link_libraries(routegen PRIVATE
-    Qt::Core
-    Qt::Gui
-    Qt::Positioning
-    Qt::WebEngineWidgets
-    Qt::Widgets
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Positioning
+    Qt6::WebEngineWidgets
+    Qt6::Widgets
     geotiff_library
 )
 

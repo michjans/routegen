@@ -287,6 +287,9 @@ void RGMainWindow::on_actionOpen_image_triggered(bool /*checked*/)
     if (!fileName.isNull())
     {
         QPixmap pm(fileName);
+        //TODO: Reading large files (i.e. > 256MB, in case of GeoTiff files) results in allocation limit errors.
+        //      To prevent this we could try to refactor this code to read it through QImageReader, e.g.
+        //      QImageReader::reader.setAllocationLimit(2048); // MB, here 2 GB limit
         if (pm.isNull())
         {
             QMessageBox::critical(this, tr("Oops"), tr("Could not load image"));

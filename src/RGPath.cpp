@@ -186,7 +186,10 @@ void RGPath::setSmoothCoef(int dSmooth)
 void RGPath::setTotalTime(int time) //set mTotaltime in ms !!it must never be null
 {
     if (time != 0)
+    {
         mTotalTime = time;
+        createAverageRouteAngles();
+    }
 }
 
 void RGPath::setPlayMode(int mode)
