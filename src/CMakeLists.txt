@@ -60,7 +60,6 @@ add_executable(routegen WIN32 MACOSX_BUNDLE
     RGMapProjection.cpp RGMapProjection.h
     RGGoogleMapProjection.cpp RGGoogleMapProjection.h
     RGGeoTiffMapProjection.cpp RGGeoTiffMapProjection.h
-    RGOSMapProjection.cpp RGOSMapProjection.h
     RGWebMercatorProjection.cpp RGWebMercatorProjection.h
     RGOSMTileProviderEditor.h RGOSMTileProviderEditor.cpp
     RGOSMTileProviderManager.cpp RGOSMTileProviderManager.h

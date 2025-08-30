@@ -18,7 +18,6 @@
 */
 
 #include "RGOsmGraphicsView.h"
-#include "RGOSMapProjection.h"
 
 #include <QDebug>
 #include <QGraphicsPixmapItem>
@@ -111,10 +110,10 @@ void RGOsmGraphicsView::mouseMoveEvent(QMouseEvent* event)
     // Convert pixel movement to change in lat/lon
     qDebug() << "original mCenterCoord = " << mCenterCoord;
 
-    QPointF centerTile = RGOSMapProjection::latLonToTile(mCenterCoord, mZoomLevel);
-    centerTile.setX(centerTile.x() - delta.x() / RGOSMapProjection::TILE_SIZE);
-    centerTile.setY(centerTile.y() - delta.y() / RGOSMapProjection::TILE_SIZE);
-    mCenterCoord = RGOSMapProjection::tileToLatLon(centerTile, mZoomLevel);
+    QPointF centerTile = mOsmBackEnd.latLonToTile(mCenterCoord, mZoomLevel);
+    centerTile.setX(centerTile.x() - delta.x() / mOsmBackEnd.TILE_SIZE);
+    centerTile.setY(centerTile.y() - delta.y() / mOsmBackEnd.TILE_SIZE);
+    mCenterCoord = mOsmBackEnd.tileToLatLon(centerTile, mZoomLevel);
     qDebug() << "shifted mCenterCoord = " << mCenterCoord;
     emit centerCoordChanged(mCenterCoord);
 
@@ -146,8 +145,8 @@ void RGOsmGraphicsView::wheelEvent(QWheelEvent* event)
 void RGOsmGraphicsView::addTileToScene(const QImage& tile, int tileX, int tileY)
 {
     // Calculate the tile's position in the scene
-    int x = tileX * RGOSMapProjection::TILE_SIZE;
-    int y = tileY * RGOSMapProjection::TILE_SIZE;
+    int x = tileX * mOsmBackEnd.TILE_SIZE;
+    int y = tileY * mOsmBackEnd.TILE_SIZE;
 
     // Create a pixmap item and add it to the scene
     //qDebug() << "adding tile item:" << x << ", " << y;
@@ -162,21 +161,21 @@ void RGOsmGraphicsView::loadTiles()
 {
     //The tilePos is a floating point position, which maps to the correct tile x,y when
     //rounding down to integers (i.e. one pixel in the tile represents 1/256 of the tile's size)
-    QPointF tilePos = RGOSMapProjection::latLonToTile(mCenterCoord, mZoomLevel);
+    QPointF tilePos = mOsmBackEnd.latLonToTile(mCenterCoord, mZoomLevel);
     qDebug() << "center tilePos is:" << tilePos;
 
     //Determine visible rectangle based on requested map resolution
-    double centerX = tilePos.x() * RGOSMapProjection::TILE_SIZE;
-    double centerY = tilePos.y() * RGOSMapProjection::TILE_SIZE;
+    double centerX = tilePos.x() * mOsmBackEnd.TILE_SIZE;
+    double centerY = tilePos.y() * mOsmBackEnd.TILE_SIZE;
     QPointF topLeft(centerX - mSize.width() / 2.0, centerY - mSize.height() / 2.0);
     QRectF fixedSceneRect(topLeft, mSize);
     mScene->setSceneRect(fixedSceneRect);
 
     // Calculate tile indices to load
-    int beginX = std::floor(fixedSceneRect.left() / RGOSMapProjection::TILE_SIZE);
-    int endX = std::ceil(fixedSceneRect.right() / RGOSMapProjection::TILE_SIZE) - 1;
-    int beginY = std::floor(fixedSceneRect.top() / RGOSMapProjection::TILE_SIZE);
-    int endY = std::ceil(fixedSceneRect.bottom() / RGOSMapProjection::TILE_SIZE) - 1;
+    int beginX = std::floor(fixedSceneRect.left() / mOsmBackEnd.TILE_SIZE);
+    int endX = std::ceil(fixedSceneRect.right() / mOsmBackEnd.TILE_SIZE) - 1;
+    int beginY = std::floor(fixedSceneRect.top() / mOsmBackEnd.TILE_SIZE);
+    int endY = std::ceil(fixedSceneRect.bottom() / mOsmBackEnd.TILE_SIZE) - 1;
 
     qDebug() << "Tile grid bounds:" << beginX << endX << beginY << endY;
     for (int x = beginX; x <= endX; ++x)

@@ -3,7 +3,6 @@
 
 #include "RGGeoTiffMapProjection.h"
 #include "RGGoogleMapProjection.h"
-#include "RGOSMapProjection.h"
 #include "RGWebMercatorProjection.h"
 
 #include <QDebug>
@@ -112,9 +111,9 @@ bool RGMap::loadMap(const QString& fileName, const QPixmap& map, const RGOsMapBo
     {
         if (osmBounds.isValid())
         {
-            //TODO: Find a way to store OSM map's geo boundaries, e.g. as meta tags in file
+            //TODO: Since we now only use RGWebMercatorProjection we can store the geo bounds in the same
+            //      way as the Google map bounds, but preferrable we now store them as meta-tags in the file.
             //RGSettings::setMapGeoBounds(fileName, gmapBounds);
-            //mMapProjection = std::make_unique<RGOSMapProjection>(osmBounds, mMap.width(), mMap.height());
             mMapProjection = std::make_unique<RGWebMercatorProjection>(osmBounds, mMap.width(), mMap.height());
         }
 

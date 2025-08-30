@@ -18,7 +18,6 @@ This file is part of Route Generator.
 */
 
 #include "RGOsmBackend.h"
-#include "RGOSMapProjection.h"
 
 #include <QApplication>
 #include <QColor>
@@ -69,12 +68,12 @@ QImage RGOsmBackend::getTile(int x, int y, int zoom)
 void RGOsmBackend::stitchTiles(double lat, double lon, int zoom, int width, int height, const QString& outputFile)
 {
     // Calculate the number of tiles needed to cover the desired area
-    QPointF centerTile = RGOSMapProjection::latLonToTile(QGeoCoordinate(lat, lon), zoom);
+    QPointF centerTile = latLonToTile(QGeoCoordinate(lat, lon), zoom);
     int tileXCenter = std::floor(centerTile.x());
     int tileYCenter = std::floor(centerTile.y());
 
-    int tilesX = std::ceil((double)width / RGOSMapProjection::TILE_SIZE);
-    int tilesY = std::ceil((double)height / RGOSMapProjection::TILE_SIZE);
+    int tilesX = std::ceil((double)width / TILE_SIZE);
+    int tilesY = std::ceil((double)height / TILE_SIZE);
 
     int tileXMin = tileXCenter - tilesX / 2;
     int tileYMin = tileYCenter - tilesY / 2;
@@ -95,8 +94,8 @@ void RGOsmBackend::stitchTiles(double lat, double lon, int zoom, int width, int 
             QImage tile = getTile(tileX, tileY, zoom);
             if (!tile.isNull())
             {
-                int posX = x * RGOSMapProjection::TILE_SIZE - ((centerTile.x() - tileXCenter) * RGOSMapProjection::TILE_SIZE);
-                int posY = y * RGOSMapProjection::TILE_SIZE - ((centerTile.y() - tileYCenter) * RGOSMapProjection::TILE_SIZE);
+                int posX = x * TILE_SIZE - ((centerTile.x() - tileXCenter) * TILE_SIZE);
+                int posY = y * TILE_SIZE - ((centerTile.y() - tileYCenter) * TILE_SIZE);
                 painter.drawImage(posX, posY, tile);
             }
         }
@@ -144,6 +143,22 @@ void RGOsmBackend::addAttribution(QPaintDevice& image)
     painter.drawText(x, y, mTileProvider.attribution);
 
     painter.end();
+}
+
+QPointF RGOsmBackend::latLonToTile(const QGeoCoordinate& geoPoint, int zoom)
+{
+    double x = (geoPoint.longitude() + 180.0) / 360.0 * (1 << zoom);
+    double y = (1.0 - log(tan(geoPoint.latitude() * M_PI / 180.0) + 1.0 / cos(geoPoint.latitude() * M_PI / 180.0)) / M_PI) / 2.0 * (1 << zoom);
+    return QPointF(x, y);
+}
+
+QGeoCoordinate RGOsmBackend::tileToLatLon(const QPointF& tileXY, int zoom)
+{
+    QGeoCoordinate geoCoord;
+    double n = std::pow(2.0, zoom);
+    geoCoord.setLongitude(tileXY.x() / n * 360.0 - 180.0);
+    geoCoord.setLatitude(std::atan(std::sinh(M_PI * (1 - 2 * tileXY.y() / n))) * 180.0 / M_PI);
+    return geoCoord;
 }
 
 // Downloads a tile from OpenStreetMap

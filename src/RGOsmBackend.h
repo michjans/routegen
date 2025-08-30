@@ -22,15 +22,19 @@ This file is part of Route Generator.
 
 #include "RGOSMTileProviderManager.h"
 
+#include <QGeoCoordinate>
 #include <QImage>
 #include <QObject>
 #include <QRandomGenerator>
+
 #include <QtNetwork/QNetworkAccessManager>
 
 class RGOsmBackend : public QObject
 {
     Q_OBJECT
 public:
+    static const int TILE_SIZE = 256;
+
     RGOsmBackend(QObject* parent = nullptr);
 
     void setTileProvider(const RGTileProviderManager::TileProvider& provider);
@@ -42,6 +46,9 @@ public:
     QImage getTile(int x, int y, int zoom);
     void stitchTiles(double lat, double lon, int zoom, int width, int height, const QString& outputFile);
     void addAttribution(QPaintDevice& image);
+
+    static QPointF latLonToTile(const QGeoCoordinate& geoPoint, int zoom);
+    static QGeoCoordinate tileToLatLon(const QPointF& tileXY, int zoom);
 
 signals:
     void tileAvailable(const QImage& tile, int x, int y);
