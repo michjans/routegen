@@ -20,6 +20,7 @@ set(CMAKE_INSTALL_RPATH "$ORIGIN/lib")
 set(QT_MIN_VERSION "6.2.0")
 
 find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS Core Gui Positioning WebEngineWidgets Widgets LinguistTools)
+find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS Test)
 find_package(GeoTIFF REQUIRED)
 find_package(TIFF REQUIRED)
 
@@ -58,7 +59,6 @@ add_executable(routegen WIN32 MACOSX_BUNDLE
     RGGoogleMapBounds.h
     RGOsMapBounds.h
     RGMapProjection.cpp RGMapProjection.h
-    RGGoogleMapProjection.cpp RGGoogleMapProjection.h
     RGGeoTiffMapProjection.cpp RGGeoTiffMapProjection.h
     RGWebMercatorProjection.cpp RGWebMercatorProjection.h
     RGOSMTileProviderEditor.h RGOSMTileProviderEditor.cpp
@@ -120,6 +120,30 @@ install(TARGETS routegen
     BUNDLE DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+enable_testing()
+
+add_executable(rg_projection_test
+    tests/tst_rgwebmercatorprojection.cpp
+    RGWebMercatorProjection.cpp
+    RGWebMercatorProjection.h
+    RGMapProjection.cpp
+    RGMapProjection.h
+    RGMapBounds.h
+    RGGoogleMapBounds.h
+    RGOsMapBounds.h
+    RGSettings.h
+    RGSettings.cpp
+)
+
+target_link_libraries(rg_projection_test PRIVATE
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Test
+    Qt6::Positioning
+)
+
+add_test(NAME RGWebMercatorProjectionTest COMMAND rg_projection_test)
 
 # Consider using qt_generate_deploy_app_script() for app deployment if
 # the project can use Qt 6.3. In that case rerun qmake2cmake with

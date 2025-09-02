@@ -21,6 +21,10 @@ public:
     QPoint convert(const QGeoCoordinate& geoPoint) const override;
     QGeoCoordinate pixelToGeo(const QPoint& pixel) const;
     bool saveProjection(const QString& fileName) override;
+    const RGGoogleMapBounds& googleMapBounds() const
+    {
+        return m_bounds;
+    }
 
 private:
     //Coordinate to world coordinates

@@ -17,8 +17,7 @@ class RGMap : public QObject
 public:
     explicit RGMap(QObject* parent = 0);
 
-    bool loadMap(const QString& fileName);
-    bool loadMap(const QString& fileName, const QPixmap& map);
+    bool loadMap(const QString& fileName, const QPixmap& map = QPixmap());
     bool loadMap(const QString& fileName, const QPixmap& map, const RGGoogleMapBounds& gmapBounds);
     bool loadMap(const QString& fileName, const QPixmap& map, const RGOsMapBounds& osmBounds);
     bool hasGeoBounds() const;

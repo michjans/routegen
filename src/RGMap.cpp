@@ -2,7 +2,6 @@
 #include "RGSettings.h"
 
 #include "RGGeoTiffMapProjection.h"
-#include "RGGoogleMapProjection.h"
 #include "RGWebMercatorProjection.h"
 
 #include <QDebug>
@@ -14,44 +13,20 @@ RGMap::RGMap(QObject* parent)
 {
 }
 
-bool RGMap::loadMap(const QString& fileName)
-{
-    mFileName = fileName;
-    bool success = mMap.load(fileName);
-
-    if (success)
-    {
-        //TODO: It coulds also be a map imported from OSM?
-        //      Store tags in image file, instead of separately in RGSettings?
-        //      Then we can determine which kind of map bounds to load.
-        //Store or retrieve google map's geo boundaries
-        RGGoogleMapBounds googleBounds = RGSettings::getMapGeoBounds(fileName);
-
-        if (googleBounds.isValid())
-        {
-            mMapProjection = std::make_unique<RGGoogleMapProjection>(googleBounds);
-        }
-        else if (fileName.endsWith(QLatin1String(".tif")))
-        {
-            //This is potentially a geotiff file
-            mMapProjection = std::make_unique<RGGeoTiffMapProjection>(fileName);
-        }
-
-        emit mapLoaded(mMap);
-    }
-
-    mDirty = true;
-
-    return success;
-}
-
 bool RGMap::loadMap(const QString& fileName, const QPixmap& map)
 {
     bool success = !map.isNull();
-    mFileName = fileName;
-    mMap = map;
+    if (map.isNull())
+    {
+        mFileName = fileName;
+        success = mMap.load(fileName);
+    }
+    else
+    {
+        mFileName = fileName;
+        mMap = map;
+    }
 
-    //TODO: The block below is identical as in method above, so put in commont function!
     if (success)
     {
         //TODO: It coulds also be a map imported from OSM?
@@ -62,7 +37,7 @@ bool RGMap::loadMap(const QString& fileName, const QPixmap& map)
 
         if (googleBounds.isValid())
         {
-            mMapProjection = std::make_unique<RGGoogleMapProjection>(googleBounds);
+            mMapProjection = std::make_unique<RGWebMercatorProjection>(googleBounds);
         }
         else if (fileName.endsWith(QLatin1String(".tif")))
         {
@@ -89,8 +64,8 @@ bool RGMap::loadMap(const QString& fileName, const QPixmap& map, const RGGoogleM
         if (gmapBounds.isValid())
         {
             //Store google map's geo boundaries
-            RGSettings::setMapGeoBounds(fileName, gmapBounds);
-            mMapProjection = std::make_unique<RGGoogleMapProjection>(gmapBounds);
+            mMapProjection = std::make_unique<RGWebMercatorProjection>(gmapBounds);
+            mMapProjection->saveProjection(fileName);
         }
 
         emit mapLoaded(mMap);
@@ -113,8 +88,8 @@ bool RGMap::loadMap(const QString& fileName, const QPixmap& map, const RGOsMapBo
         {
             //TODO: Since we now only use RGWebMercatorProjection we can store the geo bounds in the same
             //      way as the Google map bounds, but preferrable we now store them as meta-tags in the file.
-            //RGSettings::setMapGeoBounds(fileName, gmapBounds);
             mMapProjection = std::make_unique<RGWebMercatorProjection>(osmBounds, mMap.width(), mMap.height());
+            mMapProjection->saveProjection(fileName);
         }
 
         emit mapLoaded(mMap);

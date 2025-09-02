@@ -20,6 +20,7 @@ RGWebMercatorProjection::RGWebMercatorProjection(const RGGoogleMapBounds& mapBou
     qDebug() << "zoom:" << m_bounds.getZoom();
     qDebug() << "pixWidth:" << mBottomRight.x() - mTopLeft.x();
     qDebug() << "pixHeigth:" << mBottomRight.y() - mTopLeft.y();
+    qDebug() << "mapBounds:" << mapBounds.toQVariant();
 }
 
 RGWebMercatorProjection::RGWebMercatorProjection(const RGOsMapBounds& mapBounds, int mapWidth, int mapHeight, QObject* parent)
@@ -35,9 +36,18 @@ RGWebMercatorProjection::RGWebMercatorProjection(const RGOsMapBounds& mapBounds,
     mBottomRight = centerPixel + QPoint(mapWidth / 2, mapHeight / 2);
     mAntiMeredianPosX = worldToPixel(QPointF(TILE_SIZE, TILE_SIZE)).x();
 
-    QGeoCoordinate sw = unproject(pixelToWorld(mBottomRight));
-    QGeoCoordinate ne = unproject(pixelToWorld(mTopLeft));
+    //Google maps provides map bounds as sw,ne, which is basically the bottom,left corner vs top,right corner, so we have
+    //to swap the x,y coordinates.
+    QPointF swWorld = pixelToWorld(QPoint(mTopLeft.x(), mBottomRight.y()));
+    QPointF neWorld = pixelToWorld(QPoint(mBottomRight.x(), mTopLeft.y()));
+    QGeoCoordinate sw = unproject(swWorld);
+    QGeoCoordinate ne = unproject(neWorld);
     m_bounds = RGGoogleMapBounds(ne, sw, mapBounds.getZoom());
+
+    qDebug() << "zoom:" << m_bounds.getZoom();
+    qDebug() << "pixWidth:" << mBottomRight.x() - mTopLeft.x();
+    qDebug() << "pixHeigth:" << mBottomRight.y() - mTopLeft.y();
+    qDebug() << "mapBounds:" << m_bounds.toQVariant();
 }
 
 RGWebMercatorProjection::~RGWebMercatorProjection()
@@ -86,7 +96,7 @@ bool RGWebMercatorProjection::saveProjection(const QString& fileName)
 
 QPointF RGWebMercatorProjection::project(const QGeoCoordinate& geoPoint) const
 {
-    qreal siny = qSin(geoPoint.latitude() * M_PI / 180);
+    qreal siny = qSin(geoPoint.latitude() * M_PI / 180.0);
 
     // Algorithm copied from Google maps API
     // Truncating to 0.9999 effectively limits latitude to 89.189. This is
@@ -98,11 +108,13 @@ QPointF RGWebMercatorProjection::project(const QGeoCoordinate& geoPoint) const
 
 QGeoCoordinate RGWebMercatorProjection::unproject(const QPointF& worldPoint) const
 {
-    double lon = (worldPoint.x() / TILE_SIZE - 0.5) * 360.0;
+    const double xnorm = worldPoint.x() / TILE_SIZE;
+    const double ynorm = worldPoint.y() / TILE_SIZE;
 
-    double n = M_PI - 2.0 * M_PI * (worldPoint.y() / TILE_SIZE - 0.5);
-    double lat = 180.0 / M_PI * std::atan(0.5 * (std::exp(n) - std::exp(-n)));
+    const double lon = (xnorm - 0.5) * 360.0;
 
+    const double n = M_PI - 2.0 * M_PI * ynorm;
+    const double lat = 180.0 / M_PI * std::atan(std::sinh(n));
     return QGeoCoordinate(lat, lon);
 }
 
