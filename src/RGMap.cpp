@@ -13,38 +13,41 @@ RGMap::RGMap(QObject* parent)
 {
 }
 
-bool RGMap::loadMap(const QString& fileName, const QPixmap& map)
+bool RGMap::loadMap(const QString& fileName, QImage map)
 {
     bool success = !map.isNull();
     if (map.isNull())
     {
         mFileName = fileName;
-        success = mMap.load(fileName);
+        success = map.load(fileName);
     }
     else
     {
         mFileName = fileName;
-        mMap = map;
     }
 
     if (success)
     {
-        //TODO: It coulds also be a map imported from OSM?
-        //      Store tags in image file, instead of separately in RGSettings?
-        //      Then we can determine which kind of map bounds to load.
-        //Store or retrieve google map's geo boundaries
-        RGGoogleMapBounds googleBounds = RGSettings::getMapGeoBounds(fileName);
-
-        if (googleBounds.isValid())
-        {
-            mMapProjection = std::make_unique<RGWebMercatorProjection>(googleBounds);
-        }
-        else if (fileName.endsWith(QLatin1String(".tif")))
+        if (fileName.endsWith(QLatin1String(".tif")))
         {
             //This is potentially a geotiff file
             mMapProjection = std::make_unique<RGGeoTiffMapProjection>(fileName);
         }
+        else
+        {
+            //TODO:Initialize RGWebMercatorProjection from image.
+            qDebug() << "MAP KEYS:" << map.textKeys();
 
+            //For backward compatiblity we can still retrieve the RGGoogleMapBounds
+            //from the settings, but the new method is to store "geotags" in image file.
+            RGGoogleMapBounds googleBounds = RGSettings::getMapGeoBounds(fileName);
+            if (googleBounds.isValid())
+            {
+                mMapProjection = std::make_unique<RGWebMercatorProjection>(googleBounds);
+            }
+        }
+
+        mMap = QPixmap::fromImage(map);
         emit mapLoaded(mMap);
     }
 
@@ -53,7 +56,7 @@ bool RGMap::loadMap(const QString& fileName, const QPixmap& map)
     return success;
 }
 
-bool RGMap::loadMap(const QString& fileName, const QPixmap& map, const RGGoogleMapBounds& gmapBounds)
+bool RGMap::loadImportedMap(const QString& fileName, const QPixmap& map, const RGGoogleMapBounds& gmapBounds)
 {
     bool success = !map.isNull();
     mFileName = fileName;
@@ -63,9 +66,13 @@ bool RGMap::loadMap(const QString& fileName, const QPixmap& map, const RGGoogleM
     {
         if (gmapBounds.isValid())
         {
+            //TODO: If the map was saved as tif file, save using the RGGeoTiffMapProjection class, because when
+            //      loading a tif file, we also use the RGGeoTiffMapProjection.
+            //TODO: If we extend the RGWebMercatorProjection constructor to also accept map with/height, we can
+            //      make this a template class with mapBounds as template parameter
             //Store google map's geo boundaries
             mMapProjection = std::make_unique<RGWebMercatorProjection>(gmapBounds);
-            mMapProjection->saveProjection(fileName);
+            saveProjection(fileName);
         }
 
         emit mapLoaded(mMap);
@@ -76,7 +83,7 @@ bool RGMap::loadMap(const QString& fileName, const QPixmap& map, const RGGoogleM
     return success;
 }
 
-bool RGMap::loadMap(const QString& fileName, const QPixmap& map, const RGOsMapBounds& osmBounds)
+bool RGMap::loadImportedMap(const QString& fileName, const QPixmap& map, const RGOsMapBounds& osmBounds)
 {
     bool success = !map.isNull();
     mFileName = fileName;
@@ -86,10 +93,8 @@ bool RGMap::loadMap(const QString& fileName, const QPixmap& map, const RGOsMapBo
     {
         if (osmBounds.isValid())
         {
-            //TODO: Since we now only use RGWebMercatorProjection we can store the geo bounds in the same
-            //      way as the Google map bounds, but preferrable we now store them as meta-tags in the file.
             mMapProjection = std::make_unique<RGWebMercatorProjection>(osmBounds, mMap.width(), mMap.height());
-            mMapProjection->saveProjection(fileName);
+            saveProjection(fileName);
         }
 
         emit mapLoaded(mMap);
@@ -150,7 +155,7 @@ bool RGMap::saveGeoBoundsToNewFile(const QString& fileName)
 {
     if (mMapProjection)
     {
-        return mMapProjection->saveProjection(fileName);
+        return saveProjection(fileName);
     }
     return false;
 }
@@ -177,4 +182,20 @@ void RGMap::write(QJsonObject& json)
     //The geobounds are stored along with the map in the settings, so no meed to store them in the project
 
     json.insert(QStringLiteral("map"), mapObject);
+}
+
+bool RGMap::saveProjection(const QString& fileName)
+{
+    //TODO: Do a check on file extenstion and depending on that store the geo reference information in a different
+    //      way. E.g. if TIFF, use GeoTiff, if PNG, GIF, use RGWebMercatorProjection
+    //      The current mMapProjection should get methods to return the worldOriginXY coordinate and all required
+    //      information.
+    //      Add static methods to both projection classes to store the projection data from another projection system.
+    //      E.g. RGeoTiffMapProjection::saveProjection(const RGMapProjection &srcProjection);
+    //           RGWebMercatorProjection::saveProjection(const RGMapProjection &srcProjection);
+    //      ...Hmmm, this is not entirely correct because the projection system is independent of the way that the
+    //         georefernce data is stored....
+    //         Maybe we should create a RGGeoReferenceWriter that can store in the correct format.
+
+    return mMapProjection->saveProjection(fileName);
 }

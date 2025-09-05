@@ -19,7 +19,7 @@ private slots:
 
         RGOsMapBounds osmBounds(ctr, zoom);
         RGWebMercatorProjection projOSM(osmBounds, 1280, 720);
-        const RGGoogleMapBounds& gmb = projOSM.googleMapBounds();
+        //const RGGoogleMapBounds& gmb = projOSM.googleMapBounds();
 
         RGGoogleMapBounds gmBounds(ne, sw, zoom);
         RGWebMercatorProjection projGM(gmBounds);
@@ -27,10 +27,10 @@ private slots:
         QCOMPARE_EQ(projGM.convert(ne), QPoint(1280, 0));
         QCOMPARE_EQ(projGM.convert(sw), QPoint(0, 720));
 
-        QCOMPARE_EQ(gmb.getNE().latitude(), gmBounds.getNE().latitude());
-        QCOMPARE_EQ(gmb.getNE().longitude(), gmBounds.getNE().longitude());
-        QCOMPARE_EQ(gmb.getSW().longitude(), gmBounds.getSW().longitude());
-        QCOMPARE_EQ(gmb.getSW().longitude(), gmBounds.getSW().longitude());
+        // QCOMPARE_EQ(gmb.getNE().latitude(), gmBounds.getNE().latitude());
+        // QCOMPARE_EQ(gmb.getNE().longitude(), gmBounds.getNE().longitude());
+        // QCOMPARE_EQ(gmb.getSW().longitude(), gmBounds.getSW().longitude());
+        // QCOMPARE_EQ(gmb.getSW().longitude(), gmBounds.getSW().longitude());
     }
 };
 

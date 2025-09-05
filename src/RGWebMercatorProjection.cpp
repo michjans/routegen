@@ -1,23 +1,29 @@
 #include "RGWebMercatorProjection.h"
-#include "RGSettings.h"
 
 #include <QDebug>
+#include <QImage>
 #include <QtMath>
 
 namespace
 {
 const int TILE_SIZE = 256;
+
+//Keys used to store the georeferencing metadata into the image files
+const QLatin1StringView imgKeyPixelToLeftXStr("RGWebMercatorPixelTopLeftX");
+const QLatin1StringView imgKeyPixelToLeftYStr("RGWebMercatorPixelTopLeftY");
+const QLatin1StringView imgKeyZoomStr("RGWebMercatorZoom");
 }
 
 RGWebMercatorProjection::RGWebMercatorProjection(const RGGoogleMapBounds& mapBounds, QObject* parent)
     : RGMapProjection(parent),
-      m_bounds(mapBounds)
+      m_zoom(mapBounds.getZoom())
 {
     //Calculate topleft/bottomright of the current map in pixel coordinates
-    mTopLeft = worldToPixel(project(QGeoCoordinate(m_bounds.getNE().latitude(), m_bounds.getSW().longitude())));
-    mBottomRight = worldToPixel(project(QGeoCoordinate(m_bounds.getSW().latitude(), m_bounds.getNE().longitude())));
+    mTopLeft = worldToPixel(project(QGeoCoordinate(mapBounds.getNE().latitude(), mapBounds.getSW().longitude())));
+    mBottomRight = worldToPixel(project(QGeoCoordinate(mapBounds.getSW().latitude(), mapBounds.getNE().longitude())));
     mAntiMeredianPosX = worldToPixel(QPointF(TILE_SIZE, TILE_SIZE)).x();
-    qDebug() << "zoom:" << m_bounds.getZoom();
+
+    qDebug() << "zoom:" << mapBounds.getZoom();
     qDebug() << "pixWidth:" << mBottomRight.x() - mTopLeft.x();
     qDebug() << "pixHeigth:" << mBottomRight.y() - mTopLeft.y();
     qDebug() << "mapBounds:" << mapBounds.toQVariant();
@@ -25,9 +31,7 @@ RGWebMercatorProjection::RGWebMercatorProjection(const RGGoogleMapBounds& mapBou
 
 RGWebMercatorProjection::RGWebMercatorProjection(const RGOsMapBounds& mapBounds, int mapWidth, int mapHeight, QObject* parent)
     : RGMapProjection(parent),
-      //TODO: worldToPixel requires the zoom to be set in m_bounds, but we should probably just store zoom as separate
-      //      member, but for now I just wanted to have this working quickly
-      m_bounds(QGeoCoordinate(), QGeoCoordinate(), mapBounds.getZoom())
+      m_zoom(mapBounds.getZoom())
 {
     QPointF worldCenter = project(mapBounds.getCenterCoord());
     QPoint centerPixel = worldToPixel(worldCenter);
@@ -36,18 +40,9 @@ RGWebMercatorProjection::RGWebMercatorProjection(const RGOsMapBounds& mapBounds,
     mBottomRight = centerPixel + QPoint(mapWidth / 2, mapHeight / 2);
     mAntiMeredianPosX = worldToPixel(QPointF(TILE_SIZE, TILE_SIZE)).x();
 
-    //Google maps provides map bounds as sw,ne, which is basically the bottom,left corner vs top,right corner, so we have
-    //to swap the x,y coordinates.
-    QPointF swWorld = pixelToWorld(QPoint(mTopLeft.x(), mBottomRight.y()));
-    QPointF neWorld = pixelToWorld(QPoint(mBottomRight.x(), mTopLeft.y()));
-    QGeoCoordinate sw = unproject(swWorld);
-    QGeoCoordinate ne = unproject(neWorld);
-    m_bounds = RGGoogleMapBounds(ne, sw, mapBounds.getZoom());
-
-    qDebug() << "zoom:" << m_bounds.getZoom();
+    qDebug() << "zoom:" << m_zoom;
     qDebug() << "pixWidth:" << mBottomRight.x() - mTopLeft.x();
     qDebug() << "pixHeigth:" << mBottomRight.y() - mTopLeft.y();
-    qDebug() << "mapBounds:" << m_bounds.toQVariant();
 }
 
 RGWebMercatorProjection::~RGWebMercatorProjection()
@@ -56,7 +51,7 @@ RGWebMercatorProjection::~RGWebMercatorProjection()
 
 bool RGWebMercatorProjection::isValid() const
 {
-    return m_bounds.isValid();
+    return !mTopLeft.isNull() && !mBottomRight.isNull();
 }
 
 QPoint RGWebMercatorProjection::convert(const QGeoCoordinate& geoPoint) const
@@ -89,9 +84,13 @@ QGeoCoordinate RGWebMercatorProjection::pixelToGeo(const QPoint& pixel) const
 
 bool RGWebMercatorProjection::saveProjection(const QString& fileName)
 {
-    //If current map has geo bounds, also store geo bounds along with the saved map image
-    RGSettings::setMapGeoBounds(fileName, m_bounds);
-    return true;
+    //We store the geo refence information as tags in the file (if possible)
+    //It's only required to store the topleft coordinate and the zoomlevel
+    QImage img(fileName);
+    img.setText(imgKeyPixelToLeftXStr, QString::number(mTopLeft.x()));
+    img.setText(imgKeyPixelToLeftYStr, QString::number(mTopLeft.y()));
+    img.setText(imgKeyZoomStr, QString::number(m_zoom));
+    return img.save(fileName);
 }
 
 QPointF RGWebMercatorProjection::project(const QGeoCoordinate& geoPoint) const
@@ -120,13 +119,13 @@ QGeoCoordinate RGWebMercatorProjection::unproject(const QPointF& worldPoint) con
 
 QPoint RGWebMercatorProjection::worldToPixel(const QPointF& worldPoint) const
 {
-    int scale = 1 << m_bounds.getZoom();
+    int scale = 1 << m_zoom;
 
     return QPoint(qFloor(worldPoint.x() * scale), qFloor(worldPoint.y() * scale));
 }
 
 QPointF RGWebMercatorProjection::pixelToWorld(const QPoint& pixel) const
 {
-    int scale = 1 << m_bounds.getZoom();
+    int scale = 1 << m_zoom;
     return QPointF(static_cast<qreal>(pixel.x()) / scale, static_cast<qreal>(pixel.y()) / scale);
 }

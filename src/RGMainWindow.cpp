@@ -286,7 +286,7 @@ void RGMainWindow::on_actionOpen_image_triggered(bool /*checked*/)
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), lastOpenDir, tr("Images (*.png *.bmp *.jpg *.tif *.gif)"));
     if (!fileName.isNull())
     {
-        QPixmap pm(fileName);
+        QImage pm(fileName);
         //TODO: Reading large files (i.e. > 256MB, in case of GeoTiff files) results in allocation limit errors.
         //      To prevent this we could try to refactor this code to read it through QImageReader, e.g.
         //      QImageReader::reader.setAllocationLimit(2048); // MB, here 2 GB limit
@@ -910,8 +910,10 @@ template <typename T> void RGMainWindow::importMap()
         //Yes, lastOpenDir, because lastSaveDir is used to save map files
         //from the main window
         QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QFileInfo(lastSaveDir).absoluteDir().absolutePath(),
-                                                        tr("Images (*.png *.bmp *.jpg *.tif *.gif)"));
+
+        //Note that only these file formats support writing meta data in the file, as we now do for geo projection
+        QString fileName =
+            QFileDialog::getSaveFileName(this, tr("Save File"), QFileInfo(lastSaveDir).absoluteDir().absolutePath(), tr("Images (*.png *.bmp *.jpg *.tif)"));
         if (fileName.isEmpty())
         {
             return;
@@ -921,7 +923,7 @@ template <typename T> void RGMainWindow::importMap()
         if (map.save(fileName))
         {
             RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
-            mMap->loadMap(fileName, map, gm.getMapBounds());
+            mMap->loadImportedMap(fileName, map, gm.getMapBounds());
         }
         else
         {
