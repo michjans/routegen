@@ -35,15 +35,15 @@ bool RGMap::loadMap(const QString& fileName, QImage map)
         }
         else
         {
-            //TODO:Initialize RGWebMercatorProjection from image.
-            qDebug() << "MAP KEYS:" << map.textKeys();
+            //Try to initialize RGWebMercatorProjection from image.
+            mMapProjection = std::make_unique<RGWebMercatorProjection>(map);
 
             //For backward compatiblity we can still retrieve the RGGoogleMapBounds
-            //from the settings, but the new method is to store "geotags" in image file.
+            //from the settings, but the new method is to store georeference tags in image file.
             RGGoogleMapBounds googleBounds = RGSettings::getMapGeoBounds(fileName);
             if (googleBounds.isValid())
             {
-                mMapProjection = std::make_unique<RGWebMercatorProjection>(googleBounds);
+                mMapProjection = std::make_unique<RGWebMercatorProjection>(googleBounds, map.width(), map.height());
             }
         }
 
@@ -56,7 +56,7 @@ bool RGMap::loadMap(const QString& fileName, QImage map)
     return success;
 }
 
-bool RGMap::loadImportedMap(const QString& fileName, const QPixmap& map, const RGGoogleMapBounds& gmapBounds)
+template <typename MAPBOUNDS> bool RGMap::loadImportedMap(const QString& fileName, const QPixmap& map, const MAPBOUNDS& mapBounds)
 {
     bool success = !map.isNull();
     mFileName = fileName;
@@ -64,36 +64,14 @@ bool RGMap::loadImportedMap(const QString& fileName, const QPixmap& map, const R
 
     if (success)
     {
-        if (gmapBounds.isValid())
+        if (mapBounds.isValid())
         {
             //TODO: If the map was saved as tif file, save using the RGGeoTiffMapProjection class, because when
             //      loading a tif file, we also use the RGGeoTiffMapProjection.
             //TODO: If we extend the RGWebMercatorProjection constructor to also accept map with/height, we can
             //      make this a template class with mapBounds as template parameter
             //Store google map's geo boundaries
-            mMapProjection = std::make_unique<RGWebMercatorProjection>(gmapBounds);
-            saveProjection(fileName);
-        }
-
-        emit mapLoaded(mMap);
-    }
-
-    mDirty = true;
-
-    return success;
-}
-
-bool RGMap::loadImportedMap(const QString& fileName, const QPixmap& map, const RGOsMapBounds& osmBounds)
-{
-    bool success = !map.isNull();
-    mFileName = fileName;
-    mMap = map;
-
-    if (success)
-    {
-        if (osmBounds.isValid())
-        {
-            mMapProjection = std::make_unique<RGWebMercatorProjection>(osmBounds, mMap.width(), mMap.height());
+            mMapProjection = std::make_unique<RGWebMercatorProjection>(mapBounds, mMap.width(), mMap.height());
             saveProjection(fileName);
         }
 
@@ -199,3 +177,7 @@ bool RGMap::saveProjection(const QString& fileName)
 
     return mMapProjection->saveProjection(fileName);
 }
+
+// Explicit instantiation of loadImportedMap for the possible variants
+template bool RGMap::loadImportedMap<RGGoogleMapBounds>(const QString&, const QPixmap&, const RGGoogleMapBounds&);
+template bool RGMap::loadImportedMap<RGOsMapBounds>(const QString&, const QPixmap&, const RGOsMapBounds&);

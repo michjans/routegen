@@ -22,7 +22,7 @@ private slots:
         //const RGGoogleMapBounds& gmb = projOSM.googleMapBounds();
 
         RGGoogleMapBounds gmBounds(ne, sw, zoom);
-        RGWebMercatorProjection projGM(gmBounds);
+        RGWebMercatorProjection projGM(gmBounds, 1280, 720);
 
         QCOMPARE_EQ(projGM.convert(ne), QPoint(1280, 0));
         QCOMPARE_EQ(projGM.convert(sw), QPoint(0, 720));

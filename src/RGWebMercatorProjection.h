@@ -7,14 +7,39 @@
 #include "RGOsMapBounds.h"
 
 #include <QGeoCoordinate>
+#include <QImage>
 #include <QPointF>
 
 class RGWebMercatorProjection : public RGMapProjection
 {
     Q_OBJECT
 public:
-    RGWebMercatorProjection(const RGGoogleMapBounds& mapBounds, QObject* parent = nullptr);
+    /**
+     * @brief RGWebMercatorProjection instantiotes the RGWebMercatorProjection from a RGGoogleMapBounds
+     * @param mapBounds the RGGoogleMapBounds
+     * @param mapWidth width of map
+     * @param mapHeight height of map
+     * @param parent
+     */
+    RGWebMercatorProjection(const RGGoogleMapBounds& mapBounds, int mapWidth, int mapHeight, QObject* parent = nullptr);
+
+    /**
+     * @brief RGWebMercatorProjection instantiotes the RGWebMercatorProjection from a RGOsMapBounds
+     * @param mapBounds the RGOsMapBounds
+     * @param mapWidth width of map
+     * @param mapHeight height of map
+     * @param parent
+     */
     RGWebMercatorProjection(const RGOsMapBounds& mapBounds, int mapWidth, int mapHeight, QObject* parent = nullptr);
+
+    /**
+     * @brief RGWebMercatorProjection instantiotes the RGWebMercatorProjection from an image stored on disk,
+     *        assuming that the required georefernce projection keys are stored within the file itself
+     *        If the QImage will not contain the georeference keys, the projection will be marked as invalid
+     * @param map the QImage containing the geo reference keys
+     * @param parent
+     */
+    RGWebMercatorProjection(const QImage& map, QObject* parent = nullptr);
     virtual ~RGWebMercatorProjection() override;
 
     bool isValid() const override;

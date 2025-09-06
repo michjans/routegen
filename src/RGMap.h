@@ -1,9 +1,7 @@
 #ifndef RGMAP_H
 #define RGMAP_H
 
-#include "RGGoogleMapBounds.h"
 #include "RGMapProjection.h"
-#include "RGOsMapBounds.h"
 
 #include <QList>
 #include <QObject>
@@ -30,19 +28,10 @@ public:
      * @brief loadImportedMap loads the imported map and save the geo reference data
      * @param fileName name of the file
      * @param map the map image
-     * @param gmapBounds geographic projection information
+     * @param mapBounds geographic projection information
      * @return true if successfull
      */
-    bool loadImportedMap(const QString& fileName, const QPixmap& map, const RGGoogleMapBounds& gmapBounds);
-
-    /**
-     * @brief loadImportedMap loads the imported map and save the geo reference data
-     * @param fileName name of the file
-     * @param map the map image
-     * @param gmapBounds geographic projection information
-     * @return true if successfull
-     */
-    bool loadImportedMap(const QString& fileName, const QPixmap& map, const RGOsMapBounds& osmBounds);
+    template <typename MAPBOUNDS> bool loadImportedMap(const QString& fileName, const QPixmap& map, const MAPBOUNDS& mapBounds);
 
     bool hasGeoBounds() const;
     QList<QPoint> mapRoutePoints(const QList<QGeoCoordinate>& geoCoordinates) const;

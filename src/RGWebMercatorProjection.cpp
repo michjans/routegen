@@ -1,7 +1,6 @@
 #include "RGWebMercatorProjection.h"
 
 #include <QDebug>
-#include <QImage>
 #include <QtMath>
 
 namespace
@@ -14,7 +13,7 @@ const QLatin1StringView imgKeyPixelToLeftYStr("RGWebMercatorPixelTopLeftY");
 const QLatin1StringView imgKeyZoomStr("RGWebMercatorZoom");
 }
 
-RGWebMercatorProjection::RGWebMercatorProjection(const RGGoogleMapBounds& mapBounds, QObject* parent)
+RGWebMercatorProjection::RGWebMercatorProjection(const RGGoogleMapBounds& mapBounds, int mapWidth, int mapHeight, QObject* parent)
     : RGMapProjection(parent),
       m_zoom(mapBounds.getZoom())
 {
@@ -43,6 +42,26 @@ RGWebMercatorProjection::RGWebMercatorProjection(const RGOsMapBounds& mapBounds,
     qDebug() << "zoom:" << m_zoom;
     qDebug() << "pixWidth:" << mBottomRight.x() - mTopLeft.x();
     qDebug() << "pixHeigth:" << mBottomRight.y() - mTopLeft.y();
+}
+
+RGWebMercatorProjection::RGWebMercatorProjection(const QImage& map, QObject* parent)
+    : RGMapProjection(parent)
+{
+    QString imgPixelToLeftXStr = map.text(imgKeyPixelToLeftXStr);
+    QString imgPixelToLeftYStr = map.text(imgKeyPixelToLeftYStr);
+    QString imgZoomStr = map.text(imgKeyZoomStr);
+    if (!imgPixelToLeftXStr.isEmpty() && !imgPixelToLeftYStr.isEmpty() && !imgZoomStr.isEmpty())
+    {
+        mTopLeft = QPoint(imgPixelToLeftXStr.toInt(), imgPixelToLeftYStr.toInt());
+        mBottomRight = mTopLeft + QPoint(map.width(), map.height());
+        m_zoom = imgZoomStr.toInt();
+        mAntiMeredianPosX = worldToPixel(QPointF(TILE_SIZE, TILE_SIZE)).x();
+        qDebug() << "Georeference keys read from file:";
+        qDebug() << "mTopLeft:" << mTopLeft;
+        qDebug() << "mBottomRight:" << mBottomRight;
+        qDebug() << "m_zoom:" << m_zoom;
+    }
+    //else no geo reference keys found, projection remains invalid
 }
 
 RGWebMercatorProjection::~RGWebMercatorProjection()
