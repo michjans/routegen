@@ -6,11 +6,6 @@
 namespace
 {
 const int TILE_SIZE = 256;
-
-//Keys used to store the georeferencing metadata into the image files
-const QLatin1StringView imgKeyPixelToLeftXStr("RGWebMercatorPixelTopLeftX");
-const QLatin1StringView imgKeyPixelToLeftYStr("RGWebMercatorPixelTopLeftY");
-const QLatin1StringView imgKeyZoomStr("RGWebMercatorZoom");
 }
 
 RGWebMercatorProjection::RGWebMercatorProjection(const RGGoogleMapBounds& mapBounds, int mapWidth, int mapHeight, QObject* parent)
@@ -44,24 +39,13 @@ RGWebMercatorProjection::RGWebMercatorProjection(const RGOsMapBounds& mapBounds,
     qDebug() << "pixHeigth:" << mBottomRight.y() - mTopLeft.y();
 }
 
-RGWebMercatorProjection::RGWebMercatorProjection(const QImage& map, QObject* parent)
-    : RGMapProjection(parent)
+RGWebMercatorProjection::RGWebMercatorProjection(const QPoint topLeftWorldPixel, int zoom, int mapWidth, int mapHeight, QObject* parent)
+    : RGMapProjection(parent),
+      m_zoom(zoom),
+      mTopLeft(topLeftWorldPixel),
+      mBottomRight(mTopLeft + QPoint(mapWidth, mapHeight))
 {
-    QString imgPixelToLeftXStr = map.text(imgKeyPixelToLeftXStr);
-    QString imgPixelToLeftYStr = map.text(imgKeyPixelToLeftYStr);
-    QString imgZoomStr = map.text(imgKeyZoomStr);
-    if (!imgPixelToLeftXStr.isEmpty() && !imgPixelToLeftYStr.isEmpty() && !imgZoomStr.isEmpty())
-    {
-        mTopLeft = QPoint(imgPixelToLeftXStr.toInt(), imgPixelToLeftYStr.toInt());
-        mBottomRight = mTopLeft + QPoint(map.width(), map.height());
-        m_zoom = imgZoomStr.toInt();
-        mAntiMeredianPosX = worldToPixel(QPointF(TILE_SIZE, TILE_SIZE)).x();
-        qDebug() << "Georeference keys read from file:";
-        qDebug() << "mTopLeft:" << mTopLeft;
-        qDebug() << "mBottomRight:" << mBottomRight;
-        qDebug() << "m_zoom:" << m_zoom;
-    }
-    //else no geo reference keys found, projection remains invalid
+    mAntiMeredianPosX = worldToPixel(QPointF(TILE_SIZE, TILE_SIZE)).x();
 }
 
 RGWebMercatorProjection::~RGWebMercatorProjection()
@@ -101,15 +85,14 @@ QGeoCoordinate RGWebMercatorProjection::pixelToGeo(const QPoint& pixel) const
     return unproject(world);
 }
 
-bool RGWebMercatorProjection::saveProjection(const QString& fileName)
+QPoint RGWebMercatorProjection::topLeftWorldPixel() const
 {
-    //We store the geo refence information as tags in the file (if possible)
-    //It's only required to store the topleft coordinate and the zoomlevel
-    QImage img(fileName);
-    img.setText(imgKeyPixelToLeftXStr, QString::number(mTopLeft.x()));
-    img.setText(imgKeyPixelToLeftYStr, QString::number(mTopLeft.y()));
-    img.setText(imgKeyZoomStr, QString::number(m_zoom));
-    return img.save(fileName);
+    return mTopLeft;
+}
+
+int RGWebMercatorProjection::zoomLevel() const
+{
+    return m_zoom;
 }
 
 QPointF RGWebMercatorProjection::project(const QGeoCoordinate& geoPoint) const

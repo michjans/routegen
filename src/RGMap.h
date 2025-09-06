@@ -25,13 +25,16 @@ public:
     bool loadMap(const QString& fileName, QImage map = QImage());
 
     /**
-     * @brief loadImportedMap loads the imported map and save the geo reference data
+     * @brief saveImportedMapAndUse saves the imported map including the geo reference data and also loads in as background
+     *        map to be used for generating the route
      * @param fileName name of the file
      * @param map the map image
      * @param mapBounds geographic projection information
+     * @param geoReferenceSavedSuccess is set to true when the georeference metadata could be samed into the file as well
      * @return true if successfull
      */
-    template <typename MAPBOUNDS> bool loadImportedMap(const QString& fileName, const QPixmap& map, const MAPBOUNDS& mapBounds);
+    template <typename MAPBOUNDS>
+    bool saveImportedMapAndUse(const QString& fileName, const QPixmap& map, const MAPBOUNDS& mapBounds, bool& geoReferenceSavedSuccess);
 
     bool hasGeoBounds() const;
     QList<QPoint> mapRoutePoints(const QList<QGeoCoordinate>& geoCoordinates) const;
@@ -57,8 +60,6 @@ signals:
     void mapLoaded(const QPixmap& map);
 
 private:
-    bool saveProjection(const QString& fileName);
-
     QPixmap mMap;
     QString mFileName;
     bool mDirty;

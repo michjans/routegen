@@ -912,21 +912,29 @@ template <typename T> void RGMainWindow::importMap()
         QString lastSaveDir = RGSettings::getLastOpenDir(RGSettings::RG_MAP_LOCATION);
 
         //Note that only these file formats support writing meta data in the file, as we now do for geo projection
-        QString fileName =
-            QFileDialog::getSaveFileName(this, tr("Save File"), QFileInfo(lastSaveDir).absoluteDir().absolutePath(), tr("Images (*.png *.bmp *.jpg *.tif)"));
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QFileInfo(lastSaveDir).absoluteDir().absolutePath(),
+                                                        tr("Images (*.png *.bmp *.jpg *.tif *.gif)"));
         if (fileName.isEmpty())
         {
             return;
         }
 
         forceFileSuffix(fileName, QStringLiteral("png"));
-        if (map.save(fileName))
+        bool geoReferenceSavedSuccess = false;
+        if (mMap->saveImportedMapAndUse(fileName, map, gm.getMapBounds(), geoReferenceSavedSuccess))
         {
             RGSettings::setLastOpenDir(fileName, RGSettings::RG_MAP_LOCATION);
-            mMap->loadImportedMap(fileName, map, gm.getMapBounds());
+
+            if (!geoReferenceSavedSuccess)
+            {
+                QMessageBox::warning(this, tr("Problems saving geo reference data"),
+                                     tr("Unable to save geo reference data into image file (not supported by selected file type). It will not be possible to "
+                                        "re-open this map to import a GPX route."));
+            }
         }
         else
         {
+
             QMessageBox::critical(this, tr("Cannot write file"), tr("Unable to save map file!"));
         }
     }

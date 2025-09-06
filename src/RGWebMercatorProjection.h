@@ -7,7 +7,7 @@
 #include "RGOsMapBounds.h"
 
 #include <QGeoCoordinate>
-#include <QImage>
+#include <QPoint>
 #include <QPointF>
 
 class RGWebMercatorProjection : public RGMapProjection
@@ -33,19 +33,22 @@ public:
     RGWebMercatorProjection(const RGOsMapBounds& mapBounds, int mapWidth, int mapHeight, QObject* parent = nullptr);
 
     /**
-     * @brief RGWebMercatorProjection instantiotes the RGWebMercatorProjection from an image stored on disk,
-     *        assuming that the required georefernce projection keys are stored within the file itself
-     *        If the QImage will not contain the georeference keys, the projection will be marked as invalid
-     * @param map the QImage containing the geo reference keys
+     * @brief RGWebMercatorProjection instantiotes the RGWebMercatorProjection directly from passed georeference data
+     * @param topLeftWorldPixel the topleft pixel in world for the applied zoom
+     * @param zoom the used zoomlevel
+     * @param mapWidth widht of map
+     * @param mapHeight height of map
      * @param parent
      */
-    RGWebMercatorProjection(const QImage& map, QObject* parent = nullptr);
+    RGWebMercatorProjection(const QPoint topLeftWorldPixel, int zoom, int mapWidth, int mapHeight, QObject* parent = nullptr);
     virtual ~RGWebMercatorProjection() override;
 
     bool isValid() const override;
     QPoint convert(const QGeoCoordinate& geoPoint) const override;
     QGeoCoordinate pixelToGeo(const QPoint& pixel) const;
-    bool saveProjection(const QString& fileName) override;
+
+    QPoint topLeftWorldPixel() const;
+    int zoomLevel() const;
 
 private:
     //Coordinate to world coordinates

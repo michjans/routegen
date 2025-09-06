@@ -14,7 +14,7 @@ public:
 
     bool isValid() const override;
     QPoint convert(const QGeoCoordinate& geoPoint) const override;
-    bool saveProjection(const QString& fileName) override;
+    bool saveProjection(const QString& fileName);
 
 private:
     QString mFileName;
