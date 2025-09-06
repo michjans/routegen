@@ -9,19 +9,20 @@ on GitHub as well, with the intention that more people are willing to contribute
 to it.
 	  
 ## Installation
-On Windows use the distributed installer named routegen-winxx-x.x.exe
-On Linux and Mac OS the program has to be build from source code (see below)
+On Windows and Linux use the distributed installer provided from the website.
+On Mac OS the program has to be build from source code (see below)
 
 ## Building Route Generator from the source code
 Since version 1.13 Route Generator has been build using Qt 6.9 using CMake, although
-the code itself still still compiles against Qt 5.12, but it's not guaranteed to fully
+the code itself might still compile against Qt 5.12, but it's not guaranteed to fully
 function as expected.
 
 So Qt 6.9 (or higher) should be downloaded and installed, including CMake with at least
 the following packages:
--Qt WebChannel
--Qt Positioning
--Extensions: Qt WebEngine
+
+- Qt WebChannel
+- Qt Positioning
+- Extensions: Qt WebEngine
 
 Also Route Generator supports importing GeoTiff maps, so it requires
 libgeotiff development libraries to be installed, before it can be build.
@@ -32,13 +33,18 @@ Libgeotiff depends on libtiff, libproj and sqlite3, so they have to be installed
 #### Linux (Ubuntu or similar OS)
 
 Execute the following commands:
+
 - sudo apt install sqlite3
 - sudo apt install proj
 - sudo apt install libproj-dev
+- sudo apt install libgeotiff-dev
+
+Or optionally manually install libgeotiff:
+
 - mkdir libgeotiff
 - cd libgeotiff
 - git clone https://github.com/OSGeo/libgeotiff.git
-- git checkout 1.7.1
+- git checkout 1.7.4
 - cd libgeotiff
 
 Then follow the GeoTiff installation instructions and choose for the cmake installation,
@@ -52,6 +58,7 @@ so that the GeoTIFF package can be found from the CMakeLists.txt, e.g.
 Note that since Qt 6.9, the MSVS 2022 development environment has to be installed and used to compile everything.
 
 On Windows all dependent packages have to be build from source.
+
 - Download libtiff from https://download.osgeo.org/libtiff/ (at least version 4.7.0)
 - Download sqlite3 source code from: https://sqlite.org/download.html (sqlite-amalgamation-3500400.zip)
 - Download Proj (dev) from https://proj.org/download.html (at least version 9.6.1)
@@ -254,11 +261,16 @@ Finally embed all required qm files in the routegen.qrc file and reference them 
   - Smoother vehicle rotation (using average angles)
   - Donation button on toolbar and About dialog
   - Added possibility to select the map resolution (to prevent a scrolling map)
+- 1.13.0 release
+  - Upgrade to Qt 6.9 (no longer maintaining Qt 5.12)
+  - Import of maps from several OpenStreetMap providers (which can be customized)
+  - Georeference infomation now stored directly inside the saved map image
+  - Several bugfixes (sometimes resulting in crashes) resolved
  
 ## Technical details
 
-Route Generator is developed using the GPL version of Qt 5.15
-(Copyright (C) 2008-2021  The Qt Company Ltd. All rights reserved).
+Route Generator is developed using the GPL version of Qt 6.9
+(Copyright (C) 2008-2025  The Qt Company Ltd. All rights reserved).
 Qt can be [downloaded](https://www.qt.io/download) from The Qt Company website.
 
 
