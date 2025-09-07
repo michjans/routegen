@@ -50,8 +50,9 @@ public:
      *        Norally only TIFF files can support Geo information or the existing map was imported
      *        using Google maps. In that case the geograpic information is stored outside the map.s
      * @param fileName
+     * @param srcImge the image into which the geo bounds should be written
      */
-    bool saveGeoBoundsToNewFile(const QString& fileName);
+    bool saveGeoBoundsToNewFile(const QString& fileName /*TODO:, QImage &srcImage*/);
 
     void read(const QJsonObject& json);
     void write(QJsonObject& json);
@@ -60,6 +61,9 @@ signals:
     void mapLoaded(const QPixmap& map);
 
 private:
+    bool saveImageAndWebMercatorProjection(const QString& fileName, const QImage& srcImage, bool& geoReferenceSavedSuccess);
+    bool saveImageAndGeoTiffProjection(const QString& fileName, const QImage& srcImage, bool& geoReferenceSavedSuccess);
+
     QPixmap mMap;
     QString mFileName;
     bool mDirty;

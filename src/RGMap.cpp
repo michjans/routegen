@@ -37,7 +37,7 @@ bool RGMap::loadMap(const QString& fileName, QImage map)
 
     if (success)
     {
-        if (fileName.endsWith(QLatin1String(".tif")))
+        if (fileName.endsWith(QStringLiteral(".tif")))
         {
             //This is potentially a geotiff file
             mMapProjection = std::make_unique<RGGeoTiffMapProjection>(fileName);
@@ -91,35 +91,15 @@ bool RGMap::saveImportedMapAndUse(const QString& fileName, const QPixmap& map, c
 
     if (success)
     {
-        QImageWriter writer(fileName);
-        std::unique_ptr<RGWebMercatorProjection> wmProjection = std::make_unique<RGWebMercatorProjection>(mapBounds, mMap.width(), mMap.height());
-        if (fileName.endsWith(QLatin1String(".tif")))
+        //All imported maps use WebMercator projection
+        mMapProjection = std::make_unique<RGWebMercatorProjection>(mapBounds, mMap.width(), mMap.height());
+        if (fileName.endsWith(QStringLiteral(".tif")))
         {
-            //If the map was saved as tif file, save using the RGGeoTiffMapProjection class, but we can still keep using
-            //the RGWebMercatorProjection while the map is still in memory. Once the file is re-opened later on the
-            //RGGeoTiffMapProjection will be used (see RGMap::load)
-
-            //First save the tif file itself, then append the keys
-            success = writer.write(map.toImage());
-            geoReferenceSavedSuccess = RGGeoTiffMapProjection::saveProjectionDataToGeoTiff(fileName, *(wmProjection.get()));
-            qDebug() << "Saving TIF file success = " << success << "; geoReferenceSavedSuccess = " << geoReferenceSavedSuccess;
+            success = saveImageAndGeoTiffProjection(fileName, map.toImage(), geoReferenceSavedSuccess);
         }
-        else if (writer.supportsOption(QImageIOHandler::Description) && wmProjection->isValid())
+        else
         {
-            //We store the geo refence information as tags in the file (if possible)
-            //It's only required to store the topleft coordinate and the zoomlevel
-            QPoint topLeft = wmProjection->topLeftWorldPixel();
-            writer.setText(imgKeyPixelToLeftXStr, QString::number(topLeft.x()));
-            writer.setText(imgKeyPixelToLeftYStr, QString::number(topLeft.y()));
-            writer.setText(imgKeyZoomStr, QString::number(wmProjection->zoomLevel()));
-            geoReferenceSavedSuccess = true;
-            //Now save the full image
-            success = writer.write(map.toImage());
-        }
-
-        if (success)
-        {
-            mMapProjection = std::move(wmProjection);
+            success = saveImageAndWebMercatorProjection(fileName, map.toImage(), geoReferenceSavedSuccess);
         }
 
         emit mapLoaded(mMap);
@@ -176,15 +156,23 @@ void RGMap::clearMap()
     emit mapLoaded(mMap);
 }
 
-bool RGMap::saveGeoBoundsToNewFile(const QString& fileName)
+bool RGMap::saveGeoBoundsToNewFile(const QString& fileName /*TODO:, QImage &srcImage*/)
 {
     //TODO: Here we should pass the QImage to which the geo reference information should be added using the QImageWriter,
-    //      but take into account if we save as a tif file, i.e.
-    // if (mMapProjection)
-    // {
-    //     return mMapProjection->saveProjection(fileName);
-    // }
-    return false;
+    //      but take into account if we save as a tif file vs saving to png, jpg, etc. because then a different projection
+    //      has to be used (e.g. web mercator vs geotiff)
+    //      For now we only support writing webmercator, as that will be the most common way. Ideally we don't write into
+    //      a new QImage, but pass it along from the caller, but this will require some refactoring.
+    bool success = false, geoReferenceSavedSuccess = false;
+    if (mMapProjection)
+    {
+        QImage srcImage(fileName);
+        if (!fileName.endsWith(QStringLiteral("tif")))
+            success = saveImageAndWebMercatorProjection(fileName, srcImage, geoReferenceSavedSuccess);
+        else
+            success = saveImageAndGeoTiffProjection(fileName, srcImage, geoReferenceSavedSuccess);
+    }
+    return success && geoReferenceSavedSuccess;
 }
 
 void RGMap::read(const QJsonObject& json)
@@ -209,6 +197,42 @@ void RGMap::write(QJsonObject& json)
     //The geobounds are stored along with the map in the settings, so no meed to store them in the project
 
     json.insert(QStringLiteral("map"), mapObject);
+}
+
+bool RGMap::saveImageAndWebMercatorProjection(const QString& fileName, const QImage& srcImage, bool& geoReferenceSavedSuccess)
+{
+    QImageWriter writer(fileName);
+    if (writer.supportsOption(QImageIOHandler::Description) && mMapProjection->isValid())
+    {
+        //We store the geo refence information as tags in the file (if possible)
+        //It's only required to store the topleft coordinate and the zoomlevel
+        RGWebMercatorProjection* wmProjection = dynamic_cast<RGWebMercatorProjection*>(mMapProjection.get());
+        if (wmProjection)
+        {
+            QPoint topLeft = wmProjection->topLeftWorldPixel();
+            writer.setText(imgKeyPixelToLeftXStr, QString::number(topLeft.x()));
+            writer.setText(imgKeyPixelToLeftYStr, QString::number(topLeft.y()));
+            writer.setText(imgKeyZoomStr, QString::number(wmProjection->zoomLevel()));
+            geoReferenceSavedSuccess = true;
+        }
+    }
+    //Now save the full image
+    return writer.write(srcImage);
+}
+
+bool RGMap::saveImageAndGeoTiffProjection(const QString& fileName, const QImage& srcImage, bool& geoReferenceSavedSuccess)
+{
+    bool success = false;
+    QImageWriter writer(fileName);
+
+    //First save the tif file itself, then append the Geo keys
+    success = writer.write(srcImage);
+    if (success)
+    {
+        geoReferenceSavedSuccess = RGGeoTiffMapProjection::saveProjectionDataToGeoTiff(fileName, *(mMapProjection.get()));
+        qDebug() << "Saving TIF file success = " << success << "; geoReferenceSavedSuccess = " << geoReferenceSavedSuccess;
+    }
+    return success;
 }
 
 // Explicit instantiation of loadImportedMap for the possible variants

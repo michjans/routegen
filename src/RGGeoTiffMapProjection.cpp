@@ -34,11 +34,11 @@ RGGeoTiffMapProjection::RGGeoTiffMapProjection(const QString& fileName, QObject*
     }
 
     /* Get the GeoTIFF directory info */
+    //TODO: This method currently only suports ModelTypeGeographic, this means we can't use ouw own saved tiff files with web meractor projection at the moment,
+    //      i.e. Model = ModelTypeProjected
     GTIFDefn defn;
-    if (GTIFGetDefn(mGTif, &defn))
+    if (GTIFGetDefn(mGTif, &defn) && defn.Model == ModelTypeGeographic)
     {
-        qDebug() << "defn.Model=" << defn.Model;
-
         int xsize, ysize;
         TIFFGetField(mTiff, TIFFTAG_IMAGEWIDTH, &xsize);
         TIFFGetField(mTiff, TIFFTAG_IMAGELENGTH, &ysize);
@@ -71,6 +71,7 @@ RGGeoTiffMapProjection::RGGeoTiffMapProjection(const QString& fileName, QObject*
     else
     {
         //No valid Geo reference information found in GeoTIFF file
+        qDebug() << "No GeoTiff file or Unsupported defn.Model=" << defn.Model;
         GTIFFree(mGTif);
         XTIFFClose(mTiff);
         mTiff = nullptr;
