@@ -6,6 +6,14 @@
 namespace
 {
 const int TILE_SIZE = 256;
+const double R = 6378137.0;
+
+QPointF lonLatToMeters(const QGeoCoordinate& coord)
+{
+    double mx = R * coord.longitude() * M_PI / 180.0;
+    double my = R * std::log(std::tan(M_PI / 4.0 + coord.latitude() * M_PI / 360.0));
+    return QPointF(mx, my);
+}
 }
 
 RGWebMercatorProjection::RGWebMercatorProjection(const RGGoogleMapBounds& mapBounds, int mapWidth, int mapHeight, QObject* parent)
@@ -60,6 +68,8 @@ bool RGWebMercatorProjection::isValid() const
 QPoint RGWebMercatorProjection::convert(const QGeoCoordinate& geoPoint) const
 {
     QPoint point = worldToPixel(project(geoPoint));
+    //TODO: This check will not work anymore since we refactored this class to support OSM imports and saving
+    //      geo projections by just saving the mTopLeft and zoomlevel!
     if (mTopLeft.x() > mBottomRight.x() && point.x() < mTopLeft.x())
     {
         //When the route passes around the 180.0/-180.0 meridian (antimeridian), the coordinates will wrap around and we need to correct for this
@@ -70,12 +80,38 @@ QPoint RGWebMercatorProjection::convert(const QGeoCoordinate& geoPoint) const
     return point - mTopLeft;
 }
 
+bool RGWebMercatorProjection::fillProjectionTransformation(double& xOrigin, double& yOrigin, double& pixelSize, int& csType) const
+{
+    if (!isValid())
+    {
+        return false;
+    }
+
+    // meters per pixel
+    pixelSize = 2.0 * M_PI * R / (TILE_SIZE * (1 << m_zoom));
+
+    // compute geo position of top-left pixel (EPSG:3857 meters)
+    QGeoCoordinate topLeftCoord = pixelToGeo(QPoint(0, 0));
+    QPointF topLeftMeters = lonLatToMeters(topLeftCoord);
+    qDebug() << "RGWebMercatorProjection: topLeftCoord = " << topLeftCoord;
+    qDebug() << "RGWebMercatorProjection: topLeftMeters = " << topLeftMeters;
+    qDebug() << "RGWebMercatorProjection: pixelSize = " << pixelSize;
+
+    xOrigin = topLeftMeters.x();
+    yOrigin = topLeftMeters.y();
+    csType = 3857; // EPSG:3857
+
+    return true;
+}
+
 QGeoCoordinate RGWebMercatorProjection::pixelToGeo(const QPoint& pixel) const
 {
     // Re-add the top-left offset
     QPoint absPixel = pixel + mTopLeft;
 
     // If the map crosses the antimeridian, normalize the x coordinate
+    //TODO: This check will not work anymore since we refactored this class to support OSM imports and saving
+    //      geo projections by just saving the mTopLeft and zoomlevel!
     if (mTopLeft.x() > mBottomRight.x() && absPixel.x() > mAntiMeredianPosX)
     {
         absPixel.setX(absPixel.x() - mAntiMeredianPosX);

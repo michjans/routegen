@@ -45,6 +45,8 @@ public:
 
     bool isValid() const override;
     QPoint convert(const QGeoCoordinate& geoPoint) const override;
+    bool fillProjectionTransformation(double& xOrigin, double& yOrigin, double& pixelSize, int& csType) const override;
+
     QGeoCoordinate pixelToGeo(const QPoint& pixel) const;
 
     QPoint topLeftWorldPixel() const;

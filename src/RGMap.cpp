@@ -41,6 +41,7 @@ bool RGMap::loadMap(const QString& fileName, QImage map)
         {
             //This is potentially a geotiff file
             mMapProjection = std::make_unique<RGGeoTiffMapProjection>(fileName);
+            qDebug() << "GeoTiff file? RGGeoTiffMapProjection reports valid = " << mMapProjection->isValid();
         }
         else
         {
@@ -91,26 +92,35 @@ bool RGMap::saveImportedMapAndUse(const QString& fileName, const QPixmap& map, c
     if (success)
     {
         QImageWriter writer(fileName);
-        if (mapBounds.isValid())
+        std::unique_ptr<RGWebMercatorProjection> wmProjection = std::make_unique<RGWebMercatorProjection>(mapBounds, mMap.width(), mMap.height());
+        if (fileName.endsWith(QLatin1String(".tif")))
         {
-            //TODO: If the map was saved as tif file, save using the RGGeoTiffMapProjection class, because when
-            //      loading a tif file, we also use the RGGeoTiffMapProjection.
+            //If the map was saved as tif file, save using the RGGeoTiffMapProjection class, but we can still keep using
+            //the RGWebMercatorProjection while the map is still in memory. Once the file is re-opened later on the
+            //RGGeoTiffMapProjection will be used (see RGMap::load)
 
-            std::unique_ptr<RGWebMercatorProjection> wmProjection = std::make_unique<RGWebMercatorProjection>(mapBounds, mMap.width(), mMap.height());
-            if (writer.supportsOption(QImageIOHandler::Description) && wmProjection->isValid())
-            {
-                //We store the geo refence information as tags in the file (if possible)
-                //It's only required to store the topleft coordinate and the zoomlevel
-                QPoint topLeft = wmProjection->topLeftWorldPixel();
-                writer.setText(imgKeyPixelToLeftXStr, QString::number(topLeft.x()));
-                writer.setText(imgKeyPixelToLeftYStr, QString::number(topLeft.y()));
-                writer.setText(imgKeyZoomStr, QString::number(wmProjection->zoomLevel()));
-                mMapProjection = std::move(wmProjection);
-                geoReferenceSavedSuccess = true;
-            }
+            //First save the tif file itself, then append the keys
+            success = writer.write(map.toImage());
+            geoReferenceSavedSuccess = RGGeoTiffMapProjection::saveProjectionDataToGeoTiff(fileName, *(wmProjection.get()));
+            qDebug() << "Saving TIF file success = " << success << "; geoReferenceSavedSuccess = " << geoReferenceSavedSuccess;
         }
-        //Now save the full image
-        success = writer.write(map.toImage());
+        else if (writer.supportsOption(QImageIOHandler::Description) && wmProjection->isValid())
+        {
+            //We store the geo refence information as tags in the file (if possible)
+            //It's only required to store the topleft coordinate and the zoomlevel
+            QPoint topLeft = wmProjection->topLeftWorldPixel();
+            writer.setText(imgKeyPixelToLeftXStr, QString::number(topLeft.x()));
+            writer.setText(imgKeyPixelToLeftYStr, QString::number(topLeft.y()));
+            writer.setText(imgKeyZoomStr, QString::number(wmProjection->zoomLevel()));
+            geoReferenceSavedSuccess = true;
+            //Now save the full image
+            success = writer.write(map.toImage());
+        }
+
+        if (success)
+        {
+            mMapProjection = std::move(wmProjection);
+        }
 
         emit mapLoaded(mMap);
     }
