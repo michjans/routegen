@@ -21,12 +21,14 @@
 #define RGVOSMGRAPHICSVIEW_H
 
 #include <QGeoCoordinate>
-#include <QGeoRectangle>
+#include <QGeoPath>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QList>
 #include <QTimeLine>
 #include <QTimer>
+
+#include <set>
 
 #include "RGOsmBackend.h"
 
@@ -42,10 +44,7 @@ public:
 
     void loadMap(const QGeoCoordinate& coord, int zoom, QSize size);
 
-    void setGeoRect(const QGeoRectangle& rect)
-    {
-        mGeoRect = rect;
-    }
+    void setGeoPath(const QGeoPath& geoPath);
 
     RGOsmBackend& osmBackend()
     {
@@ -57,6 +56,11 @@ public:
 signals:
     void zoomLevelChanged(int zoom);
     void centerCoordChanged(const QGeoCoordinate& centerCoord);
+
+    //For progress monitoring of received tiles
+    void initTileProgress(int totalTiles);
+    void tileProgress(int progress);
+    void allTilesReceived();
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;
@@ -70,15 +74,31 @@ private slots:
 private:
     void loadTiles();
     void clearTiles();
+    void initProgressMonitor(int beginX, int endX, int beginY, int endY);
+    void updateProgressMonitor(int tileX, int tileY);
+    void drawGeoPath();
 
     RGOsmBackend mOsmBackEnd;
 
     QGraphicsScene* mScene;
     QPointF mDragOrigin;
     QGeoCoordinate mCenterCoord;
-    QGeoRectangle mGeoRect;
+    QGeoPath mGeoPath;
+    QGraphicsPathItem *mRouteItem;
     QSize mSize;
     int mZoomLevel;
+
+    struct QPointLess {
+        bool operator()(const QPoint& a, const QPoint& b) const {
+            if (a.x() < b.x()) return true;
+            if (a.x() > b.x()) return false;
+            return a.y() < b.y();
+        }
+    };
+
+    //For monitoring the number of requested tiles
+    int mTotalTilesRequested;
+    std::set<QPoint, QPointLess> mPointMonitorMap;
 };
 
 #endif // RGVOSMGRAPHICSVIEW_H

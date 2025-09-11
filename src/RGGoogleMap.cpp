@@ -73,6 +73,7 @@ RGGoogleMap::RGGoogleMap(QWidget* parent, const QGeoPath& geoPath)
 {
     ui.setupUi(this);
 
+    //TODO: Can we embed this file into the resources, so the api key is not that obvious?
     QFile file(QStringLiteral("google-maps-template.html"));
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
@@ -278,6 +279,7 @@ QString RGGoogleMap::genHtml(const QString& latlon, const QString& zoom) const
     html.replace(QLatin1String("LATLON"), latlon);
     html.replace(QLatin1String("ZOOM"), zoom);
     html.replace(QLatin1String("MAPTYPE"), ui.mapTypeBox->currentText());
+    //TODO: Can we replace the XXXXXXXXXXXXX key from the source code and kind of encrypt it?
 
     ui.zoomBox->setValue(zoom.toInt());
 

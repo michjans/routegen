@@ -121,8 +121,10 @@ After everything is setup correctly, now Route Generator itself can be build.
 - cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=C:/Users/mjans/dev/local ..
 - nmake
 
-Note: when using QtCreator on Windows you also have to set the CMAKE_INSTALL_PREFIX key in the CMake
-      build setting to point to the "C:/Users/mjans/dev/local", directory, otherwise GeoTIFF cannot be found.
+Note: 1. When using QtCreator on Windows you also have to set the CMAKE_INSTALL_PREFIX key in the CMake
+         build setting to point to the "C:/Users/mjans/dev/local", directory, otherwise GeoTIFF cannot be found.
+      2. You can also manually build with the instructions above and in qtcreator go to project and select import
+         build environment. Then select the "Release" directory from which cmake was executed.
 
 #### Linux (or Mac)
 - cd to the the directory where you unzipped or cloned the source code

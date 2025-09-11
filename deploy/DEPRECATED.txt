@@ -1,0 +1,1 @@
+These deployment methods are deprecated. Now using the Qt installer framework in the installer directory.

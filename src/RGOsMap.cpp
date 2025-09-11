@@ -27,13 +27,13 @@
 #include <QTimer>
 
 RGOsMap::RGOsMap(QWidget* parent, const QGeoPath& geoPath)
-    : QDialog(parent, Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::Dialog | Qt::WindowMaximizeButtonHint),
-      m_geoPath(geoPath)
+    : QDialog(parent, Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::Dialog | Qt::WindowMaximizeButtonHint)
 {
     ui.setupUi(this);
 
-    ui.progressBar->hide();
-    ui.progressBar->setRange(0, 100);
+    //ui.progressBar->hide();
+    //ui.progressBar->setTextVisible(true);
+    //ui.progressBar->setFormat(tr("Number of retrieved tiles: %p"));
     ui.widthScaleSB->setValue(RGSettings::getGMXFactor());
     ui.heightScaleSB->setValue(RGSettings::getGMYFactor());
 
@@ -42,7 +42,7 @@ RGOsMap::RGOsMap(QWidget* parent, const QGeoPath& geoPath)
     QObject::connect(ui.widthScaleSB, &QDoubleSpinBox::valueChanged, this, &RGOsMap::handleScaleSpinboxChanged);
     QObject::connect(ui.heightScaleSB, &QDoubleSpinBox::valueChanged, this, &RGOsMap::handleScaleSpinboxChanged);
 
-    QObject::connect(ui.buttonBox, &QDialogButtonBox::accepted, this, &RGOsMap::on_accept);
+    QObject::connect(ui.buttonBox, &QDialogButtonBox::accepted, this, &RGOsMap::accept);
 
     RGTileProviderManager tileProviderMgr;
     auto tileProviders = tileProviderMgr.getAllProviders();
@@ -61,21 +61,17 @@ RGOsMap::RGOsMap(QWidget* parent, const QGeoPath& geoPath)
     QObject::connect(ui.osmView, &RGOsmGraphicsView::zoomLevelChanged, this, &RGOsMap::on_zoomLevelChangedChanged);
     QObject::connect(ui.osmView, &RGOsmGraphicsView::centerCoordChanged, this, &RGOsMap::on_centerCoordChanged);
 
+    //Connect progress monitor
+    QObject::connect(ui.osmView, &RGOsmGraphicsView::initTileProgress, this, &RGOsMap::handleInitTileProgress);
+    QObject::connect(ui.osmView, &RGOsmGraphicsView::tileProgress, this, &RGOsMap::handleTileProgress);
+    QObject::connect(ui.osmView, &RGOsmGraphicsView::allTilesReceived, this, &RGOsMap::handleAllTilesReceived);
+
     //Init map resolution
     handleScaleSpinboxChanged(1.0);
 
-    if (m_geoPath.size() > 1)
+    if (geoPath.size() > 1)
     {
-        QGeoRectangle startGeoRect = m_geoPath.boundingGeoRectangle();
-        //Load initial map location from incoming geo rectangle
-        qDebug() << "startGeoRect:"
-                 << "  topLeft:" << startGeoRect.topLeft() << "  bottomLeft:" << startGeoRect.bottomLeft() << "  topRight:" << startGeoRect.topRight()
-                 << "  bottomRight:" << startGeoRect.bottomRight() << "  center:" << startGeoRect.center();
-
-        QGeoCoordinate center = startGeoRect.center();
-        ui.latSB->setValue(center.latitude());
-        ui.lonSB->setValue(center.longitude());
-        ui.osmView->setGeoRect(startGeoRect);
+        ui.osmView->setGeoPath(geoPath);
 
         //Immediately load the map in case a route is passed
         on_goButton_clicked(true);
@@ -96,35 +92,8 @@ void RGOsMap::accept()
     QDialog::accept();
 }
 
-void RGOsMap::on_accept()
-{
-    if (m_geoPath.size() > 1)
-    {
-        //TODO: Do we need this extra stage?
-        //We need to wait until the georect is deleted
-        QTimer::singleShot(1000, this, &RGOsMap::continue_Accept);
-
-        setCursor(Qt::WaitCursor);
-    }
-    else
-    {
-        continue_Accept();
-    }
-}
-
-void RGOsMap::continue_Accept()
-{
-    //Now retrieve the map boundaries from google's map
-    this->accept();
-}
-
 void RGOsMap::on_goButton_clicked(bool)
 {
-    //TODO: Monitor progress
-    // ui.progressBar->hide();
-    // ui.progressBar->setValue(progress);
-    // ui.progressBar->show();
-
     QGeoCoordinate coord(ui.latSB->value(), ui.lonSB->value());
     m_mapBounds.setZoom(ui.zoomBox->value());
     m_mapBounds.setCenterCoord(coord);
@@ -157,4 +126,20 @@ void RGOsMap::on_centerCoordChanged(const QGeoCoordinate& centerCoord)
     ui.latSB->setValue(centerCoord.latitude());
     ui.lonSB->setValue(centerCoord.longitude());
     m_mapBounds.setCenterCoord(centerCoord);
+}
+
+void RGOsMap::handleInitTileProgress(int totalTiles)
+{
+    //ui.progressBar->show();
+    ui.progressBar->setRange(0, totalTiles);
+}
+
+void RGOsMap::handleTileProgress(int progress)
+{
+    ui.progressBar->setValue(progress);
+}
+
+void RGOsMap::handleAllTilesReceived()
+{
+    ui.progressBar->reset();
 }

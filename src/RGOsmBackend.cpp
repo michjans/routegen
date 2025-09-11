@@ -152,6 +152,11 @@ QPointF RGOsmBackend::latLonToTile(const QGeoCoordinate& geoPoint, int zoom)
     return QPointF(x, y);
 }
 
+QPointF RGOsmBackend::latLonToWorld(const QGeoCoordinate &geoPoint, int zoom)
+{
+    return latLonToTile(geoPoint, zoom) * TILE_SIZE;
+}
+
 QGeoCoordinate RGOsmBackend::tileToLatLon(const QPointF& tileXY, int zoom)
 {
     QGeoCoordinate geoCoord;

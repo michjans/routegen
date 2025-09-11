@@ -20,15 +20,18 @@
 #include "RGOsmGraphicsView.h"
 
 #include <QDebug>
+#include <QGeoRectangle>
 #include <QGraphicsPixmapItem>
 #include <QMessageBox>
 #include <QMouseEvent>
+#include <QPainterPath>
 #include <QPixmap>
 #include <QProgressDialog>
 
 RGOsmGraphicsView::RGOsmGraphicsView(QWidget* parent)
     : QGraphicsView(parent),
       mScene(new QGraphicsScene(this)),
+      mRouteItem(nullptr),
       mZoomLevel(1)
 {
     setScene(mScene);
@@ -73,12 +76,29 @@ void RGOsmGraphicsView::loadMap(const QGeoCoordinate& coord, int zoom, QSize siz
     loadTiles();
 }
 
+void RGOsmGraphicsView::setGeoPath(const QGeoPath &geoPath)
+{
+    mGeoPath = geoPath;
+
+    QGeoRectangle startGeoRect = mGeoPath.boundingGeoRectangle();
+
+    //Load initial map location from incoming geo rectangle
+    qDebug() << "startGeoRect:"
+             << "  topLeft:" << startGeoRect.topLeft() << "  bottomLeft:" << startGeoRect.bottomLeft() << "  topRight:" << startGeoRect.topRight()
+             << "  bottomRight:" << startGeoRect.bottomRight() << "  center:" << startGeoRect.center();
+
+    mCenterCoord = startGeoRect.center();
+    emit centerCoordChanged(mCenterCoord);
+}
+
 QPixmap RGOsmGraphicsView::renderMap()
 {
     QRect fullMapRect(0, 0, mScene->width(), mScene->height());
     bool result = false;
     QPixmap outImage(fullMapRect.size());
     QPainter painter(&outImage);
+    //Don't draw the route on the generated map
+    if (mRouteItem) mRouteItem->setVisible(false);
     mScene->render(&painter);
     painter.end();
     mOsmBackEnd.addAttribution(outImage);
@@ -111,8 +131,8 @@ void RGOsmGraphicsView::mouseMoveEvent(QMouseEvent* event)
     qDebug() << "original mCenterCoord = " << mCenterCoord;
 
     QPointF centerTile = mOsmBackEnd.latLonToTile(mCenterCoord, mZoomLevel);
-    centerTile.setX(centerTile.x() - delta.x() / mOsmBackEnd.TILE_SIZE);
-    centerTile.setY(centerTile.y() - delta.y() / mOsmBackEnd.TILE_SIZE);
+    centerTile.setX((centerTile.x() - delta.x()) / mOsmBackEnd.TILE_SIZE);
+    centerTile.setY((centerTile.y() - delta.y()) / mOsmBackEnd.TILE_SIZE);
     mCenterCoord = mOsmBackEnd.tileToLatLon(centerTile, mZoomLevel);
     qDebug() << "shifted mCenterCoord = " << mCenterCoord;
     emit centerCoordChanged(mCenterCoord);
@@ -144,15 +164,17 @@ void RGOsmGraphicsView::wheelEvent(QWheelEvent* event)
 
 void RGOsmGraphicsView::addTileToScene(const QImage& tile, int tileX, int tileY)
 {
+    qDebug() << "adding tile:" << tileX << ", " << tileY;
     // Calculate the tile's position in the scene
     int x = tileX * mOsmBackEnd.TILE_SIZE;
     int y = tileY * mOsmBackEnd.TILE_SIZE;
 
     // Create a pixmap item and add it to the scene
-    //qDebug() << "adding tile item:" << x << ", " << y;
     QGraphicsPixmapItem* tileItem = new QGraphicsPixmapItem(QPixmap::fromImage(tile));
     tileItem->setPos(x, y);
     mScene->addItem(tileItem);
+
+    updateProgressMonitor(tileX, tileY);
 
     //qDebug() << "scene rect is now: " << mScene->sceneRect();
 }
@@ -177,6 +199,10 @@ void RGOsmGraphicsView::loadTiles()
     int beginY = std::floor(fixedSceneRect.top() / mOsmBackEnd.TILE_SIZE);
     int endY = std::ceil(fixedSceneRect.bottom() / mOsmBackEnd.TILE_SIZE) - 1;
 
+    //We want to monitor if all tiles have been received
+    initProgressMonitor(beginX, endX, beginY, endY);
+
+    //Now request the actual tiles
     qDebug() << "Tile grid bounds:" << beginX << endX << beginY << endY;
     for (int x = beginX; x <= endX; ++x)
     {
@@ -186,8 +212,6 @@ void RGOsmGraphicsView::loadTiles()
         }
     }
 
-    //TODO: Draw mGeoRect on top if all tiles have been loaded
-
     // Center the view on the calculated tile position
     //qDebug() << "centerOn:" << centerX << "," << centerY;
     centerOn(centerX, centerY);
@@ -196,4 +220,66 @@ void RGOsmGraphicsView::loadTiles()
 void RGOsmGraphicsView::clearTiles()
 {
     mScene->clear();
+    mRouteItem = nullptr;
+}
+
+void RGOsmGraphicsView::initProgressMonitor(int beginX, int endX, int beginY, int endY)
+{
+    setCursor(Qt::WaitCursor);
+    qDebug() << "initProgressMonitor(" << beginX << "," << endX << "," << beginY << "," << endY;
+    mTotalTilesRequested = 0;
+    for (int x = beginX; x <= endX; ++x)
+    {
+        for (int y = beginY; y <= endY; ++y)
+        {
+            mPointMonitorMap.emplace(x,y);
+        }
+    }
+    mTotalTilesRequested = mPointMonitorMap.size();
+    qDebug() << "initProgressMonitor:mTotalTilesRequested=" << mTotalTilesRequested;
+    emit initTileProgress(mTotalTilesRequested);
+}
+
+void RGOsmGraphicsView::updateProgressMonitor(int tileX, int tileY)
+{
+    qDebug() << "updateProgressMonitor(" << tileX << "," << tileY;
+    QPoint tilePos(tileX, tileY);
+    mPointMonitorMap.erase(tilePos);
+    if (mPointMonitorMap.empty())
+    {
+        qDebug() << "updateProgressMonitor: all tiles received";
+        drawGeoPath();
+        unsetCursor();
+        emit allTilesReceived();
+    }
+    else
+    {
+        qDebug() << "updateProgressMonitor:" << mTotalTilesRequested << "-" << mPointMonitorMap.size();
+        emit tileProgress(mTotalTilesRequested - mPointMonitorMap.size());
+    }
+}
+
+void RGOsmGraphicsView::drawGeoPath()
+{
+    if (mGeoPath.isEmpty()) return;
+
+    // Create a QPainterPath from the geopoints
+    QPainterPath path;
+    bool firstPoint = true;
+    for (const auto &geoPoint : mGeoPath.path())
+    {
+        QPointF point = mOsmBackEnd.latLonToWorld(geoPoint, mZoomLevel);
+        if (firstPoint)
+        {
+            path.moveTo(point);
+            firstPoint = false;
+        }
+        else
+        {
+            path.lineTo(point);
+        }
+    }
+
+    // Add the path to the scene
+    mRouteItem = mScene->addPath(path, QPen(Qt::blue, 4));
 }

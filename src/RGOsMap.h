@@ -46,18 +46,21 @@ public slots:
     void accept() override;
 
 private slots:
-    void on_accept();
-    void continue_Accept();
     void on_goButton_clicked(bool);
     void handleScaleSpinboxChanged(double);
     void on_mapTypeBox_textActivated(const QString&);
     void on_zoomLevelChangedChanged(int zoom);
     void on_centerCoordChanged(const QGeoCoordinate& centerCoord);
 
+    //Tile download monitoring slots
+    void handleInitTileProgress(int totalTiles);
+    void handleTileProgress(int progress);
+    void handleAllTilesReceived();
+
+
 private:
     Ui_osMap ui;
     QPixmap m_map;
-    QGeoPath m_geoPath;
     RGOsMapBounds m_mapBounds;
     std::map<QString, RGTileProviderManager::TileProvider> mTileProviders;
 };

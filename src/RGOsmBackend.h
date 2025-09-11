@@ -33,6 +33,7 @@ class RGOsmBackend : public QObject
 {
     Q_OBJECT
 public:
+    //Size of a single tile in pixels
     static const int TILE_SIZE = 256;
 
     RGOsmBackend(QObject* parent = nullptr);
@@ -47,7 +48,28 @@ public:
     void stitchTiles(double lat, double lon, int zoom, int width, int height, const QString& outputFile);
     void addAttribution(QPaintDevice& image);
 
+    /**
+     * @brief latLonToTile Returns the tile location for the specified geoPoint and zoom factor
+     * @param geoPoint
+     * @param zoom
+     * @return the tile's location as QPointF, because the fraction represents the location with the tile itself
+     */
     static QPointF latLonToTile(const QGeoCoordinate& geoPoint, int zoom);
+
+    /**
+     * @brief latLonToWorld Returns the coordinate in world pixels
+     * @param geoPoint
+     * @param zoom
+     * @return the coordinate in world pixel coordinates (i.e. tile location multiplied by TILE_SIZE)
+     */
+    static QPointF latLonToWorld(const QGeoCoordinate& geoPoint, int zoom);
+
+    /**
+     * @brief tileToLatLon Returns the lat/lon coordiante for the specified tile location
+     * @param tileXY
+     * @param zoom
+     * @return
+     */
     static QGeoCoordinate tileToLatLon(const QPointF& tileXY, int zoom);
 
 signals:
