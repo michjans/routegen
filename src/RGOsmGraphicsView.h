@@ -82,10 +82,10 @@ private:
     QGraphicsScene* mScene;
     QPointF mDragOrigin;
     QGeoCoordinate mCenterCoord;
-    QRectF mTargetRect;
+    QRectF mCutoutRect;
     QGeoPath mGeoPath;
     QGraphicsPathItem *mRouteItem;
-    QGraphicsRectItem *mTargetRectItem;
+    QGraphicsRectItem *mCutoutRectItem;
     QSize mSize;
     int mZoomLevel;
 

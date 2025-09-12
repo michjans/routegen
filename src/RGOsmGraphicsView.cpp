@@ -37,23 +37,20 @@ RGOsmGraphicsView::RGOsmGraphicsView(QWidget* parent)
     : QGraphicsView(parent),
       mScene(new QGraphicsScene(this)),
       mRouteItem(nullptr),
-      mTargetRectItem(nullptr),
+      mCutoutRectItem(nullptr),
       mZoomLevel(1)
 {
     setScene(mScene);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
-    //We want the map to drag and zoom by actually loading the new OSM tiles, so we don't want to make
-    //use of the default transformations provided by QGraphicsView and scene
+    //We want the map to drag and zoom by actually loading the new OSM tiles, so we don't want to completely
+    //make use of the default transformations provided by QGraphicsView and scene
     setTransformationAnchor(QGraphicsView::NoAnchor);
     setResizeAnchor(QGraphicsView::AnchorViewCenter);
     setRenderHint(QPainter::SmoothPixmapTransform, false);
     setRenderHint(QPainter::Antialiasing, false);
-    //setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
-    //setInteractive(false);
-    //setDragMode(QGraphicsView::NoDrag);
     setDragMode(QGraphicsView::ScrollHandDrag);
     setCursor(Qt::OpenHandCursor);
 
@@ -95,30 +92,42 @@ void RGOsmGraphicsView::setGeoPath(const QGeoPath &geoPath)
              << "  topLeft:" << startGeoRect.topLeft() << "  bottomLeft:" << startGeoRect.bottomLeft() << "  topRight:" << startGeoRect.topRight()
              << "  bottomRight:" << startGeoRect.bottomRight() << "  center:" << startGeoRect.center();
 
+    //Try to calculate the optimal zoom level to contain the full route
+    QGeoCoordinate topLeft = startGeoRect.topLeft();
+    QGeoCoordinate bottomRight = startGeoRect.bottomRight();
+    for (mZoomLevel = 18; mZoomLevel >= 0; --mZoomLevel) {
+        QPointF p1 = mOsmBackEnd.latLonToWorld(topLeft, mZoomLevel);
+        QPointF p2 = mOsmBackEnd.latLonToWorld(bottomRight, mZoomLevel);
+
+        double bboxWidth  = fabs(p2.x() - p1.x());
+        double bboxHeight = fabs(p2.y() - p1.y());
+
+        if (bboxWidth <= mSize.width() && bboxHeight <= mSize.height()) {
+            break;
+        }
+    }
+
     mCenterCoord = startGeoRect.center();
     emit centerCoordChanged(mCenterCoord);
+    emit zoomLevelChanged(mZoomLevel);
 }
 
 QPixmap RGOsmGraphicsView::renderMap()
 {
-    QRect fullMapRect(0, 0, mScene->width(), mScene->height());
-    bool result = false;
     QPixmap outImage(mSize);
     QPainter painter(&outImage);
     painter.setRenderHint(QPainter::SmoothPixmapTransform, false);
     painter.setRenderHint(QPainter::Antialiasing, false);
 
-    //Don't draw the route on the generated map
+    //Don't draw the route and target rectangle on the generated map
     if (mRouteItem) mRouteItem->setVisible(false);
-    if (mTargetRectItem) mTargetRectItem->setVisible(false);
+    if (mCutoutRectItem) mCutoutRectItem->setVisible(false);
 
-    //Force selected resolution
-    QRectF targetRect(0.0, 0.0, mSize.width(), mSize.height());
-    QPointF sceneCenter = mScene->sceneRect().center();
-    QRectF sourceRect(sceneCenter.x() - mSize.width() / 2.0, sceneCenter.y() - mSize.height() / 2.0, mSize.width(), mSize.height());
-    qDebug() << "sourceRect=" << sourceRect << "; targetRect=" << targetRect;
+    //Force selected resolution as output rectangle
+    QRectF outputRect(0.0, 0.0, mSize.width(), mSize.height());
+    qDebug() << "mCutoutRect=" << mCutoutRect << "; outputRect=" << outputRect;
 
-    mScene->render(&painter, targetRect, sourceRect);
+    mScene->render(&painter, outputRect, mCutoutRect);
     painter.end();
     mOsmBackEnd.addAttribution(outImage);
     return outImage;
@@ -179,11 +188,11 @@ void RGOsmGraphicsView::loadTiles()
     double centerX = tilePos.x() * mOsmBackEnd.TILE_SIZE;
     double centerY = tilePos.y() * mOsmBackEnd.TILE_SIZE;
     QPointF topLeft(centerX - mSize.width() / 2.0, centerY - mSize.height() / 2.0);
-    mTargetRect = QRectF(topLeft, mSize);
+    mCutoutRect = QRectF(topLeft, mSize);
 
     //We add some margin around the scene so the user can scroll the map. Later on (when rendering the map)
-    //we will pick the mTargetRect again, that represents the chosen resolution for the map.
-    QRectF sceneRect = mTargetRect.marginsAdded(QMarginsF(mOsmBackEnd.TILE_SIZE * marginTiles,
+    //we will pick the mCutoutRect again, that represents the chosen resolution for the map.
+    QRectF sceneRect = mCutoutRect.marginsAdded(QMarginsF(mOsmBackEnd.TILE_SIZE * marginTiles,
                                                               mOsmBackEnd.TILE_SIZE * marginTiles,
                                                               mOsmBackEnd.TILE_SIZE * marginTiles,
                                                               mOsmBackEnd.TILE_SIZE * marginTiles));
@@ -215,7 +224,7 @@ void RGOsmGraphicsView::clearTiles()
 {
     mScene->clear();
     mRouteItem = nullptr;
-    mTargetRectItem = nullptr;
+    mCutoutRectItem = nullptr;
 }
 
 void RGOsmGraphicsView::initProgressMonitor(int beginX, int endX, int beginY, int endY)
@@ -282,7 +291,7 @@ void RGOsmGraphicsView::drawGeoPath()
 
 void RGOsmGraphicsView::drawTargetRect()
 {
-    if (mTargetRect.isEmpty()) return;
+    if (mCutoutRect.isEmpty()) return;
 
-    mTargetRectItem = mScene->addRect(mTargetRect, QPen(Qt::black, 2));
+    mCutoutRectItem = mScene->addRect(mCutoutRect, QPen(Qt::black, 2));
 }
