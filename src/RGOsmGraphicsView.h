@@ -63,10 +63,6 @@ signals:
     void allTilesReceived();
 
 protected:
-    /*
-    void mousePressEvent(QMouseEvent* event) override;
-    void mouseMoveEvent(QMouseEvent* event) override;
-    */
     void mouseReleaseEvent(QMouseEvent* event) override;
     void wheelEvent(QWheelEvent* event) override;
 
@@ -79,17 +75,19 @@ private:
     void initProgressMonitor(int beginX, int endX, int beginY, int endY);
     void updateProgressMonitor(int tileX, int tileY);
     void drawGeoPath();
+    void drawTargetRect();
 
     RGOsmBackend mOsmBackEnd;
 
     QGraphicsScene* mScene;
     QPointF mDragOrigin;
     QGeoCoordinate mCenterCoord;
+    QRectF mTargetRect;
     QGeoPath mGeoPath;
     QGraphicsPathItem *mRouteItem;
+    QGraphicsRectItem *mTargetRectItem;
     QSize mSize;
     int mZoomLevel;
-    QRectF mFixedSceneRect;
 
     struct QPointLess {
         bool operator()(const QPoint& a, const QPoint& b) const {

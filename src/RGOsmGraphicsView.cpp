@@ -37,6 +37,7 @@ RGOsmGraphicsView::RGOsmGraphicsView(QWidget* parent)
     : QGraphicsView(parent),
       mScene(new QGraphicsScene(this)),
       mRouteItem(nullptr),
+      mTargetRectItem(nullptr),
       mZoomLevel(1)
 {
     setScene(mScene);
@@ -104,60 +105,24 @@ QPixmap RGOsmGraphicsView::renderMap()
     bool result = false;
     QPixmap outImage(mSize);
     QPainter painter(&outImage);
+    painter.setRenderHint(QPainter::SmoothPixmapTransform, false);
+    painter.setRenderHint(QPainter::Antialiasing, false);
+
     //Don't draw the route on the generated map
     if (mRouteItem) mRouteItem->setVisible(false);
+    if (mTargetRectItem) mTargetRectItem->setVisible(false);
 
     //Force selected resolution
-    //mScene->setSceneRect(mFixedSceneRect);
     QRectF targetRect(0.0, 0.0, mSize.width(), mSize.height());
     QPointF sceneCenter = mScene->sceneRect().center();
     QRectF sourceRect(sceneCenter.x() - mSize.width() / 2.0, sceneCenter.y() - mSize.height() / 2.0, mSize.width(), mSize.height());
+    qDebug() << "sourceRect=" << sourceRect << "; targetRect=" << targetRect;
 
     mScene->render(&painter, targetRect, sourceRect);
     painter.end();
     mOsmBackEnd.addAttribution(outImage);
     return outImage;
 }
-
-/*
-void RGOsmGraphicsView::mousePressEvent(QMouseEvent* event)
-{
-    if (event->button() == Qt::LeftButton)
-    {
-        mDragOrigin = event->pos();
-        //qDebug() << "viewport size:" << viewport()->size();
-        //qDebug() << "transformation:" << transform();
-        //qDebug() << "Viewport center after centerOn:" << mapToScene(viewport()->rect().center());
-        qDebug() << "mDragOrigin = " << mDragOrigin;
-        setCursor(Qt::ClosedHandCursor); // Optional: better UX
-    }
-}
-
-void RGOsmGraphicsView::mouseMoveEvent(QMouseEvent* event)
-{
-    auto delta = event->pos() - mDragOrigin;
-
-    qDebug() << "delta:" << delta;
-    qDebug() << "delta.x() / 256.0 = " << delta.x() / 256.0;
-
-    mDragOrigin = event->pos();
-
-    // Convert pixel movement to change in lat/lon
-    qDebug() << "original mCenterCoord = " << mCenterCoord;
-
-    QPointF centerTile = mOsmBackEnd.latLonToTile(mCenterCoord, mZoomLevel);
-    centerTile.setX((centerTile.x() - delta.x()) / mOsmBackEnd.TILE_SIZE);
-    centerTile.setY((centerTile.y() - delta.y()) / mOsmBackEnd.TILE_SIZE);
-    mCenterCoord = mOsmBackEnd.tileToLatLon(centerTile, mZoomLevel);
-    qDebug() << "shifted mCenterCoord = " << mCenterCoord;
-    emit centerCoordChanged(mCenterCoord);
-
-    event->accept();
-
-    clearTiles();
-    loadTiles();
-}
-*/
 
 void RGOsmGraphicsView::mouseReleaseEvent(QMouseEvent* event)
 {
@@ -214,11 +179,11 @@ void RGOsmGraphicsView::loadTiles()
     double centerX = tilePos.x() * mOsmBackEnd.TILE_SIZE;
     double centerY = tilePos.y() * mOsmBackEnd.TILE_SIZE;
     QPointF topLeft(centerX - mSize.width() / 2.0, centerY - mSize.height() / 2.0);
-    mFixedSceneRect = QRectF(topLeft, mSize);
+    mTargetRect = QRectF(topLeft, mSize);
 
     //We add some margin around the scene so the user can scroll the map. Later on (when rendering the map)
-    //we will pick the mFixedSceneRect again, that represents the chosen resolution for the map.
-    QRectF sceneRect = mFixedSceneRect.marginsAdded(QMarginsF(mOsmBackEnd.TILE_SIZE * marginTiles,
+    //we will pick the mTargetRect again, that represents the chosen resolution for the map.
+    QRectF sceneRect = mTargetRect.marginsAdded(QMarginsF(mOsmBackEnd.TILE_SIZE * marginTiles,
                                                               mOsmBackEnd.TILE_SIZE * marginTiles,
                                                               mOsmBackEnd.TILE_SIZE * marginTiles,
                                                               mOsmBackEnd.TILE_SIZE * marginTiles));
@@ -243,8 +208,6 @@ void RGOsmGraphicsView::loadTiles()
         }
     }
 
-    // Center the view on the calculated tile position
-    //qDebug() << "centerOn:" << centerX << "," << centerY;
     centerOn(centerX, centerY);
 }
 
@@ -252,6 +215,7 @@ void RGOsmGraphicsView::clearTiles()
 {
     mScene->clear();
     mRouteItem = nullptr;
+    mTargetRectItem = nullptr;
 }
 
 void RGOsmGraphicsView::initProgressMonitor(int beginX, int endX, int beginY, int endY)
@@ -280,6 +244,7 @@ void RGOsmGraphicsView::updateProgressMonitor(int tileX, int tileY)
     {
         qDebug() << "updateProgressMonitor: all tiles received";
         drawGeoPath();
+        drawTargetRect();
         unsetCursor();
         emit allTilesReceived();
     }
@@ -313,4 +278,11 @@ void RGOsmGraphicsView::drawGeoPath()
 
     // Add the path to the scene
     mRouteItem = mScene->addPath(path, QPen(Qt::blue, 4));
+}
+
+void RGOsmGraphicsView::drawTargetRect()
+{
+    if (mTargetRect.isEmpty()) return;
+
+    mTargetRectItem = mScene->addRect(mTargetRect, QPen(Qt::black, 2));
 }
