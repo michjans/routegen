@@ -67,6 +67,32 @@ protected:
 };
 #endif
 
+namespace
+{
+// Example: paste these from gen_obf.cpp API key generator (only example values shown)
+//          real key should be pasted here before deployment!
+static const unsigned short obf_key[] = { 1, 2, 3, 4, 5, 6 };
+static const size_t obf_key_len = sizeof(obf_key)/sizeof(obf_key[0]);
+
+// Use some kind of simple obfuscation, just to prevent that the API key is
+// stored here in plain sight.
+QString getDecodedApiKeyFromObf() {
+    QByteArray ba;
+    ba.reserve(static_cast<int>(obf_key_len));
+
+    for (size_t i = 0; i < obf_key_len; ++i) {
+        unsigned short val = obf_key[obf_key_len - 1 - i];
+        unsigned char ch = static_cast<unsigned char>(val / 42);
+        ba.append(char(ch));
+    }
+
+    QString key = QString::fromUtf8(ba);
+    ba.fill('\0');
+    return key;
+}
+
+}
+
 RGGoogleMap::RGGoogleMap(QWidget* parent, const QGeoPath& geoPath)
     : QDialog(parent, Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::Dialog | Qt::WindowMaximizeButtonHint),
       m_geoPath(geoPath)
@@ -279,7 +305,7 @@ QString RGGoogleMap::genHtml(const QString& latlon, const QString& zoom) const
     html.replace(QLatin1String("LATLON"), latlon);
     html.replace(QLatin1String("ZOOM"), zoom);
     html.replace(QLatin1String("MAPTYPE"), ui.mapTypeBox->currentText());
-    //TODO: Can we replace the XXXXXXXXXXXXX key from the source code and kind of encrypt it?
+    html.replace(QLatin1String("XXXXXXXXXXXXX"), getDecodedApiKeyFromObf());
 
     ui.zoomBox->setValue(zoom.toInt());
 
