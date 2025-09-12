@@ -63,8 +63,10 @@ signals:
     void allTilesReceived();
 
 protected:
+    /*
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
+    */
     void mouseReleaseEvent(QMouseEvent* event) override;
     void wheelEvent(QWheelEvent* event) override;
 
@@ -87,6 +89,7 @@ private:
     QGraphicsPathItem *mRouteItem;
     QSize mSize;
     int mZoomLevel;
+    QRectF mFixedSceneRect;
 
     struct QPointLess {
         bool operator()(const QPoint& a, const QPoint& b) const {

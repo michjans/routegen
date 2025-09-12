@@ -28,6 +28,11 @@
 #include <QPixmap>
 #include <QProgressDialog>
 
+namespace {
+//Number of extra tiles to load round map, to give room for panning the map
+const int marginTiles = 2;
+}
+
 RGOsmGraphicsView::RGOsmGraphicsView(QWidget* parent)
     : QGraphicsView(parent),
       mScene(new QGraphicsScene(this)),
@@ -41,12 +46,14 @@ RGOsmGraphicsView::RGOsmGraphicsView(QWidget* parent)
     //We want the map to drag and zoom by actually loading the new OSM tiles, so we don't want to make
     //use of the default transformations provided by QGraphicsView and scene
     setTransformationAnchor(QGraphicsView::NoAnchor);
-    setResizeAnchor(QGraphicsView::NoAnchor);
+    setResizeAnchor(QGraphicsView::AnchorViewCenter);
     setRenderHint(QPainter::SmoothPixmapTransform, false);
     setRenderHint(QPainter::Antialiasing, false);
-    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-    setInteractive(false);
-    setDragMode(QGraphicsView::NoDrag);
+    //setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+    //setInteractive(false);
+    //setDragMode(QGraphicsView::NoDrag);
+    setDragMode(QGraphicsView::ScrollHandDrag);
     setCursor(Qt::OpenHandCursor);
 
     connect(&mOsmBackEnd, &RGOsmBackend::tileAvailable, this, &RGOsmGraphicsView::addTileToScene);
@@ -95,16 +102,24 @@ QPixmap RGOsmGraphicsView::renderMap()
 {
     QRect fullMapRect(0, 0, mScene->width(), mScene->height());
     bool result = false;
-    QPixmap outImage(fullMapRect.size());
+    QPixmap outImage(mSize);
     QPainter painter(&outImage);
     //Don't draw the route on the generated map
     if (mRouteItem) mRouteItem->setVisible(false);
-    mScene->render(&painter);
+
+    //Force selected resolution
+    //mScene->setSceneRect(mFixedSceneRect);
+    QRectF targetRect(0.0, 0.0, mSize.width(), mSize.height());
+    QPointF sceneCenter = mScene->sceneRect().center();
+    QRectF sourceRect(sceneCenter.x() - mSize.width() / 2.0, sceneCenter.y() - mSize.height() / 2.0, mSize.width(), mSize.height());
+
+    mScene->render(&painter, targetRect, sourceRect);
     painter.end();
     mOsmBackEnd.addAttribution(outImage);
     return outImage;
 }
 
+/*
 void RGOsmGraphicsView::mousePressEvent(QMouseEvent* event)
 {
     if (event->button() == Qt::LeftButton)
@@ -142,12 +157,21 @@ void RGOsmGraphicsView::mouseMoveEvent(QMouseEvent* event)
     clearTiles();
     loadTiles();
 }
+*/
 
 void RGOsmGraphicsView::mouseReleaseEvent(QMouseEvent* event)
 {
     if (event->button() == Qt::LeftButton)
     {
-        setCursor(Qt::OpenHandCursor);
+        //setCursor(Qt::OpenHandCursor);
+        QPointF centerScene = mapToScene(viewport()->rect().center());
+        QPointF centerTile = centerScene / mOsmBackEnd.TILE_SIZE;
+        mCenterCoord = mOsmBackEnd.tileToLatLon(centerTile, mZoomLevel);
+        qDebug() << "shifted mCenterCoord = " << mCenterCoord;
+        clearTiles();
+        loadTiles();
+        emit centerCoordChanged(mCenterCoord);
+        event->accept();
     }
 }
 
@@ -190,14 +214,21 @@ void RGOsmGraphicsView::loadTiles()
     double centerX = tilePos.x() * mOsmBackEnd.TILE_SIZE;
     double centerY = tilePos.y() * mOsmBackEnd.TILE_SIZE;
     QPointF topLeft(centerX - mSize.width() / 2.0, centerY - mSize.height() / 2.0);
-    QRectF fixedSceneRect(topLeft, mSize);
-    mScene->setSceneRect(fixedSceneRect);
+    mFixedSceneRect = QRectF(topLeft, mSize);
+
+    //We add some margin around the scene so the user can scroll the map. Later on (when rendering the map)
+    //we will pick the mFixedSceneRect again, that represents the chosen resolution for the map.
+    QRectF sceneRect = mFixedSceneRect.marginsAdded(QMarginsF(mOsmBackEnd.TILE_SIZE * marginTiles,
+                                                              mOsmBackEnd.TILE_SIZE * marginTiles,
+                                                              mOsmBackEnd.TILE_SIZE * marginTiles,
+                                                              mOsmBackEnd.TILE_SIZE * marginTiles));
+    mScene->setSceneRect(sceneRect);
 
     // Calculate tile indices to load
-    int beginX = std::floor(fixedSceneRect.left() / mOsmBackEnd.TILE_SIZE);
-    int endX = std::ceil(fixedSceneRect.right() / mOsmBackEnd.TILE_SIZE) - 1;
-    int beginY = std::floor(fixedSceneRect.top() / mOsmBackEnd.TILE_SIZE);
-    int endY = std::ceil(fixedSceneRect.bottom() / mOsmBackEnd.TILE_SIZE) - 1;
+    int beginX = std::floor(sceneRect.left() / mOsmBackEnd.TILE_SIZE);
+    int endX = std::ceil(sceneRect.right() / mOsmBackEnd.TILE_SIZE) - 1;
+    int beginY = std::floor(sceneRect.top() / mOsmBackEnd.TILE_SIZE);
+    int endY = std::ceil(sceneRect.bottom() / mOsmBackEnd.TILE_SIZE) - 1;
 
     //We want to monitor if all tiles have been received
     initProgressMonitor(beginX, endX, beginY, endY);
