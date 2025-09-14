@@ -268,6 +268,7 @@ Finally embed all required qm files in the routegen.qrc file and reference them 
   - Import of maps from several OpenStreetMap providers (which can be customized)
   - Georeference infomation now stored directly inside the saved map image
   - Several bugfixes (sometimes resulting in crashes) resolved
+  - CODEX FFmpeg upgraded to 8.0 (provided on Windows only)
  
 ## Technical details
 

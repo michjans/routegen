@@ -629,7 +629,7 @@ void RGMainWindow::on_action_About_triggered(bool checked)
                           "from the <a href=\"https://www.qt.io\">Qt</a> website. </p>"
                           "<p>See: <a href=\"https://en.wikipedia.org/wiki/GeoTIFF\">GeoTIFF article on wikipedia</a>, to read more about GeoTIFF support</p>"
                           "<p>The video generation on Windows is provided by:<br>"
-                          "<i>CODEX FFmpeg by Gyan Doshi<br>"
+                          "<i>CODEX FFmpeg 8.0 by Gyan Doshi<br>"
                           "See: <a href=\"https://www.gyan.dev/ffmpeg/builds/#about-these-builds\">CODEX FFmpeg About Builds Page</a></i><br>"
                           "OR<br>"
                           "<i>bmp2avi Copyright (C)) Paul Roberts 1996 - 1998</i></p>"

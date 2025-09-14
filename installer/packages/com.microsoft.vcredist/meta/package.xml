@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package>
+    <DisplayName>MSVC Runtime</DisplayName>
+    <Description>Microsoft Visual C++ Redistributable for Visual Studio 2022</Description>
+    <Version>14.44.35112</Version>
+    <ReleaseDate>2025-09-01</ReleaseDate>
+    <Default>true</Default>
+    <ForcedInstallation>true</ForcedInstallation>
+    <RequiresAdminRights>true</RequiresAdminRights>
+
+    <!-- OS filter: only show/install on Windows -->
+    <OperatingSystems>
+        <OperatingSystem>Windows</OperatingSystem>
+    </OperatingSystems>
+</Package>

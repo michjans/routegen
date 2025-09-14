@@ -24,6 +24,7 @@
 #include <QFileDialog>
 #include <QLibraryInfo>
 #include <QMessageBox>
+#include <QStyleFactory>
 #include <QTranslator>
 
 #include "RGMainWindow.h"
@@ -123,6 +124,11 @@ extern const QString applicationName(QStringLiteral("Route Generator version 1.1
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
+
+#ifdef Q_OS_WIN
+    //Try to follow the windows style
+    QStyle *theStyle = app.setStyle("windows11");
+#endif
 
     //Translations are qurrently loaded automatically determined from the current locale of the system.
     //However, it is possible to force an alternative language, e.g. by adding a language setting to the
