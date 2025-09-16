@@ -619,7 +619,7 @@ void RGMainWindow::on_action_About_triggered(bool checked)
                           "<center>"
                           "<p><b>") +
                   applicationName +
-                  QString(" Copyright (C) 2008-2023  Michiel Jansen </b></p>"
+                  QString(" Copyright (C) 2008-2025  Michiel Jansen </b></p>"
                           "<p>This program comes with ABSOLUTELY NO WARRANTY</p>"
                           "This is free software, and you are welcome to redistribute it "
                           "under certain conditions; see LICENSE file for details.</p>"

@@ -130,7 +130,8 @@ void RGOsMap::on_centerCoordChanged(const QGeoCoordinate& centerCoord)
 
 void RGOsMap::handleInitTileProgress(int totalTiles)
 {
-    //ui.progressBar->show();
+    //Tile loading has started, block other requests
+    ui.goButton->setDisabled(true);
     ui.progressBar->setRange(0, totalTiles);
 }
 
@@ -141,5 +142,6 @@ void RGOsMap::handleTileProgress(int progress)
 
 void RGOsMap::handleAllTilesReceived()
 {
+    ui.goButton->setDisabled(false);
     ui.progressBar->reset();
 }

@@ -77,6 +77,10 @@ private:
     void drawGeoPath();
     void drawTargetRect();
 
+    //If the mPointMonitorMap contains points, we know that tiles are currently
+    //being requested
+    bool tileLoadingInProgress() const { return !mPointMonitorMap.empty(); }
+
     RGOsmBackend mOsmBackEnd;
 
     QGraphicsScene* mScene;

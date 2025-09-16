@@ -75,6 +75,7 @@ void RGOsmGraphicsView::setFixedSceneResolution(const QSize& res)
 
 void RGOsmGraphicsView::loadMap(const QGeoCoordinate& coord, int zoom, QSize size)
 {
+    if (tileLoadingInProgress()) return;
     mZoomLevel = zoom;
     mCenterCoord = coord;
     clearTiles();
@@ -135,7 +136,7 @@ QPixmap RGOsmGraphicsView::renderMap()
 
 void RGOsmGraphicsView::mouseReleaseEvent(QMouseEvent* event)
 {
-    if (event->button() == Qt::LeftButton)
+    if (event->button() == Qt::LeftButton && !tileLoadingInProgress())
     {
         //setCursor(Qt::OpenHandCursor);
         QPointF centerScene = mapToScene(viewport()->rect().center());
@@ -151,6 +152,10 @@ void RGOsmGraphicsView::mouseReleaseEvent(QMouseEvent* event)
 
 void RGOsmGraphicsView::wheelEvent(QWheelEvent* event)
 {
+    if (tileLoadingInProgress()) {
+        //Tile loading is still in progress, reject new zoom requests
+        event->ignore();
+    }
     clearTiles();
     int zoomDelta = event->angleDelta().y() > 0 ? 1 : -1;
     mZoomLevel = qBound(1, mZoomLevel + zoomDelta, 20);
