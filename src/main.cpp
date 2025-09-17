@@ -113,13 +113,13 @@
  *          Smoother vehicle rotation (using average angles)
  *          Donation button on toolbar and About dialog
  *          Added possibility to select the map resolution (to prevent a scrolling map)
- *  v1.13.0 Upgrade to Qt 6.9 (no longer maintaining Qt 5.12)
+ *  v2.0.0  Upgrade to Qt 6.9 (no longer maintaining Qt 5.12)
  *          Import of maps from several OpenStreetMap providers (which can be customized)
   *         Georeference infomation now stored directly inside the saved map image
   *         Several bugfixes (sometimes resulting in crashes) resolved
  */
 
-extern const QString applicationName(QStringLiteral("Route Generator version 1.13.0"));
+extern const QString applicationName(QStringLiteral("Route Generator version 2.0.0"));
 
 int main(int argc, char* argv[])
 {

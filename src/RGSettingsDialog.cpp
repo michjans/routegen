@@ -88,8 +88,18 @@ void RGSettingsDialog::addTileProviderClicked(bool)
     if (tileProviderDialog.exec() == QDialog::Accepted)
     {
         auto tileProvider = tileProviderDialog.tileProvider();
-        mTileProviderManager.addCustomProvider(tileProvider);
-        ui.osmProviderList->addItem(tileProvider.name); //TODO add signal to mTileProviderManagaer that provider was added
+        if (validateOSMTileProvider(tileProvider))
+        {
+            if (mTileProviderManager.addCustomProvider(tileProvider))
+            {
+                ui.osmProviderList->addItem(tileProvider.name);
+            }
+            else
+            {
+                //Not added
+                QMessageBox::warning(this, tr("Provider not added"), tr("Tile provider not added. Name already exists or empty?"));
+            }
+        }
     }
 }
 
@@ -107,7 +117,10 @@ void RGSettingsDialog::editTileProviderClicked(bool)
         if (tileProviderDialog.exec() == QDialog::Accepted)
         {
             auto tileProvider = tileProviderDialog.tileProvider();
-            mTileProviderManager.replaceCustomProvider(tileProvider);
+            if (validateOSMTileProvider(tileProvider))
+            {
+                mTileProviderManager.replaceCustomProvider(tileProvider);
+            }
         }
     }
 }
@@ -153,4 +166,43 @@ void RGSettingsDialog::accept()
     mTileProviderManager.saveCustomProviders();
 
     QDialog::accept();
+}
+
+bool RGSettingsDialog::validateOSMTileProvider(const RGTileProviderManager::TileProvider &tileProvider)
+{
+
+#if 0
+    //TODO: Somehow always results in false! Check!
+    bool validUrl = false;
+    QUrl url(tileProvider.urlTemplate);
+    if (!url.isValid() || (url.scheme() != "http" && url.scheme() != "https")) {
+        validUrl = false;
+    } else {
+        QString path = url.path();
+        if (path.contains("{zoom}") && path.contains("{x}") && path.contains("{y}")) {
+            validUrl = true;
+        }
+    }
+#else
+    bool validUrl = true;
+#endif
+
+    if (!validUrl)
+    {
+        QMessageBox::warning(this, tr("Incorrect URL format"),
+                             tr("<html><head/><body><p>Enter URL to tile provider in format of e.g.:</p><p><span style=\" text-decoration: underline;\">"
+                                "https://{s}.tile.openstreetmap.org/{zoom}/{x}/{y}.png</span></p><p>Note that the {s} (subdomain part) is optional and"
+                                "will be replaced by a, b, or c if provided.</p>"
+                                "<p>For an overview of OSM tile provider see: <a href=\"https://wiki.openstreetmap.org/wiki/Raster_tile_providers\">"
+                                "OSM Raster tile providers</span></a></p></body></html>"));
+        return false;
+    }
+    if (tileProvider.attribution.isEmpty())
+    {
+        QMessageBox::warning(this, tr("Empty attribution text"),
+                             tr("<html><head/><body><p>Attribution text may not be empty when the Produced Work is used Publicly.</p>"
+                                "<p>See: <a href=\"https://osmfoundation.org/wiki/Licence/Attribution_Guidelines\">OSM Attribution Guidelines</a></p></body></html>"));
+    }
+
+    return true;;
 }

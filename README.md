@@ -263,12 +263,25 @@ Finally embed all required qm files in the routegen.qrc file and reference them 
   - Smoother vehicle rotation (using average angles)
   - Donation button on toolbar and About dialog
   - Added possibility to select the map resolution (to prevent a scrolling map)
-- 1.13.0 release
-  - Upgrade to Qt 6.9 (no longer maintaining Qt 5.12)
-  - Import of maps from several OpenStreetMap providers (which can be customized)
-  - Georeference infomation now stored directly inside the saved map image
+- 2.0.0 release
+  - Import of maps from OpenStreetMap (including possiblity to add custom tile servers)!
+  - Georeference infomation now stored directly inside the metadata of saved map images,
+    but reading maps saved in the old format (via settings or registry) is still supported.
+  - Ready for Windows 11 and no longer maintaining Windows 7 (or lower), due to upgrade
+    from Qt 5.12 to 6.9
+  - Application now follows the Windows (dark/light) theme. 
   - Several bugfixes (sometimes resulting in crashes) resolved
-  - CODEX FFmpeg upgraded to 8.0 (provided on Windows only)
+  - CODEX FFmpeg upgraded to 8.0 (provided with the installer for Windows only)
+  - Known issues that will (hopefully) soon be fixed in 2.0.1 and later:
+    - New functionality not yet translated to Italian, Dutch, German, French and Spanish.
+    - When an imported route crosses the antimerdian point (i.e. longitude > 180 or < -180),
+      the route will not be correctly projected on the map.
+    - The GeoTIFF importer does not support projected coordinate systems (like Web Mercator).
+      Only geographic projections are supported. However, it is possible to save a map
+      image in GeoTIFF format in Web Mercator projection. As a result Route Generator
+      cannot open GeoTIFF files that it has saved itself.
+    - Reading large map files (i.e. > 256MB, in case of GeoTiff files) results in allocation
+      limit errors.
  
 ## Technical details
 

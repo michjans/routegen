@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2008-2011  Michiel Jansen
+    Copyright (C) 2008-2025  Michiel Jansen
 
   This file is part of Route Generator.
 

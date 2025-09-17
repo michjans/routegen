@@ -48,6 +48,8 @@ private slots:
     void accept();
 
 private:
+    bool validateOSMTileProvider(const RGTileProviderManager::TileProvider &tileProvider);
+
     QCheckBox* mGenerateBeginEndFramesCB;
     QSpinBox* mSmoothLengthSB;
     QPushButton* mResetDefaultsPB;

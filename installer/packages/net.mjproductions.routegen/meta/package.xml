@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package>
     <DisplayName>Route Generator</DisplayName>
-    <Version>1.13.0</Version>
+    <Version>2.0.0</Version>
     <Description>Route Generator application.</Description>
-    <ReleaseDate>2025-09-14</ReleaseDate>
+    <ReleaseDate>2025-09-16</ReleaseDate>
     <Default>true</Default>
     <Licenses>
         <License name="License Agreement" file="LICENSE" />
