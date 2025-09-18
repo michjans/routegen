@@ -6,7 +6,7 @@
     <ReleaseDate>2025-09-01</ReleaseDate>
     <Default>true</Default>
     <ForcedInstallation>true</ForcedInstallation>
-    <RequiresAdminRights>true</RequiresAdminRights>
+    <Virtual>true</Virtual>
 
     <!-- OS filter: only show/install on Windows -->
     <OperatingSystems>

@@ -92,6 +92,7 @@ private:
     QGraphicsRectItem *mCutoutRectItem;
     QSize mSize;
     int mZoomLevel;
+    bool mMapLoaded;
 
     struct QPointLess {
         bool operator()(const QPoint& a, const QPoint& b) const {

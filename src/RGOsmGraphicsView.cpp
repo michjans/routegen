@@ -38,7 +38,8 @@ RGOsmGraphicsView::RGOsmGraphicsView(QWidget* parent)
       mScene(new QGraphicsScene(this)),
       mRouteItem(nullptr),
       mCutoutRectItem(nullptr),
-      mZoomLevel(1)
+      mZoomLevel(1),
+      mMapLoaded(false)
 {
     setScene(mScene);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
@@ -136,7 +137,7 @@ QPixmap RGOsmGraphicsView::renderMap()
 
 void RGOsmGraphicsView::mouseReleaseEvent(QMouseEvent* event)
 {
-    if (event->button() == Qt::LeftButton && !tileLoadingInProgress())
+    if (event->button() == Qt::LeftButton && !tileLoadingInProgress() && mMapLoaded)
     {
         //setCursor(Qt::OpenHandCursor);
         QPointF centerScene = mapToScene(viewport()->rect().center());
@@ -152,9 +153,10 @@ void RGOsmGraphicsView::mouseReleaseEvent(QMouseEvent* event)
 
 void RGOsmGraphicsView::wheelEvent(QWheelEvent* event)
 {
-    if (tileLoadingInProgress()) {
+    if (tileLoadingInProgress() || !mMapLoaded) {
         //Tile loading is still in progress, reject new zoom requests
         event->ignore();
+        return;
     }
     clearTiles();
     int zoomDelta = event->angleDelta().y() > 0 ? 1 : -1;
@@ -260,6 +262,7 @@ void RGOsmGraphicsView::updateProgressMonitor(int tileX, int tileY)
         drawGeoPath();
         drawTargetRect();
         unsetCursor();
+        mMapLoaded = true;
         emit allTilesReceived();
     }
     else

@@ -215,6 +215,7 @@ bool RGOsmBackend::isTileCached(int zoom, int x, int y)
 
 QImage RGOsmBackend::loadCachedTile(int zoom, int x, int y)
 {
+    //TODO: Add possiblity to clear the cache when images are older thanr N (configurable) days
     QString path = getCachePath(zoom, x, y);
     QImage tile;
     qDebug() << "loading tile from cache: " << path;

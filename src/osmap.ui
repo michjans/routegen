@@ -89,13 +89,16 @@
      <item>
       <widget class="QDoubleSpinBox" name="latSB">
        <property name="toolTip">
-        <string>Latitude</string>
+        <string>Latitude of map center</string>
        </property>
        <property name="decimals">
         <number>4</number>
        </property>
        <property name="minimum">
-        <double>1.000000000000000</double>
+        <double>-89.900000000000006</double>
+       </property>
+       <property name="maximum">
+        <double>89.900000000000006</double>
        </property>
        <property name="singleStep">
         <double>0.100000000000000</double>
@@ -115,13 +118,16 @@
      <item>
       <widget class="QDoubleSpinBox" name="lonSB">
        <property name="toolTip">
-        <string>Longitude</string>
+        <string>Longitude of map center</string>
        </property>
        <property name="decimals">
         <number>4</number>
        </property>
        <property name="minimum">
-        <double>1.000000000000000</double>
+        <double>-180.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>180.000000000000000</double>
        </property>
        <property name="singleStep">
         <double>0.100000000000000</double>
@@ -159,12 +165,16 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="mapTypeBox"/>
+      <widget class="QComboBox" name="mapTypeBox">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select map provider. Note that you can add more providers in the preferences (advanced tab).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="goButton">
        <property name="text">
-        <string>Go</string>
+        <string> Load map</string>
        </property>
       </widget>
      </item>

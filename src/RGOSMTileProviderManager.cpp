@@ -109,7 +109,7 @@ bool RGTileProviderManager::providerExists(const QString& name) const
 void RGTileProviderManager::saveCustomProviders() const
 {
     QSettings settings;
-    QMap<QString, QVariant> osmTileProviderMap = settings.value("customOsmTileProviders", QMap<QString, QVariant>()).toMap();
+    QMap<QString, QVariant> osmTileProviderMap;
     for (const auto& provider : customProviders)
     {
         QHash<QString, QVariant> cpMap;
@@ -144,4 +144,6 @@ void RGTileProviderManager::loadDefaultProviders()
                                          QStringLiteral("© OpenStreetMap contributors")));
     defaultProviders.append(TileProvider(QStringLiteral("CycleOSM"), QStringLiteral("https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png"),
                                          QStringLiteral("© OpenStreetMap contributors | Tiles courtesy of CycleOSM")));
+    defaultProviders.append(TileProvider(QStringLiteral("OpenTopoMap"), QStringLiteral("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"),
+                                         QStringLiteral("© OpenTopoMap")));
 }

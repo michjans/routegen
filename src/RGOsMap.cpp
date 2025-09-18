@@ -50,7 +50,7 @@ RGOsMap::RGOsMap(QWidget* parent, const QGeoPath& geoPath)
                   [this](const auto& tileProvider)
                   {
                       mTileProviders[tileProvider.name] = tileProvider;
-                      ui.mapTypeBox->insertItem(0, tileProvider.name);
+                      ui.mapTypeBox->addItem(tileProvider.name);
                   });
 
     QString activeOsmProvider = RGSettings::getActiveOsmProvider();

@@ -170,22 +170,12 @@ void RGSettingsDialog::accept()
 
 bool RGSettingsDialog::validateOSMTileProvider(const RGTileProviderManager::TileProvider &tileProvider)
 {
-
-#if 0
-    //TODO: Somehow always results in false! Check!
-    bool validUrl = false;
-    QUrl url(tileProvider.urlTemplate);
-    if (!url.isValid() || (url.scheme() != "http" && url.scheme() != "https")) {
-        validUrl = false;
-    } else {
-        QString path = url.path();
-        if (path.contains("{zoom}") && path.contains("{x}") && path.contains("{y}")) {
-            validUrl = true;
-        }
-    }
-#else
-    bool validUrl = true;
-#endif
+    bool validUrl = tileProvider.urlTemplate.startsWith("http") &&
+        tileProvider.urlTemplate.contains("{z}") &&
+        tileProvider.urlTemplate.contains("{x}") &&
+        tileProvider.urlTemplate.contains("{y}") &&
+        tileProvider.urlTemplate.indexOf("{z}") < tileProvider.urlTemplate.indexOf("{x}") &&
+        tileProvider.urlTemplate.indexOf("{x}") < tileProvider.urlTemplate.indexOf("{y}");
 
     if (!validUrl)
     {
@@ -199,8 +189,9 @@ bool RGSettingsDialog::validateOSMTileProvider(const RGTileProviderManager::Tile
     }
     if (tileProvider.attribution.isEmpty())
     {
+        //Allow empty attribution text, but at least warn
         QMessageBox::warning(this, tr("Empty attribution text"),
-                             tr("<html><head/><body><p>Attribution text may not be empty when the Produced Work is used Publicly.</p>"
+                             tr("<html><head/><body><p>Attribution text may not be empty when the Produced Work is used Publicly! E.g. \"© OpenStreetMap\"</p>"
                                 "<p>See: <a href=\"https://osmfoundation.org/wiki/Licence/Attribution_Guidelines\">OSM Attribution Guidelines</a></p></body></html>"));
     }
 

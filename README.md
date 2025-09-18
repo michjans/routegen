@@ -282,6 +282,9 @@ Finally embed all required qm files in the routegen.qrc file and reference them 
       cannot open GeoTIFF files that it has saved itself.
     - Reading large map files (i.e. > 256MB, in case of GeoTiff files) results in allocation
       limit errors.
+    - Currently the OSM tiles stored in the cache directory never expire, i.e. new tiles
+      will never be re-downloaded when they are already stored in the cache.
+    - Additonally to the above there is also no cache size limit.
  
 ## Technical details
 
