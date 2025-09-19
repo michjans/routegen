@@ -63,6 +63,31 @@
         <source>Reset to defaults</source>
         <translation>Ripristina i valori predefiniti</translation>
     </message>
+    <message>
+        <location filename="../settings.ui" line="144"/>
+        <source>Here you can add custom URL&apos;s to other OSM tile providers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settings.ui" line="147"/>
+        <source>OpenStreetMap custom tile providers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settings.ui" line="153"/>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settings.ui" line="160"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settings.ui" line="167"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GPXSelectionDialog</name>
@@ -109,211 +134,264 @@
         <translation>&amp;File</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="101"/>
+        <location filename="../routegen.ui" line="102"/>
         <source>toolBar</source>
         <translation>Barra strumenti</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="142"/>
+        <location filename="../routegen.ui" line="144"/>
         <source>&amp;Open map image</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>&amp;Apri immagine mappa</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="145"/>
+        <location filename="../routegen.ui" line="147"/>
         <source>Open image with map</source>
         <translation>Apri immagine con mappa</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="154"/>
+        <location filename="../routegen.ui" line="156"/>
         <source>&amp;Quit</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>&amp;Esci</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="157"/>
+        <location filename="../routegen.ui" line="159"/>
         <source>Quit the application</source>
         <translation>Esci dall&apos;applicazione</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="166"/>
+        <location filename="../routegen.ui" line="168"/>
         <source>&amp;Save map image as ...</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>&amp;Salva immagine mappa come ...</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="169"/>
+        <location filename="../routegen.ui" line="171"/>
         <source>Save map image as ...</source>
         <translation>Salva immagine mappa come ...</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="172"/>
+        <location filename="../routegen.ui" line="174"/>
         <source>Save the currently displayed map and route as image</source>
         <translation>Salva la mappa e il percorso attualmente visualizzati come immagine</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="175"/>
+        <location filename="../routegen.ui" line="177"/>
         <source>Save the currently displayed map and route as image, which can be used as start point for generating another route.</source>
         <translation>Salva la mappa e il percorso attualmente visualizzati come immagine, che può essere utilizzata come punto di partenza per generare un altro percorso.</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="187"/>
+        <location filename="../routegen.ui" line="189"/>
         <source>&amp;Draw mode</source>
         <translation>Modalità &amp;Disegna</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="190"/>
+        <location filename="../routegen.ui" line="192"/>
         <source>(De)Activate route draw mode</source>
         <translation>Attiva/Disattiva modalità Disegna percorso</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="199"/>
+        <location filename="../routegen.ui" line="201"/>
         <source>&amp;Generate route</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>&amp;Genera percorso</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="202"/>
+        <location filename="../routegen.ui" line="204"/>
         <source>Generate the route into a selected directory</source>
         <translation>Genera il percorso in una cartella selezionata</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="211"/>
+        <location filename="../routegen.ui" line="213"/>
         <source>&amp;Playback</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>&amp;Riproduci</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="214"/>
+        <location filename="../routegen.ui" line="216"/>
         <source>Playback the currently drawn route (preview)</source>
         <translation>Riproduci il percorso corrente disegnato (anteprima)</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="219"/>
+        <location filename="../routegen.ui" line="221"/>
         <source>&amp;About</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>Informa&amp;zioni su</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="224"/>
+        <location filename="../routegen.ui" line="226"/>
         <source>&amp;Tutorial</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>&amp;Tutorial</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="233"/>
+        <location filename="../routegen.ui" line="235"/>
         <source>S&amp;top</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>F&amp;erma</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="236"/>
+        <location filename="../routegen.ui" line="238"/>
         <source>Stops playback</source>
         <translation>Ferma riproduzione</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="245"/>
+        <location filename="../routegen.ui" line="247"/>
         <source>&amp;Undo</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>A&amp;nnulla</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="254"/>
+        <location filename="../routegen.ui" line="256"/>
         <source>&amp;Redo</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>R&amp;ipristina</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="259"/>
+        <location filename="../routegen.ui" line="261"/>
         <source>&amp;Preferences</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>&amp;Preferenze</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="268"/>
+        <location filename="../routegen.ui" line="270"/>
         <source>&amp;Import from Google Maps</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>I&amp;mporta da Google Maps</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="271"/>
+        <location filename="../routegen.ui" line="273"/>
         <source>Import from Google Maps</source>
         <translation>Importa da Google Maps</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="280"/>
+        <location filename="../routegen.ui" line="282"/>
         <source>Import route from GP&amp;X</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>Importa percorso da GP&amp;X</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="283"/>
+        <location filename="../routegen.ui" line="285"/>
         <source>Import route points from GPX file</source>
         <translation>Importa punti percorso da file GPX</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="292"/>
+        <location filename="../routegen.ui" line="294"/>
         <source>&amp;New Route</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>Nuovo per&amp;corso</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="295"/>
+        <location filename="../routegen.ui" line="297"/>
         <source>Start New Route</source>
         <translation>Inizia un nuovo percorso</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="304"/>
+        <location filename="../routegen.ui" line="306"/>
         <source>Save &amp;project</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>Sa&amp;lva progetto</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="307"/>
+        <location filename="../routegen.ui" line="309"/>
         <source>Save project (map and route)</source>
         <translation>Salva progetto (mappa e percorso)</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="316"/>
+        <location filename="../routegen.ui" line="318"/>
         <source>&amp;New project</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>Nuo&amp;vo progetto</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="319"/>
+        <location filename="../routegen.ui" line="321"/>
         <source>Start new project</source>
         <translation>Inizia un nuovo progetto</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="328"/>
+        <location filename="../routegen.ui" line="330"/>
         <source>Open p&amp;roject</source>
         <translatorcomment>The letter after the &amp; will be used to use as menu short-cut. Place the &amp; in front of the appropriate character in Italian.</translatorcomment>
         <translation>Apri pr&amp;ogetto</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="331"/>
+        <location filename="../routegen.ui" line="333"/>
         <source>Open a route generator project</source>
         <translation>Apre un progetto Route Generator</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="340"/>
+        <location filename="../routegen.ui" line="342"/>
         <source>Save project as...</source>
         <translation>Salva progetto come...</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="343"/>
+        <location filename="../routegen.ui" line="345"/>
         <source>Save current project in another file</source>
         <translation>Salva il progetto corrente in un altro file</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="352"/>
+        <location filename="../routegen.ui" line="354"/>
         <source>&amp;Donate</source>
         <translation>&amp;Donare</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="355"/>
+        <location filename="../routegen.ui" line="357"/>
         <source>Click here if you would like to make a donation</source>
         <translation>Clicca qui se vuoi fare una donazione</translation>
+    </message>
+    <message>
+        <location filename="../routegen.ui" line="369"/>
+        <source>Import from Open &amp;Street Maps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../routegen.ui" line="372"/>
+        <source>Import Open Street Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OsmProviderEditor</name>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="14"/>
+        <source>Edit OSM Tile Provider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="20"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attribution text according to the provider&apos;s usage policy (applicable when the Produced Work is used Publicly. This attribution text will be placed in the bottom right corner of the map.&lt;/p&gt;&lt;p&gt;See: OSM Attribution Guidelines), e.g. “© OpenStreetMap”&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="29"/>
+        <source>© OpenStreetMap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="36"/>
+        <source>Attribution text:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="43"/>
+        <source>OSM URL:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="50"/>
+        <source>Enter (short) name of OSM Tile provider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="60"/>
+        <source>Tile provider:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="67"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter URL to tile provider in format of e.g.:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{zoom}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Note that the {s} (subdomain part) is optional and will be replaced by a, b, or c if provided.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -495,24 +573,24 @@ Puoi impostare la directory %2 nelle preferenze</translation>
 <context>
     <name>RGGeoTiffMapProjection</name>
     <message>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="133"/>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="145"/>
         <location filename="../RGGeoTiffMapProjection.cpp" line="155"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="167"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="177"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="133"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="155"/>
         <source>Unable to execute listgeo, is executable available?</source>
         <translation>Impossibile eseguire listgeo, è disponibile un eseguibile?</translation>
     </message>
     <message>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="145"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="167"/>
         <source>Unable to write %1! Disk full or no permissions?</source>
         <translation>Impossibile scrivere %1! Disco pieno o nessuna autorizzazione?</translation>
     </message>
     <message>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="155"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="177"/>
         <source>Unable to execute applygeo, is executable available?</source>
         <translation>Impossibile eseguire applygeo, è disponibile un eseguibile?</translation>
     </message>
@@ -520,12 +598,12 @@ Puoi impostare la directory %2 nelle preferenze</translation>
 <context>
     <name>RGGoogleMap</name>
     <message>
-        <location filename="../RGGoogleMap.cpp" line="207"/>
+        <location filename="../RGGoogleMap.cpp" line="235"/>
         <source>Web Test</source>
         <translation>Test Web</translation>
     </message>
     <message>
-        <location filename="../RGGoogleMap.cpp" line="208"/>
+        <location filename="../RGGoogleMap.cpp" line="236"/>
         <source>URL should have format similar like this:
 https://www.google.nl/maps/@52.374716,4.898623,12z
 Copy it from the Google Maps URL line in your browser.</source>
@@ -537,102 +615,100 @@ Copialo dalla riga dell&apos;URL di Google Maps nel tuo browser.</translation>
 <context>
     <name>RGMainWindow</name>
     <message>
-        <location filename="../RGMainWindow.cpp" line="122"/>
+        <location filename="../RGMainWindow.cpp" line="123"/>
         <source>Custom</source>
         <translation>Personalizzato</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="140"/>
+        <location filename="../RGMainWindow.cpp" line="141"/>
         <source>Custom: %1x%2</source>
         <translation>Personalizzato: %1x%2</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="183"/>
+        <location filename="../RGMainWindow.cpp" line="185"/>
         <source>Enabled if a map is loaded</source>
         <translation>Abilitato se è caricata una mappa</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="184"/>
+        <location filename="../RGMainWindow.cpp" line="186"/>
         <source>If the globe is enabled, the map has geographic (lat/lon) coordinates, so can be used to import a GPX route</source>
         <translation>Se il globo è abilitato, la mappa ha le coordinate geografiche (lat/lon), quindi può essere utilizzata per importare un percorso GPX</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="185"/>
+        <location filename="../RGMainWindow.cpp" line="187"/>
         <source>Enabled if a route is loaded</source>
         <translation>Abilitato se è caricato un percorso</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="186"/>
+        <location filename="../RGMainWindow.cpp" line="188"/>
         <source>If the globe is enabled, the route is generated from (gpx) geographic coordinates</source>
         <translation>Se il globo è abilitato, il percorso è generato dalle coordinate geografiche (gpx)</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="259"/>
+        <location filename="../RGMainWindow.cpp" line="261"/>
         <source>Open RG project file</source>
         <translation>Apri file progetto RG</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="259"/>
+        <location filename="../RGMainWindow.cpp" line="261"/>
         <source>Project files (*.rgp)</source>
         <translation>File progetto (*.rgp)</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="268"/>
+        <location filename="../RGMainWindow.cpp" line="270"/>
         <source>Cannot read file</source>
         <translation>Impossibile leggere il file</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="268"/>
+        <location filename="../RGMainWindow.cpp" line="270"/>
         <source>Unable to open RG project file!</source>
         <translation>Impossibile aprire il file progetto RG!</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="284"/>
+        <location filename="../RGMainWindow.cpp" line="286"/>
         <source>Open File</source>
         <translation>Apri file</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="284"/>
-        <location filename="../RGMainWindow.cpp" line="337"/>
-        <location filename="../RGMainWindow.cpp" line="417"/>
+        <location filename="../RGMainWindow.cpp" line="286"/>
+        <location filename="../RGMainWindow.cpp" line="342"/>
+        <location filename="../RGMainWindow.cpp" line="916"/>
         <source>Images (*.png *.bmp *.jpg *.tif *.gif)</source>
         <translation>Immagini (*.png *.bmp *.jpg *.tif *.gif)</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="290"/>
+        <location filename="../RGMainWindow.cpp" line="295"/>
         <source>Oops</source>
         <translation>Oops</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="290"/>
+        <location filename="../RGMainWindow.cpp" line="295"/>
         <source>Could not load image</source>
         <translation>Impossibile caricare l&apos;immagine</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="301"/>
+        <location filename="../RGMainWindow.cpp" line="306"/>
         <source>Resolution too small</source>
         <translation>Risoluzione troppo bassa</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="65"/>
         <source>First select a preferred video resolution before importing map from Google Maps!</source>
         <translatorcomment>To be confirmed</translatorcomment>
-        <translation type="unfinished">Seleziona innanzitutto la risoluzione video preferita prima di importare la mappa da Google Maps!</translation>
+        <translation type="obsolete">Seleziona innanzitutto la risoluzione video preferita prima di importare la mappa da Google Maps!</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="66"/>
         <source>Import map from Google Maps using currently selected video resolution</source>
         <translatorcomment>To be confirmed</translatorcomment>
-        <translation type="unfinished">Importa la mappa da Google Maps utilizzando la risoluzione video attualmente selezionata</translation>
+        <translation type="obsolete">Importa la mappa da Google Maps utilizzando la risoluzione video attualmente selezionata</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="112"/>
+        <location filename="../RGMainWindow.cpp" line="113"/>
         <source>Current map resolution</source>
         <translatorcomment>To be confirmed</translatorcomment>
         <translation type="unfinished">Risoluzione della mappa attuale</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="124"/>
+        <location filename="../RGMainWindow.cpp" line="125"/>
         <source>Select the preferred resolution of the output video. If the resolution of the background map is higher, the map in the generated video will scroll.
 Select &quot;Current map resolution&quot; to set it to the same resolution as the current map, which will prevent a scrolling map.</source>
         <translatorcomment>To be confirmed</translatorcomment>
@@ -640,7 +716,7 @@ Select &quot;Current map resolution&quot; to set it to the same resolution as th
 Seleziona &quot;Risoluzione mappa corrente&quot; per impostarla sulla stessa risoluzione della mappa corrente, impedendo lo scorrimento della mappa.</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="302"/>
+        <location filename="../RGMainWindow.cpp" line="307"/>
         <source>Resolution of background image is smaller than the selected output resolution. This will give wrong results in the generated output video!
 Continue anyway? (you can select a higher output resolution later)</source>
         <translatorcomment>To be confirmed</translatorcomment>
@@ -648,13 +724,13 @@ Continue anyway? (you can select a higher output resolution later)</source>
 Continuare comunque? (puoi selezionare una risoluzione di output più alta in seguito)</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="315"/>
+        <location filename="../RGMainWindow.cpp" line="320"/>
         <source>Resolution size should be even</source>
         <translatorcomment>To be confirmed</translatorcomment>
         <translation type="unfinished">La dimensione della risoluzione dovrebbe essere pari</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="316"/>
+        <location filename="../RGMainWindow.cpp" line="321"/>
         <source>Resolution of background image cannot be divided by 2. Some codecs (like h.264) do not support this, so video generation will fail!
 Continue anyway?</source>
         <translatorcomment>To be confirmed</translatorcomment>
@@ -662,184 +738,217 @@ Continue anyway?</source>
 Continuare comunque?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="336"/>
+        <location filename="../RGMainWindow.cpp" line="341"/>
         <source>Save map image as</source>
         <translation>Salva immagine mappa come</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="348"/>
+        <location filename="../RGMainWindow.cpp" line="353"/>
         <source>Cannot write geographic information</source>
         <translation>Impossibile scrivere informazioni geografiche</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="349"/>
+        <location filename="../RGMainWindow.cpp" line="354"/>
         <source>Unable to save geographic (lat/lon) projection information,so the saved file cannot be used to import GPX routes! If the currentloaded file is a GeoTIFF file, then use *.tif as extension.</source>
         <translation>Impossibile salvare le informazioni di proiezione geografica (lat/lon), quindi il file salvato non può essere utilizzato per importare percorsi GPX! Se il file attualmente caricato è un file GeoTIFF, utilizzare *.tif come estensione.</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="374"/>
-        <location filename="../RGMainWindow.cpp" line="416"/>
+        <location filename="../RGMainWindow.cpp" line="379"/>
+        <location filename="../RGMainWindow.cpp" line="915"/>
         <source>Save File</source>
         <translation>Salva file</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="374"/>
+        <location filename="../RGMainWindow.cpp" line="379"/>
         <source>Projects (*.rgp)</source>
         <translation>Progetti (*.rgp)</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="431"/>
-        <location filename="../RGMainWindow.cpp" line="886"/>
+        <location filename="../RGMainWindow.cpp" line="437"/>
+        <source>Import new Google map...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="438"/>
+        <source>Import new OSM map...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="465"/>
+        <source>Unable to draw route on current map: import new map or open existing map?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="878"/>
+        <location filename="../RGMainWindow.cpp" line="938"/>
         <source>Cannot write file</source>
         <translation>Impossibile scrivere il file</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="431"/>
+        <location filename="../RGMainWindow.cpp" line="930"/>
+        <source>Problems saving geo reference data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="931"/>
+        <source>Unable to save geo reference data into image file (not supported by selected file type). It will not be possible to re-open this map to import a GPX route.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="938"/>
         <source>Unable to save map file!</source>
         <translation>Impossibile salvare il file mappa!</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="439"/>
+        <location filename="../RGMainWindow.cpp" line="422"/>
         <source>Open GPX File</source>
         <translation>Apri file GPX</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="439"/>
+        <location filename="../RGMainWindow.cpp" line="65"/>
+        <source>First select a preferred video resolution before importing map from %1!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="66"/>
+        <source>Import map from %1 using currently selected video resolution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="422"/>
         <source>GPX files (*.gpx)</source>
         <translation>File GPX (*.gpx)</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="453"/>
+        <location filename="../RGMainWindow.cpp" line="436"/>
         <source>GPX route imported succesfully!</source>
         <translation>Percorso GPX importato con successo!</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="454"/>
         <source>Import new map (Google maps)...</source>
-        <translation>Importa nuova mappa (Google maps)...</translation>
+        <translation type="vanished">Importa nuova mappa (Google maps)...</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="468"/>
+        <location filename="../RGMainWindow.cpp" line="455"/>
         <source>Open existing map...</source>
         <translation>Apri mappa esistente...</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="472"/>
+        <location filename="../RGMainWindow.cpp" line="459"/>
         <source>Import new map, open other map, or draw route on current map?</source>
         <translation>Importare una nuova mappa, aprire un&apos;altra mappa, o disegnare un percorso sulla corrente mappa?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="473"/>
+        <location filename="../RGMainWindow.cpp" line="460"/>
         <source>Draw route on current map</source>
         <translation>Disegna il percorso sulla mappa corrente</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="478"/>
         <source>Unable to draw route on current map: import new (Google) map or open existing map?</source>
-        <translation>Impossibile disegnare un percorso sulla mappa corrente: importare una nuova mappa (Google) o aprire una mappa esistente?</translation>
+        <translation type="vanished">Impossibile disegnare un percorso sulla mappa corrente: importare una nuova mappa (Google) o aprire una mappa esistente?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="479"/>
+        <location filename="../RGMainWindow.cpp" line="466"/>
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="501"/>
+        <location filename="../RGMainWindow.cpp" line="492"/>
         <source>hold SHIFT to record free drawing, CTRL to select several points. Del key to delete selected points</source>
         <translation>tieni premuto MAIUSC per registrare liberamente il disegno, CTRL per selezionare più punti, CANC per eliminare i punti selezionati</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="543"/>
+        <location filename="../RGMainWindow.cpp" line="534"/>
         <source>Select an empty directory where the movie should be generated.</source>
         <translation>Seleziona una cartella vuota nella quale deve essere generato il video.</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="568"/>
+        <location filename="../RGMainWindow.cpp" line="559"/>
         <source>Folder not empty</source>
         <translation>Cartella non vuota</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="568"/>
+        <location filename="../RGMainWindow.cpp" line="559"/>
         <source>Folder not empty, delete all existing frame image files in this folder first?</source>
         <translation>Cartella non vuota, eliminare prima tutti i file fotogramma immagine esistenti in questa cartella?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="606"/>
+        <location filename="../RGMainWindow.cpp" line="597"/>
         <source>Encoder unavailable</source>
         <translation>Codificatore non disponibile</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="606"/>
+        <location filename="../RGMainWindow.cpp" line="597"/>
         <source>No encoder available, only image frames have been generated!</source>
         <translation>Nessun codificatore disponibile, sono stati generati solo i fotogrammi immagine!</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="615"/>
+        <location filename="../RGMainWindow.cpp" line="606"/>
         <source>Route Generator Tutorial</source>
         <translation>Tutorial su Route Generator</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="651"/>
+        <location filename="../RGMainWindow.cpp" line="642"/>
         <source>About Route Generator</source>
         <translation>Informazioni su Route Generator</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="666"/>
+        <location filename="../RGMainWindow.cpp" line="657"/>
         <source>Failed to open donation URL</source>
         <translation>Impossibile aprire l&apos;URL della donazione</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="666"/>
+        <location filename="../RGMainWindow.cpp" line="657"/>
         <source>Failed to open URL: %1</source>
         <translation>Impossibile aprire l&apos;URL %1</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="688"/>
+        <location filename="../RGMainWindow.cpp" line="679"/>
         <source>Enter custom resolution in format like: 1024x786</source>
         <translation>Inserisci la risoluzione personalizzata in un formato come: 1024x786</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="690"/>
+        <location filename="../RGMainWindow.cpp" line="681"/>
         <source>Enter custom resolution</source>
         <translation>Inserisci risoluzione personalizzata</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="707"/>
+        <location filename="../RGMainWindow.cpp" line="698"/>
         <source>Custom: </source>
         <translation>Personalizzato: </translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="712"/>
+        <location filename="../RGMainWindow.cpp" line="703"/>
         <source>Wrong resolution text</source>
         <translation>Testo della risoluzione errato</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="800"/>
+        <location filename="../RGMainWindow.cpp" line="792"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="800"/>
+        <location filename="../RGMainWindow.cpp" line="792"/>
         <source>Unable to delete generated image frames! No permissions?</source>
         <translation>Impossibile eliminare i fotogrammi immagini generati! Nessuna autorizzazione?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="828"/>
+        <location filename="../RGMainWindow.cpp" line="820"/>
         <source>Unknown video encoder:</source>
         <translation>Codificatore video sconosciuto:</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="854"/>
+        <location filename="../RGMainWindow.cpp" line="846"/>
         <source>Project not saved</source>
         <translation>Progetto non salvato</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="854"/>
+        <location filename="../RGMainWindow.cpp" line="846"/>
         <source>Do you want to save the current map and route as a project?</source>
         <translation>Vuoi salvare la mappa e il percorso correnti come progetto?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="886"/>
+        <location filename="../RGMainWindow.cpp" line="878"/>
         <source>Unable to write RG project file!</source>
         <translation>Impossibile scrivere il file progetto RG!</translation>
     </message>
@@ -847,19 +956,49 @@ Continuare comunque?</translation>
 <context>
     <name>RGSettingsDialog</name>
     <message>
-        <location filename="../RGSettingsDialog.cpp" line="50"/>
+        <location filename="../RGSettingsDialog.cpp" line="51"/>
         <source>Movie Generation</source>
         <translation>Generazione filmato</translation>
     </message>
     <message>
-        <location filename="../RGSettingsDialog.cpp" line="84"/>
+        <location filename="../RGSettingsDialog.cpp" line="100"/>
+        <source>Provider not added</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="100"/>
+        <source>Tile provider not added. Name already exists or empty?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="149"/>
         <source>Encoder changed</source>
         <translation>Codificatore modificato</translation>
     </message>
     <message>
-        <location filename="../RGSettingsDialog.cpp" line="84"/>
+        <location filename="../RGSettingsDialog.cpp" line="149"/>
         <source>Changing the encoder will reset the movie generation codec settings. Continue?</source>
         <translation>La modifica del codificatore ripristinerà le impostazioni del codec di generazione del filmato. Continuare?</translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="182"/>
+        <source>Incorrect URL format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="183"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter URL to tile provider in format of e.g.:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{zoom}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Note that the {s} (subdomain part) is optional andwill be replaced by a, b, or c if provided.&lt;/p&gt;&lt;p&gt;For an overview of OSM tile provider see: &lt;a href=&quot;https://wiki.openstreetmap.org/wiki/Raster_tile_providers&quot;&gt;OSM Raster tile providers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="193"/>
+        <source>Empty attribution text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="194"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attribution text may not be empty when the Produced Work is used Publicly! E.g. &quot;© OpenStreetMap&quot;&lt;/p&gt;&lt;p&gt;See: &lt;a href=&quot;https://osmfoundation.org/wiki/Licence/Attribution_Guidelines&quot;&gt;OSM Attribution Guidelines&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -922,26 +1061,42 @@ Continuare comunque?</translation>
         <translation>Importazione da Google Maps</translation>
     </message>
     <message>
-        <location filename="../googlemap.ui" line="26"/>
         <source>X scale:</source>
-        <translation>Scala X:</translation>
+        <translation type="vanished">Scala X:</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s X resolution in relation to the X resolution of the output video (will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translatorcomment>Leave the HTML tags, html, center, p, etc. intact. They will be used for HTML formatting of the text.</translatorcomment>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ridimensiona il fattore della risoluzione X della mappa in relazione alla risoluzione X del video di uscita (comporterà lo scorrimento in direzione X)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Y scale:</source>
+        <translation type="vanished">Scala Y:</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translatorcomment>Leave the HTML tags, html, center, p, etc. intact. They will be used for HTML formatting of the text.</translatorcomment>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ridimensiona il fattore della risoluzione Y della mappa in relazione alla risoluzione Y del video di uscita (comporterà lo scorrimento in direzione Y)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../googlemap.ui" line="26"/>
+        <source>X scroll:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="33"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s X resolution in relation to the X resolution of the output video (will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translatorcomment>Leave the HTML tags, html, center, p, etc. intact. They will be used for HTML formatting of the text.</translatorcomment>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ridimensiona il fattore della risoluzione X della mappa in relazione alla risoluzione X del video di uscita (comporterà lo scorrimento in direzione X)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s X resolution in relation to the X resolution of the output video (a value higher than 1,0 will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="49"/>
-        <source>Y scale:</source>
-        <translation>Scala Y:</translation>
+        <source>Y scroll:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="56"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translatorcomment>Leave the HTML tags, html, center, p, etc. intact. They will be used for HTML formatting of the text.</translatorcomment>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ridimensiona il fattore della risoluzione Y della mappa in relazione alla risoluzione Y del video di uscita (comporterà lo scorrimento in direzione Y)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (a value higher than 1,0 will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="72"/>
@@ -973,6 +1128,74 @@ Continuare comunque?</translation>
         <location filename="../googlemap.ui" line="141"/>
         <source>about:blank</source>
         <translation>about:blank</translation>
+    </message>
+</context>
+<context>
+    <name>osMap</name>
+    <message>
+        <location filename="../osmap.ui" line="14"/>
+        <source>Open Street Maps Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="26"/>
+        <source>X scroll:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="33"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s X resolution in relation to the X resolution of the output video (a value higher than 1,0 will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="49"/>
+        <source>Y scroll:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="56"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (a value higher than 1,0 will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="85"/>
+        <source>Lat:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="92"/>
+        <source>Latitude of map center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="114"/>
+        <source>Lon:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="121"/>
+        <source>Longitude of map center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="143"/>
+        <source>Zoom:</source>
+        <translation type="unfinished">Zoom:</translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="163"/>
+        <source>Map type:</source>
+        <translation type="unfinished">Tipo mappa:</translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="170"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select map provider. Note that you can add more providers in the preferences (advanced tab).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="177"/>
+        <source> Load map</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

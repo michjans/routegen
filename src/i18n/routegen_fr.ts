@@ -63,6 +63,31 @@
         <source>Reset to defaults</source>
         <translation>Réinitialiser aux valeurs par défaut</translation>
     </message>
+    <message>
+        <location filename="../settings.ui" line="144"/>
+        <source>Here you can add custom URL&apos;s to other OSM tile providers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settings.ui" line="147"/>
+        <source>OpenStreetMap custom tile providers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settings.ui" line="153"/>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settings.ui" line="160"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settings.ui" line="167"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GPXSelectionDialog</name>
@@ -105,194 +130,247 @@
         <translation>&amp;Fichier</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="101"/>
+        <location filename="../routegen.ui" line="102"/>
         <source>toolBar</source>
         <translation>barre d&apos;outils</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="142"/>
+        <location filename="../routegen.ui" line="144"/>
         <source>&amp;Open map image</source>
         <translation>&amp;Ouvrir l&apos;image de la carte</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="145"/>
+        <location filename="../routegen.ui" line="147"/>
         <source>Open image with map</source>
         <translation>Ouvrir une image avec la carte</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="154"/>
+        <location filename="../routegen.ui" line="156"/>
         <source>&amp;Quit</source>
         <translation>&amp;Quitter</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="157"/>
+        <location filename="../routegen.ui" line="159"/>
         <source>Quit the application</source>
         <translation>Quitter l&apos;application</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="166"/>
+        <location filename="../routegen.ui" line="168"/>
         <source>&amp;Save map image as ...</source>
         <translation>&amp;Enregistrer l&apos;image de la carte sous...</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="169"/>
+        <location filename="../routegen.ui" line="171"/>
         <source>Save map image as ...</source>
         <translation>Enregistrer l&apos;image de la carte sous...</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="172"/>
+        <location filename="../routegen.ui" line="174"/>
         <source>Save the currently displayed map and route as image</source>
         <translation>Enregistrer la carte et la route affichées comme image</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="175"/>
+        <location filename="../routegen.ui" line="177"/>
         <source>Save the currently displayed map and route as image, which can be used as start point for generating another route.</source>
         <translation>Enregistrer la carte et la route affichées comme image, pouvant servir de point de départ pour générer une autre route.</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="187"/>
+        <location filename="../routegen.ui" line="189"/>
         <source>&amp;Draw mode</source>
         <translation>Mode &amp;Dessin</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="190"/>
+        <location filename="../routegen.ui" line="192"/>
         <source>(De)Activate route draw mode</source>
         <translation>(Dés)activer le mode dessin de route</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="199"/>
+        <location filename="../routegen.ui" line="201"/>
         <source>&amp;Generate route</source>
         <translation>&amp;Générer une route</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="202"/>
+        <location filename="../routegen.ui" line="204"/>
         <source>Generate the route into a selected directory</source>
         <translation>Générer la route dans un répertoire sélectionné</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="211"/>
+        <location filename="../routegen.ui" line="213"/>
         <source>&amp;Playback</source>
         <translation>&amp;Lecture</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="214"/>
+        <location filename="../routegen.ui" line="216"/>
         <source>Playback the currently drawn route (preview)</source>
         <translation>Lecture de la route dessinée (aperçu)</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="219"/>
+        <location filename="../routegen.ui" line="221"/>
         <source>&amp;About</source>
         <translation>À &amp;propos</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="224"/>
+        <location filename="../routegen.ui" line="226"/>
         <source>&amp;Tutorial</source>
         <translation>&amp;Tutoriel</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="233"/>
+        <location filename="../routegen.ui" line="235"/>
         <source>S&amp;top</source>
         <translation>A&amp;rreter</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="236"/>
+        <location filename="../routegen.ui" line="238"/>
         <source>Stops playback</source>
         <translation>Arrêter la lecture</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="245"/>
+        <location filename="../routegen.ui" line="247"/>
         <source>&amp;Undo</source>
         <translation>&amp;Annuler</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="254"/>
+        <location filename="../routegen.ui" line="256"/>
         <source>&amp;Redo</source>
         <translation>&amp;Rétablir</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="259"/>
+        <location filename="../routegen.ui" line="261"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Préférences</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="268"/>
+        <location filename="../routegen.ui" line="270"/>
         <source>&amp;Import from Google Maps</source>
         <translation>&amp;Importer de Google Maps</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="271"/>
+        <location filename="../routegen.ui" line="273"/>
         <source>Import from Google Maps</source>
         <translation>Importer depuis Google Maps</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="352"/>
+        <location filename="../routegen.ui" line="354"/>
         <source>&amp;Donate</source>
         <translation>Faire un &amp;don</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="355"/>
+        <location filename="../routegen.ui" line="357"/>
         <source>Click here if you would like to make a donation</source>
         <translation>Cliquez ici si vous souhaitez faire un don</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="280"/>
+        <location filename="../routegen.ui" line="369"/>
+        <source>Import from Open &amp;Street Maps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../routegen.ui" line="372"/>
+        <source>Import Open Street Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../routegen.ui" line="282"/>
         <source>Import route from GP&amp;X</source>
         <translation>Importer une route depuis GP&amp;X</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="283"/>
+        <location filename="../routegen.ui" line="285"/>
         <source>Import route points from GPX file</source>
         <translation>Importer des points de route depuis un fichier GPX</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="292"/>
+        <location filename="../routegen.ui" line="294"/>
         <source>&amp;New Route</source>
         <translation>&amp;Nouvelle route</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="295"/>
+        <location filename="../routegen.ui" line="297"/>
         <source>Start New Route</source>
         <translation>Commencer une nouvelle route</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="304"/>
+        <location filename="../routegen.ui" line="306"/>
         <source>Save &amp;project</source>
         <translation>Enregistrer &amp;projet</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="307"/>
+        <location filename="../routegen.ui" line="309"/>
         <source>Save project (map and route)</source>
         <translation>Enregistrer le projet (carte et route)</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="316"/>
+        <location filename="../routegen.ui" line="318"/>
         <source>&amp;New project</source>
         <translation>&amp;Nouveau projet</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="319"/>
+        <location filename="../routegen.ui" line="321"/>
         <source>Start new project</source>
         <translation>Commencer un nouveau projet</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="328"/>
+        <location filename="../routegen.ui" line="330"/>
         <source>Open p&amp;roject</source>
         <translation>Ouvrir un p&amp;rojet</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="331"/>
+        <location filename="../routegen.ui" line="333"/>
         <source>Open a route generator project</source>
         <translation>Ouvrir un projet de générateur de route</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="340"/>
+        <location filename="../routegen.ui" line="342"/>
         <source>Save project as...</source>
         <translation>Enregistrer le projet sous...</translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="343"/>
+        <location filename="../routegen.ui" line="345"/>
         <source>Save current project in another file</source>
         <translation>Enregistrer le projet actuel dans un autre fichier</translation>
+    </message>
+</context>
+<context>
+    <name>OsmProviderEditor</name>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="14"/>
+        <source>Edit OSM Tile Provider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="20"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attribution text according to the provider&apos;s usage policy (applicable when the Produced Work is used Publicly. This attribution text will be placed in the bottom right corner of the map.&lt;/p&gt;&lt;p&gt;See: OSM Attribution Guidelines), e.g. “© OpenStreetMap”&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="29"/>
+        <source>© OpenStreetMap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="36"/>
+        <source>Attribution text:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="43"/>
+        <source>OSM URL:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="50"/>
+        <source>Enter (short) name of OSM Tile provider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="60"/>
+        <source>Tile provider:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="67"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter URL to tile provider in format of e.g.:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{zoom}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Note that the {s} (subdomain part) is optional and will be replaced by a, b, or c if provided.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -471,24 +549,24 @@ Vous pouvez définir le répertoire %2 dans les préférences</translation>
 <context>
     <name>RGGeoTiffMapProjection</name>
     <message>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="133"/>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="145"/>
         <location filename="../RGGeoTiffMapProjection.cpp" line="155"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="167"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="177"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="133"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="155"/>
         <source>Unable to execute listgeo, is executable available?</source>
         <translation>Impossible d&apos;exécuter listgeo, l&apos;exécutable est-il disponible ?</translation>
     </message>
     <message>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="145"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="167"/>
         <source>Unable to write %1! Disk full or no permissions?</source>
         <translation>Impossible d&apos;écrire %1 ! Disque plein ou permissions insuffisantes ?</translation>
     </message>
     <message>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="155"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="177"/>
         <source>Unable to execute applygeo, is executable available?</source>
         <translation>Impossible d&apos;exécuter applygeo, l&apos;exécutable est-il disponible ?</translation>
     </message>
@@ -496,12 +574,12 @@ Vous pouvez définir le répertoire %2 dans les préférences</translation>
 <context>
     <name>RGGoogleMap</name>
     <message>
-        <location filename="../RGGoogleMap.cpp" line="207"/>
+        <location filename="../RGGoogleMap.cpp" line="235"/>
         <source>Web Test</source>
         <translation>Test Web</translation>
     </message>
     <message>
-        <location filename="../RGGoogleMap.cpp" line="208"/>
+        <location filename="../RGGoogleMap.cpp" line="236"/>
         <source>URL should have format similar like this:
 https://www.google.nl/maps/@52.374716,4.898623,12z
 Copy it from the Google Maps URL line in your browser.</source>
@@ -513,302 +591,333 @@ Copiez-le depuis la barre d&apos;URL de Google Maps dans votre navigateur.</tran
 <context>
     <name>RGMainWindow</name>
     <message>
-        <location filename="../RGMainWindow.cpp" line="122"/>
+        <location filename="../RGMainWindow.cpp" line="123"/>
         <source>Custom</source>
         <translation>Personnalisé</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="140"/>
+        <location filename="../RGMainWindow.cpp" line="141"/>
         <source>Custom: %1x%2</source>
         <translation>Personnalisé : %1x%2</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="183"/>
+        <location filename="../RGMainWindow.cpp" line="185"/>
         <source>Enabled if a map is loaded</source>
         <translation>Activé si une carte est chargée</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="184"/>
+        <location filename="../RGMainWindow.cpp" line="186"/>
         <source>If the globe is enabled, the map has geographic (lat/lon) coordinates, so can be used to import a GPX route</source>
         <translation>Si le globe est activé, la carte a des coordonnées géographiques (lat/lon) et peut être utilisée pour importer un itinéraire GPX</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="185"/>
+        <location filename="../RGMainWindow.cpp" line="187"/>
         <source>Enabled if a route is loaded</source>
         <translation>Activé si un itinéraire est chargé</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="186"/>
+        <location filename="../RGMainWindow.cpp" line="188"/>
         <source>If the globe is enabled, the route is generated from (gpx) geographic coordinates</source>
         <translation>Si le globe est activé, l&apos;itinéraire est généré à partir des coordonnées géographiques (gpx)</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="259"/>
+        <location filename="../RGMainWindow.cpp" line="261"/>
         <source>Open RG project file</source>
         <translation>Ouvrir le fichier projet RG</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="259"/>
+        <location filename="../RGMainWindow.cpp" line="261"/>
         <source>Project files (*.rgp)</source>
         <translation>Fichiers projet (*.rgp)</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="268"/>
+        <location filename="../RGMainWindow.cpp" line="270"/>
         <source>Cannot read file</source>
         <translation>Impossible de lire le fichier</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="268"/>
+        <location filename="../RGMainWindow.cpp" line="270"/>
         <source>Unable to open RG project file!</source>
         <translation>Impossible d&apos;ouvrir le fichier projet RG !</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="284"/>
+        <location filename="../RGMainWindow.cpp" line="286"/>
         <source>Open File</source>
         <translation>Ouvrir le fichier</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="284"/>
-        <location filename="../RGMainWindow.cpp" line="337"/>
-        <location filename="../RGMainWindow.cpp" line="417"/>
+        <location filename="../RGMainWindow.cpp" line="286"/>
+        <location filename="../RGMainWindow.cpp" line="342"/>
+        <location filename="../RGMainWindow.cpp" line="916"/>
         <source>Images (*.png *.bmp *.jpg *.tif *.gif)</source>
         <translation>Images (*.png *.bmp *.jpg *.tif *.gif)</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="290"/>
+        <location filename="../RGMainWindow.cpp" line="295"/>
         <source>Oops</source>
         <translation>Oups</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="290"/>
+        <location filename="../RGMainWindow.cpp" line="295"/>
         <source>Could not load image</source>
         <translation>Impossible de charger l&apos;image</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="301"/>
+        <location filename="../RGMainWindow.cpp" line="306"/>
         <source>Resolution too small</source>
         <translation>Résolution trop faible</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="65"/>
         <source>First select a preferred video resolution before importing map from Google Maps!</source>
-        <translation>Sélectionnez d’abord une résolution vidéo préférée avant d’importer la carte depuis Google Maps!</translation>
+        <translation type="vanished">Sélectionnez d’abord une résolution vidéo préférée avant d’importer la carte depuis Google Maps!</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="66"/>
         <source>Import map from Google Maps using currently selected video resolution</source>
-        <translation>Importer une carte depuis Google Maps en utilisant la résolution vidéo actuellement sélectionnée</translation>
+        <translation type="vanished">Importer une carte depuis Google Maps en utilisant la résolution vidéo actuellement sélectionnée</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="112"/>
+        <location filename="../RGMainWindow.cpp" line="113"/>
         <source>Current map resolution</source>
         <translation>Résolution actuelle de la carte</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="124"/>
+        <location filename="../RGMainWindow.cpp" line="125"/>
         <source>Select the preferred resolution of the output video. If the resolution of the background map is higher, the map in the generated video will scroll.
 Select &quot;Current map resolution&quot; to set it to the same resolution as the current map, which will prevent a scrolling map.</source>
         <translation>Sélectionnez la résolution préférée de la vidéo de sortie. Si la résolution de la carte d&apos;arrière-plan est plus élevée, la carte dans la vidéo générée défilera.
 Sélectionnez «&#xa0;Résolution actuelle de la carte&#xa0;» pour la définir sur la même résolution que la carte actuelle, ce qui empêchera la carte de défiler.</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="302"/>
+        <location filename="../RGMainWindow.cpp" line="307"/>
         <source>Resolution of background image is smaller than the selected output resolution. This will give wrong results in the generated output video!
 Continue anyway? (you can select a higher output resolution later)</source>
         <translation>La résolution de l&apos;image d&apos;arrière-plan est inférieure à la résolution de sortie sélectionnée. Cela donnera des résultats erronés dans la vidéo de sortie générée&#xa0;!
 Continuer quand même ? (vous pourrez sélectionner une résolution de sortie plus élevée plus tard)</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="315"/>
+        <location filename="../RGMainWindow.cpp" line="320"/>
         <source>Resolution size should be even</source>
         <translation>La taille de la résolution doit être pair</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="316"/>
+        <location filename="../RGMainWindow.cpp" line="321"/>
         <source>Resolution of background image cannot be divided by 2. Some codecs (like h.264) do not support this, so video generation will fail!
 Continue anyway?</source>
         <translation>La résolution de l&apos;image d&apos;arrière-plan ne peut pas être divisée par 2. Certains codecs (comme le h.264) ne le prennent pas en charge, la génération vidéo échouera donc&#xa0;!
 Continuer quand même ?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="336"/>
+        <location filename="../RGMainWindow.cpp" line="341"/>
         <source>Save map image as</source>
         <translation>Enregistrer l&apos;image de la carte sous</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="348"/>
+        <location filename="../RGMainWindow.cpp" line="353"/>
         <source>Cannot write geographic information</source>
         <translation>Impossible d&apos;écrire les informations géographiques</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="349"/>
+        <location filename="../RGMainWindow.cpp" line="354"/>
         <source>Unable to save geographic (lat/lon) projection information,so the saved file cannot be used to import GPX routes! If the currentloaded file is a GeoTIFF file, then use *.tif as extension.</source>
         <translation>Impossible de sauvegarder les informations de projection géographiques (lat/lon), de sorte que le fichier enregistré ne peut pas être utilisé pour importer des itinéraires GPX ! Si le fichier chargé actuellement est un fichier GeoTIFF, utilisez l&apos;extension *.tif.</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="374"/>
-        <location filename="../RGMainWindow.cpp" line="416"/>
+        <location filename="../RGMainWindow.cpp" line="379"/>
+        <location filename="../RGMainWindow.cpp" line="915"/>
         <source>Save File</source>
         <translation>Enregistrer le fichier</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="374"/>
+        <location filename="../RGMainWindow.cpp" line="379"/>
         <source>Projects (*.rgp)</source>
         <translation>Projets (*.rgp)</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="431"/>
-        <location filename="../RGMainWindow.cpp" line="886"/>
+        <location filename="../RGMainWindow.cpp" line="437"/>
+        <source>Import new Google map...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="438"/>
+        <source>Import new OSM map...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="465"/>
+        <source>Unable to draw route on current map: import new map or open existing map?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="878"/>
+        <location filename="../RGMainWindow.cpp" line="938"/>
         <source>Cannot write file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="431"/>
+        <location filename="../RGMainWindow.cpp" line="930"/>
+        <source>Problems saving geo reference data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="931"/>
+        <source>Unable to save geo reference data into image file (not supported by selected file type). It will not be possible to re-open this map to import a GPX route.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="938"/>
         <source>Unable to save map file!</source>
         <translation>Impossible d&apos;enregistrer le fichier de carte !</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="439"/>
+        <location filename="../RGMainWindow.cpp" line="422"/>
         <source>Open GPX File</source>
         <translation>Ouvrir le fichier GPX</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="439"/>
+        <location filename="../RGMainWindow.cpp" line="65"/>
+        <source>First select a preferred video resolution before importing map from %1!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="66"/>
+        <source>Import map from %1 using currently selected video resolution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="422"/>
         <source>GPX files (*.gpx)</source>
         <translation>Fichiers GPX (*.gpx)</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="453"/>
+        <location filename="../RGMainWindow.cpp" line="436"/>
         <source>GPX route imported succesfully!</source>
         <translation>Itinéraire GPX importé avec succès !</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="454"/>
         <source>Import new map (Google maps)...</source>
-        <translation>Importer une nouvelle carte (Google Maps)...</translation>
+        <translation type="vanished">Importer une nouvelle carte (Google Maps)...</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="468"/>
+        <location filename="../RGMainWindow.cpp" line="455"/>
         <source>Open existing map...</source>
         <translation>Ouvrir une carte existante...</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="472"/>
+        <location filename="../RGMainWindow.cpp" line="459"/>
         <source>Import new map, open other map, or draw route on current map?</source>
         <translation>Importer une nouvelle carte, ouvrir une autre carte ou dessiner un itinéraire sur la carte actuelle ?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="473"/>
+        <location filename="../RGMainWindow.cpp" line="460"/>
         <source>Draw route on current map</source>
         <translation>Dessiner un itinéraire sur la carte actuelle</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="478"/>
         <source>Unable to draw route on current map: import new (Google) map or open existing map?</source>
-        <translation>Impossible de dessiner un itinéraire sur la carte actuelle : importer une nouvelle carte (Google) ou ouvrir une carte existante ?</translation>
+        <translation type="vanished">Impossible de dessiner un itinéraire sur la carte actuelle : importer une nouvelle carte (Google) ou ouvrir une carte existante ?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="479"/>
+        <location filename="../RGMainWindow.cpp" line="466"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="501"/>
+        <location filename="../RGMainWindow.cpp" line="492"/>
         <source>hold SHIFT to record free drawing, CTRL to select several points. Del key to delete selected points</source>
         <translation>maintenez la touche SHIFT pour enregistrer le dessin libre, CTRL pour sélectionner plusieurs points. Touche Suppr pour supprimer les points sélectionnés</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="543"/>
+        <location filename="../RGMainWindow.cpp" line="534"/>
         <source>Select an empty directory where the movie should be generated.</source>
         <translation>Sélectionnez un répertoire vide où le film doit être généré.</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="568"/>
+        <location filename="../RGMainWindow.cpp" line="559"/>
         <source>Folder not empty</source>
         <translation>Dossier non vide</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="568"/>
+        <location filename="../RGMainWindow.cpp" line="559"/>
         <source>Folder not empty, delete all existing frame image files in this folder first?</source>
         <translation>Dossier non vide, supprimer d&apos;abord tous les fichiers d&apos;images de cadre existants dans ce dossier ?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="606"/>
+        <location filename="../RGMainWindow.cpp" line="597"/>
         <source>Encoder unavailable</source>
         <translation>Encodeur non disponible</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="606"/>
+        <location filename="../RGMainWindow.cpp" line="597"/>
         <source>No encoder available, only image frames have been generated!</source>
         <translation>Aucun encodeur disponible, seuls les cadres d&apos;image ont été générés !</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="615"/>
+        <location filename="../RGMainWindow.cpp" line="606"/>
         <source>Route Generator Tutorial</source>
         <translation>Tutoriel du Générateur d&apos;Itinéraire</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="651"/>
+        <location filename="../RGMainWindow.cpp" line="642"/>
         <source>About Route Generator</source>
         <translation>À propos du Générateur d&apos;Itinéraire</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="666"/>
+        <location filename="../RGMainWindow.cpp" line="657"/>
         <source>Failed to open donation URL</source>
         <translation>Échec de l&apos;ouverture de l&apos;URL du don</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="666"/>
+        <location filename="../RGMainWindow.cpp" line="657"/>
         <source>Failed to open URL: %1</source>
         <translation>Échec de l&apos;ouverture de l&apos;URL %1</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="688"/>
+        <location filename="../RGMainWindow.cpp" line="679"/>
         <source>Enter custom resolution in format like: 1024x786</source>
         <translation>Entrez une résolution personnalisée au format suivant : 1024x786</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="690"/>
+        <location filename="../RGMainWindow.cpp" line="681"/>
         <source>Enter custom resolution</source>
         <translation>Entrez une résolution personnalisée</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="707"/>
+        <location filename="../RGMainWindow.cpp" line="698"/>
         <source>Custom: </source>
         <translation>Personnalisé : </translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="712"/>
+        <location filename="../RGMainWindow.cpp" line="703"/>
         <source>Wrong resolution text</source>
         <translation>Texte de résolution incorrect</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="800"/>
+        <location filename="../RGMainWindow.cpp" line="792"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="800"/>
+        <location filename="../RGMainWindow.cpp" line="792"/>
         <source>Unable to delete generated image frames! No permissions?</source>
         <translation>Impossible de supprimer les images générées ! Pas de permissions ?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="828"/>
+        <location filename="../RGMainWindow.cpp" line="820"/>
         <source>Unknown video encoder:</source>
         <translation>Encodeur vidéo inconnu :</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="854"/>
+        <location filename="../RGMainWindow.cpp" line="846"/>
         <source>Project not saved</source>
         <translation>Projet non enregistré</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="854"/>
+        <location filename="../RGMainWindow.cpp" line="846"/>
         <source>Do you want to save the current map and route as a project?</source>
         <translation>Voulez-vous enregistrer la carte et l&apos;itinéraire actuels en tant que projet ?</translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="886"/>
+        <location filename="../RGMainWindow.cpp" line="878"/>
         <source>Unable to write RG project file!</source>
         <translation>Impossible d&apos;écrire le fichier de projet RG !</translation>
     </message>
@@ -816,19 +925,49 @@ Continuer quand même ?</translation>
 <context>
     <name>RGSettingsDialog</name>
     <message>
-        <location filename="../RGSettingsDialog.cpp" line="50"/>
+        <location filename="../RGSettingsDialog.cpp" line="51"/>
         <source>Movie Generation</source>
         <translation>Génération de film</translation>
     </message>
     <message>
-        <location filename="../RGSettingsDialog.cpp" line="84"/>
+        <location filename="../RGSettingsDialog.cpp" line="100"/>
+        <source>Provider not added</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="100"/>
+        <source>Tile provider not added. Name already exists or empty?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="149"/>
         <source>Encoder changed</source>
         <translation>Encodeur modifié</translation>
     </message>
     <message>
-        <location filename="../RGSettingsDialog.cpp" line="84"/>
+        <location filename="../RGSettingsDialog.cpp" line="149"/>
         <source>Changing the encoder will reset the movie generation codec settings. Continue?</source>
         <translation>Changer l’encodeur réinitialisera les paramètres du codec de génération de film. Continuer ?</translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="182"/>
+        <source>Incorrect URL format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="183"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter URL to tile provider in format of e.g.:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{zoom}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Note that the {s} (subdomain part) is optional andwill be replaced by a, b, or c if provided.&lt;/p&gt;&lt;p&gt;For an overview of OSM tile provider see: &lt;a href=&quot;https://wiki.openstreetmap.org/wiki/Raster_tile_providers&quot;&gt;OSM Raster tile providers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="193"/>
+        <source>Empty attribution text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="194"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attribution text may not be empty when the Produced Work is used Publicly! E.g. &quot;© OpenStreetMap&quot;&lt;/p&gt;&lt;p&gt;See: &lt;a href=&quot;https://osmfoundation.org/wiki/Licence/Attribution_Guidelines&quot;&gt;OSM Attribution Guidelines&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -890,24 +1029,40 @@ Continuer quand même ?</translation>
         <translation>Importation Google Maps</translation>
     </message>
     <message>
-        <location filename="../googlemap.ui" line="26"/>
         <source>X scale:</source>
-        <translation>Échelle X :</translation>
+        <translation type="vanished">Échelle X :</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s X resolution in relation to the X resolution of the output video (will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Facteur d’échelle de la résolution X de la carte par rapport à la résolution X de la vidéo de sortie (entraînant un défilement dans la direction X)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Y scale:</source>
+        <translation type="vanished">Échelle Y :</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Facteur d’échelle de la résolution Y de la carte par rapport à la résolution Y de la vidéo de sortie (entraînant un défilement dans la direction Y)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../googlemap.ui" line="26"/>
+        <source>X scroll:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="33"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s X resolution in relation to the X resolution of the output video (will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Facteur d’échelle de la résolution X de la carte par rapport à la résolution X de la vidéo de sortie (entraînant un défilement dans la direction X)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s X resolution in relation to the X resolution of the output video (a value higher than 1,0 will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="49"/>
-        <source>Y scale:</source>
-        <translation>Échelle Y :</translation>
+        <source>Y scroll:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="56"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Facteur d’échelle de la résolution Y de la carte par rapport à la résolution Y de la vidéo de sortie (entraînant un défilement dans la direction Y)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (a value higher than 1,0 will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="72"/>
@@ -938,6 +1093,74 @@ Continuer quand même ?</translation>
         <location filename="../googlemap.ui" line="141"/>
         <source>about:blank</source>
         <translation>à propos : vide</translation>
+    </message>
+</context>
+<context>
+    <name>osMap</name>
+    <message>
+        <location filename="../osmap.ui" line="14"/>
+        <source>Open Street Maps Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="26"/>
+        <source>X scroll:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="33"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s X resolution in relation to the X resolution of the output video (a value higher than 1,0 will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="49"/>
+        <source>Y scroll:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="56"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (a value higher than 1,0 will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="85"/>
+        <source>Lat:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="92"/>
+        <source>Latitude of map center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="114"/>
+        <source>Lon:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="121"/>
+        <source>Longitude of map center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="143"/>
+        <source>Zoom:</source>
+        <translation type="unfinished">Zoom :</translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="163"/>
+        <source>Map type:</source>
+        <translation type="unfinished">Type de carte :</translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="170"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select map provider. Note that you can add more providers in the preferences (advanced tab).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="177"/>
+        <source> Load map</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

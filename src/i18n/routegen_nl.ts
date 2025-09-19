@@ -66,27 +66,27 @@
     <message>
         <location filename="../settings.ui" line="144"/>
         <source>Here you can add custom URL&apos;s to other OSM tile providers</source>
-        <translation type="unfinished"></translation>
+        <translation>Hier kunt u extra URL&apos;s naar andere OSM tile aanbieders toevoegen</translation>
     </message>
     <message>
         <location filename="../settings.ui" line="147"/>
         <source>OpenStreetMap custom tile providers</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenStreetMap andere anbieders toevoegen</translation>
     </message>
     <message>
         <location filename="../settings.ui" line="153"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Toevoegen</translation>
     </message>
     <message>
         <location filename="../settings.ui" line="160"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Aanpassen</translation>
     </message>
     <message>
         <location filename="../settings.ui" line="167"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijderen</translation>
     </message>
 </context>
 <context>
@@ -322,12 +322,12 @@
     <message>
         <location filename="../routegen.ui" line="369"/>
         <source>Import from Open &amp;Street Maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeer van Open &amp;Street Maps</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="372"/>
         <source>Import Open Street Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeer Open Street Map</translation>
     </message>
 </context>
 <context>
@@ -335,37 +335,42 @@
     <message>
         <location filename="../osmtileprovidereditor.ui" line="14"/>
         <source>Edit OSM Tile Provider</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas OSM aanbieder aan</translation>
     </message>
     <message>
         <location filename="../osmtileprovidereditor.ui" line="20"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attribution text according to the provider&apos;s usage policy (applicable when the Produced Work is used Publicly as defined by the ODbL).&lt;/p&gt;&lt;p&gt;See: &lt;a href=&quot;https://osmfoundation.org/wiki/Licence/Attribution_Guidelines&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Attribution Guidelines&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attribution text according to the provider&apos;s usage policy (applicable when the Produced Work is used Publicly. This attribution text will be placed in the bottom right corner of the map.&lt;/p&gt;&lt;p&gt;See: OSM Attribution Guidelines), e.g. “© OpenStreetMap”&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attributietekst volgens het gebruiksbeleid van de provider (van toepassing wanneer het Geproduceerde Werk openbaar wordt gebruikt). Deze attributietekst wordt in de rechter benedenhoek van de kaart geplaatst.&lt;/p&gt;&lt;p&gt;Zie: OSM Attribution Guidelines), e.g. “© OpenStreetMap”&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../osmtileprovidereditor.ui" line="30"/>
+        <location filename="../osmtileprovidereditor.ui" line="29"/>
+        <source>© OpenStreetMap</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="36"/>
         <source>Attribution text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Attributie tekst:</translation>
     </message>
     <message>
-        <location filename="../osmtileprovidereditor.ui" line="37"/>
+        <location filename="../osmtileprovidereditor.ui" line="43"/>
         <source>OSM URL:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../osmtileprovidereditor.ui" line="44"/>
+        <location filename="../osmtileprovidereditor.ui" line="50"/>
         <source>Enter (short) name of OSM Tile provider</source>
-        <translation type="unfinished"></translation>
+        <translation>Korte naam voor OSM provider</translation>
     </message>
     <message>
-        <location filename="../osmtileprovidereditor.ui" line="51"/>
+        <location filename="../osmtileprovidereditor.ui" line="60"/>
         <source>Tile provider:</source>
-        <translation type="unfinished"></translation>
+        <translation>Provider naam:</translation>
     </message>
     <message>
-        <location filename="../osmtileprovidereditor.ui" line="58"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter URL to tile provider in format of e.g.:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{zoom}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Note that the {s} (subdomain part) is optional and will be replaced by a, b, or c if provided.&lt;/p&gt;&lt;p&gt;For an overview of OSM tile provider see: &lt;a href=&quot;https://wiki.openstreetmap.org/wiki/Raster_tile_providers&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Raster tile providers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <location filename="../osmtileprovidereditor.ui" line="67"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter URL to tile provider in format of e.g.:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{zoom}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Note that the {s} (subdomain part) is optional and will be replaced by a, b, or c if provided.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vul URL in naar tile provider in formaat van b.v.:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{zoom}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Noot dat het {s} (subdomain deel) is optioneel en zal vervangen worden door a, b, of c.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -544,24 +549,24 @@ You can set the %2 directory in the preferences</source>
 <context>
     <name>RGGeoTiffMapProjection</name>
     <message>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="136"/>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="148"/>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="158"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="155"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="167"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="177"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="136"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="155"/>
         <source>Unable to execute listgeo, is executable available?</source>
         <translation>Kon listgeo niet uitvoeren, is dit programma beschikbaar?</translation>
     </message>
     <message>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="148"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="167"/>
         <source>Unable to write %1! Disk full or no permissions?</source>
         <translation>Kon %1 niet overschrijjven! Schijf vol of geen permissies?</translation>
     </message>
     <message>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="158"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="177"/>
         <source>Unable to execute applygeo, is executable available?</source>
         <translation>Kon applygeo niet uitvoerenn, is dit programma beschikbaar?</translation>
     </message>
@@ -730,17 +735,17 @@ Toch doorgaan?</translation>
     <message>
         <location filename="../RGMainWindow.cpp" line="437"/>
         <source>Import new Google map...</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeer nieuwe kaart van Google ...</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="438"/>
         <source>Import new OSM map...</source>
-        <translation type="unfinished"></translation>
+        <translation>Importeer nieuwe kaart van OpenStreetMap...</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="465"/>
         <source>Unable to draw route on current map: import new map or open existing map?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan huidige route niet op deze kaart tekenen: importeer nieuwe kaart of open bestaande kaart?</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="878"/>
@@ -751,12 +756,12 @@ Toch doorgaan?</translation>
     <message>
         <location filename="../RGMainWindow.cpp" line="930"/>
         <source>Problems saving geo reference data</source>
-        <translation type="unfinished"></translation>
+        <translation>Problemen met het opslaan van de geografische referentie data</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="931"/>
         <source>Unable to save geo reference data into image file (not supported by selected file type). It will not be possible to re-open this map to import a GPX route.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan geografische referentie data niet opslaan in het afbeeldingsbestand (wordt niet ondersteunde door geselecteerde bestandstype). Het zal niet mogelijk zijn om deze kaart te her-openen en daarop een GPX route te importeren.</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="938"/>
@@ -925,14 +930,44 @@ Toch doorgaan?</translation>
         <translation>Video Generatie</translation>
     </message>
     <message>
-        <location filename="../RGSettingsDialog.cpp" line="136"/>
+        <location filename="../RGSettingsDialog.cpp" line="100"/>
+        <source>Provider not added</source>
+        <translation>Aanbieder niet toegevoegd</translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="100"/>
+        <source>Tile provider not added. Name already exists or empty?</source>
+        <translation>Aanbieder niet toegevoegd. Naam bestaat al of is leeg?</translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="149"/>
         <source>Encoder changed</source>
         <translation>Encoder aangepast</translation>
     </message>
     <message>
-        <location filename="../RGSettingsDialog.cpp" line="136"/>
+        <location filename="../RGSettingsDialog.cpp" line="149"/>
         <source>Changing the encoder will reset the movie generation codec settings. Continue?</source>
         <translation>Aanpassen van de encoder zal de huidige instellingen verloren laten gaan. Doorgaan?</translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="182"/>
+        <source>Incorrect URL format</source>
+        <translation>Fout in URL formaat</translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="183"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter URL to tile provider in format of e.g.:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{zoom}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Note that the {s} (subdomain part) is optional andwill be replaced by a, b, or c if provided.&lt;/p&gt;&lt;p&gt;For an overview of OSM tile provider see: &lt;a href=&quot;https://wiki.openstreetmap.org/wiki/Raster_tile_providers&quot;&gt;OSM Raster tile providers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vul URL in het verwachte formaat  b.v..:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{zoom}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Noot: het {s} (subdomain part) is optioneel en zal vervangen worden met a, b, or c als deze is ingevuld.&lt;/p&gt;&lt;p&gt;Voor een overzicht van OSM tile aanbieders, zie: &lt;a href=&quot;https://wiki.openstreetmap.org/wiki/Raster_tile_providers&quot;&gt;OSM Raster tile providers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="193"/>
+        <source>Empty attribution text</source>
+        <translation>Lege attributie text</translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="194"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attribution text may not be empty when the Produced Work is used Publicly! E.g. &quot;© OpenStreetMap&quot;&lt;/p&gt;&lt;p&gt;See: &lt;a href=&quot;https://osmfoundation.org/wiki/Licence/Attribution_Guidelines&quot;&gt;OSM Attribution Guidelines&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attributie tekst mag niet leeg zijn als het resultaat publiek wordt vertoond! B.v. &quot;© OpenStreetMap&quot;&lt;/p&gt;&lt;p&gt;Zie: &lt;a href=&quot;https://osmfoundation.org/wiki/Licence/Attribution_Guidelines&quot;&gt;OSM Attribution Guidelines&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -973,7 +1008,7 @@ Toch doorgaan?</translation>
     <message>
         <location filename="../RGViewWidget.cpp" line="156"/>
         <source>Problems saving file </source>
-        <translation>Problemen om bestand op te slaan: </translation>
+        <translation>Problemen om bestand op te slaan </translation>
     </message>
     <message>
         <location filename="../RGViewWidget.cpp" line="171"/>
@@ -1012,22 +1047,22 @@ Toch doorgaan?</translation>
     <message>
         <location filename="../googlemap.ui" line="26"/>
         <source>X scroll:</source>
-        <translation type="unfinished"></translation>
+        <translation>X scroll:</translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="33"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s X resolution in relation to the X resolution of the output video (a value higher than 1,0 will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor van de kaart X resolutie in relatie tot the X resolutie van de output video (een waarde hoger dan 1,0 zal resulteren in scrollen in X richting)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="49"/>
         <source>Y scroll:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y scroll:</translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (a value higher than 1,0 will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor van de kaart Y resolutie in relatie tot the Y resolutie van de output video (een waarde hoger dan 1,0 zal resulteren in scrollen in Y richting)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="72"/>
@@ -1094,33 +1129,42 @@ Toch doorgaan?</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="92"/>
-        <source>Latitude</source>
+        <source>Latitude of map center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../osmap.ui" line="111"/>
+        <location filename="../osmap.ui" line="121"/>
+        <source>Longitude of map center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="170"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select map provider. Note that you can add more providers in the preferences (advanced tab).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="177"/>
+        <source> Load map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="114"/>
         <source>Lon:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../osmap.ui" line="118"/>
-        <source>Longitude</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../osmap.ui" line="137"/>
+        <location filename="../osmap.ui" line="143"/>
         <source>Zoom:</source>
         <translation type="unfinished">Zoom:</translation>
     </message>
     <message>
-        <location filename="../osmap.ui" line="157"/>
+        <location filename="../osmap.ui" line="163"/>
         <source>Map type:</source>
         <translation type="unfinished">Map type:</translation>
     </message>
     <message>
-        <location filename="../osmap.ui" line="167"/>
         <source>Go</source>
-        <translation type="unfinished">Ga</translation>
+        <translation type="obsolete">Ga</translation>
     </message>
 </context>
 <context>

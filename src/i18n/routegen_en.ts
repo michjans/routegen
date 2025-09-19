@@ -5,74 +5,87 @@
     <name>Dialog</name>
     <message>
         <location filename="../settings.ui" line="14"/>
-        <location filename="../Release/routegen_autogen/include/ui_settings.h" line="159"/>
         <source>Route Generator Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="24"/>
-        <location filename="../Release/routegen_autogen/include/ui_settings.h" line="174"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="27"/>
-        <location filename="../Release/routegen_autogen/include/ui_settings.h" line="176"/>
         <source>Change advanced settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="33"/>
-        <location filename="../Release/routegen_autogen/include/ui_settings.h" line="160"/>
         <source>Generator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="39"/>
-        <location filename="../Release/routegen_autogen/include/ui_settings.h" line="161"/>
         <source>Generator selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="65"/>
-        <location filename="../Release/routegen_autogen/include/ui_settings.h" line="162"/>
         <source>Route generation setting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="71"/>
-        <location filename="../Release/routegen_autogen/include/ui_settings.h" line="163"/>
         <source>The smoothing coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="91"/>
-        <location filename="../Release/routegen_autogen/include/ui_settings.h" line="164"/>
         <source>(between 10 and 25 should give better results)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="111"/>
-        <location filename="../Release/routegen_autogen/include/ui_settings.h" line="165"/>
         <source>Show vehicle in begin/end frames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="118"/>
-        <location filename="../Release/routegen_autogen/include/ui_settings.h" line="167"/>
         <source>Check if first and last frame should contain the vehicle icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="131"/>
-        <location filename="../Release/routegen_autogen/include/ui_settings.h" line="171"/>
         <source>Reset to original settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settings.ui" line="134"/>
-        <location filename="../Release/routegen_autogen/include/ui_settings.h" line="173"/>
         <source>Reset to defaults</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settings.ui" line="144"/>
+        <source>Here you can add custom URL&apos;s to other OSM tile providers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settings.ui" line="147"/>
+        <source>OpenStreetMap custom tile providers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settings.ui" line="153"/>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settings.ui" line="160"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settings.ui" line="167"/>
+        <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -80,13 +93,11 @@
     <name>GPXSelectionDialog</name>
     <message>
         <location filename="../gpxselectiondialog.ui" line="14"/>
-        <location filename="../Release/routegen_autogen/include/ui_gpxselectiondialog.h" line="73"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gpxselectiondialog.ui" line="45"/>
-        <location filename="../Release/routegen_autogen/include/ui_gpxselectiondialog.h" line="74"/>
         <source>Select a route or track from the list below:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -95,270 +106,287 @@
     <name>MainWindow</name>
     <message>
         <location filename="../routegen.ui" line="14"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="241"/>
         <source>Route Generator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="54"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="310"/>
         <source>&amp;Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="63"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="311"/>
         <source>&amp;Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="70"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="312"/>
         <source>&amp;Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="313"/>
-        <source>Route Generator v0.1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../routegen.ui" line="79"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="314"/>
         <source>&amp;File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="101"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="315"/>
+        <location filename="../routegen.ui" line="102"/>
         <source>toolBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="140"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="245"/>
+        <location filename="../routegen.ui" line="144"/>
         <source>&amp;Open map image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="143"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="247"/>
+        <location filename="../routegen.ui" line="147"/>
         <source>Open image with map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="152"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="249"/>
+        <location filename="../routegen.ui" line="156"/>
         <source>&amp;Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="155"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="251"/>
+        <location filename="../routegen.ui" line="159"/>
         <source>Quit the application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="164"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="253"/>
+        <location filename="../routegen.ui" line="168"/>
         <source>&amp;Save map image as ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="167"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="254"/>
+        <location filename="../routegen.ui" line="171"/>
         <source>Save map image as ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="170"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="256"/>
+        <location filename="../routegen.ui" line="174"/>
         <source>Save the currently displayed map and route as image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="173"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="259"/>
+        <location filename="../routegen.ui" line="177"/>
         <source>Save the currently displayed map and route as image, which can be used as start point for generating another route.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="185"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="261"/>
+        <location filename="../routegen.ui" line="189"/>
         <source>&amp;Draw mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="188"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="263"/>
+        <location filename="../routegen.ui" line="192"/>
         <source>(De)Activate route draw mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="197"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="265"/>
+        <location filename="../routegen.ui" line="201"/>
         <source>&amp;Generate route</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="200"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="267"/>
+        <location filename="../routegen.ui" line="204"/>
         <source>Generate the route into a selected directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="209"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="269"/>
+        <location filename="../routegen.ui" line="213"/>
         <source>&amp;Playback</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="212"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="271"/>
+        <location filename="../routegen.ui" line="216"/>
         <source>Playback the currently drawn route (preview)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="217"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="273"/>
+        <location filename="../routegen.ui" line="221"/>
         <source>&amp;About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="222"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="274"/>
+        <location filename="../routegen.ui" line="226"/>
         <source>&amp;Tutorial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="231"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="275"/>
+        <location filename="../routegen.ui" line="235"/>
         <source>S&amp;top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="234"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="277"/>
+        <location filename="../routegen.ui" line="238"/>
         <source>Stops playback</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="243"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="279"/>
+        <location filename="../routegen.ui" line="247"/>
         <source>&amp;Undo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="252"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="280"/>
+        <location filename="../routegen.ui" line="256"/>
         <source>&amp;Redo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="257"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="281"/>
+        <location filename="../routegen.ui" line="261"/>
         <source>&amp;Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="266"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="282"/>
+        <location filename="../routegen.ui" line="270"/>
         <source>&amp;Import from Google Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="269"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="284"/>
-        <source>Import map from Google Maps</source>
+        <location filename="../routegen.ui" line="273"/>
+        <source>Import from Google Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="278"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="286"/>
+        <location filename="../routegen.ui" line="354"/>
+        <source>&amp;Donate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../routegen.ui" line="357"/>
+        <source>Click here if you would like to make a donation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../routegen.ui" line="369"/>
+        <source>Import from Open &amp;Street Maps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../routegen.ui" line="372"/>
+        <source>Import Open Street Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../routegen.ui" line="282"/>
         <source>Import route from GP&amp;X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="281"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="288"/>
+        <location filename="../routegen.ui" line="285"/>
         <source>Import route points from GPX file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="290"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="290"/>
+        <location filename="../routegen.ui" line="294"/>
         <source>&amp;New Route</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="293"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="292"/>
+        <location filename="../routegen.ui" line="297"/>
         <source>Start New Route</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="302"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="294"/>
+        <location filename="../routegen.ui" line="306"/>
         <source>Save &amp;project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="305"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="296"/>
+        <location filename="../routegen.ui" line="309"/>
         <source>Save project (map and route)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="314"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="298"/>
+        <location filename="../routegen.ui" line="318"/>
         <source>&amp;New project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="317"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="300"/>
+        <location filename="../routegen.ui" line="321"/>
         <source>Start new project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="326"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="302"/>
+        <location filename="../routegen.ui" line="330"/>
         <source>Open p&amp;roject</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="329"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="304"/>
+        <location filename="../routegen.ui" line="333"/>
         <source>Open a route generator project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="338"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="306"/>
+        <location filename="../routegen.ui" line="342"/>
         <source>Save project as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../routegen.ui" line="341"/>
-        <location filename="../Release/routegen_autogen/include/ui_routegen.h" line="308"/>
+        <location filename="../routegen.ui" line="345"/>
         <source>Save current project in another file</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OsmProviderEditor</name>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="14"/>
+        <source>Edit OSM Tile Provider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="20"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attribution text according to the provider&apos;s usage policy (applicable when the Produced Work is used Publicly. This attribution text will be placed in the bottom right corner of the map.&lt;/p&gt;&lt;p&gt;See: OSM Attribution Guidelines), e.g. “© OpenStreetMap”&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="29"/>
+        <source>© OpenStreetMap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="36"/>
+        <source>Attribution text:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="43"/>
+        <source>OSM URL:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="50"/>
+        <source>Enter (short) name of OSM Tile provider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="60"/>
+        <source>Tile provider:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmtileprovidereditor.ui" line="67"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter URL to tile provider in format of e.g.:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{zoom}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Note that the {s} (subdomain part) is optional and will be replaced by a, b, or c if provided.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../RGVehicleList.cpp" line="143"/>
+        <location filename="../RGVehicleList.cpp" line="134"/>
         <source>Unable to find folder for custom vehicles.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGVehicleList.cpp" line="151"/>
+        <location filename="../RGVehicleList.cpp" line="142"/>
         <source>Unable to copy custom vehicle to folder for custom vehicles.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGVehicleList.cpp" line="157"/>
+        <location filename="../RGVehicleList.cpp" line="148"/>
         <source>Error adding vehicle (unexpected file format or error in file?)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -519,24 +547,24 @@ You can set the %2 directory in the preferences</source>
 <context>
     <name>RGGeoTiffMapProjection</name>
     <message>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="133"/>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="145"/>
         <location filename="../RGGeoTiffMapProjection.cpp" line="155"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="167"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="177"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="133"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="155"/>
         <source>Unable to execute listgeo, is executable available?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="145"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="167"/>
         <source>Unable to write %1! Disk full or no permissions?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGGeoTiffMapProjection.cpp" line="155"/>
+        <location filename="../RGGeoTiffMapProjection.cpp" line="177"/>
         <source>Unable to execute applygeo, is executable available?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -544,12 +572,12 @@ You can set the %2 directory in the preferences</source>
 <context>
     <name>RGGoogleMap</name>
     <message>
-        <location filename="../RGGoogleMap.cpp" line="207"/>
+        <location filename="../RGGoogleMap.cpp" line="235"/>
         <source>Web Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGGoogleMap.cpp" line="208"/>
+        <location filename="../RGGoogleMap.cpp" line="236"/>
         <source>URL should have format similar like this:
 https://www.google.nl/maps/@52.374716,4.898623,12z
 Copy it from the Google Maps URL line in your browser.</source>
@@ -559,262 +587,314 @@ Copy it from the Google Maps URL line in your browser.</source>
 <context>
     <name>RGMainWindow</name>
     <message>
-        <location filename="../RGMainWindow.cpp" line="108"/>
+        <location filename="../RGMainWindow.cpp" line="123"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="110"/>
-        <source>Select the output resolution of the generated video.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../RGMainWindow.cpp" line="118"/>
+        <location filename="../RGMainWindow.cpp" line="141"/>
         <source>Custom: %1x%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="156"/>
+        <location filename="../RGMainWindow.cpp" line="185"/>
         <source>Enabled if a map is loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="157"/>
+        <location filename="../RGMainWindow.cpp" line="186"/>
         <source>If the globe is enabled, the map has geographic (lat/lon) coordinates, so can be used to import a GPX route</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="158"/>
+        <location filename="../RGMainWindow.cpp" line="187"/>
         <source>Enabled if a route is loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="159"/>
+        <location filename="../RGMainWindow.cpp" line="188"/>
         <source>If the globe is enabled, the route is generated from (gpx) geographic coordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="231"/>
+        <location filename="../RGMainWindow.cpp" line="261"/>
         <source>Open RG project file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="231"/>
+        <location filename="../RGMainWindow.cpp" line="261"/>
         <source>Project files (*.rgp)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="240"/>
+        <location filename="../RGMainWindow.cpp" line="270"/>
         <source>Cannot read file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="240"/>
+        <location filename="../RGMainWindow.cpp" line="270"/>
         <source>Unable to open RG project file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="256"/>
+        <location filename="../RGMainWindow.cpp" line="286"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="256"/>
-        <location filename="../RGMainWindow.cpp" line="293"/>
-        <location filename="../RGMainWindow.cpp" line="373"/>
+        <location filename="../RGMainWindow.cpp" line="286"/>
+        <location filename="../RGMainWindow.cpp" line="342"/>
+        <location filename="../RGMainWindow.cpp" line="916"/>
         <source>Images (*.png *.bmp *.jpg *.tif *.gif)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="262"/>
+        <location filename="../RGMainWindow.cpp" line="295"/>
         <source>Oops</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="262"/>
+        <location filename="../RGMainWindow.cpp" line="295"/>
         <source>Could not load image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="270"/>
+        <location filename="../RGMainWindow.cpp" line="306"/>
         <source>Resolution too small</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="271"/>
-        <source>Resolution of background image is smaller than the selected output resolution. This will give wrong results in the generated output video!
-Continue anyway?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../RGMainWindow.cpp" line="292"/>
+        <location filename="../RGMainWindow.cpp" line="341"/>
         <source>Save map image as</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="304"/>
+        <location filename="../RGMainWindow.cpp" line="353"/>
         <source>Cannot write geographic information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="305"/>
+        <location filename="../RGMainWindow.cpp" line="354"/>
         <source>Unable to save geographic (lat/lon) projection information,so the saved file cannot be used to import GPX routes! If the currentloaded file is a GeoTIFF file, then use *.tif as extension.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="330"/>
-        <location filename="../RGMainWindow.cpp" line="372"/>
+        <location filename="../RGMainWindow.cpp" line="379"/>
+        <location filename="../RGMainWindow.cpp" line="915"/>
         <source>Save File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="330"/>
+        <location filename="../RGMainWindow.cpp" line="379"/>
         <source>Projects (*.rgp)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="387"/>
-        <location filename="../RGMainWindow.cpp" line="790"/>
+        <location filename="../RGMainWindow.cpp" line="437"/>
+        <source>Import new Google map...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="438"/>
+        <source>Import new OSM map...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="465"/>
+        <source>Unable to draw route on current map: import new map or open existing map?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="878"/>
+        <location filename="../RGMainWindow.cpp" line="938"/>
         <source>Cannot write file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="387"/>
+        <location filename="../RGMainWindow.cpp" line="930"/>
+        <source>Problems saving geo reference data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="931"/>
+        <source>Unable to save geo reference data into image file (not supported by selected file type). It will not be possible to re-open this map to import a GPX route.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="938"/>
         <source>Unable to save map file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="395"/>
+        <location filename="../RGMainWindow.cpp" line="422"/>
         <source>Open GPX File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="395"/>
-        <source>GPX files (*.gpx)</source>
+        <location filename="../RGMainWindow.cpp" line="65"/>
+        <source>First select a preferred video resolution before importing map from %1!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="409"/>
-        <source>GPX route imported succesfully!</source>
+        <location filename="../RGMainWindow.cpp" line="66"/>
+        <source>Import map from %1 using currently selected video resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="410"/>
-        <source>Import new map (Google maps)...</source>
+        <location filename="../RGMainWindow.cpp" line="113"/>
+        <source>Current map resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="411"/>
-        <source>Open existing map...</source>
+        <location filename="../RGMainWindow.cpp" line="125"/>
+        <source>Select the preferred resolution of the output video. If the resolution of the background map is higher, the map in the generated video will scroll.
+Select &quot;Current map resolution&quot; to set it to the same resolution as the current map, which will prevent a scrolling map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="415"/>
-        <source>Import new map, open other map, or draw route on current map?</source>
+        <location filename="../RGMainWindow.cpp" line="307"/>
+        <source>Resolution of background image is smaller than the selected output resolution. This will give wrong results in the generated output video!
+Continue anyway? (you can select a higher output resolution later)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="416"/>
-        <source>Draw route on current map</source>
+        <location filename="../RGMainWindow.cpp" line="320"/>
+        <source>Resolution size should be even</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="421"/>
-        <source>Unable to draw route on current map: import new (Google) map or open existing map?</source>
+        <location filename="../RGMainWindow.cpp" line="321"/>
+        <source>Resolution of background image cannot be divided by 2. Some codecs (like h.264) do not support this, so video generation will fail!
+Continue anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="422"/>
+        <source>GPX files (*.gpx)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="436"/>
+        <source>GPX route imported succesfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="455"/>
+        <source>Open existing map...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="459"/>
+        <source>Import new map, open other map, or draw route on current map?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="460"/>
+        <source>Draw route on current map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="466"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="444"/>
+        <location filename="../RGMainWindow.cpp" line="492"/>
         <source>hold SHIFT to record free drawing, CTRL to select several points. Del key to delete selected points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="486"/>
+        <location filename="../RGMainWindow.cpp" line="534"/>
         <source>Select an empty directory where the movie should be generated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="511"/>
+        <location filename="../RGMainWindow.cpp" line="559"/>
         <source>Folder not empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="511"/>
+        <location filename="../RGMainWindow.cpp" line="559"/>
         <source>Folder not empty, delete all existing frame image files in this folder first?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="549"/>
+        <location filename="../RGMainWindow.cpp" line="597"/>
         <source>Encoder unavailable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="549"/>
+        <location filename="../RGMainWindow.cpp" line="597"/>
         <source>No encoder available, only image frames have been generated!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="558"/>
+        <location filename="../RGMainWindow.cpp" line="606"/>
         <source>Route Generator Tutorial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="592"/>
+        <location filename="../RGMainWindow.cpp" line="642"/>
         <source>About Route Generator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="613"/>
+        <location filename="../RGMainWindow.cpp" line="657"/>
+        <source>Failed to open donation URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="657"/>
+        <source>Failed to open URL: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGMainWindow.cpp" line="679"/>
         <source>Enter custom resolution in format like: 1024x786</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="614"/>
+        <location filename="../RGMainWindow.cpp" line="681"/>
         <source>Enter custom resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="631"/>
+        <location filename="../RGMainWindow.cpp" line="698"/>
         <source>Custom: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="636"/>
+        <location filename="../RGMainWindow.cpp" line="703"/>
         <source>Wrong resolution text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="704"/>
+        <location filename="../RGMainWindow.cpp" line="792"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="704"/>
+        <location filename="../RGMainWindow.cpp" line="792"/>
         <source>Unable to delete generated image frames! No permissions?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="732"/>
+        <location filename="../RGMainWindow.cpp" line="820"/>
         <source>Unknown video encoder:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="758"/>
+        <location filename="../RGMainWindow.cpp" line="846"/>
         <source>Project not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="758"/>
+        <location filename="../RGMainWindow.cpp" line="846"/>
         <source>Do you want to save the current map and route as a project?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGMainWindow.cpp" line="790"/>
+        <location filename="../RGMainWindow.cpp" line="878"/>
         <source>Unable to write RG project file!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -822,18 +902,48 @@ Continue anyway?</source>
 <context>
     <name>RGSettingsDialog</name>
     <message>
-        <location filename="../RGSettingsDialog.cpp" line="50"/>
+        <location filename="../RGSettingsDialog.cpp" line="51"/>
         <source>Movie Generation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGSettingsDialog.cpp" line="84"/>
+        <location filename="../RGSettingsDialog.cpp" line="100"/>
+        <source>Provider not added</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="100"/>
+        <source>Tile provider not added. Name already exists or empty?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="149"/>
         <source>Encoder changed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../RGSettingsDialog.cpp" line="84"/>
+        <location filename="../RGSettingsDialog.cpp" line="149"/>
         <source>Changing the encoder will reset the movie generation codec settings. Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="182"/>
+        <source>Incorrect URL format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="183"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter URL to tile provider in format of e.g.:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{zoom}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Note that the {s} (subdomain part) is optional andwill be replaced by a, b, or c if provided.&lt;/p&gt;&lt;p&gt;For an overview of OSM tile provider see: &lt;a href=&quot;https://wiki.openstreetmap.org/wiki/Raster_tile_providers&quot;&gt;OSM Raster tile providers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="193"/>
+        <source>Empty attribution text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../RGSettingsDialog.cpp" line="194"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attribution text may not be empty when the Produced Work is used Publicly! E.g. &quot;© OpenStreetMap&quot;&lt;/p&gt;&lt;p&gt;See: &lt;a href=&quot;https://osmfoundation.org/wiki/Licence/Attribution_Guidelines&quot;&gt;OSM Attribution Guidelines&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -892,37 +1002,11 @@ Continue anyway?</source>
     <name>googleMap</name>
     <message>
         <location filename="../googlemap.ui" line="14"/>
-        <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="175"/>
         <source>Google Maps Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../googlemap.ui" line="26"/>
-        <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="176"/>
-        <source>X scale:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../googlemap.ui" line="33"/>
-        <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="178"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s X resolution in relation to the X resolution of the output video (will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../googlemap.ui" line="49"/>
-        <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="180"/>
-        <source>Y scale:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../googlemap.ui" line="56"/>
-        <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="182"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../googlemap.ui" line="72"/>
-        <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="184"/>
         <source>URL:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -932,30 +1016,37 @@ Continue anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="186"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Paste link from google maps, e.g. http://maps.google.nl/?ie=UTF8&amp;amp;ll=52.469397,5.509644&amp;amp;spn=4.766159,9.876709&amp;amp;z=7&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;and click &apos;Go&apos;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="../googlemap.ui" line="26"/>
+        <source>X scroll:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../googlemap.ui" line="33"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s X resolution in relation to the X resolution of the output video (a value higher than 1,0 will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../googlemap.ui" line="49"/>
+        <source>Y scroll:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../googlemap.ui" line="56"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (a value higher than 1,0 will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="86"/>
-        <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="193"/>
         <source>Zoom:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="106"/>
-        <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="194"/>
         <source>Map type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="116"/>
-        <location filename="../Release/routegen_autogen/include/ui_googlemap.h" line="195"/>
         <source>Go</source>
         <translation type="unfinished"></translation>
     </message>
@@ -966,64 +1057,122 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>osMap</name>
+    <message>
+        <location filename="../osmap.ui" line="14"/>
+        <source>Open Street Maps Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="26"/>
+        <source>X scroll:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="33"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s X resolution in relation to the X resolution of the output video (a value higher than 1,0 will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="49"/>
+        <source>Y scroll:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="56"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (a value higher than 1,0 will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="85"/>
+        <source>Lat:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="92"/>
+        <source>Latitude of map center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="114"/>
+        <source>Lon:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="121"/>
+        <source>Longitude of map center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="143"/>
+        <source>Zoom:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="163"/>
+        <source>Map type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="170"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select map provider. Note that you can add more providers in the preferences (advanced tab).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../osmap.ui" line="177"/>
+        <source> Load map</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>routeUi</name>
     <message>
         <location filename="../routeui.ui" line="20"/>
-        <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="151"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="32"/>
-        <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="153"/>
         <source>Modify the width of the drawn route line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="51"/>
-        <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="156"/>
         <source>Select line style of route</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="64"/>
-        <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="159"/>
         <source>Select route color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="81"/>
-        <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="163"/>
         <source>Select vehicle for the route</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="94"/>
-        <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="166"/>
         <source>Vehicle Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="115"/>
-        <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="170"/>
         <source>Turns on/off automatic route interpolation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="118"/>
-        <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="172"/>
         <source>Set total time (s) :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="128"/>
-        <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="174"/>
         <source>Length of generated route in seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../routeui.ui" line="148"/>
-        <location filename="../Release/routegen_autogen/include/ui_routeui.h" line="176"/>
         <source>Smooth route</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1032,79 +1181,66 @@ p, li { white-space: pre-wrap; }
     <name>vehicleDialog</name>
     <message>
         <location filename="../vehicledialog.ui" line="14"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="214"/>
         <source>Vehicle Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="76"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="216"/>
         <source>Remove selected vehicle (only custom vehicles can be removed)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="79"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="218"/>
         <source>Remove vehicle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="86"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="220"/>
         <source>Add your own custom vehicle icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="89"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="222"/>
         <source>Add vehicle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="188"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="223"/>
         <source>Size :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="117"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="225"/>
         <source>Reset the size of the vehicle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="158"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="227"/>
         <source>Angle :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="128"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="228"/>
         <source>0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="135"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="229"/>
         <source>Mirror :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="178"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="231"/>
         <source>Mirrors the vehicle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="107"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="234"/>
         <source>Automatic orientation:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../vehicledialog.ui" line="168"/>
-        <location filename="../Release/routegen_autogen/include/ui_vehicledialog.h" line="236"/>
         <source>Vehicle&apos;s orientation will automatically change depending on route heading</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1113,163 +1249,136 @@ p, li { white-space: pre-wrap; }
     <name>videoSettings</name>
     <message>
         <location filename="../videosettings.ui" line="14"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="233"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="20"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="235"/>
         <source>Delete generated image frames after movie generation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="30"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="239"/>
         <source>Number of seconds delay before the route animation starts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="37"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="242"/>
         <source>Enter location of bmp2avi executable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="44"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="245"/>
         <source>Enter name of ouptut AVI (without .avi extension!)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="54"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="247"/>
         <source>Bmp2Avi location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="61"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="249"/>
         <source>Number of seconds delay after end of the route animation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="68"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="251"/>
         <source>Name output movie</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="75"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="252"/>
         <source>End delay (seconds)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="82"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="253"/>
         <source>Begin delay (seconds)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="89"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="254"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="96"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="255"/>
         <source>Delete image frames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="116"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="256"/>
         <source>Movie encoder settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="122"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="257"/>
         <source>Bitrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="129"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="258"/>
         <source>FPS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="136"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="259"/>
         <source>Output file type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="159"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="261"/>
         <source>Select frame rate of output AVI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="175"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="263"/>
         <source>Codec</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="182"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="265"/>
         <source>Select type of movie output file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="196"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="267"/>
         <source>Key frame rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="203"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="269"/>
         <source>Select key frame rate of output AVI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="216"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="272"/>
         <source>Manually enter ffmpeg commandline arguments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="219"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="274"/>
         <source>Manual ffmpeg arguments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="226"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="275"/>
         <source>kb/s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="233"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="277"/>
         <source>Select codec used for output video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="240"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="279"/>
         <source>Frame/image file type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../videosettings.ui" line="247"/>
-        <location filename="../Release/routegen_autogen/include/ui_videosettings.h" line="281"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select file type to be used for the generated frames.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Note&lt;/span&gt; that when using compressed file types, like jpg, png, movie generation will take longer, but this will reduce disk space usage.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
