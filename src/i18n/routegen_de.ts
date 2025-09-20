@@ -66,27 +66,27 @@
     <message>
         <location filename="../settings.ui" line="144"/>
         <source>Here you can add custom URL&apos;s to other OSM tile providers</source>
-        <translation type="unfinished"></translation>
+        <translation>Hier können Sie benutzerdefinierte URLs zu anderen OSM-Kachelanbietern hinzufügen</translation>
     </message>
     <message>
         <location filename="../settings.ui" line="147"/>
         <source>OpenStreetMap custom tile providers</source>
-        <translation type="unfinished"></translation>
+        <translation>Anbieter von benutzerdefinierten OpenStreetMap-Kacheln</translation>
     </message>
     <message>
         <location filename="../settings.ui" line="153"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Hinzufügen</translation>
     </message>
     <message>
         <location filename="../settings.ui" line="160"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Bearbeiten</translation>
     </message>
     <message>
         <location filename="../settings.ui" line="167"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernen</translation>
     </message>
 </context>
 <context>
@@ -322,12 +322,12 @@
     <message>
         <location filename="../routegen.ui" line="369"/>
         <source>Import from Open &amp;Street Maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Von Open &amp;Street Maps importieren</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="372"/>
         <source>Import Open Street Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Von Open Street Mep importieren</translation>
     </message>
 </context>
 <context>
@@ -335,42 +335,42 @@
     <message>
         <location filename="../osmtileprovidereditor.ui" line="14"/>
         <source>Edit OSM Tile Provider</source>
-        <translation type="unfinished"></translation>
+        <translation>OSM-Kachelanbieter bearbeiten</translation>
     </message>
     <message>
         <location filename="../osmtileprovidereditor.ui" line="20"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attribution text according to the provider&apos;s usage policy (applicable when the Produced Work is used Publicly. This attribution text will be placed in the bottom right corner of the map.&lt;/p&gt;&lt;p&gt;See: OSM Attribution Guidelines), e.g. “© OpenStreetMap”&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Quellenvermerk gemäß den Nutzungsrichtlinien des Anbieters (gilt, wenn das erstellte Werk öffentlich genutzt wird. Dieser Quellenvermerk wird in der unteren rechten Ecke der Karte platziert.&lt;/p&gt;&lt;p&gt;Siehe: OSM-Quellenvermerksrichtlinien), z. B. &quot;© OpenStreetMap&quot;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../osmtileprovidereditor.ui" line="29"/>
         <source>© OpenStreetMap</source>
-        <translation type="unfinished"></translation>
+        <translation>© OpenStreetMap</translation>
     </message>
     <message>
         <location filename="../osmtileprovidereditor.ui" line="36"/>
         <source>Attribution text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Namensnennungstext:</translation>
     </message>
     <message>
         <location filename="../osmtileprovidereditor.ui" line="43"/>
         <source>OSM URL:</source>
-        <translation type="unfinished"></translation>
+        <translation>OSM URL:</translation>
     </message>
     <message>
         <location filename="../osmtileprovidereditor.ui" line="50"/>
         <source>Enter (short) name of OSM Tile provider</source>
-        <translation type="unfinished"></translation>
+        <translation>Geben Sie den (Kurz-)Namen des OSM-Kachelanbieters ein</translation>
     </message>
     <message>
         <location filename="../osmtileprovidereditor.ui" line="60"/>
         <source>Tile provider:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fliesenanbieter:</translation>
     </message>
     <message>
         <location filename="../osmtileprovidereditor.ui" line="67"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter URL to tile provider in format of e.g.:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{zoom}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Note that the {s} (subdomain part) is optional and will be replaced by a, b, or c if provided.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Geben Sie die URL zum Kachelanbieter im folgenden Format ein:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{zoom}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Beachten Sie, dass das {s} (Subdomänenteil) optional ist und durch a, b oder c ersetzt wird, falls angegeben.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -668,14 +668,6 @@ Kopieren Sie sie aus der Google Maps URL-Zeile in Ihrem Browser.</translation>
         <translation>Auflösung zu klein</translation>
     </message>
     <message>
-        <source>First select a preferred video resolution before importing map from Google Maps!</source>
-        <translation type="vanished">Wählen Sie zunächst eine bevorzugte Videoauflösung aus, bevor Sie eine Karte aus Google Maps importieren!</translation>
-    </message>
-    <message>
-        <source>Import map from Google Maps using currently selected video resolution</source>
-        <translation type="vanished">Importieren Sie eine Karte aus Google Maps mit der aktuell ausgewählten Videoauflösung</translation>
-    </message>
-    <message>
         <location filename="../RGMainWindow.cpp" line="113"/>
         <source>Current map resolution</source>
         <translation>Aktuelle Kartenauflösung</translation>
@@ -735,17 +727,17 @@ Trotzdem weitermachen?</translation>
     <message>
         <location filename="../RGMainWindow.cpp" line="437"/>
         <source>Import new Google map...</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Karte importieren (Google Maps)...</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="438"/>
         <source>Import new OSM map...</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Karte importieren (OSM Map)...</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="465"/>
         <source>Unable to draw route on current map: import new map or open existing map?</source>
-        <translation type="unfinished"></translation>
+        <translation>Route auf aktueller Karte kann nicht gezeichnet werden: neue Karte importieren oder vorhandene Karte öffnen?</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="878"/>
@@ -756,12 +748,12 @@ Trotzdem weitermachen?</translation>
     <message>
         <location filename="../RGMainWindow.cpp" line="930"/>
         <source>Problems saving geo reference data</source>
-        <translation type="unfinished"></translation>
+        <translation>Probleme beim Speichern von Georeferenzdaten</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="931"/>
         <source>Unable to save geo reference data into image file (not supported by selected file type). It will not be possible to re-open this map to import a GPX route.</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferenzdaten können nicht in der Bilddatei gespeichert werden (wird vom ausgewählten Dateityp nicht unterstützt). Es ist nicht möglich, diese Karte erneut zu öffnen, um eine GPX-Route zu importieren.</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="938"/>
@@ -776,12 +768,12 @@ Trotzdem weitermachen?</translation>
     <message>
         <location filename="../RGMainWindow.cpp" line="65"/>
         <source>First select a preferred video resolution before importing map from %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie zunächst eine bevorzugte Videoauflösung aus, bevor Sie eine Karte aus %1 importieren!</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="66"/>
         <source>Import map from %1 using currently selected video resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Importieren Sie eine Karte aus %1 mit der aktuell ausgewählten Videoauflösung</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="422"/>
@@ -792,10 +784,6 @@ Trotzdem weitermachen?</translation>
         <location filename="../RGMainWindow.cpp" line="436"/>
         <source>GPX route imported succesfully!</source>
         <translation>GPX-Route erfolgreich importiert!</translation>
-    </message>
-    <message>
-        <source>Import new map (Google maps)...</source>
-        <translation type="vanished">Neue Karte importieren (Google Maps)...</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="455"/>
@@ -811,10 +799,6 @@ Trotzdem weitermachen?</translation>
         <location filename="../RGMainWindow.cpp" line="460"/>
         <source>Draw route on current map</source>
         <translation>Route auf aktueller Karte zeichnen</translation>
-    </message>
-    <message>
-        <source>Unable to draw route on current map: import new (Google) map or open existing map?</source>
-        <translation type="vanished">Route auf aktueller Karte kann nicht gezeichnet werden: neue (Google) Karte importieren oder vorhandene Karte öffnen?</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="466"/>
@@ -932,12 +916,12 @@ Trotzdem weitermachen?</translation>
     <message>
         <location filename="../RGSettingsDialog.cpp" line="100"/>
         <source>Provider not added</source>
-        <translation type="unfinished"></translation>
+        <translation>Anbieter nicht hinzugefügt</translation>
     </message>
     <message>
         <location filename="../RGSettingsDialog.cpp" line="100"/>
         <source>Tile provider not added. Name already exists or empty?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kachelanbieter nicht hinzugefügt. Name existiert bereits oder ist leer?</translation>
     </message>
     <message>
         <location filename="../RGSettingsDialog.cpp" line="149"/>
@@ -952,22 +936,22 @@ Trotzdem weitermachen?</translation>
     <message>
         <location filename="../RGSettingsDialog.cpp" line="182"/>
         <source>Incorrect URL format</source>
-        <translation type="unfinished"></translation>
+        <translation>Falsches URL-Format</translation>
     </message>
     <message>
         <location filename="../RGSettingsDialog.cpp" line="183"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter URL to tile provider in format of e.g.:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{zoom}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Note that the {s} (subdomain part) is optional andwill be replaced by a, b, or c if provided.&lt;/p&gt;&lt;p&gt;For an overview of OSM tile provider see: &lt;a href=&quot;https://wiki.openstreetmap.org/wiki/Raster_tile_providers&quot;&gt;OSM Raster tile providers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Geben Sie die URL zum Kachelanbieter im folgenden Format ein:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{zoom}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Beachten Sie, dass das {s} (Subdomänenteil) optional ist und durch a, b oder c ersetzt wird, falls angegeben.&lt;/p&gt;&lt;p&gt;Eine Übersicht über OSM-Kachelanbieter finden Sie unter: &lt;a href=&quot;https://wiki.openstreetmap.org/wiki/Raster_tile_providers&quot;&gt;OSM-Rasterkachelanbieter&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RGSettingsDialog.cpp" line="193"/>
         <source>Empty attribution text</source>
-        <translation type="unfinished"></translation>
+        <translation>Leerer Attributionstext</translation>
     </message>
     <message>
         <location filename="../RGSettingsDialog.cpp" line="194"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attribution text may not be empty when the Produced Work is used Publicly! E.g. &quot;© OpenStreetMap&quot;&lt;/p&gt;&lt;p&gt;See: &lt;a href=&quot;https://osmfoundation.org/wiki/Licence/Attribution_Guidelines&quot;&gt;OSM Attribution Guidelines&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Der Quellenangabetext darf nicht leer sein, wenn das erstellte Werk öffentlich verwendet wird! Z. B. &quot;© OpenStreetMap&quot;&lt;/p&gt;&lt;p&gt;Siehe: &lt;a href=&quot;https://osmfoundation.org/wiki/Licence/Attribution_Guidelines&quot;&gt;OSM-Quellenangaben&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1029,40 +1013,24 @@ Trotzdem weitermachen?</translation>
         <translation>Google Maps-Import</translation>
     </message>
     <message>
-        <source>X scale:</source>
-        <translation type="vanished">X-Skalierung:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s X resolution in relation to the X resolution of the output video (will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Skalierungsfaktor der X-Auflösung der Karte im Verhältnis zur X-Auflösung des Ausgabevideos (führt zum Scrollen in X-Richtung)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Y scale:</source>
-        <translation type="vanished">Y-Skalierung:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Skalierungsfaktor der Y-Auflösung der Karte im Verhältnis zur Y-Auflösung des Ausgabevideos (führt zum Scrollen in Y-Richtung)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../googlemap.ui" line="26"/>
         <source>X scroll:</source>
-        <translation type="unfinished"></translation>
+        <translation>X scroll:</translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="33"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s X resolution in relation to the X resolution of the output video (a value higher than 1,0 will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scrollfaktor der X-Auflösung der Karte im Verhältnis zur X-Auflösung des Ausgabevideos (ein Wert größer als 1,0 führt zum Scrollen in X-Richtung)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="49"/>
         <source>Y scroll:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y scroll:</translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (a value higher than 1,0 will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scrollfaktor der Y-Auflösung der Karte im Verhältnis zur Y-Auflösung des Ausgabevideos (ein Wert größer als 1,0 führt zum Scrollen in Y-Richtung)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="72"/>
@@ -1100,67 +1068,67 @@ Trotzdem weitermachen?</translation>
     <message>
         <location filename="../osmap.ui" line="14"/>
         <source>Open Street Maps Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnen Sie den Import von Open Street Map</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="26"/>
         <source>X scroll:</source>
-        <translation type="unfinished"></translation>
+        <translation>X scroll:</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="33"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s X resolution in relation to the X resolution of the output video (a value higher than 1,0 will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scrollfaktor der X-Auflösung der Karte im Verhältnis zur X-Auflösung des Ausgabevideos (ein Wert größer als 1,0 führt zum Scrollen in X-Richtung)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="49"/>
         <source>Y scroll:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y scroll:</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (a value higher than 1,0 will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scrollfaktor der Y-Auflösung der Karte im Verhältnis zur Y-Auflösung des Ausgabevideos (ein Wert größer als 1,0 führt zum Scrollen in Y-Richtung)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="85"/>
         <source>Lat:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lat:</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="92"/>
         <source>Latitude of map center</source>
-        <translation type="unfinished"></translation>
+        <translation>Breitengrad des Kartenmittelpunkts</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="114"/>
         <source>Lon:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lon:</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="121"/>
         <source>Longitude of map center</source>
-        <translation type="unfinished"></translation>
+        <translation>Längengrad des Kartenmittelpunkts</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="143"/>
         <source>Zoom:</source>
-        <translation type="unfinished">Zoom:</translation>
+        <translation>Zoom:</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="163"/>
         <source>Map type:</source>
-        <translation type="unfinished">Kartentyp:</translation>
+        <translation>Kartentyp:</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="170"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select map provider. Note that you can add more providers in the preferences (advanced tab).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kartenanbieter auswählen. Beachten Sie, dass Sie in den Einstellungen (Registerkarte „Erweitert“) weitere Anbieter hinzufügen können.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="177"/>
         <source> Load map</source>
-        <translation type="unfinished"></translation>
+        <translation>Karte laden</translation>
     </message>
 </context>
 <context>
