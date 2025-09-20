@@ -66,27 +66,27 @@
     <message>
         <location filename="../settings.ui" line="144"/>
         <source>Here you can add custom URL&apos;s to other OSM tile providers</source>
-        <translation type="unfinished"></translation>
+        <translation>Qui puoi aggiungere URL personalizzati ad altri provider di tile OSM</translation>
     </message>
     <message>
         <location filename="../settings.ui" line="147"/>
         <source>OpenStreetMap custom tile providers</source>
-        <translation type="unfinished"></translation>
+        <translation>Fornitori di riquadri personalizzati OpenStreetMap</translation>
     </message>
     <message>
         <location filename="../settings.ui" line="153"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungere</translation>
     </message>
     <message>
         <location filename="../settings.ui" line="160"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificare</translation>
     </message>
     <message>
         <location filename="../settings.ui" line="167"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Rimuovere</translation>
     </message>
 </context>
 <context>
@@ -343,12 +343,12 @@
     <message>
         <location filename="../routegen.ui" line="369"/>
         <source>Import from Open &amp;Street Maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Importa da Open &amp;Street Map</translation>
     </message>
     <message>
         <location filename="../routegen.ui" line="372"/>
         <source>Import Open Street Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Importa Open Street Map</translation>
     </message>
 </context>
 <context>
@@ -356,42 +356,42 @@
     <message>
         <location filename="../osmtileprovidereditor.ui" line="14"/>
         <source>Edit OSM Tile Provider</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica fornitore di tile OSM</translation>
     </message>
     <message>
         <location filename="../osmtileprovidereditor.ui" line="20"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attribution text according to the provider&apos;s usage policy (applicable when the Produced Work is used Publicly. This attribution text will be placed in the bottom right corner of the map.&lt;/p&gt;&lt;p&gt;See: OSM Attribution Guidelines), e.g. “© OpenStreetMap”&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Testo di attribuzione secondo la politica di utilizzo del fornitore (applicabile quando l&apos;opera prodotta viene utilizzata pubblicamente. Questo testo di attribuzione verrà posizionato nell&apos;angolo in basso a destra della mappa.&lt;/p&gt;&lt;p&gt;Vedi: Linee guida per l&apos;attribuzione di OSM), ad esempio &quot;© OpenStreetMap&quot;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../osmtileprovidereditor.ui" line="29"/>
         <source>© OpenStreetMap</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../osmtileprovidereditor.ui" line="36"/>
         <source>Attribution text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Testo di attribuzione:</translation>
     </message>
     <message>
         <location filename="../osmtileprovidereditor.ui" line="43"/>
         <source>OSM URL:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../osmtileprovidereditor.ui" line="50"/>
         <source>Enter (short) name of OSM Tile provider</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserisci il nome (breve) del fornitore di OSM Tile</translation>
     </message>
     <message>
         <location filename="../osmtileprovidereditor.ui" line="60"/>
         <source>Tile provider:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fornitore di piastrelle:</translation>
     </message>
     <message>
         <location filename="../osmtileprovidereditor.ui" line="67"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter URL to tile provider in format of e.g.:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Note that the {s} (subdomain part) is optional and will be replaced by a, b, or c if provided.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inserisci l&apos;URL del provider del tile nel formato, ad esempio:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Nota che {s} (parte del sottodominio) è facoltativa e verrà sostituita da a, b o c se fornita.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -692,27 +692,17 @@ Copialo dalla riga dell&apos;URL di Google Maps nel tuo browser.</translation>
         <translation>Risoluzione troppo bassa</translation>
     </message>
     <message>
-        <source>First select a preferred video resolution before importing map from Google Maps!</source>
-        <translatorcomment>To be confirmed</translatorcomment>
-        <translation type="obsolete">Seleziona innanzitutto la risoluzione video preferita prima di importare la mappa da Google Maps!</translation>
-    </message>
-    <message>
-        <source>Import map from Google Maps using currently selected video resolution</source>
-        <translatorcomment>To be confirmed</translatorcomment>
-        <translation type="obsolete">Importa la mappa da Google Maps utilizzando la risoluzione video attualmente selezionata</translation>
-    </message>
-    <message>
         <location filename="../RGMainWindow.cpp" line="113"/>
         <source>Current map resolution</source>
         <translatorcomment>To be confirmed</translatorcomment>
-        <translation type="unfinished">Risoluzione della mappa attuale</translation>
+        <translation>Risoluzione della mappa attuale</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="125"/>
         <source>Select the preferred resolution of the output video. If the resolution of the background map is higher, the map in the generated video will scroll.
 Select &quot;Current map resolution&quot; to set it to the same resolution as the current map, which will prevent a scrolling map.</source>
         <translatorcomment>To be confirmed</translatorcomment>
-        <translation type="unfinished">Seleziona la risoluzione preferita del video in uscita. Se la risoluzione della mappa di sfondo è maggiore, la mappa nel video generato scorrerà.
+        <translation>Seleziona la risoluzione preferita del video in uscita. Se la risoluzione della mappa di sfondo è maggiore, la mappa nel video generato scorrerà.
 Seleziona &quot;Risoluzione mappa corrente&quot; per impostarla sulla stessa risoluzione della mappa corrente, impedendo lo scorrimento della mappa.</translation>
     </message>
     <message>
@@ -720,21 +710,21 @@ Seleziona &quot;Risoluzione mappa corrente&quot; per impostarla sulla stessa ris
         <source>Resolution of background image is smaller than the selected output resolution. This will give wrong results in the generated output video!
 Continue anyway? (you can select a higher output resolution later)</source>
         <translatorcomment>To be confirmed</translatorcomment>
-        <translation type="unfinished">La risoluzione dell&apos;immagine di sfondo è inferiore alla risoluzione di output selezionata. Ciò darà risultati errati nel video di output generato!
+        <translation>La risoluzione dell&apos;immagine di sfondo è inferiore alla risoluzione di output selezionata. Ciò darà risultati errati nel video di output generato!
 Continuare comunque? (puoi selezionare una risoluzione di output più alta in seguito)</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="320"/>
         <source>Resolution size should be even</source>
         <translatorcomment>To be confirmed</translatorcomment>
-        <translation type="unfinished">La dimensione della risoluzione dovrebbe essere pari</translation>
+        <translation>La dimensione della risoluzione dovrebbe essere pari</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="321"/>
         <source>Resolution of background image cannot be divided by 2. Some codecs (like h.264) do not support this, so video generation will fail!
 Continue anyway?</source>
         <translatorcomment>To be confirmed</translatorcomment>
-        <translation type="unfinished">La risoluzione dell&apos;immagine di sfondo non può essere divisa per 2. Alcuni codec (come h.264) non la supportano, quindi la generazione del video fallirà!
+        <translation>La risoluzione dell&apos;immagine di sfondo non può essere divisa per 2. Alcuni codec (come h.264) non la supportano, quindi la generazione del video fallirà!
 Continuare comunque?</translation>
     </message>
     <message>
@@ -766,17 +756,17 @@ Continuare comunque?</translation>
     <message>
         <location filename="../RGMainWindow.cpp" line="437"/>
         <source>Import new Google map...</source>
-        <translation type="unfinished"></translation>
+        <translation>Importa nuova mappa Google maps...</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="438"/>
         <source>Import new OSM map...</source>
-        <translation type="unfinished"></translation>
+        <translation>Importa nuova mappa OSM...</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="465"/>
         <source>Unable to draw route on current map: import new map or open existing map?</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile disegnare un percorso sulla mappa corrente: importare una nuova mappa o aprire una mappa esistente?</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="878"/>
@@ -787,12 +777,12 @@ Continuare comunque?</translation>
     <message>
         <location filename="../RGMainWindow.cpp" line="930"/>
         <source>Problems saving geo reference data</source>
-        <translation type="unfinished"></translation>
+        <translation>Problemi nel salvataggio dei dati di riferimento geografico</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="931"/>
         <source>Unable to save geo reference data into image file (not supported by selected file type). It will not be possible to re-open this map to import a GPX route.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile salvare i dati di riferimento geografico nel file immagine (non supportato dal tipo di file selezionato). Non sarà possibile riaprire questa mappa per importare un percorso GPX.</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="938"/>
@@ -807,12 +797,12 @@ Continuare comunque?</translation>
     <message>
         <location filename="../RGMainWindow.cpp" line="65"/>
         <source>First select a preferred video resolution before importing map from %1!</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona innanzitutto la risoluzione video preferita prima di importare la mappa da %1!</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="66"/>
         <source>Import map from %1 using currently selected video resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Importa la mappa da %1 utilizzando la risoluzione video attualmente selezionata</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="422"/>
@@ -823,10 +813,6 @@ Continuare comunque?</translation>
         <location filename="../RGMainWindow.cpp" line="436"/>
         <source>GPX route imported succesfully!</source>
         <translation>Percorso GPX importato con successo!</translation>
-    </message>
-    <message>
-        <source>Import new map (Google maps)...</source>
-        <translation type="vanished">Importa nuova mappa (Google maps)...</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="455"/>
@@ -842,10 +828,6 @@ Continuare comunque?</translation>
         <location filename="../RGMainWindow.cpp" line="460"/>
         <source>Draw route on current map</source>
         <translation>Disegna il percorso sulla mappa corrente</translation>
-    </message>
-    <message>
-        <source>Unable to draw route on current map: import new (Google) map or open existing map?</source>
-        <translation type="vanished">Impossibile disegnare un percorso sulla mappa corrente: importare una nuova mappa (Google) o aprire una mappa esistente?</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="466"/>
@@ -963,12 +945,12 @@ Continuare comunque?</translation>
     <message>
         <location filename="../RGSettingsDialog.cpp" line="100"/>
         <source>Provider not added</source>
-        <translation type="unfinished"></translation>
+        <translation>Fornitore non aggiunto</translation>
     </message>
     <message>
         <location filename="../RGSettingsDialog.cpp" line="100"/>
         <source>Tile provider not added. Name already exists or empty?</source>
-        <translation type="unfinished"></translation>
+        <translation>Fornitore di tile non aggiunto. Il nome esiste già o è vuoto?</translation>
     </message>
     <message>
         <location filename="../RGSettingsDialog.cpp" line="149"/>
@@ -983,22 +965,22 @@ Continuare comunque?</translation>
     <message>
         <location filename="../RGSettingsDialog.cpp" line="182"/>
         <source>Incorrect URL format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato URL non corretto</translation>
     </message>
     <message>
         <location filename="../RGSettingsDialog.cpp" line="183"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter URL to tile provider in format of e.g.:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Note that the {s} (subdomain part) is optional andwill be replaced by a, b, or c if provided.&lt;/p&gt;&lt;p&gt;For an overview of OSM tile provider see: &lt;a href=&quot;https://wiki.openstreetmap.org/wiki/Raster_tile_providers&quot;&gt;OSM Raster tile providers&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inserisci l&apos;URL del provider di tile nel formato, ad esempio:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Nota che {s} (parte del sottodominio) è facoltativa e verrà sostituita da a, b o c se fornita.&lt;/p&gt;&lt;p&gt;Per una panoramica del provider di tile OSM, consulta: &lt;a href=&quot;https://wiki.openstreetmap.org/wiki/Raster_tile_providers&quot;&gt;Provider di tile raster OSM&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../RGSettingsDialog.cpp" line="193"/>
         <source>Empty attribution text</source>
-        <translation type="unfinished"></translation>
+        <translation>Testo di attribuzione vuoto</translation>
     </message>
     <message>
         <location filename="../RGSettingsDialog.cpp" line="194"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Attribution text may not be empty when the Produced Work is used Publicly! E.g. &quot;© OpenStreetMap&quot;&lt;/p&gt;&lt;p&gt;See: &lt;a href=&quot;https://osmfoundation.org/wiki/Licence/Attribution_Guidelines&quot;&gt;OSM Attribution Guidelines&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Il testo di attribuzione non può essere vuoto quando l&apos;opera prodotta viene utilizzata pubblicamente! Ad esempio &quot;© OpenStreetMap&quot;&lt;/p&gt;&lt;p&gt;Vedi: &lt;a href=&quot;https://osmfoundation.org/wiki/Licence/Attribution_Guidelines&quot;&gt;Linee guida sull&apos;attribuzione di OSM&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1061,42 +1043,24 @@ Continuare comunque?</translation>
         <translation>Importazione da Google Maps</translation>
     </message>
     <message>
-        <source>X scale:</source>
-        <translation type="vanished">Scala X:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s X resolution in relation to the X resolution of the output video (will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translatorcomment>Leave the HTML tags, html, center, p, etc. intact. They will be used for HTML formatting of the text.</translatorcomment>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ridimensiona il fattore della risoluzione X della mappa in relazione alla risoluzione X del video di uscita (comporterà lo scorrimento in direzione X)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Y scale:</source>
-        <translation type="vanished">Scala Y:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translatorcomment>Leave the HTML tags, html, center, p, etc. intact. They will be used for HTML formatting of the text.</translatorcomment>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ridimensiona il fattore della risoluzione Y della mappa in relazione alla risoluzione Y del video di uscita (comporterà lo scorrimento in direzione Y)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../googlemap.ui" line="26"/>
         <source>X scroll:</source>
-        <translation type="unfinished"></translation>
+        <translation>Scorrimento X:</translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="33"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s X resolution in relation to the X resolution of the output video (a value higher than 1,0 will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fattore di scorrimento della risoluzione X della mappa in relazione alla risoluzione X del video di output (un valore superiore a 1,0 comporterà lo scorrimento nella direzione X)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="49"/>
         <source>Y scroll:</source>
-        <translation type="unfinished"></translation>
+        <translation>Scorrimento Y:</translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (a value higher than 1,0 will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fattore di scorrimento della risoluzione Y della mappa in relazione alla risoluzione Y del video in uscita (un valore superiore a 1,0 comporterà lo scorrimento nella direzione Y)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../googlemap.ui" line="72"/>
@@ -1135,67 +1099,67 @@ Continuare comunque?</translation>
     <message>
         <location filename="../osmap.ui" line="14"/>
         <source>Open Street Maps Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importazione di Open Street Map</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="26"/>
         <source>X scroll:</source>
-        <translation type="unfinished"></translation>
+        <translation>Scorrimento X:</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="33"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s X resolution in relation to the X resolution of the output video (a value higher than 1,0 will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fattore di scorrimento della risoluzione X della mappa in relazione alla risoluzione X del video di output (un valore superiore a 1,0 comporterà lo scorrimento nella direzione X)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="49"/>
         <source>Y scroll:</source>
-        <translation type="unfinished"></translation>
+        <translation>Scorrimento Y:</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (a value higher than 1,0 will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fattore di scorrimento della risoluzione Y della mappa in relazione alla risoluzione Y del video in uscita (un valore superiore a 1,0 comporterà lo scorrimento nella direzione Y)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="85"/>
         <source>Lat:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="92"/>
         <source>Latitude of map center</source>
-        <translation type="unfinished"></translation>
+        <translation>Latitudine del centro della mappa</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="114"/>
         <source>Lon:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="121"/>
         <source>Longitude of map center</source>
-        <translation type="unfinished"></translation>
+        <translation>Longitudine del centro della mappa</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="143"/>
         <source>Zoom:</source>
-        <translation type="unfinished">Zoom:</translation>
+        <translation>Zoom:</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="163"/>
         <source>Map type:</source>
-        <translation type="unfinished">Tipo mappa:</translation>
+        <translation>Tipo mappa:</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="170"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select map provider. Note that you can add more providers in the preferences (advanced tab).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seleziona il fornitore della mappa. Nota che puoi aggiungere altri fornitori nelle preferenze (scheda avanzate).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="177"/>
         <source> Load map</source>
-        <translation type="unfinished"></translation>
+        <translation>Carica mappa</translation>
     </message>
 </context>
 <context>
