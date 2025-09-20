@@ -668,14 +668,6 @@ Kopieer deze van de Google Maps URL line in uw browser.</translation>
         <translation>Resolutie te klein</translation>
     </message>
     <message>
-        <source>First select a preferred video resolution before importing map from Google Maps!</source>
-        <translation type="vanished">Selecteer eerst een gewenste videoresolutie voordat u de kaart uit Google Maps importeert!</translation>
-    </message>
-    <message>
-        <source>Import map from Google Maps using currently selected video resolution</source>
-        <translation type="vanished">Importeer een kaart van Google Maps met de huidig geselecteerde videoresolutie</translation>
-    </message>
-    <message>
         <location filename="../RGMainWindow.cpp" line="113"/>
         <source>Current map resolution</source>
         <translation>Huidige kaart resolutie</translation>
@@ -794,10 +786,6 @@ Toch doorgaan?</translation>
         <translation>GPX route succesvol geimporteerd!</translation>
     </message>
     <message>
-        <source>Import new map (Google maps)...</source>
-        <translation type="vanished">Importeer nieuwe kaart (Google Maps)...</translation>
-    </message>
-    <message>
         <location filename="../RGMainWindow.cpp" line="455"/>
         <source>Open existing map...</source>
         <translation>Open bestaande kaart...</translation>
@@ -811,10 +799,6 @@ Toch doorgaan?</translation>
         <location filename="../RGMainWindow.cpp" line="460"/>
         <source>Draw route on current map</source>
         <translation>Teken route op huidige kaart</translation>
-    </message>
-    <message>
-        <source>Unable to draw route on current map: import new (Google) map or open existing map?</source>
-        <translation type="vanished">Kan route niet op de huidige kaart tekenen: importeer nieuwe (Google) kaart of open bestaande kaart?</translation>
     </message>
     <message>
         <location filename="../RGMainWindow.cpp" line="466"/>
@@ -1029,22 +1013,6 @@ Toch doorgaan?</translation>
         <translation></translation>
     </message>
     <message>
-        <source>X scale:</source>
-        <translation type="vanished">X schaal:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s X resolution in relation to the X resolution of the output video (will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Schaal factor van de X resolutie van deze kaart in relatie tot de X resolutie van de uitvoer video (zal resulteren in scrollen in X richting)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Y scale:</source>
-        <translation type="vanished">Y schaal:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Schaal factor van de Y resolutie van deze kaart in relatie tot de Y resolutie van de uitvoer video (zal resulteren in scrollen in Y richting)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../googlemap.ui" line="26"/>
         <source>X scroll:</source>
         <translation>X scroll:</translation>
@@ -1100,71 +1068,67 @@ Toch doorgaan?</translation>
     <message>
         <location filename="../osmap.ui" line="14"/>
         <source>Open Street Maps Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Open Street Maps Import</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="26"/>
         <source>X scroll:</source>
-        <translation type="unfinished"></translation>
+        <translation>X scroll:</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="33"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s X resolution in relation to the X resolution of the output video (a value higher than 1,0 will result in scrolling in X direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor van de X resolutie van de kaart in relatie tot the X resolutie van de output video (een waarde groter dan 1,0 zal resulteren in scrollen in X richting)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="49"/>
         <source>Y scroll:</source>
-        <translation type="unfinished"></translation>
+        <translation>X scroll:</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor of the map&apos;s Y resolution in relation to the Y resolution of the output video (a value higher than 1,0 will result in scrolling in Y direction)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scroll factor van de kaart Y resolutie in relatie tot the Y resolutie van de output video (een waarde hoger dan 1,0 zal resulteren in scrollen in Y richting)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="85"/>
         <source>Lat:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lat:</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="92"/>
         <source>Latitude of map center</source>
-        <translation type="unfinished"></translation>
+        <translation>Latitude van centrum van de kaart</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="121"/>
         <source>Longitude of map center</source>
-        <translation type="unfinished"></translation>
+        <translation>Longitude van centrum van de kaart</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="170"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select map provider. Note that you can add more providers in the preferences (advanced tab).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Selecteer kaart aanbieder. Noot dat het mogelijk  is om meer aanbieders toe te voegen in de voorkeuren (geavanceerd tab).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="177"/>
         <source> Load map</source>
-        <translation type="unfinished"></translation>
+        <translation>Laad kaart</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="114"/>
         <source>Lon:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lon:</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="143"/>
         <source>Zoom:</source>
-        <translation type="unfinished">Zoom:</translation>
+        <translation>Zoom:</translation>
     </message>
     <message>
         <location filename="../osmap.ui" line="163"/>
         <source>Map type:</source>
-        <translation type="unfinished">Map type:</translation>
-    </message>
-    <message>
-        <source>Go</source>
-        <translation type="obsolete">Ga</translation>
+        <translation>Kaart type:</translation>
     </message>
 </context>
 <context>
