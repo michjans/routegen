@@ -53,7 +53,6 @@ RGOsmGraphicsView::RGOsmGraphicsView(QWidget* parent)
     setRenderHint(QPainter::Antialiasing, false);
     setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
     setDragMode(QGraphicsView::ScrollHandDrag);
-    setCursor(Qt::OpenHandCursor);
 
     connect(&mOsmBackEnd, &RGOsmBackend::tileAvailable, this, &RGOsmGraphicsView::addTileToScene);
 }
@@ -139,7 +138,6 @@ void RGOsmGraphicsView::mouseReleaseEvent(QMouseEvent* event)
 {
     if (event->button() == Qt::LeftButton && !tileLoadingInProgress() && mMapLoaded)
     {
-        //setCursor(Qt::OpenHandCursor);
         QPointF centerScene = mapToScene(viewport()->rect().center());
         QPointF centerTile = centerScene / mOsmBackEnd.TILE_SIZE;
         mCenterCoord = mOsmBackEnd.tileToLatLon(centerTile, mZoomLevel);
@@ -149,6 +147,7 @@ void RGOsmGraphicsView::mouseReleaseEvent(QMouseEvent* event)
         emit centerCoordChanged(mCenterCoord);
         event->accept();
     }
+    QGraphicsView::mouseReleaseEvent(event);
 }
 
 void RGOsmGraphicsView::wheelEvent(QWheelEvent* event)
@@ -236,7 +235,6 @@ void RGOsmGraphicsView::clearTiles()
 
 void RGOsmGraphicsView::initProgressMonitor(int beginX, int endX, int beginY, int endY)
 {
-    setCursor(Qt::WaitCursor);
     qDebug() << "initProgressMonitor(" << beginX << "," << endX << "," << beginY << "," << endY;
     mTotalTilesRequested = 0;
     for (int x = beginX; x <= endX; ++x)
@@ -261,7 +259,6 @@ void RGOsmGraphicsView::updateProgressMonitor(int tileX, int tileY)
         qDebug() << "updateProgressMonitor: all tiles received";
         drawGeoPath();
         drawTargetRect();
-        unsetCursor();
         mMapLoaded = true;
         emit allTilesReceived();
     }
