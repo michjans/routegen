@@ -11,14 +11,15 @@
           This tutorial explains how to generate route movies, using Route Generator.
      </p>
 
-     <h2>New since 1.13.0: Import map from Open Steet Map</h2>
+     <h2>New since 1.13.0: Import map from OpenStreetMap</h2>
      <p>
-          Since version 1.13.0 it is possible to import maps from Open Street Map. This works very similar to the import
-          from Google Maps functionality that already exists. By default two raster tile providers (or tile servers) are 
+          Since version 1.13.0 it is possible to import maps from OpenStreetMap. This works very similar to the import
+          from Google Maps functionality that already exists. By default three raster tile providers (or tile servers) are 
           supported:
           <ul>
           <li>Carto (OpenStreetMap's Standard tile layer)</li>
           <li>CyclOSM (focussed on cyclists)</li>
+          <li>OpenTopoMap (rendering topographic maps from OSM)</li>
           </ul>
           However, it is possible to add custom tile servers as well from the preferences menu (advanced tab).
      </p>
@@ -49,11 +50,15 @@
           Generator will generate a warning when you open a map with a resolution that is too low.
      </p>
 
+     <h3>Force the current map resolution</h3>
      <p>
           Since version 1.12.0 it is possible again to use (or force) the resolution of the current map as resolution
           for the output video, by selecting: "Current map resolution". This will prevent scrolling/panning of the map
-          at all times.<br>
-          <b>NOTE:</b> When this option is selected it will not be possible to import a new map from Google Maps,
+          at all times. Selecting this option will also prevent the "Resolution too small" error, when opening maps
+          that do not match the currently selected video resolution.
+     </p>
+     <p>
+          <b>NOTE!</b> When this option is selected it will not be possible to import a new map from Google Maps,
           because Route Generator has to know the resolution to use for the map to import!
      </p>
 
@@ -72,18 +77,34 @@
      </p>
 
      <p>
-          After (or before) the map has loaded it is possible to modify the <b>X scale, Y scale</b> factors of the map.
+          After (or before) the map has loaded it is possible to modify the <b>X scroll, Y scroll</b> factors of the map.
           In this way it is possible to import a map with a resolution that is higher than the selected output video
           resolution, which will result in a scrolling/panning map in the output video. E.g. if you want that the map
           wil scroll from north to south, pick a Y scale factor higher than 1.0.
      </p>
 
-     <h3>Import map from OpenStreetMaps</h3>
+     <h3>Import map from OpenStreetMap</h3>
      <p>
-          Similar to the import from Google Maps, but instead of pasting a URL, you can enter the requested latitude,
-          longitude coordinates, zoomlevel and tile server to load the map from.
+          To import a map from OpenStreetMaps, go to File-&gt;Import from OpenStreetMap or click <img src="OSM_logo.svg" width="35" height="35">.
      </p>
-
+     <p>
+          This works similar to the import from Google Maps, but instead of pasting a URL, you can enter the requested latitude,
+          longitude coordinates, zoomlevel and tile server to load the map from. If a GPX route has been loaded, the map will 
+          automatically pan and zoom to the location of the imported route.
+     </p>
+     <p>
+          <img src="osm-import.png"><br>
+     </p>
+     <p>
+          The map will show the rectangle that represents the area that will actually be saved into the map. The size
+          of this rectangle matches with the selected output resolution of the video. Similar to the Google Maps import
+          it is possible to modify the <b>X scroll, Y scroll</b> factors of the map, which will also result in an increase
+          of this area. However, when you do this, it will result in scrolling of the map in the output video.
+     </p>
+     <p>
+          Additionally if a GPX route has already been loaded, it will be shown here as well, so you can adjust the map
+          location and zoomlevel to cover the area of interest.
+     </p>
      <h3>Import a GeoTIFF file</h3>
      <p>
           Since verision 1.11.0 it is also possible to open a GeoTIFF file. A GeoTIFF file is a TIFF image that contains
