@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package>
-    <DisplayName>MSVC Runtime</DisplayName>
+    <DisplayName>MSVC Runtime (Ignored on Linux)</DisplayName>
     <Description>Microsoft Visual C++ Redistributable for Visual Studio 2022</Description>
     <Version>14.44.35112</Version>
     <ReleaseDate>2025-09-01</ReleaseDate>
     <Default>true</Default>
     <ForcedInstallation>true</ForcedInstallation>
-    <Virtual>true</Virtual>
 
-    <!-- OS filter: only show/install on Windows -->
+    <!-- OS filter: only show/install on Windows (TODO: Does not work...anymore?) -->
     <OperatingSystems>
         <OperatingSystem>Windows</OperatingSystem>
     </OperatingSystems>

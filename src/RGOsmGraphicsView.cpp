@@ -219,6 +219,9 @@ void RGOsmGraphicsView::loadTiles()
     {
         for (int y = beginY; y <= endY; ++y)
         {
+            //TODO: When no network connection, timeouts, certificate errors, etc. occur the dialog
+            //      will block untill all tiles are received, which will not happen in that case.
+            //      Add timeout protection and proper network error handling.
             mOsmBackEnd.requestTile(x, y, mZoomLevel);
         }
     }
