@@ -115,11 +115,12 @@
  *          Added possibility to select the map resolution (to prevent a scrolling map)
  *  v2.0.0  Upgrade to Qt 6.9 (no longer maintaining Qt 5.12)
  *          Import of maps from several OpenStreetMap providers (which can be customized)
-  *         Georeference infomation now stored directly inside the saved map image
-  *         Several bugfixes (sometimes resulting in crashes) resolved
+ *          Georeference infomation now stored directly inside the saved map image
+ *          Several bugfixes (sometimes resulting in crashes) resolved
+ *  v2.0.1  Build fixes for Ubuntu 24
  */
 
-extern const QString applicationName(QStringLiteral("Route Generator version 2.0.0"));
+extern const QString applicationName(QStringLiteral("Route Generator version 2.0.1"));
 
 int main(int argc, char* argv[])
 {
