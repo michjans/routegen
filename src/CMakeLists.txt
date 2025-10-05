@@ -18,6 +18,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_MACOSX_RPATH 1)
 set(CMAKE_INSTALL_RPATH "$ORIGIN/lib")
 set(QT_MIN_VERSION "6.2.0")
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules)
 
 find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS Core Gui Positioning WebEngineWidgets Widgets LinguistTools)
 find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS Test)
@@ -105,7 +106,8 @@ target_link_libraries(routegen PRIVATE
     Qt6::Positioning
     Qt6::WebEngineWidgets
     Qt6::Widgets
-    geotiff_library
+    ${GeoTIFF_LIBRARIES}
+    TIFF::TIFF
 )
 
 set(CMAKE_EXE_LINKER_FLAGS "-fuse-ld=gold ${CMAKE_CXX_FLAGS}")

@@ -6,19 +6,12 @@ It's especially important that all required Qt libraries, plugins, resources, et
 plugins directory. The list below is the list of files that was required to run routegen for Qt 6.7.2 on Ubuntu 22.04.
 For other distributions this list is probably similar, but it's not guaranteed to work.
 
--These files are not required if users have installed the geotiff binaries themselves using:
+-Dueo to dependency of the GeoTIFF libraries and binaries, users will have to install these themselves using:
+
+ sudo apt install libgeotiff5
  sudo apt install geotiff-bin
 
-packages/net.mjproductions.routegen/data/listgeo
-packages/net.mjproductions.routegen/data/applygeo
-
--This is the version of libgeotiff.so that was actually used to build the routegen binary on Ubuntu 22.04. However,
- it is dependent on the version of libproj that was installed on Ubuntu 22.04 (libproj-dev/jammy,now 8.2.1-1 amd64)
-packages/net.mjproductions.routegen/data/lib/libgeotiff.so
-packages/net.mjproductions.routegen/data/lib/libgeotiff.so.5
-packages/net.mjproductions.routegen/data/lib/libgeotiff.so.5.2.4
-
--These files are required by routegen itself:
+-These files are directly required by routegen itself:
 packages/net.mjproductions.routegen/data/routegen
 packages/net.mjproductions.routegen/data/qt.conf
 packages/net.mjproductions.routegen/data/google-maps-template.html

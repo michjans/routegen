@@ -38,6 +38,7 @@ Execute the following commands:
 - sudo apt install proj
 - sudo apt install libproj-dev
 - sudo apt install libgeotiff-dev
+- sudo apt install geotiff-bin
 
 Or optionally manually install libgeotiff:
 
@@ -130,10 +131,10 @@ Note: 1. When using QtCreator on Windows you also have to set the CMAKE_INSTALL_
 
 #### Linux (or Mac)
 - cd to the the directory where you unzipped or cloned the source code
-  (e.g. cd routegen/src)
+  (e.g. cd routegen)
 - mkdir Release
 - cd Release
-- cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. ..
+- cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. ../src
 
 Builds release version of routegen executable locally
 - make
@@ -294,6 +295,8 @@ Finally embed all required qm files in the routegen.qrc file and reference them 
     - Currently the OSM tiles stored in the cache directory never expire, i.e. new tiles
       will never be re-downloaded when they are already stored in the cache.
     - Additonally to the above there is also no cache size limit.
+- 2.0.1 release
+  - Build fixes for Ubuntu 24 only (only released for Ubuntu 24)
  
 ## Technical details
 

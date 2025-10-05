@@ -26,9 +26,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <QStandardPaths>
 
 //GeoTiff headers
-#include "geo_normalize.h"
-#include "geovalues.h"
-#include "xtiffio.h"
+#include <geotiff/xtiffio.h>
+#include <geotiff/geo_normalize.h>
+#include <geotiff/geovalues.h>
 
 RGGeoTiffMapProjection::RGGeoTiffMapProjection(const QString& fileName, QObject* parent)
     : RGMapProjection(parent),
