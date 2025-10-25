@@ -13,13 +13,16 @@ On Windows and Linux use the distributed installer provided from the website.
 On Mac OS the program has to be build from source code (see below)
 
 ## Building Route Generator from the source code
-Since version 1.13 Route Generator has been build using Qt 6.9 using CMake, although
+Since version 2.0 Route Generator has been build using Qt >= 6.7 using CMake, although
 the code itself might still compile against Qt 5.12, but it's not guaranteed to fully
 function as expected.
 
-So Qt 6.9 (or higher) should be downloaded and installed, including CMake with at least
-the following packages:
-
+It is recommended to install Qt 6.7 (or higher) using the Qt maintainance tool, which
+can be downloaded from https://www.qt.io/download-open-source
+During installation select at least the following packages:
+- CMake
+- Qt Core
+- Qt Gui
 - Qt WebChannel
 - Qt Positioning
 - Extensions: Qt WebEngine
@@ -300,7 +303,7 @@ Finally embed all required qm files in the routegen.qrc file and reference them 
  
 ## Technical details
 
-Route Generator is developed using the GPL version of Qt 6.9
+Route Generator is developed using the GPL version of Qt 6
 (Copyright (C) 2008-2025  The Qt Company Ltd. All rights reserved).
 Qt can be [downloaded](https://www.qt.io/download) from The Qt Company website.
 
