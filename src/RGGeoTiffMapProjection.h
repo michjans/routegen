@@ -50,9 +50,13 @@ public:
     static bool saveProjectionDataToGeoTiff(const QString& fileName, const RGMapProjection& rgMapProj);
 
 private:
+    void cleanup();
+
     QString mFileName;
     TIFF* mTiff;
     GTIF* mGTif;
+
+    short mModelType;          // ModelTypeGeographic / ModelTypeProjected / etc.
 };
 
 #endif // RGGEOTIFFMAPPROJECTION_H

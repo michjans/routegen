@@ -24,104 +24,159 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <QMessageBox>
 #include <QProcess>
 #include <QStandardPaths>
+#include <cmath>
 
-//GeoTiff headers
-#include <geotiff/xtiffio.h>
+// GeoTiff headers
 #include <geotiff/geo_normalize.h>
 #include <geotiff/geovalues.h>
+#include <geotiff/xtiffio.h>
+
+namespace
+{
+// Web Mercator constants
+static constexpr double kEarthRadius = 6378137.0; // meters (WGS84)
+
+void wgs84ToWebMercator(double lonDeg, double latDeg, double& x, double& y)
+{
+    // lonDeg, latDeg in degrees -> EPSG:3857 meters
+    const double lonRad = lonDeg * M_PI / 180.0;
+    const double latRad = latDeg * M_PI / 180.0;
+    x = kEarthRadius * lonRad;
+    // clamp latitude to valid Mercator range to avoid Inf
+    const double maxLat = 85.05112877980659; // approx
+    double latC = std::min(std::max(latDeg, -maxLat), maxLat);
+    double latCRad = latC * M_PI / 180.0;
+    y = kEarthRadius * std::log(std::tan(M_PI / 4.0 + latCRad / 2.0));
+}
+} // namespace
 
 RGGeoTiffMapProjection::RGGeoTiffMapProjection(const QString& fileName, QObject* parent)
     : RGMapProjection(parent),
       mFileName(fileName),
       mTiff(nullptr),
-      mGTif(nullptr)
+      mGTif(nullptr),
+      mModelType(-1)
 {
     std::string fileNameStr = fileName.toStdString();
     mTiff = XTIFFOpen(fileNameStr.c_str(), "r");
     if (!mTiff)
     {
+        qDebug() << "RGGeoTiffMapProjection: failed to open TIFF:" << fileName;
         return;
     }
 
     mGTif = GTIFNew(mTiff);
     if (!mGTif)
     {
-        qDebug() << "Failed opening GTIF.";
-        XTIFFClose(mTiff);
-        mTiff = nullptr;
+        qDebug() << "RGGeoTiffMapProjection: Failed opening GTIF.";
+        cleanup();
         return;
     }
 
-    /* Get the GeoTIFF directory info */
-    //TODO: This method currently only suports ModelTypeGeographic, this means we can't use ouw own saved tiff files with web meractor projection at the moment,
-    //      i.e. Model = ModelTypeProjected
     GTIFDefn defn;
-    if (GTIFGetDefn(mGTif, &defn) && defn.Model == ModelTypeGeographic)
+    if (!GTIFGetDefn(mGTif, &defn))
     {
-        int xsize, ysize;
-        TIFFGetField(mTiff, TIFFTAG_IMAGEWIDTH, &xsize);
-        TIFFGetField(mTiff, TIFFTAG_IMAGELENGTH, &ysize);
+        qDebug() << "RGGeoTiffMapProjection: no GeoTIFF definition present.";
+        cleanup();
+        return;
+    }
 
-        qDebug() << "xsize=" << xsize;
-        qDebug() << "ysize=" << ysize;
+    // Record model type
+    mModelType = defn.Model;
 
-        unsigned short raster_type = RasterPixelIsArea;
-        GTIFKeyGetSHORT(mGTif, GTRasterTypeGeoKey, &raster_type, 0, 1);
-        double xmin = (raster_type == RasterPixelIsArea) ? 0.0 : -0.5;
-        double ymin = xmin;
-        double ymax = ymin + ysize;
-        double xmax = xmin + xsize;
-
-        double lon = xmin;
-        double lat = ymax;
-        if (GTIFImageToPCS(mGTif, &lon, &lat))
+    short projectedCSType = 0;
+    if (mModelType == ModelTypeProjected)
+    {
+        // Try to read ProjectedCSTypeGeoKey (epsg) from the file. There are diffeent methods in how this can be stored
+        // depending on the program that created it, so we support (at least) two, which is hopefully sufficient for
+        // the use case of Route Generator.
+        unsigned short pcs = 0;
+        if (GTIFKeyGetSHORT(mGTif, ProjectedCSTypeGeoKey, &pcs, 0, 1) == 1)
         {
-            qDebug() << "SW lat:" << lat;
-            qDebug() << "SW lon:" << lon;
+            projectedCSType = pcs;
         }
-        lon = xmax;
-        lat = ymin;
-        if (GTIFImageToPCS(mGTif, &lon, &lat))
+        else if (defn.ProjCode != 0)
         {
-            qDebug() << "NE lat:" << lat;
-            qDebug() << "NE lon:" << lon;
+            // defn.ProjCode may sometimes contain EPSG code
+            projectedCSType = defn.ProjCode;
+        }
+        // Only for EPSG:3857 (Pseudo-Mercator) we have added a wgs84ToWebMercator projection conversion.
+        // To support any projection method we have to become dependent of GDAL...
+        if (projectedCSType != 3857)
+        {
+            qWarning() << "Projection type" << projectedCSType << "not supported, supporting 3857 only (Pseudo-Mercator)";
+            cleanup();
+            return;
         }
     }
-    else
+    else if (mModelType != ModelTypeGeographic)
     {
-        //No valid Geo reference information found in GeoTIFF file
-        qDebug() << "No GeoTiff file or Unsupported defn.Model=" << defn.Model;
-        GTIFFree(mGTif);
-        XTIFFClose(mTiff);
-        mTiff = nullptr;
-        mGTif = nullptr;
+        //For ModelTypeGeographic no projection conversion is required, so we can call GTIFPCSToImage directly
+        qWarning() << "Model type " << mModelType << "not supported";
+        cleanup();
+        return;
     }
+
+#ifndef QT_NO_DEBUG_OUTPUT
+    // log extents (pixel -> PCS) for debugging
+    int xsize = 0, ysize = 0;
+    TIFFGetField(mTiff, TIFFTAG_IMAGEWIDTH, &xsize);
+    TIFFGetField(mTiff, TIFFTAG_IMAGELENGTH, &ysize);
+
+    qDebug() << "RGGeoTiffMapProjection: xsize=" << xsize << " ysize=" << ysize;
+    qDebug() << "RGGeoTiffMapProjection: ModelType=" << mModelType << " ProjectedCSType=" << projectedCSType;
+#endif
 }
 
 RGGeoTiffMapProjection::~RGGeoTiffMapProjection()
 {
-    GTIFFree(mGTif);
-    XTIFFClose(mTiff);
+    cleanup();
 }
 
 bool RGGeoTiffMapProjection::isValid() const
 {
-    return mTiff && mGTif;
+    // valid only if TIFF/GTIF opened *and* model is one we recognize and can use
+    return (mTiff && mGTif && (mModelType == ModelTypeGeographic || mModelType == ModelTypeProjected));
 }
 
 QPoint RGGeoTiffMapProjection::convert(const QGeoCoordinate& geoPoint) const
 {
     QPoint point;
-    if (isValid())
-    {
-        double x_io = geoPoint.longitude();
-        double y_io = geoPoint.latitude();
+    if (!isValid())
+        return point;
 
-        if (GTIFPCSToImage(mGTif, &x_io, &y_io))
-        {
-            point.setX(x_io);
-            point.setY(y_io);
-        }
+    // Determine PCS input coordinates expected by GTIFPCSToImage.
+    double pcsX = 0.0;
+    double pcsY = 0.0;
+
+    if (mModelType == ModelTypeGeographic)
+    {
+        // GeoTIFF expects lon/lat degrees
+        pcsX = geoPoint.longitude();
+        pcsY = geoPoint.latitude();
+    }
+    else if (mModelType == ModelTypeProjected)
+    {
+        // For projected images can only handle EPSG:3857 (Web Mercator) here, but this is already checked in the constructor
+        // First convert lon/lat -> projected units (meters) for Web Mercator
+        wgs84ToWebMercator(geoPoint.longitude(), geoPoint.latitude(), pcsX, pcsY);
+    }
+    //else: should not occur, because the invalid check already covers this situation
+
+    double xi = pcsX;
+    double yi = pcsY;
+    qDebug() << "xi, yi=" << xi << "," << yi;
+    if (GTIFPCSToImage(mGTif, &xi, &yi))
+    {
+        // GTIFPCSToImage writes the image (pixel) coords back into xi, yi
+        // xi/yi are doubles but QPoint takes ints; you can round as needed
+        point.setX(static_cast<int>(std::round(xi)));
+        point.setY(static_cast<int>(std::round(yi)));
+        qDebug() << "point=" << point;
+    }
+    else
+    {
+        qWarning() << "RGGeoTiffMapProjection::convert: GTIFPCSToImage failed for PCS coords:" << pcsX << pcsY;
     }
 
     return point;
@@ -187,13 +242,14 @@ bool RGGeoTiffMapProjection::saveProjectionDataToGeoTiff(const QString& fileName
     TIFF* tif = XTIFFOpen(fileNameStr.c_str(), "r+");
     if (!tif)
     {
+        qWarning() << "Failed opening XTIF:" << fileName;
         return false;
     }
 
     GTIF* gtif = GTIFNew(tif);
     if (!gtif)
     {
-        qDebug() << "Failed opening GTIF.";
+        qWarning() << "Failed opening GTIF:" << fileName;
         XTIFFClose(tif);
         return false;
     }
@@ -218,7 +274,25 @@ bool RGGeoTiffMapProjection::saveProjectionDataToGeoTiff(const QString& fileName
         GTIFWriteKeys(gtif);
         success = true;
     }
+    else
+    {
+        qWarning() << "Unable to fill projection transformation for file:" << fileName;
+    }
     GTIFFree(gtif);
     XTIFFClose(tif);
     return success;
+}
+
+void RGGeoTiffMapProjection::cleanup()
+{
+    if (mGTif)
+    {
+        GTIFFree(mGTif);
+        mGTif = nullptr;
+    }
+    if (mTiff)
+    {
+        XTIFFClose(mTiff);
+        mTiff = nullptr;
+    }
 }

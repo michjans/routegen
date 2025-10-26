@@ -63,6 +63,7 @@ signals:
 private:
     bool saveImageAndWebMercatorProjection(const QString& fileName, const QImage& srcImage, bool& geoReferenceSavedSuccess);
     bool saveImageAndGeoTiffProjection(const QString& fileName, const QImage& srcImage, bool& geoReferenceSavedSuccess);
+    bool saveGeoTiffToGeoTiffProjection(const QString& fileName, const QImage& srcImage, bool& geoReferenceSavedSuccess);
 
     QPixmap mMap;
     QString mFileName;

@@ -158,19 +158,39 @@ void RGMap::clearMap()
 
 bool RGMap::saveGeoBoundsToNewFile(const QString& fileName /*TODO:, QImage &srcImage*/)
 {
-    //TODO: Here we should pass the QImage to which the geo reference information should be added using the QImageWriter,
-    //      but take into account if we save as a tif file vs saving to png, jpg, etc. because then a different projection
-    //      has to be used (e.g. web mercator vs geotiff)
-    //      For now we only support writing webmercator, as that will be the most common way. Ideally we don't write into
-    //      a new QImage, but pass it along from the caller, but this will require some refactoring.
+    //TODO:1: Here we should pass the QImage to which the geo reference information should be added using the QImageWriter,
+    //        but take into account if we save as a tif file vs saving to png, jpg, etc. because then a different projection
+    //        has to be used (e.g. web mercator vs geotiff)
+    //        For now we only support writing webmercator, as that will be the most common way. Ideally we don't write into
+    //        a new QImage, but pass it along from the caller, but this will require some refactoring.
     bool success = false, geoReferenceSavedSuccess = false;
     if (mMapProjection)
     {
+        //TODO:2: This is still clumsy, because this class requires all this knowledge about used file extenstions, etc. and
+        //        based on that use dynamic_cast to in order to call the right methods on the projection classes.
+        //        We should refactor this, but for now just leave it as it is, so my weekend will not be occupied again.
+        bool sourceWebMercator = !mFileName.endsWith(QStringLiteral("tif"));
+        bool targetWebMercator = !fileName.endsWith(QStringLiteral("tif"));
+        bool targetGeoTiff = !targetWebMercator;
+        bool sourceGeotiff = !sourceWebMercator;
+
         QImage srcImage(fileName);
-        if (!fileName.endsWith(QStringLiteral("tif")))
+        if (sourceWebMercator && targetWebMercator)
+        {
             success = saveImageAndWebMercatorProjection(fileName, srcImage, geoReferenceSavedSuccess);
-        else
+        }
+        else if (sourceWebMercator && targetGeoTiff)
+        {
             success = saveImageAndGeoTiffProjection(fileName, srcImage, geoReferenceSavedSuccess);
+        }
+        else if (sourceGeotiff && targetGeoTiff)
+        {
+            success = saveGeoTiffToGeoTiffProjection(fileName, srcImage, geoReferenceSavedSuccess);
+        }
+        else
+        {
+            qWarning() << "We can't safe geotiff files back to web mercator files (non geotiff) image files";
+        }
     }
     return success && geoReferenceSavedSuccess;
 }
@@ -206,7 +226,7 @@ bool RGMap::saveImageAndWebMercatorProjection(const QString& fileName, const QIm
     {
         //We store the geo refence information as tags in the file (if possible)
         //It's only required to store the topleft coordinate and the zoomlevel
-        RGWebMercatorProjection* wmProjection = dynamic_cast<RGWebMercatorProjection*>(mMapProjection.get());
+        RGWebMercatorProjection* wmProjection = qobject_cast<RGWebMercatorProjection*>(mMapProjection.get());
         if (wmProjection)
         {
             QPoint topLeft = wmProjection->topLeftWorldPixel();
@@ -215,6 +235,10 @@ bool RGMap::saveImageAndWebMercatorProjection(const QString& fileName, const QIm
             writer.setText(imgKeyZoomStr, QString::number(wmProjection->zoomLevel()));
             geoReferenceSavedSuccess = true;
         }
+    }
+    else
+    {
+        qWarning() << "Image format for " << fileName << "does not support metadata to store georef tags";
     }
     //Now save the full image
     return writer.write(srcImage);
@@ -231,6 +255,33 @@ bool RGMap::saveImageAndGeoTiffProjection(const QString& fileName, const QImage&
     {
         geoReferenceSavedSuccess = RGGeoTiffMapProjection::saveProjectionDataToGeoTiff(fileName, *(mMapProjection.get()));
         qDebug() << "Saving TIF file success = " << success << "; geoReferenceSavedSuccess = " << geoReferenceSavedSuccess;
+    }
+    else
+    {
+        qWarning() << "Cannot save " << fileName << "while trying to save image to GeoTiff format!";
+    }
+    return success;
+}
+
+bool RGMap::saveGeoTiffToGeoTiffProjection(const QString& fileName, const QImage& srcImage, bool& geoReferenceSavedSuccess)
+{
+    bool success = false;
+    QImageWriter writer(fileName);
+
+    //First save the tif file itself, then append the Geo keys
+    success = writer.write(srcImage);
+    if (success)
+    {
+        RGGeoTiffMapProjection* geoTiffProjection = qobject_cast<RGGeoTiffMapProjection*>(mMapProjection.get());
+        if (geoTiffProjection)
+        {
+            geoReferenceSavedSuccess = geoTiffProjection->saveProjection(fileName);
+        }
+        qDebug() << "Saving TIF file success = " << success << "; geoReferenceSavedSuccess = " << geoReferenceSavedSuccess;
+    }
+    else
+    {
+        qWarning() << "Cannot save " << fileName << "while trying to save GeoTiff image to GeoTiff format!";
     }
     return success;
 }
