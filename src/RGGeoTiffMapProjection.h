@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGGEOTIFFMAPPROJECTION_H
 
 #include "RGMapProjection.h"
-#include <geotiff/geotiff.h>
+#include <geotiff.h>
 #include <tiffio.h>
 
 class RGGeoTiffMapProjection : public RGMapProjection

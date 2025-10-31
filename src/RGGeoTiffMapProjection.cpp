@@ -27,9 +27,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <cmath>
 
 // GeoTiff headers
-#include <geotiff/geo_normalize.h>
-#include <geotiff/geovalues.h>
-#include <geotiff/xtiffio.h>
+#include <geo_normalize.h>
+#include <geovalues.h>
+#include <xtiffio.h>
 
 namespace
 {

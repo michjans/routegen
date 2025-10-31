@@ -118,9 +118,11 @@
  *          Georeference infomation now stored directly inside the saved map image
  *          Several bugfixes (sometimes resulting in crashes) resolved
  *  v2.0.1  Build fixes for Ubuntu 24
+ *  v2.0.2  Saving a GeoTIFF as GeoTIFF works again.
+ *          Builds on macOS!
  */
 
-extern const QString applicationName(QStringLiteral("Route Generator version 2.0.1"));
+extern const QString applicationName(QStringLiteral("Route Generator version 2.0.2"));
 
 int main(int argc, char* argv[])
 {

@@ -9,13 +9,20 @@ on GitHub as well, with the intention that more people are willing to contribute
 to it.
 	  
 ## Installation
-On Windows and Linux use the distributed installer provided from the website.
-On Mac OS the program has to be build from source code (see below)
+For Windows, Linux and macOS you can use the distributed installer provided from the
+website, but it's also possible to build it yourself from the source code.
 
 ## Building Route Generator from the source code
 Since version 2.0 Route Generator has been build using Qt >= 6.7 using CMake, although
 the code itself might still compile against Qt 5.12, but it's not guaranteed to fully
 function as expected.
+Additionally Route Generator requires the libgeotiff library to be able to import maps
+in GeoTIFF format.
+
+### Install Qt
+Installation of Qt works similar on all 3 supported OS's. On all OS's the same version
+of Qt is supported to build Route Generator against, although in practice I do not use
+exactly the same version of Qt on all operating systems.
 
 It is recommended to install Qt 6.7 (or higher) using the Qt maintainance tool, which
 can be downloaded from https://www.qt.io/download-open-source
@@ -27,7 +34,7 @@ During installation select at least the following packages:
 - Qt Positioning
 - Extensions: Qt WebEngine
 
-Also Route Generator supports importing GeoTiff maps, so it requires
+Also Route Generator supports importing GeoTIFF maps, so it requires
 libgeotiff development libraries to be installed, before it can be build.
 Libgeotiff depends on libtiff, libproj and sqlite3, so they have to be installed as well.
 
@@ -112,6 +119,14 @@ On Windows all dependent packages have to be build from source.
 - cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="/WX" -DCMAKE_CXX_FLAGS="/WX" -DCMAKE_INSTALL_PREFIX=C:/Users/mjans/dev/local -DPROJ_INCLUDE_DIR=C:/Users/mjans/dev/local/include -DPROJ_LIBRARY=C:/Users/mjans/dev/local/lib/proj.lib -G "NMake Makefiles" ..
 - cmake --build . --config Release --target install
 
+#### macOS
+First install the Homebrew Package Manager for macOS using the command shell, see: https://brew.sh
+- /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+Now install libgeotiff
+- brew install libgeotiff
+
+
 ### Build Route Generator itself
 After everything is setup correctly, now Route Generator itself can be build.
 - unzip or clone the Route Generator source code in a new directory
@@ -132,7 +147,7 @@ Note: 1. When using QtCreator on Windows you also have to set the CMAKE_INSTALL_
       2. You can also manually build with the instructions above and in qtcreator go to project and select import
          build environment. Then select the "Release" directory from which cmake was executed.
 
-#### Linux (or Mac)
+#### Linux
 - cd to the the directory where you unzipped or cloned the source code
   (e.g. cd routegen)
 - mkdir Release
@@ -155,6 +170,29 @@ correctly on any Linux distribution. Check out installer/linux-deploy.txt
 
 AppImage deployment using linuxdeployqt is no longer being maintained. A new method for deploying linux apps for
 multiple distributions could be Flatpak (https://flatpak.org/), but have to dive into this.
+
+#### macOS
+Very similar to Linux but some small differences, especially related to deployment, because macOS deployment comes
+out of the box by Qt by using the default app format for macOS. So, no need for using the InstallerFramework.
+
+- cd to the the directory where you unzipped or cloned the source code
+  (e.g. cd routegen)
+- mkdir Release
+- cd Release
+
+Support with support for Apple processors, i.e arm64.
+- cmake ../src \
+  -DCMAKE_OSX_ARCHITECTURES=arm64 \
+  -DCMAKE_BUILD_TYPE=Release
+
+NOTE: Intel (x86_64) can also be supported by passing: -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
+
+Builds release version of routegen executable locally in ./routegen.app/Contents/MacOS/routegen
+- make
+
+##### Deployment
+TODO
+
 
 ## Managing the translations
 Some information regarding translation of Route Generator (up to now only, DE, EN, NL, IT, ES, FR supported)

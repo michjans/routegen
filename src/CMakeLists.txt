@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(routegen VERSION 1.13.0 LANGUAGES CXX)
+project(routegen VERSION 2.0.2 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -96,6 +96,10 @@ add_executable(routegen WIN32 MACOSX_BUNDLE
     ${QM_FILES}
 )
 
+if(APPLE)
+    set_target_properties(routegen PROPERTIES MACOSX_BUNDLE TRUE)
+endif()
+
 target_compile_definitions(routegen PRIVATE
     QT_DISABLE_DEPRECATED_BEFORE=0x060000
 )
@@ -110,7 +114,9 @@ target_link_libraries(routegen PRIVATE
     TIFF::TIFF
 )
 
-set(CMAKE_EXE_LINKER_FLAGS "-fuse-ld=gold ${CMAKE_CXX_FLAGS}")
+if(UNIX AND NOT APPLE)
+    set(CMAKE_EXE_LINKER_FLAGS "-fuse-ld=gold ${CMAKE_CXX_FLAGS}")
+endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL Release)
     target_compile_definitions(routegen PRIVATE
