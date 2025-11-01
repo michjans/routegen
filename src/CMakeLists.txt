@@ -104,6 +104,8 @@ target_compile_definitions(routegen PRIVATE
     QT_DISABLE_DEPRECATED_BEFORE=0x060000
 )
 
+target_include_directories(routegen PRIVATE ${GeoTIFF_INCLUDE_DIRS})
+
 target_link_libraries(routegen PRIVATE
     Qt6::Core
     Qt6::Gui

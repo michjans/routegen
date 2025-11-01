@@ -2,13 +2,12 @@
 # Works for Linux and macOS (including Homebrew on Apple Silicon)
 
 find_path(GEOTIFF_INCLUDE_DIR
-    NAMES geotiff.h geotiff/geotiff.h
-    HINTS
-        /usr
-        /usr/local
-        /opt/homebrew
-        /opt/homebrew/opt/libgeotiff
-    PATH_SUFFIXES include
+    NAMES geotiff.h
+    PATH_SUFFIXES geotiff
+    PATHS
+        /usr/include
+        /usr/local/include
+        /opt/homebrew/include
 )
 
 find_library(GEOTIFF_LIBRARY
@@ -39,4 +38,5 @@ find_package_handle_standard_args(GeoTIFF DEFAULT_MSG
 if(GeoTIFF_FOUND)
     set(GeoTIFF_INCLUDE_DIRS ${GEOTIFF_INCLUDE_DIR})
     set(GeoTIFF_LIBRARIES ${GEOTIFF_LIBRARY})
+    message(STATUS "GeoTIFF include dir found: ${GEOTIFF_INCLUDE_DIR}")
 endif()

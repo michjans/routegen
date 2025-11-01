@@ -154,8 +154,13 @@ Note: 1. When using QtCreator on Windows you also have to set the CMAKE_INSTALL_
 - cd Release
 - cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. ../src
 
+For more verbose output of make also pass:
+- -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+
 Builds release version of routegen executable locally
 - make
+OR
+- cmake --build .
 
 Will install the release executable in the bin sub-directory
 Note that this step is required to create a release executable that has the correct
