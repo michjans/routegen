@@ -17,9 +17,26 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <QDir>
+#include <QFile>
 #include <QHash>
 #include <QtGui>
 #include <RGSettings.h>
+
+QString RGSettings::resourceLocation(const QString& path, QStandardPaths::LocateOptions locOptions)
+{
+    //On macOS and in case of AppImage on linux the resources are located on a separate location...
+    QString resourceLocation = QStandardPaths::locate(QStandardPaths::AppLocalDataLocation, path, locOptions);
+    if (resourceLocation.isEmpty())
+    {
+        //...but on Linux and windows (using InstallerFramework), the resources are stored on the same level as the application
+        return QCoreApplication::applicationDirPath() + QStringLiteral("/") + path;
+    }
+    else
+    {
+        return resourceLocation;
+    }
+}
 
 QString RGSettings::getVideoEncoder()
 {

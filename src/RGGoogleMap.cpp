@@ -100,7 +100,7 @@ RGGoogleMap::RGGoogleMap(QWidget* parent, const QGeoPath& geoPath)
     ui.setupUi(this);
 
     //TODO: Can we embed this file into the resources, so the api key is not that obvious?
-    QFile file(QStringLiteral("google-maps-template.html"));
+    QFile file(RGSettings::resourceLocation(QStringLiteral("google-maps-template.html")));
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
 

@@ -24,6 +24,7 @@
 #include <QPointF>
 #include <QRect>
 #include <QRectF>
+#include <QStandardPaths>
 #include <QString>
 
 #include "RGGoogleMapBounds.h"
@@ -38,6 +39,12 @@ public:
         RG_MOVIE_LOCATION,
         RG_PROJECT_LOCATION
     };
+
+    /**
+     * @brief resourceLocation returns the path of a file or directory, independent of used installer platform or OS
+     * @return path or file for resource files to use
+     */
+    static QString resourceLocation(const QString& path, QStandardPaths::LocateOptions locOptions = QStandardPaths::LocateFile);
 
     /*
      * Movie generation settings

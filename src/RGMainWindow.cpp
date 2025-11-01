@@ -602,12 +602,13 @@ void RGMainWindow::on_actionGenerate_map_triggered(bool checked)
 void RGMainWindow::on_action_Tutorial_triggered(bool checked)
 {
     Q_UNUSED(checked);
+
+    QString docPath = RGSettings::resourceLocation(QStringLiteral("doc/tutorial.html"), QStandardPaths::LocateFile);
     QTextBrowser* te = new QTextBrowser();
     te->setWindowTitle(tr("Route Generator Tutorial"));
     te->setWindowIcon(QIcon(":/icons/icons/mapgen.png"));
     te->setAttribute(Qt::WA_DeleteOnClose);
-    te->setSearchPaths(QStringList(QDir::currentPath()));
-    te->setSource(QUrl(QStringLiteral("doc/tutorial.html")));
+    te->setSource(QUrl(docPath));
     te->resize(800, 700);
     te->show();
 }
