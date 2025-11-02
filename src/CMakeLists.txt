@@ -20,7 +20,7 @@ set(CMAKE_INSTALL_RPATH "$ORIGIN/lib")
 set(QT_MIN_VERSION "6.2.0")
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules)
 
-find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS Core Gui Positioning WebEngineWidgets Widgets LinguistTools)
+find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS Core Gui Positioning Svg WebEngineWidgets Widgets LinguistTools)
 find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS Test)
 find_package(GeoTIFF REQUIRED)
 find_package(TIFF REQUIRED)
@@ -98,6 +98,21 @@ add_executable(routegen WIN32 MACOSX_BUNDLE
 
 if(APPLE)
     set_target_properties(routegen PROPERTIES MACOSX_BUNDLE TRUE)
+
+    # Copy resource files into the app bundle's Resources folder
+    set(APP_RESOURCES_DIR "${CMAKE_BINARY_DIR}/routegen.app/Contents/Resources")
+
+    add_custom_command(TARGET routegen POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${APP_RESOURCES_DIR}/vehicles"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${CMAKE_SOURCE_DIR}/vehicles" "${APP_RESOURCES_DIR}/vehicles"
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${APP_RESOURCES_DIR}/doc"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${CMAKE_SOURCE_DIR}/doc" "${APP_RESOURCES_DIR}/doc"
+        COMMAND ${CMAKE_COMMAND} -E copy
+            "${CMAKE_SOURCE_DIR}/google-maps-template.html" "${APP_RESOURCES_DIR}/"
+        COMMENT "Copying extra resource files into .app bundle"
+    )
 endif()
 
 target_compile_definitions(routegen PRIVATE
@@ -110,6 +125,7 @@ target_link_libraries(routegen PRIVATE
     Qt6::Core
     Qt6::Gui
     Qt6::Positioning
+    Qt6::Svg
     Qt6::WebEngineWidgets
     Qt6::Widgets
     ${GeoTIFF_LIBRARIES}

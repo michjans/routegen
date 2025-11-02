@@ -193,10 +193,17 @@ Support with support for Apple processors, i.e arm64.
 NOTE: Intel (x86_64) can also be supported by passing: -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
 
 Builds release version of routegen executable locally in ./routegen.app/Contents/MacOS/routegen
-- make
+- cmake --build .
 
 ##### Deployment
-TODO
+
+Make sure that all required dependencies will be deployed with the app
+- macdeployqt routegen.app
+
+Somehow the app should still be signed after macdeployqt, although the Qt documentation 
+doesn't really mention that this extra step is required. Maybe it's due to the extra
+libgeotiff dependencies?
+- codesign --deep --force --verify --verbose --sign - routegen.app
 
 
 ## Managing the translations

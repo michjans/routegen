@@ -1,5 +1,6 @@
 // linux: g++ -O2 -std=c++17 gen_obf.cpp -o gen_simple
 // msvc:  cl gen_obf.cpp
+// macOS: clang++ ../src/gen_obf.cpp -o gen_obf
 // Usage: ./gen_obf "YOUR_API_KEY"
 // Emits an obfuscated Google maps API key in obfuscated format to be pasted
 // in RGGoogleMap.cpp
