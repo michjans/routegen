@@ -120,6 +120,14 @@ On Windows all dependent packages have to be build from source.
 - cmake --build . --config Release --target install
 
 #### macOS
+
+Before installing Qt, make sure that at least the xcode command line tools are installed.
+This installation is triggered by calling:
+- xcode-select --install
+
+The Qt installer warns that the full Xcode environment has to be installed, but when just
+building from the command line and using Qt creator for development, this is not required. 
+
 First install the Homebrew Package Manager for macOS using the command shell, see: https://brew.sh
 - /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 

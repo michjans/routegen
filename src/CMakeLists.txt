@@ -43,7 +43,7 @@ qt_add_resources(ROUTEGEN_RESOURCES
     "routegen.qrc"
 )
 
-add_executable(routegen WIN32 MACOSX_BUNDLE
+qt_add_executable(routegen WIN32 MACOSX_BUNDLE
     GPXSelectionDialog.cpp GPXSelectionDialog.h
     RGEditPath.cpp RGEditPath.h
     RGEditPathPoint.cpp RGEditPathPoint.h
@@ -149,7 +149,7 @@ install(TARGETS routegen
 
 enable_testing()
 
-add_executable(rg_projection_test
+qt_add_executable(rg_projection_test
     tests/tst_rgwebmercatorprojection.cpp
     RGWebMercatorProjection.cpp
     RGWebMercatorProjection.h
