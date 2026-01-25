@@ -28,20 +28,38 @@
 
 RGVehicleList::RGVehicleList()
 {
-    QDir vehicleDir = QDir::currentPath() + "/vehicles";
     QStringList filters;
     filters << QStringLiteral("*.bmp") << QStringLiteral("*.gif") << QStringLiteral("*.png") << QStringLiteral("*.jpg") << QStringLiteral("*.svg");
-    vehicleDir.setNameFilters(filters);
-    QFileInfoList vehicles = vehicleDir.entryInfoList();
-    vehicleDir.setPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/vehicles");
-    if (vehicleDir.exists())
+
+    QFileInfoList vehicles;
+    auto vehiclesSubFolder = QStringLiteral("/vehicles");
+
+    // For each standard location, check if a "vehicles" sub-directory exists. This can be the default resources directory containing
+    // the vehicle provided with the application (e.g. on macOS or AppImage) or the writeable directory for custom vehicles.
+    QStringList vehicleDirs = QStandardPaths::standardLocations(QStandardPaths::AppLocalDataLocation);
+    for (const QString& baseDir : vehicleDirs)
     {
-        vehicles.append(vehicleDir.entryInfoList());
+        QDir dir = baseDir + vehiclesSubFolder;
+        if (dir.exists())
+        {
+            dir.setNameFilters(filters);
+            vehicles.append(dir.entryInfoList());
+        }
     }
-    else
+
+    // Also search the vehicle path relative to application path
+    QDir appDirVehicles = QDir::currentPath() + vehiclesSubFolder;
+    if (appDirVehicles.exists())
     {
-        //Create folder for custom vehicles
-        vehicleDir.mkpath(vehicleDir.absolutePath());
+        appDirVehicles.setNameFilters(filters);
+        vehicles.append(appDirVehicles.entryInfoList());
+    }
+
+    QDir customVehicleDir(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + vehiclesSubFolder);
+    if (!customVehicleDir.exists())
+    {
+        //Create folder for custom vehicles if not existin, yet
+        customVehicleDir.mkpath(customVehicleDir.absolutePath());
     }
 
     //Always add 'none' vehicle
@@ -51,7 +69,7 @@ RGVehicleList::RGVehicleList()
     for (QFileInfoList::iterator it = vehicles.begin(); it != vehicles.end(); it++)
     {
         //Add vehicle (and mark vehicles that reside in custom vehicle path as custom)
-        if (addVehicle(*it, it->absoluteFilePath().startsWith(vehicleDir.absolutePath())) == nullptr)
+        if (addVehicle(*it, it->absoluteFilePath().startsWith(customVehicleDir.absolutePath())) == nullptr)
             continue;
         if (it->baseName() == RGSettings::getLastVehicleName())
             mCurrentVehicleId = i;
