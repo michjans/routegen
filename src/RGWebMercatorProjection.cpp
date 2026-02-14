@@ -44,10 +44,16 @@ RGWebMercatorProjection::RGWebMercatorProjection(const RGGoogleMapBounds& mapBou
     mBottomRight = worldToPixel(project(QGeoCoordinate(mapBounds.getSW().latitude(), mapBounds.getNE().longitude())));
     mAntiMeredianPosX = worldToPixel(QPointF(TILE_SIZE, TILE_SIZE)).x();
 
+    qDebug() << "RGWebMercatorProjection::RGWebMercatorProjection:RGoogleMapBounds...";
     qDebug() << "zoom:" << mapBounds.getZoom();
     qDebug() << "pixWidth:" << mBottomRight.x() - mTopLeft.x();
     qDebug() << "pixHeigth:" << mBottomRight.y() - mTopLeft.y();
     qDebug() << "mapBounds:" << mapBounds.toQVariant();
+    qDebug() << "mapWidth:" << mapWidth;
+    qDebug() << "mapHeight:" << mapHeight;
+    qDebug() << "mTopLeft:" << mTopLeft;
+    qDebug() << "mBottomRight:" << mBottomRight;
+    qDebug() << "mAntiMeredianPosX:" << mAntiMeredianPosX;
 }
 
 RGWebMercatorProjection::RGWebMercatorProjection(const RGOsMapBounds& mapBounds, int mapWidth, int mapHeight, QObject* parent)
@@ -61,9 +67,15 @@ RGWebMercatorProjection::RGWebMercatorProjection(const RGOsMapBounds& mapBounds,
     mBottomRight = centerPixel + QPoint(mapWidth / 2, mapHeight / 2);
     mAntiMeredianPosX = worldToPixel(QPointF(TILE_SIZE, TILE_SIZE)).x();
 
+    qDebug() << "RGWebMercatorProjection::RGWebMercatorProjection:RGOsMapBounds...";
     qDebug() << "zoom:" << m_zoom;
     qDebug() << "pixWidth:" << mBottomRight.x() - mTopLeft.x();
     qDebug() << "pixHeigth:" << mBottomRight.y() - mTopLeft.y();
+    qDebug() << "mapWidth:" << mapWidth;
+    qDebug() << "mapHeight:" << mapHeight;
+    qDebug() << "mTopLeft:" << mTopLeft;
+    qDebug() << "mBottomRight:" << mBottomRight;
+    qDebug() << "mAntiMeredianPosX:" << mAntiMeredianPosX;
 }
 
 RGWebMercatorProjection::RGWebMercatorProjection(const QPoint topLeftWorldPixel, int zoom, int mapWidth, int mapHeight, QObject* parent)
@@ -72,7 +84,21 @@ RGWebMercatorProjection::RGWebMercatorProjection(const QPoint topLeftWorldPixel,
       mTopLeft(topLeftWorldPixel),
       mBottomRight(mTopLeft + QPoint(mapWidth, mapHeight))
 {
+    qDebug() << "RGWebMercatorProjection::RGWebMercatorProjection:QPoint...";
     mAntiMeredianPosX = worldToPixel(QPointF(TILE_SIZE, TILE_SIZE)).x();
+
+    //Correct for antimeridian crossing
+    if (mBottomRight.x() > mAntiMeredianPosX)
+    {
+        mBottomRight.setX(mBottomRight.x() - mAntiMeredianPosX);
+    }
+
+    qDebug() << "zoom:" << m_zoom;
+    qDebug() << "mapWidth:" << mapWidth;
+    qDebug() << "mapHeight:" << mapHeight;
+    qDebug() << "mTopLeft:" << mTopLeft;
+    qDebug() << "mBottomRight:" << mBottomRight;
+    qDebug() << "mAntiMeredianPosX:" << mAntiMeredianPosX;
 }
 
 RGWebMercatorProjection::~RGWebMercatorProjection()
@@ -87,8 +113,6 @@ bool RGWebMercatorProjection::isValid() const
 QPoint RGWebMercatorProjection::convert(const QGeoCoordinate& geoPoint) const
 {
     QPoint point = worldToPixel(project(geoPoint));
-    //TODO: This check will not work anymore since we refactored this class to support OSM imports and saving
-    //      geo projections by just saving the mTopLeft and zoomlevel!
     if (mTopLeft.x() > mBottomRight.x() && point.x() < mTopLeft.x())
     {
         //When the route passes around the 180.0/-180.0 meridian (antimeridian), the coordinates will wrap around and we need to correct for this
@@ -129,8 +153,6 @@ QGeoCoordinate RGWebMercatorProjection::pixelToGeo(const QPoint& pixel) const
     QPoint absPixel = pixel + mTopLeft;
 
     // If the map crosses the antimeridian, normalize the x coordinate
-    //TODO: This check will not work anymore since we refactored this class to support OSM imports and saving
-    //      geo projections by just saving the mTopLeft and zoomlevel!
     if (mTopLeft.x() > mBottomRight.x() && absPixel.x() > mAntiMeredianPosX)
     {
         absPixel.setX(absPixel.x() - mAntiMeredianPosX);
