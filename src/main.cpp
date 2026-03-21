@@ -119,6 +119,8 @@
  *          Several bugfixes (sometimes resulting in crashes) resolved
  *  v2.0.1  Build fixes for Ubuntu 24
  *  v2.0.2  Saving a GeoTIFF as GeoTIFF works again.
+ *          Importing GeoTIFF using Projection Coordinate System now read correctly.
+ *          Fixed x coordinate wrap-around bug when imported map image passes the antimeredian point.
  *          Builds on macOS!
  */
 

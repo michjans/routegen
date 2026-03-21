@@ -55,7 +55,8 @@ RGGeoTiffMapProjection::RGGeoTiffMapProjection(const QString& fileName, QObject*
       mFileName(fileName),
       mTiff(nullptr),
       mGTif(nullptr),
-      mModelType(-1)
+      mModelType(-1),
+      mYInvert(false)
 {
     std::string fileNameStr = fileName.toStdString();
     mTiff = XTIFFOpen(fileNameStr.c_str(), "r");
@@ -108,6 +109,10 @@ RGGeoTiffMapProjection::RGGeoTiffMapProjection(const QString& fileName, QObject*
             cleanup();
             return;
         }
+
+        // We need to determine whether going north from the center of the image results in a positive or negative Y delta,
+        // this determines if the Y values after conversion to image coordinates have to be inverted or not.
+        mYInvert = determineYInvert();
     }
     else if (mModelType != ModelTypeGeographic)
     {
@@ -165,9 +170,13 @@ QPoint RGGeoTiffMapProjection::convert(const QGeoCoordinate& geoPoint) const
 
     double xi = pcsX;
     double yi = pcsY;
-    qDebug() << "xi, yi=" << xi << "," << yi;
+    qDebug() << "webmercator: xi, yi=" << xi << "," << yi;
     if (GTIFPCSToImage(mGTif, &xi, &yi))
     {
+        if (mModelType == ModelTypeProjected && mYInvert)
+        {
+            yi = -yi;
+        }
         // GTIFPCSToImage writes the image (pixel) coords back into xi, yi
         // xi/yi are doubles but QPoint takes ints; you can round as needed
         point.setX(static_cast<int>(std::round(xi)));
@@ -295,4 +304,26 @@ void RGGeoTiffMapProjection::cleanup()
         XTIFFClose(mTiff);
         mTiff = nullptr;
     }
+}
+
+bool RGGeoTiffMapProjection::determineYInvert()
+{
+    uint32_t width = 0, height = 0;
+    TIFFGetField(mTiff, TIFFTAG_IMAGEWIDTH, &width);
+    TIFFGetField(mTiff, TIFFTAG_IMAGELENGTH, &height);
+
+    double centerX = width / 2.0;
+    double centerY = height / 2.0;
+    GTIFImageToPCS(mGTif, &centerX, &centerY);
+
+    double xi1 = centerX, yi1 = centerY;
+    double xi2 = centerX, yi2 = centerY + 1.0; // slightly north
+
+    GTIFPCSToImage(mGTif, &xi1, &yi1);
+    GTIFPCSToImage(mGTif, &xi2, &yi2);
+
+    qDebug() << "xi1, yi1 = " << xi1 << "," << yi1;
+    qDebug() << "xi2, yi2 = " << xi2 << "," << yi2;
+
+    return (yi2 > yi1);
 }

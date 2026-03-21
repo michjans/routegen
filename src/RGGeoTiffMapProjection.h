@@ -51,12 +51,14 @@ public:
 
 private:
     void cleanup();
+    bool determineYInvert();
 
     QString mFileName;
     TIFF* mTiff;
     GTIF* mGTif;
 
     short mModelType;          // ModelTypeGeographic / ModelTypeProjected / etc.
+    bool mYInvert;             // Swap Y or not?
 };
 
 #endif // RGGEOTIFFMAPPROJECTION_H
